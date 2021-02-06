@@ -3,7 +3,7 @@
 <html>
     <head>
         <title>
-            Страница как бы
+            Сайт как бы
         </title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -11,10 +11,13 @@
     </head>
     <body>
         <div class="topMenu flex">
-            <div>
+            <div style="font-size: 2.5em;">
                 kofefast
             </div>
-            <div class="defaultUserPhoto">
+            <div class="defaultUserPhoto softBorder pointer">
+                <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    <b>Войти</b>
+                </div>
             </div>
         </div>
         <div class="main flex">
@@ -22,8 +25,8 @@
                 <div class="description">
                     мы реально крутые, пользуйтесь нашим офигенным сайтом
                 </div>
-                <div class="registrationButton softBorder">
-                    Зарегистрироваться
+                <div class="registrationButton softBorder pointer">
+                    <b>Зарегистрироваться</b>
                 </div>
                 <div class="">
 
@@ -77,6 +80,9 @@
                     </div>
                 </div>
             {% endif %}
+        </div>
+        <div class="bottom">
+            Designed by somebody, 2021
         </div>
     </body>
 </html>
