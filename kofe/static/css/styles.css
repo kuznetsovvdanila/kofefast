@@ -32,13 +32,16 @@ input {
     transform: filter;
 }
 .main {
-    width: 100%;
+    max-width: 100%;
     padding: 30px 100px 0 200px;
 }
 .leftSide {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+}
+.leftSide div {
+    margin: 35px 0 0 0;
 }
 .description {
     font-size: 3em;
@@ -48,8 +51,12 @@ input {
     width: 100%;
     background-color: #34a853;
     color: #111111;
-    font-size: 1.9em;
+    font-size: 2em;
+    padding: 10px;
     text-align: center;
-    padding: 15px 0 0 0;
-    height: 55px;
+    transition: .2s;
+}
+.registrationButton:hover {
+    margin: 31px 0 0 0;
+    transition: .2s;
 }
