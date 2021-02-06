@@ -18,38 +18,49 @@
             </div>
         </div>
         <div class="authIn">
-            <div class="authorization">
-                <div>
-                    {% Вход
-                </div>
-                <div class="">
-                    <form action="" method="POST">
+            {% if request.user.is_authenticated %}
+                    {% if user.first_name %}
+                        <p style="color: white">{{ user.first_name }}</p>
+                    {% else %}
+                        <p style="color: white">noname</p>
+                    {% endif %}
+                    <div class="logout">
+                        <a href="{% url 'logout' %}">
+                            <b style="color: white">Выйти</b>
+                        </a>
+                    </div>
 
-                        <input name="action_type" type="text" value="authen" style="display: none;">
-                        {{ form.username }}
-                        {{ form.password1 }}
-                        {% csrf_token %}
-                        <input type="submit" value="Войти">
-                    </form>
-                </div>
-            </div>
-            <div class="registration">
-                <div>
-                    Регистрация
-                </div>
-                <div class="">
-                    <form action="" method="POST">
+            {% else %}
+                <p style="color: white">Вход</p>
+                <div class="authorization">
+                    <div class="">
+                        <form action="" method="POST">
 
-                        <input name="action_type" type="text" value="registr" style="display: none;">
-                        {{ form.username }}
-                        {{ form.password1 }}
-                        {{ form.password2 }}
-
-                        {% csrf_token %}
-                        <input type="submit" value="Зарегистрироваться">
-                    </form>
+                            <input name="action_type" type="text" value="authen" style="display: none;">
+                            {{ form.username }}
+                            {{ form.password1 }}
+                            {% csrf_token %}
+                            <input type="submit" value="Войти">
+                        </form>
+                    </div>
                 </div>
-            </div>
+
+                <div class="registration">
+                    <p style="color: white">Регистрация</p>
+                    <div class="">
+                        <form action="" method="POST">
+
+                            <input name="action_type" type="text" value="registr" style="display: none;">
+                            {{ form.username }}
+                            {{ form.password1 }}
+                            {{ form.password2 }}
+
+                            {% csrf_token %}
+                            <input type="submit" value="Зарегистрироваться">
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </body>
 </html>
