@@ -1,4 +1,5 @@
 body {
+    font-family: "ProductSans-Regular";
     background: #111111;
 }
 @font-face {
@@ -7,9 +8,10 @@ body {
     font-style: normal;
     font-weight: normal;
 }
-
-.topMenu {
+input {
     font-family: "ProductSans-Regular";
+}
+.topMenu {
     font-size: 2em;
     color: white;
     justify-content: space-between;
