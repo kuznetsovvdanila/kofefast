@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from kofe import views
+# from django.contrib.auth import views as auth_views
+
+# from kofe.views import get_menu_context
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index_page, name='index'),
 ]
