@@ -1,6 +1,7 @@
 body {
     font-family: "ProductSans-Regular";
     background: #111111;
+    color: #eeeeee;
 }
 @font-face {
     font-family: "ProductSans-Regular";
@@ -11,9 +12,14 @@ body {
 input {
     font-family: "ProductSans-Regular";
 }
+.flex {
+    display: flex;
+}
+.softBorder {
+    border-radius: 30px;
+}
 .topMenu {
     font-size: 2em;
-    color: white;
     justify-content: space-between;
     padding: 15px 30px 0 30px;
     height: 100px;
@@ -25,6 +31,25 @@ input {
     filter: invert();
     transform: filter;
 }
-.flex {
-    display: flex;
+.main {
+    width: 100%;
+    padding: 30px 100px 0 200px;
+}
+.leftSide {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.description {
+    font-size: 3em;
+    max-width: 300px;
+}
+.registrationButton {
+    width: 100%;
+    background-color: #34a853;
+    color: #111111;
+    font-size: 1.9em;
+    text-align: center;
+    padding: 15px 0 0 0;
+    height: 55px;
 }
