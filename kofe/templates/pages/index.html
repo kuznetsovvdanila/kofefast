@@ -15,7 +15,40 @@
                 kofefast
             </div>
             <div class="defaultUserPhoto">
+            </div>
+        </div>
+        <div class="authIn">
+            <div class="authorization">
+                <div>
+                    {% Вход
+                </div>
+                <div class="">
+                    <form action="" method="POST">
 
+                        <input name="action_type" type="text" value="authen" style="display: none;">
+                        {{ form.username }}
+                        {{ form.password1 }}
+                        {% csrf_token %}
+                        <input type="submit" value="Войти">
+                    </form>
+                </div>
+            </div>
+            <div class="registration">
+                <div>
+                    Регистрация
+                </div>
+                <div class="">
+                    <form action="" method="POST">
+
+                        <input name="action_type" type="text" value="registr" style="display: none;">
+                        {{ form.username }}
+                        {{ form.password1 }}
+                        {{ form.password2 }}
+
+                        {% csrf_token %}
+                        <input type="submit" value="Зарегистрироваться">
+                    </form>
+                </div>
             </div>
         </div>
     </body>
