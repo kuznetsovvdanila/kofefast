@@ -25,7 +25,7 @@
                 <div class="description">
                     мы реально крутые, пользуйтесь нашим офигенным сайтом
                 </div>
-                <div class="registrationButton softBorder pointer">
+                <div class="registrationButton softBorder pointer active">
                     <b>Зарегистрироваться</b>
                 </div>
                 <div class="">
@@ -33,6 +33,36 @@
                 </div>
             </div>
             <div class="rightSide">
+                <div class="information active">
+                    АЕЕЕЕЕЕе
+                </div>
+
+                <div class="registration">
+                    <p style="text-align: center; font-size: 1.5em;">Регистрация</p>
+                    <div class="">
+                        <form action="" method="POST" class="flex">
+                            <input name="action_type" type="text" value="registr" style="display: none;">
+                            {{ form.username }}
+                            {{ form.password1 }}
+                            {{ form.password2 }}
+                            {% csrf_token %}
+                            <input type="submit" value="Зарегистрироваться">
+                        </form>
+                    </div>
+                </div>
+
+                <div class="authorization">
+                    <div class="">
+                        <p style="text-align: center; font-size: 1.5em;">Вход</p>
+                        <form action="" method="POST" class="flex">
+                            <input name="action_type" type="text" value="authen" style="display: none;">
+                            {{ form.username }}
+                            {{ form.password1 }}
+                            {% csrf_token %}
+                            <input type="submit" value="Войти">
+                        </form>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -50,39 +80,15 @@
                     </div>
 
             {% else %}
-                <p style="color: white">Вход</p>
-                <div class="authorization">
-                    <div class="">
-                        <form action="" method="POST">
 
-                            <input name="action_type" type="text" value="authen" style="display: none;">
-                            {{ form.username }}
-                            {{ form.password1 }}
-                            {% csrf_token %}
-                            <input type="submit" value="Войти">
-                        </form>
-                    </div>
-                </div>
-
-                <div class="registration">
-                    <p style="color: white">Регистрация</p>
-                    <div class="">
-                        <form action="" method="POST">
-
-                            <input name="action_type" type="text" value="registr" style="display: none;">
-                            {{ form.username }}
-                            {{ form.password1 }}
-                            {{ form.password2 }}
-
-                            {% csrf_token %}
-                            <input type="submit" value="Зарегистрироваться">
-                        </form>
-                    </div>
-                </div>
             {% endif %}
         </div>
         <div class="bottom">
             Designed by somebody, 2021
         </div>
+
+        <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+
     </body>
 </html>
