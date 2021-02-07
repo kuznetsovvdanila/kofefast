@@ -3,12 +3,14 @@ $('.registrationButton').click(function(){
     $('.authorization').removeClass('active');
     $('.information').removeClass('active');
     $('.registrationButton').removeClass('active');
+    $('.description').addClass('active');
 })
 $('.defaultUserPhoto').click(function(){
     $('.registration').removeClass('active');
     $('.authorization').addClass('active');
     $('.information').removeClass('active');
     $('.registrationButton').addClass('active');
+    $('.description').removeClass('active');
 })
 $('#id_username').attr('placeholder','Логин');
 $('#id_first_name').attr('placeholder','Имя');
