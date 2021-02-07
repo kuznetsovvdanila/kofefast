@@ -12,6 +12,13 @@ $('.defaultUserPhoto').click(function(){
     $('.registrationButton').addClass('active');
     $('.description').removeClass('active');
 })
+$('.closeIt').click(function(){
+    $('.registration').removeClass('active');
+    $('.authorization').removeClass('active');
+    $('.information').addClass('active');
+    $('.registrationButton').addClass('active');
+    $('.description').removeClass('active');
+})
 $('#id_username').attr('placeholder','Логин');
 $('#id_first_name').attr('placeholder','Имя');
 $('#id_last_name').attr('placeholder','Фамилия');

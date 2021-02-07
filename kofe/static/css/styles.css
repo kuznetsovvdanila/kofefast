@@ -25,6 +25,9 @@ input {
 .flex {
     display: flex;
 }
+.btw {
+    justify-content: space-between;
+}
 .softBorder {
     border-radius: 30px;
 }

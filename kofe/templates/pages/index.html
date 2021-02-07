@@ -14,7 +14,7 @@
             <div style="font-size: 2.5em;">
                 kofefast
             </div>
-            {% if request.user.is_authenticated %}
+            {% if not request.user.is_authenticated %}
                 <div class="defaultUserPhoto softBorder pointer">
                     <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         <b>Войти</b>
@@ -48,7 +48,10 @@
                 </div>
 
                 <div class="registration">
-                    <p style="text-align: center; font-size: 1.5em;">Регистрация</p>
+                    <div class="flex btw">
+                        <span style="text-align: left; font-size: 2em; margin: 0 0 0 20px;">Регистрация</span>
+                        <span class="closeIt" style="text-align: right; font-size: 2em; margin: 0 20px 0 0; cursor: pointer;">x</span>
+                    </div>
                     <div class="">
                         <form action="" method="POST" class="flex">
                             <input name="action_type" type="text" value="registr" style="display: none;">
@@ -59,20 +62,23 @@
                             {{ form.password1 }}
                             {{ form.password2 }}
                             {% csrf_token %}
-                            <input type="submit" value="Зарегистрироваться">
+                            <input type="submit" value="Зарегистрироваться" class="pointer">
                         </form>
                     </div>
                 </div>
 
                 <div class="authorization">
                     <div class="">
-                        <p style="text-align: center; font-size: 1.5em;">Вход</p>
+                        <div class="flex btw">
+                            <span style="text-align: left; font-size: 2em; margin: 0 0 0 20px;">Вход</span>
+                            <span class="closeIt" style="text-align: right; font-size: 2em; margin: 0 20px 0 0; cursor: pointer;">x</span>
+                        </div>
                         <form action="" method="POST" class="flex">
                             <input name="action_type" type="text" value="authen" style="display: none;">
                             <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
                             <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" aria-autocomplete="list" placeholder="Пароль">
                             {% csrf_token %}
-                            <input type="submit" value="Войти">
+                            <input type="submit" value="Войти" class="pointer">
                         </form>
                     </div>
                 </div>
