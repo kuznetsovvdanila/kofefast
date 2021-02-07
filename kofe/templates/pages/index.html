@@ -16,7 +16,13 @@
             </div>
             <div class="defaultUserPhoto softBorder pointer">
                 <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                    <b>Войти</b>
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'logout' %}">
+                        <b style="color: white">Выйти</b>
+                    </a>
+                    {% else %}
+                        <b>Войти</b>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -42,7 +48,10 @@
                     <div class="">
                         <form action="" method="POST" class="flex">
                             <input name="action_type" type="text" value="registr" style="display: none;">
-                            {{ form.username }}
+                            <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
+                            <input type="text" name="first_name" autocomplete="none" required="" id="id_first_name" placeholder="Имя">
+                            <input type="text" name="last_name" autocomplete="none" required="" id="id_last_name" placeholder="Фамилия">
+                            <input type="text" value="lox" style="display: none;" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus="" required="" id="id_username" placeholder="Логин" disabled="disabled">
                             {{ form.password1 }}
                             {{ form.password2 }}
                             {% csrf_token %}
@@ -56,8 +65,8 @@
                         <p style="text-align: center; font-size: 1.5em;">Вход</p>
                         <form action="" method="POST" class="flex">
                             <input name="action_type" type="text" value="authen" style="display: none;">
-                            {{ form.username }}
-                            {{ form.password1 }}
+                            <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
+                            <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" aria-autocomplete="list" placeholder="Пароль">
                             {% csrf_token %}
                             <input type="submit" value="Войти">
                         </form>
@@ -74,11 +83,7 @@
                         <p style="color: white">noname</p>
                     {% endif %}
                     <div class="logout">
-                        <a href="{% url 'logout' %}">
-                            <b style="color: white">Выйти</b>
-                        </a>
                     </div>
-
             {% else %}
 
             {% endif %}
