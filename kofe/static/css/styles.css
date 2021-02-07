@@ -4,6 +4,10 @@ body {
     color: #eeeeee;
     overflow: hidden;
 }
+a {
+    color: #111111;
+    text-decoration: none;
+}
 ::selection {
     background-color: #34a853;
     color: #111111;

@@ -14,17 +14,21 @@
             <div style="font-size: 2.5em;">
                 kofefast
             </div>
-            <div class="defaultUserPhoto softBorder pointer">
-                <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                    {% if request.user.is_authenticated %}
-                    <a href="{% url 'logout' %}">
-                        <b style="color: white">Выйти</b>
-                    </a>
-                    {% else %}
+            {% if request.user.is_authenticated %}
+                <div class="defaultUserPhoto softBorder pointer">
+                    <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         <b>Войти</b>
-                    {% endif %}
+                    </div>
                 </div>
-            </div>
+            {% else %}
+                <div class="defaultUserPhoto softBorder pointer">
+                    <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <a href="{% url 'logout' %}">
+                            <b>Выйти</b>
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
         <div class="main flex">
             <div class="leftSide flex">
