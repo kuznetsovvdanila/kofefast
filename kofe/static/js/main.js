@@ -32,3 +32,12 @@ $('#id_first_name').attr('placeholder','Имя');
 $('#id_last_name').attr('placeholder','Фамилия');
 $('#id_password1').attr('placeholder','Пароль');
 $('#id_password2').attr('placeholder','Подтверждение пароля');
+
+let map;
+
+function initMap() {
+map = new google.maps.Map(document.getElementById("map"), {
+  center: { lat: 55.7601296, lng: 37.6025209 },
+  zoom: 12,
+});
+}
