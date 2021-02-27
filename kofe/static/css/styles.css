@@ -151,7 +151,6 @@ input {
 
 }
 .item > div:not(:first-child) {
-.item > div:not(:first-child) {
     margin: 0 10px 10px 20px;
 }
 .item > div:last-child {

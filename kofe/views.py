@@ -55,6 +55,7 @@ def index_page(request):
             drinkable.append(item)
 
     context = {
+        'providers': Provider.objects.all(),
         'drinks': drinkable,
         'form': form if form else UserCreationForm(),
         'errors': errors

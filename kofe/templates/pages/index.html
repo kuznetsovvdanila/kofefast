@@ -91,15 +91,11 @@
                     Выберите кофейню:
                 </div>
                 <div class="categories flex">
-                    <div class="drink">
-                        мак
-                    </div>
-                    <div class="eat">
-                        кфс
-                    </div>
-                    <div class="eat">
-                        бк
-                    </div>
+                    {% for provider in providers %}
+                        <div class="drink">
+                            {{ provider.name }}
+                        </div>
+                    {% endfor %}
                 </div>
                 <hr class="line">
                 <div class="list">
@@ -239,7 +235,7 @@
                     </div>
                 </div>
             </div>
-            <div id="map"></div>
+<!--            <div id="map"></div>-->
         {% endif %}
 <!--        <div class="bottom">-->
 <!--            Designed by somebody, 2021-->
