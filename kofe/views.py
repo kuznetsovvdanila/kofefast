@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
+from sklearn.cluster import KMeans
+
 from kofe.models import Provider
 
 
@@ -52,6 +54,18 @@ def index_page(request):
 
     for provider in providers:
         for item in provider.item_set.all().filter(type='d'):
+            #if item.not_has_color:
+                #def palette(clusters):
+                #    width = 300
+                #    palette = np.zeros((50, width, 3), np.uint8)
+                #    steps = width / clusters.cluster_centers_.shape[0]
+                #    for idx, centers in enumerate(clusters.cluster_centers_):
+                #        palette[:, int(idx * steps):(int((idx + 1) * steps)), :] = centers
+                #    return palette
+
+                #clt_3 = KMeans(n_clusters=3)
+                #clt_3.fit(img_2.reshape(-1, 3))
+                #show_img_compar(img_2, palette(clt_3))
             drinkable.append(item)
 
     context = {

@@ -161,12 +161,11 @@ input {
     border-top: 5px solid #333333;
 }
 .itemPhoto {
-    width: 50%;
-    height: 100%;
-    background-image: url('../img/IMG_3479.png');
-    background-repeat: no-repeat;
-    background-size: 100%;
-    transition: .2s;
+    width: 50% !important;
+    height: 100% !important;
+    background-repeat: no-repeat !important;
+    background-size: 100% !important;
+    transition: .2s !important;
     margin: 0 !important;
 }
 .description {
