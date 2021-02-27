@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
+from kofe.models import Provider
+
 
 def index_page(request):
     form = None
@@ -44,10 +46,20 @@ def index_page(request):
         if request.POST.get('action_type') == 'logout':
             return redirect('logout')
 
+    providers = Provider.objects.all()
+
+    drinkable = []
+
+    for provider in providers:
+        for item in provider.item_set.all().filter(type='d'):
+            drinkable.append(item)
+
     context = {
+        'drinks': drinkable,
         'form': form if form else UserCreationForm(),
         'errors': errors
     }
+    print(len(drinkable))
     return render(request, 'pages/index.html', context)
 
 

@@ -104,54 +104,24 @@
                 <hr class="line">
                 <div class="list">
                     <div class="coffee flex active">
-                        <div class="item flex">
-                            <div class="cntnr">
-                                <div class="itemName">
-                                    <b>Афроамерикано</b>
+                        {% for coffee in drinks %}
+                            <div class="item flex">
+                                <div class="cntnr">
+                                    <div class="itemName">
+                                        <b>{{ coffee.name }}</b>
+                                    </div>
+                                    <div class="itemDescription">
+
+                                    </div>
+                                    <div class="itemPrice">
+                                        {{ coffee.price }}$
+                                    </div>
                                 </div>
-                                <div class="itemDescription">
+                                <div class="itemPhoto">
 
                                 </div>
-                                <div class="itemPrice">
-                                    300$
-                                </div>
                             </div>
-                            <div class="itemPhoto">
-
-                            </div>
-                        </div>
-                        <div class="item flex">
-                            <div class="cntnr">
-                                <div class="itemName">
-                                    <b>Экспрессо</b>
-                                </div>
-                                <div class="itemDescription">
-
-                                </div>
-                                <div class="itemPrice">
-                                    300$
-                                </div>
-                            </div>
-                            <div class="itemPhoto">
-
-                            </div>
-                        </div>
-                        <div class="item flex">
-                            <div class="cntnr">
-                                <div class="itemName">
-                                    <b>Русиано</b>
-                                </div>
-                                <div class="itemDescription">
-
-                                </div>
-                                <div class="itemPrice">
-                                    300$
-                                </div>
-                            </div>
-                            <div class="itemPhoto">
-
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                     <div class="breakfast flex">
                         <div class="item flex">
@@ -271,20 +241,6 @@
             </div>
             <div id="map"></div>
         {% endif %}
-
-        <div class="authIn">
-            {% if request.user.is_authenticated %}
-                    {% if user.first_name %}
-                        <p style="color: white">{{ user.first_name }}</p>
-                    {% else %}
-                        <p style="color: white">noname</p>
-                    {% endif %}
-                    <div class="logout">
-                    </div>
-            {% else %}
-
-            {% endif %}
-        </div>
 <!--        <div class="bottom">-->
 <!--            Designed by somebody, 2021-->
 <!--        </div>-->
