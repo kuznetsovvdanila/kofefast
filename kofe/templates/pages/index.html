@@ -11,7 +11,7 @@
     </head>
     <body>
         <div class="topMenu flex">
-            <div style="font-size: 2.5em;">
+            <div style="font-size: 3.5em;">
                 kofefast
             </div>
             {% if not request.user.is_authenticated %}
@@ -92,7 +92,8 @@
                 </div>
                 <div class="categories flex">
                     {% for provider in providers %}
-                        <div class="drink">
+
+                        <div id="{{ provider.name }}" class="provider">
                             {{ provider.name }}
                         </div>
                     {% endfor %}
@@ -100,20 +101,20 @@
                 <hr class="line">
                 <div class="list">
                     <div class="coffee flex active">
-                        {% for coffee in drinks %}
-                            <div class="item flex">
+                        {% for drink in drinks %}
+                            <div id="item{{ drink.provided }}" class="item">
                                 <div class="cntnr">
                                     <div class="itemName">
-                                        <b>{{ coffee.name }}</b>
+                                        <b>{{ drink.name }}</b>
                                     </div>
                                     <div class="itemDescription">
 
                                     </div>
                                     <div class="itemPrice">
-                                        {{ coffee.price }}$
+                                        {{ drink.price }}$
                                     </div>
                                 </div>
-                                <div class="itemPhoto" style="background-image: url('{{ coffee.preview.url }}');">
+                                <div class="itemPhoto" style="background-image: url('{{ drink.preview.url }}');">
 
                                 </div>
                             </div>

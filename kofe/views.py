@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
-from sklearn.cluster import KMeans
+# from sklearn.cluster import KMeans
 
 from kofe.models import Provider
 
@@ -69,12 +69,15 @@ def index_page(request):
             drinkable.append(item)
 
     context = {
+        # 'items': Provider.item_set.all().filter(type='d'),
         'providers': Provider.objects.all(),
         'drinks': drinkable,
         'form': form if form else UserCreationForm(),
         'errors': errors
     }
     print(len(drinkable))
+    for provider in providers:
+        print(provider.item_set.all().filter(type='d')[0])
     return render(request, 'pages/index.html', context)
 
 

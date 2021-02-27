@@ -93,7 +93,7 @@ input {
 }
 .hd {
     text-align: center;
-    font-size: 3em;
+    font-size: 4em;
 }
 .categories {
     margin: 0 0 70px 0 !important;
@@ -102,7 +102,7 @@ input {
 }
 .categories > div {
     margin: 0 15px 0 15px;
-    font-size: 1.5em;
+    font-size: 2em;
     cursor: pointer;
     text-align: center;
 }
@@ -132,9 +132,13 @@ input {
     justify-content: space-around;
 }
 .item {
+    display: none;
+}
+.item.active {
+    display: flex;
     margin: 0 0 60px 0;
     min-width: 90%;
-    height: 400px;
+    height: 350px;
     border-radius: 50px 0 0 50px;
     align-items: center;
     background: linear-gradient(to right, #deb887, transparent);
@@ -150,10 +154,10 @@ input {
 .itemDescription {
 
 }
-.item > div:not(:first-child) {
+.item.active > div:not(:first-child) {
     margin: 0 10px 10px 20px;
 }
-.item > div:last-child {
+.item.active > div:last-child {
     margin: 0 10px 20px 20px;
 }
 .itemPrice {

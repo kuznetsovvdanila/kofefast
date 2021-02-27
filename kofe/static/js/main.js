@@ -33,6 +33,16 @@ $('#id_last_name').attr('placeholder','Фамилия');
 $('#id_password1').attr('placeholder','Пароль');
 $('#id_password2').attr('placeholder','Подтверждение пароля');
 
+
+ $('.provider').click(function(){
+        var drink_id = $(this).attr('id').substring();
+        console.log("#item"+drink_id);
+        $(".item").removeClass('active');
+        $("#item"+String(drink_id)).addClass('active');
+
+
+})
+
 let map;
 
 function initMap() {
