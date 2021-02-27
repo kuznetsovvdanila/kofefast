@@ -100,7 +100,7 @@ input {
     flex-wrap: wrap;
     justify-content: center;
 }
-.categories > div {
+.categories > div:not(.item) {
     margin: 0 15px 0 15px;
     font-size: 2em;
     cursor: pointer;
@@ -117,7 +117,7 @@ input {
 }
 .line {
     background-color: #333333;
-    width: 90%;
+    width: 85%;
     height: 5px;
     border: none;
 }
@@ -137,22 +137,28 @@ input {
 .item.active {
     display: flex;
     margin: 0 0 60px 0;
-    min-width: 90%;
+    min-width: 85%;
     height: 350px;
     border-radius: 50px 0 0 50px;
     align-items: center;
-    background: linear-gradient(to right, #deb887, transparent);
+    background: linear-gradient(to right, #eeeeee, transparent);
     transition: .2s;
     justify-content: space-between;
-    font-size: 2em;
     color: #111111;
 }
 .cntnr {
-    margin: 30px 0 0 100px;
+    margin: 0 0 0 50px;
     max-width: 50%;
+    min-height: 80%;
+    flex-direction: column;
+    align-items: left;
+    justify-content: space-between;
+}
+.itemName {
+    font-size: 3em;
 }
 .itemDescription {
-
+    font-size: 1.5em;
 }
 .item.active > div:not(:first-child) {
     margin: 0 10px 10px 20px;
@@ -161,11 +167,11 @@ input {
     margin: 0 10px 20px 20px;
 }
 .itemPrice {
-    border-top: 5px solid #333333;
+    font-size: 3em;
 }
 .itemPhoto {
     width: 50% !important;
-    height: 100% !important;
+    min-height: 100% !important;
     background-repeat: no-repeat !important;
     background-size: 100% !important;
     transition: .2s !important;

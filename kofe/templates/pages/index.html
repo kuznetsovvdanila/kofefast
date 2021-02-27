@@ -103,15 +103,15 @@
                     <div class="coffee flex active">
                         {% for drink in drinks %}
                             <div id="item{{ drink.provided }}" class="item active">
-                                <div class="cntnr">
+                                <div class="cntnr flex">
                                     <div class="itemName">
-                                        <b>{{ drink.name }}</b>
+                                        <b>{{ drink.name }} - {{ drink.provided }}</b>
                                     </div>
                                     <div class="itemDescription">
-
+                                        Крутой кофе просто
                                     </div>
                                     <div class="itemPrice">
-                                        {{ drink.price }}$
+                                        <b>{{ drink.price }}$</b>
                                     </div>
                                 </div>
                                 <div class="itemPhoto" style="background-image: url('{{ drink.preview.url }}');">
