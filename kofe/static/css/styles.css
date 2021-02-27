@@ -282,6 +282,11 @@ form input[type='submit'] {
 
 
 
+#map {
+  height: 768px;
+}
+
+
 /* чтобы вернулась регистрация, уберите то, что снизу */
 .authIn {
     display: none;
