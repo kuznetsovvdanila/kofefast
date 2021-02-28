@@ -96,6 +96,11 @@ body {
     text-align: center;
     margin: 10px 0 0 15px;
     cursor: pointer;
+    transition: .2s;
+}
+.makeAnOrder:hover {
+    background-color: #34a853;
+    transition: .2s;
 }
 .addAnAddress {
     color: #111111;
@@ -106,6 +111,11 @@ body {
     text-align: center;
     margin: 10px 0 0 15px;
     cursor: pointer;
+    transition: .2s;
+}
+.addAnAddress:hover {
+    background-color: #34a853;
+    transition: .2s;
 }
 .addressMenu {
     justify-content: center;
@@ -132,4 +142,18 @@ body {
 .cls.active, .opn.active {
     transform: rotate(180deg);
     transition: .2s;
+}
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    border: 2px solid #555555;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    border: 5px solid #eeeeee;
+    background-color: #eeeeee;
 }
