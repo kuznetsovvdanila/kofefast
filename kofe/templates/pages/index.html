@@ -12,7 +12,7 @@
     <body>
         <div class="topMenu flex">
             <div style="font-size: 3.5em;">
-                kofefast
+                <a href="{% url 'index' %}" style="color: #eeeeee">kofefast</a>
             </div>
             {% if not request.user.is_authenticated %}
                 <div class="defaultUserPhoto softBorder pointer">

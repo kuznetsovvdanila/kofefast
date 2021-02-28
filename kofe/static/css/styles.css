@@ -41,6 +41,8 @@ input {
 .defaultUserPhoto {
     background-image: url('../img/person.png');
     background-repeat: no-repeat;
+    background-size: 100%;
+    margin: 10px;
     width: 60px;
     height: 60px;
     transition: .2s;
@@ -121,7 +123,7 @@ input {
     transition: .2s;
 }
 .provider.active {
-    background-color: #eeeeee;
+    background-color: #deb887;
     color: #111111;
     transition: .2s;
 }

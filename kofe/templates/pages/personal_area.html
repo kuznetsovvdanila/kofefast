@@ -3,7 +3,7 @@
 <html>
     <head>
         <title>
-            {{ user.first_name }}
+            {{ user.first_name }} - kofefast
         </title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -37,16 +37,31 @@
 
                 </div>
                 <div class="personInfo">
-                    <div>
-                        {{ user.first_name }} {{ user.last_name }}
+                    <div style="font-size: 3em; margin: 0 0 10px 0;">
+                        <b>{{ user.first_name }} {{ user.last_name }}</b>
                     </div>
-                    <div>
+                    <div style="font-size: 2em;">
                         {{ user.email }}
                     </div>
                 </div>
             </div>
-            <div class="info">
+            <div class="info flex">
+                <div class="orders flex">
+                    <div style="font-size: 2em;">
+                        <b>Мои заказы</b>
+                    </div>
+                    <div class="order">
 
+                    </div>
+                </div>
+                <div class="addresses flex">
+                    <div style="font-size: 2em;">
+                        <b>Мои адреса</b>
+                    </div>
+                    <div class="address">
+
+                    </div>
+                </div>
             </div>
         </div>
 
