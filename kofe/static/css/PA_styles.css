@@ -114,7 +114,7 @@ body {
     right: -50%;
     width: 49%;
     background-color: #111111;
-    transition: .3s;
+    transition: .5s;
     height: 100%;
     opacity: 0;
 }
@@ -124,7 +124,7 @@ body {
 .addressMenu.active {
     opacity: 1;
     right: 0;
-    transition: .3s;
+    transition: .5s;
 }
 .cls, .opn {
     transition: .2s;

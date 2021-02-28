@@ -5,6 +5,13 @@ $('.registrationButton').click(function(){
     $('.registrationButton').removeClass('active');
     $('.description').addClass('active');
 })
+$('.openAuth').click(function(){
+    $('.registration').removeClass('active');
+    $('.authorization').addClass('active');
+    $('.information').removeClass('active');
+    $('.registrationButton').addClass('active');
+    $('.description').removeClass('active');
+})
 $('.defaultUserPhoto').click(function(){
     $('.registration').removeClass('active');
     $('.authorization').addClass('active');
