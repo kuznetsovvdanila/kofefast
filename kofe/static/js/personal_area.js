@@ -1,13 +1,9 @@
 $('.ord').click(function(){
     $('.orders').toggleClass('active');
-    $('.addresses').toggleClass('active');
     $('.cls').toggleClass('active');
-    $('.opn').toggleClass('active');
 })
 $('.adr').click(function(){
     $('.addresses').toggleClass('active');
-    $('.orders').toggleClass('active');
-    $('.cls').toggleClass('active');
     $('.opn').toggleClass('active');
 })
 $('.addAnAddress').click(function(){

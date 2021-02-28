@@ -28,47 +28,51 @@ body {
     transition: .2s;
 }
 .info {
+    display: block;
     margin: 50px 50px 0 30px;
     align-items: center;
-    max-height: 100%;
+    max-height: 530px;
     width: 50%;
     flex-direction: column;
-    justify-content: flex-start;
+    overflow: auto;
 }
 .underln {
     cursor: pointer;
 }
 .orders {
-    max-height: 0;
+    height: 170px;
     width: 100%;
     align-items: center;
     flex-direction: column;
     justify-content: flex-start;
-    transition: .3s;
-    overflow: hidden;
+    transition: .3s !important;
     margin: 0 0 20px 0;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 .addresses {
-    max-height: 0;
+    height: 170px;
     width: 100%;
     align-items: center;
     flex-direction: column;
     justify-content: flex-start;
-    transition: .3s;
+    transition: .3s !important;
+    box-sizing: border-box;
     overflow: hidden;
 }
+
 .underln:hover {
     text-decoration: underline 5px solid #eeeeee;
 }
 .orders.active {
-    max-height: 370px;
-    transition: .3s;
-    overflow: auto;
+    height: auto;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 .addresses.active {
-    max-height: 370px;
-    transition: .3s;
-    overflow: auto;
+    height: auto;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 .order {
     margin: 10px 0 10px 0;
@@ -85,7 +89,8 @@ body {
     border: 5px solid #eeeeee;
 }
 .order > div, .address > div {
-    margin: 20px;
+    margin: 20px 30px 20px 30px;
+    font-size: 2em;
 }
 .makeAnOrder {
     color: #111111;
@@ -144,16 +149,16 @@ body {
     transition: .2s;
 }
 ::-webkit-scrollbar {
-    width: 12px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    border: 2px solid #555555;
-    border-radius: 10px;
+    background-color: #555555;
+    border-radius: 0px;
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    border: 5px solid #eeeeee;
-    background-color: #eeeeee;
+    border-radius: 0px;
+    border: 5px solid #deb887;
+    background-color: #deb887;
 }

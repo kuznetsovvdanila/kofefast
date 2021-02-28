@@ -30,6 +30,9 @@ input {
 .softBorder {
     border-radius: 30px;
 }
+.reallySoftBorder {
+    border-radius: 45px;
+}
 .pointer {
     cursor: pointer;
 }
@@ -110,8 +113,7 @@ input {
     transition: .2s;
 }
 .categories > div:hover {
-    background-color: #eeeeee;
-    color: #111111;
+    box-shadow: inset 0 0 0 5px #eeeeee;
     transition: .2s;
 }
 .provider {
@@ -156,9 +158,10 @@ input {
     margin: 0 0 60px 0;
     min-width: 85%;
     height: 350px;
-    border-radius: 50px 0 0 50px;
+    border-radius: 50px;
     align-items: center;
     background: linear-gradient(to right, #eeeeee, transparent);
+    border: 5px solid #eeeeee;
     transition: .2s;
     justify-content: space-between;
     color: #111111;
@@ -205,12 +208,13 @@ input {
     font-size: 3em;
 }
 .itemPhoto {
-    width: 50% !important;
+    min-width: 50% !important;
     min-height: 100% !important;
     background-repeat: no-repeat !important;
     background-size: 100% !important;
     transition: .2s !important;
     margin: 0 !important;
+    padding: 0 !important;
 }
 .description {
     font-size: 3em;
@@ -335,17 +339,16 @@ form input[type='submit'] {
     display: none;
 }
 ::-webkit-scrollbar {
-    width: 15px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    border-left: 3px solid #555555;
-    border-right: 3px solid #555555;
+    background-color: #555555;
     border-radius: 0px;
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    border: 5px solid #eeeeee;
-    background-color: #eeeeee;
+    border-radius: 0px;
+    border: 5px solid #deb887;
+    background-color: #deb887;
 }
