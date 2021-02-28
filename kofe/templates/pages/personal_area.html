@@ -46,23 +46,64 @@
                 </div>
             </div>
             <div class="info flex">
-                <div class="orders flex">
-                    <div style="font-size: 2em;">
-                        <b>Мои заказы</b>
+                <div style="font-size: 2em; margin: 0 0 20px 0;">
+                    <b class="ord underln">Мои заказы</b>
+                </div>
+                <div class="orders active flex">
+                    <div class="order">
+                        <div style="font-size: 2em;">
+                            <b>Афроамерикано</b>
+                        </div>
+                        <div>
+
+                        </div>
                     </div>
                     <div class="order">
 
                     </div>
+                    <div class="order">
+
+                    </div>
+                    <div class="order">
+
+                    </div>
+                    <div class="order">
+
+                    </div>
+                    <div class="order">
+
+                    </div>
+                    <a href="{% url 'index' %}">
+                        <div class="makeAnOrder">
+                            <b>+</b>
+                        </div>
+                    </a>
+                </div>
+                <div style="font-size: 2em; margin: 0 0 20px 0;">
+                    <b class="adr underln">Мои адреса</b>
                 </div>
                 <div class="addresses flex">
-                    <div style="font-size: 2em;">
-                        <b>Мои адреса</b>
-                    </div>
+
                     <div class="address">
 
                     </div>
+                    <div class="addAnAddress">
+                        <b>+</b>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="addressMenu flex">
+            <form action="" method="POST" class="flex">
+                <div class="flex btw">
+                    <span style="text-align: left; font-size: 2em; margin: 0 0 0 20px;">Адрес</span>
+                    <span class="closeIt" style=""><b>x</b></span>
+                </div>
+                <input type="text" name="city" maxlength="150" required="" id="city" placeholder="Город">
+                <input type="text" name="street" maxlength="150" required="" id="street" placeholder="Улица">
+                <input type="text" name="house" maxlength="150" required="" id="house" placeholder="Дом">
+                <input type="submit" value="Добавить" class="pointer">
+            </form>
         </div>
 
 <!--        <div class="bottom">-->
@@ -70,7 +111,7 @@
 <!--        </div>-->
 
         <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
-        <script src="{% static 'js/main.js' %}"></script>
+        <script src="{% static 'js/personal_area.js' %}"></script>
 
     </body>
 </html>

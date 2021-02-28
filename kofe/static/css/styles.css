@@ -41,7 +41,6 @@ input {
 .defaultUserPhoto {
     background-image: url('../img/person.png');
     background-repeat: no-repeat;
-    background-size: 100%;
     margin: 10px;
     width: 60px;
     height: 60px;
@@ -290,7 +289,9 @@ form input {
     margin: 10px 0 0 0;
 }
 form input:not([type='submit']) {
-    background-color: #333333;
+    /*background-color: #333333;*/
+    border: 5px solid #eeeeee;
+    background-color: #111111;
     color: #eeeeee;
     font-size: 1.5em;
 }

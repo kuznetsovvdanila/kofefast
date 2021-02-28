@@ -1,3 +1,6 @@
+body {
+    overflow: hidden;
+}
 .mainPA {
     justify-content: left;
     width: 100%;
@@ -27,11 +30,97 @@
 .info {
     margin: 50px 50px 0 30px;
     align-items: center;
-    min-height: 100%;
+    max-height: 100%;
     width: 50%;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
 }
-.orders, .addresses {
-    min-height: 50%;
+.underln {
+    cursor: pointer;
+}
+.orders {
+    max-height: 0;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    transition: .3s;
+    overflow: hidden;
+    margin: 0 0 20px 0;
+}
+.addresses {
+    max-height: 0;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    transition: .3s;
+    overflow: hidden;
+}
+.underln:hover {
+    text-decoration: underline 5px solid #eeeeee;
+}
+.orders.active {
+    max-height: 400px;
+    transition: .3s;
+    overflow: auto;
+}
+.addresses.active {
+    max-height: 370px;
+    transition: .3s;
+    overflow: auto;
+}
+.order {
+    margin: 10px 0 10px 0;
+    border-radius: 30px;
+    width: 80%;
+    min-height: 150px;
+    border: 5px solid #eeeeee;
+}
+.address {
+    margin: 10px 0 10px 0;
+    border-radius: 30px;
+    width: 80%;
+    min-height: 150px;
+    border: 5px solid #eeeeee;
+}
+.order > div, .address > div {
+    margin: 15px;
+}
+.makeAnOrder {
+    color: #111111;
+    background-color: #eeeeee;
+    padding: 0 17px 5px 17px;
+    font-size: 3em;
+    border-radius: 40px;
+    text-align: center;
+    margin: 10px 0 0 15px;
+    cursor: pointer;
+}
+.addAnAddress {
+    color: #111111;
+    background-color: #eeeeee;
+    padding: 0 17px 5px 17px;
+    font-size: 3em;
+    border-radius: 40px;
+    text-align: center;
+    margin: 10px 0 0 15px;
+    cursor: pointer;
+}
+.addressMenu {
+    justify-content: center;
+    position: absolute;
+    top: 150px;
+    right: -50%;
+    width: 49%;
+    background-color: #111111;
+    transition: .3s;
+}
+.addressMenu form {
+    margin: 15% 15% 0 0;
+}
+.addressMenu.active {
+    height: 100%;
+    right: 0;
+    transition: .3s;
 }
