@@ -185,7 +185,7 @@ input {
     align-items: left;
     justify-content: space-between;
 }
-.itemName b > span{
+.itemName b > span {
     font-size: 3em;
     background-color: #deb887;
     color: #111111;
