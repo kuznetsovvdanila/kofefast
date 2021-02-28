@@ -3,9 +3,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
-# from sklearn.cluster import KMeans
+from PIL import Image
+import cv2 as cv
+import numpy as np
+import matplotlib.pyplot as plt
 
-from kofe.models import Provider
+from sklearn.cluster import KMeans
+
+from kofe.models import Provider, Address
 
 
 def index_page(request):
@@ -54,18 +59,44 @@ def index_page(request):
 
     for provider in providers:
         for item in provider.item_set.all().filter(type='d'):
-            #if item.not_has_color:
-                #def palette(clusters):
-                #    width = 300
-                #    palette = np.zeros((50, width, 3), np.uint8)
-                #    steps = width / clusters.cluster_centers_.shape[0]
-                #    for idx, centers in enumerate(clusters.cluster_centers_):
-                #        palette[:, int(idx * steps):(int((idx + 1) * steps)), :] = centers
-                #    return palette
+            if item.not_has_color:
+                item.primary_color = ""
+                img = Image.open(item.preview)
+                img = img.resize((200, 200))
 
-                #clt_3 = KMeans(n_clusters=3)
-                #clt_3.fit(img_2.reshape(-1, 3))
-                #show_img_compar(img_2, palette(clt_3))
+                def remove_transparency(im, bg_colour=(255, 255, 255)):
+
+                    # Only process if image has transparency (http://stackoverflow.com/a/1963146)
+                    if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
+
+                        # Need to convert to RGBA if LA format due to a bug in PIL (http://stackoverflow.com/a/1963146)
+                        alpha = im.convert('RGBA').split()[-1]
+
+                        # Create a new background image of our matt color.
+                        # Must be RGBA because paste requires both images have the same format
+                        # (http://stackoverflow.com/a/8720632  and  http://stackoverflow.com/a/9459208)
+                        bg = Image.new("RGBA", im.size, bg_colour + (255,))
+                        bg.paste(im, mask=alpha)
+                        return bg
+
+                    else:
+                        return im
+
+                img = remove_transparency(img)
+                img = img.getdata()
+                img = np.array(img)
+
+                clt = KMeans(n_clusters=3)
+                clt.fit(img)
+
+                for cluster in enumerate(clt.cluster_centers_):
+                    for color in cluster[1]:
+                        item.primary_color += str(int(color)) + ", "
+                    item.primary_color = item.primary_color[:-2]
+                    item.not_has_color = False
+                    item.save()
+                    break
+
             drinkable.append(item)
 
     context = {
@@ -75,15 +106,33 @@ def index_page(request):
         'form': form if form else UserCreationForm(),
         'errors': errors
     }
-    print(len(drinkable))
-    for provider in providers:
-        print(provider.item_set.all().filter(type='d')[0])
+    #for provider in providers:
+    #    print(provider.item_set.all().filter(type='d')[0])
     return render(request, 'pages/index.html', context)
 
 
 def personal_area_page(request):
-    context = {
+    if not request.user.is_authenticated:
+        return redirect('index')
 
+    if request.method == 'POST':
+        if request.POST.get('action_type') == 'add_address':
+            adr = Address(owner=request.user,
+                          city=request.POST.get('city'),
+                          street=request.POST.get('street'),
+                          house=int(request.POST.get('house')))
+            if request.POST.get('entrance'):
+                adr.entrance = request.POST.get('entrance')
+
+            adr.save()
+
+    addresses = []
+
+    for adrs in Address.objects.all().filter(owner=request.user):
+        addresses.append(adrs)
+
+    context = {
+        'addresses': addresses,
     }
     return render(request, 'pages/personal_area.html', context)
 

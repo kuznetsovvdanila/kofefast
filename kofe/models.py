@@ -10,11 +10,31 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
 
+class Address(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец')
+    city = models.CharField('Город', max_length=30, default='Москва')
+    street = models.CharField('Улица', max_length=30, default='Арбат')
+    house = models.IntegerField('Дом', default=1)
+    entrance = models.IntegerField('Подъезд', default=None)
+
+    def __str__(self):
+        return str(self.owner)
+
+    class Meta:
+        verbose_name = "Адрес"
+        verbose_name_plural = "Адреса"
+
+
 class Item(models.Model):
     price = models.IntegerField('Цена', default=300)
     preview = models.ImageField('Внешка', default=None, upload_to='item_picture')
     provided = models.ForeignKey('Provider', on_delete=models.CASCADE)
     name = models.CharField('Продукт', max_length=50, default='coffee')
+    description = models.CharField('Описание',
+                                   max_length=250,
+                                   default='Съешь ещё этих мягких французских булок, да выпей же чаю')
+    not_has_color = models.BooleanField('Не просчитан цвет', default=True)
+    primary_color = models.CharField('Главный цвет превью', max_length=50, default="0, 0, 0, 255")
 
     FoodTypes = [
         ('e', 'Eatable'),

@@ -79,13 +79,17 @@
                     </div>
                 </div>
                 <div class="addresses flex">
-
-                    <div class="address">
-                        <div>
+                    {% if addresses %}
+                        {% for adr in addresses %}
+                            <div class="address">
+                                {{ adr.city }}, улица {{ adr.street }}, дом {{ adr.house }}, подъезд {{ adr.entrance }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="address">
                             Добавьте адрес <b>ᐁ</b>
                         </div>
-                    </div>
-
+                    {% endif %}
 
                     <div class="addAnAddress">
                         <b>+</b>
@@ -99,10 +103,12 @@
                     <span style="text-align: left; font-size: 2em; margin: 0 0 0 20px;"><b>Адрес</b></span>
                     <span class="closeIt" style=""><b>x</b></span>
                 </div>
+                <input name="action_type" type="text" value="add_address" style="display: none;">
                 <input type="text" name="city" maxlength="150" required="" id="city" placeholder="Город">
                 <input type="text" name="street" maxlength="150" required="" id="street" placeholder="Улица">
                 <input type="text" name="house" maxlength="150" required="" id="house" placeholder="Дом, корпус">
                 <input type="text" name="entrance" maxlength="150" required="" id="entrance" placeholder="Подъезд (при наличии)">
+                {% csrf_token %}
                 <input type="submit" value="Добавить" class="pointer">
             </form>
         </div>
