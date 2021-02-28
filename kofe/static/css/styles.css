@@ -62,6 +62,7 @@ input {
 .defaultUserPhotoAuth {
     background-image: url('../img/person.png');
     background-repeat: no-repeat;
+    margin: 10px;
     width: 60px;
     height: 60px;
     transition: .2s;
@@ -105,19 +106,24 @@ input {
     font-size: 2em;
     cursor: pointer;
     text-align: center;
+    transition: .2s;
 }
 .categories > div:hover {
-    text-decoration: 3px underline #eeeeee;
+    background-color: #eeeeee;
+    color: #111111;
+    transition: .2s;
 }
 .provider {
     padding: 5px 10px 5px 10px;
     border-radius: 30px;
     background-color: #111111;
     color: #eeeeee;
+    transition: .2s;
 }
 .provider.active {
     background-color: #eeeeee;
     color: #111111;
+    transition: .2s;
 }
 .coffee, .breakfast {
     display: none;
