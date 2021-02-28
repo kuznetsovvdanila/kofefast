@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from kofe.models import Item, Provider, Address
+from kofe.models import Item, Provider, AddressUser, AddressCafe
 
 
 # Register your models here
@@ -19,5 +19,6 @@ class Cafe(admin.ModelAdmin):
     inlines = [ItemInLine]
 
 
-admin.site.register(Address)
+admin.site.register(AddressUser)
+admin.site.register(AddressCafe)
 admin.site.register(Provider, Cafe)

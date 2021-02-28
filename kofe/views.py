@@ -8,7 +8,7 @@ import numpy as np
 
 from sklearn.cluster import KMeans
 
-from kofe.models import Provider, Address
+from kofe.models import Provider, AddressUser
 
 
 def index_page(request):
@@ -115,7 +115,7 @@ def personal_area_page(request):
 
     if request.method == 'POST':
         if request.POST.get('action_type') == 'add_address':
-            adr = Address(owner=request.user,
+            adr = AddressUser(owner=request.user,
                           city=request.POST.get('city'),
                           street=request.POST.get('street'),
                           house=int(request.POST.get('house')))
@@ -124,9 +124,11 @@ def personal_area_page(request):
 
             adr.save()
 
+        return redirect('personal_area')
+
     addresses = []
 
-    for adrs in Address.objects.all().filter(owner=request.user):
+    for adrs in AddressUser.objects.all().filter(owner=request.user):
         addresses.append(adrs)
 
     context = {

@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
 
-class Address(models.Model):
+class AddressUser(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец')
     city = models.CharField('Город', max_length=30, default='Москва')
     street = models.CharField('Улица', max_length=30, default='Арбат')
@@ -21,8 +21,23 @@ class Address(models.Model):
         return str(self.owner)
 
     class Meta:
-        verbose_name = "Адрес"
-        verbose_name_plural = "Адреса"
+        verbose_name = "Адрес Пользователя"
+        verbose_name_plural = "Адреса Пользователя"
+
+
+class AddressCafe(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец')
+    city = models.CharField('Город', max_length=30, default='Москва')
+    street = models.CharField('Улица', max_length=30, default='Арбат')
+    house = models.IntegerField('Дом', default=1)
+    entrance = models.IntegerField('Подъезд', default=None)
+
+    def __str__(self):
+        return str(self.owner)
+
+    class Meta:
+        verbose_name = "Адрес Кофейни"
+        verbose_name_plural = "Адреса Кофейни"
 
 
 class Item(models.Model):
