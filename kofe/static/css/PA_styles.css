@@ -61,7 +61,7 @@ body {
     text-decoration: underline 5px solid #eeeeee;
 }
 .orders.active {
-    max-height: 400px;
+    max-height: 370px;
     transition: .3s;
     overflow: auto;
 }
@@ -85,7 +85,7 @@ body {
     border: 5px solid #eeeeee;
 }
 .order > div, .address > div {
-    margin: 15px;
+    margin: 20px;
 }
 .makeAnOrder {
     color: #111111;
@@ -115,12 +115,21 @@ body {
     width: 49%;
     background-color: #111111;
     transition: .3s;
+    height: 100%;
+    opacity: 0;
 }
 .addressMenu form {
-    margin: 15% 15% 0 0;
+    margin: 10% 15% 0 0;
 }
 .addressMenu.active {
-    height: 100%;
+    opacity: 1;
     right: 0;
     transition: .3s;
+}
+.cls, .opn {
+    transition: .2s;
+}
+.cls.active, .opn.active {
+    transform: rotate(180deg);
+    transition: .2s;
 }

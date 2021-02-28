@@ -1,10 +1,14 @@
 $('.ord').click(function(){
-    $('.orders').addClass('active');
-    $('.addresses').removeClass('active');
+    $('.orders').toggleClass('active');
+    $('.addresses').toggleClass('active');
+    $('.cls').toggleClass('active');
+    $('.opn').toggleClass('active');
 })
 $('.adr').click(function(){
-    $('.addresses').addClass('active');
-    $('.orders').removeClass('active');
+    $('.addresses').toggleClass('active');
+    $('.orders').toggleClass('active');
+    $('.cls').toggleClass('active');
+    $('.opn').toggleClass('active');
 })
 $('.addAnAddress').click(function(){
     $('.addressMenu').addClass('active');
