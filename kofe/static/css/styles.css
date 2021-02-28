@@ -109,6 +109,16 @@ input {
 .categories > div:hover {
     text-decoration: 3px underline #eeeeee;
 }
+.provider {
+    padding: 5px 10px 5px 10px;
+    border-radius: 30px;
+    background-color: #111111;
+    color: #eeeeee;
+}
+.provider.active {
+    background-color: #eeeeee;
+    color: #111111;
+}
 .coffee, .breakfast {
     display: none;
 }
@@ -133,6 +143,18 @@ input {
 }
 .item {
     display: none;
+}
+.item.show {
+    display: flex;
+    margin: 0 0 60px 0;
+    min-width: 85%;
+    height: 350px;
+    border-radius: 50px 0 0 50px;
+    align-items: center;
+    background: linear-gradient(to right, #eeeeee, transparent);
+    transition: .2s;
+    justify-content: space-between;
+    color: #111111;
 }
 .item.active {
     display: flex;
@@ -160,8 +182,14 @@ input {
 .itemDescription {
     font-size: 1.5em;
 }
+.item.show > div:not(:first-child) {
+    margin: 0 10px 10px 20px;
+}
 .item.active > div:not(:first-child) {
     margin: 0 10px 10px 20px;
+}
+.item.show > div:last-child {
+    margin: 0 10px 20px 20px;
 }
 .item.active > div:last-child {
     margin: 0 10px 20px 20px;

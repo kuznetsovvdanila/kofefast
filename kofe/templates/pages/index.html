@@ -91,8 +91,10 @@
                     Выберите кофейню:
                 </div>
                 <div class="categories flex">
+                    <div class="provider del active">
+                        Любая
+                    </div>
                     {% for provider in providers %}
-
                         <div id="{{ provider.name }}" class="provider">
                             {{ provider.name }}
                         </div>
@@ -102,7 +104,7 @@
                 <div class="list">
                     <div class="coffee flex active">
                         {% for drink in drinks %}
-                            <div id="item{{ drink.provided }}" class="item active">
+                            <div id="item{{ drink.provided }}" class="item show">
                                 <div class="cntnr flex">
                                     <div class="itemName">
                                         <b>{{ drink.name }} - {{ drink.provided }}</b>
@@ -119,120 +121,6 @@
                                 </div>
                             </div>
                         {% endfor %}
-                    </div>
-                    <div class="breakfast flex">
-                        <div class="item flex">
-                            <div class="itemPhoto">
-
-                            </div>
-                            <div class="itemName">
-                                <b>Пицца</b>
-                            </div>
-                            <div class="itemDescription">
-
-                            </div>
-                            <div class="itemPrice">
-                                300$
-                            </div>
-                        </div>
-                        <div class="item flex">
-                            <div class="itemPhoto">
-
-                            </div>
-                            <div class="itemName">
-                                <b>Пицца</b>
-                            </div>
-                            <div class="itemDescription">
-
-                            </div>
-                            <div class="itemPrice">
-                                300$
-                            </div>
-                        </div>
-                        <div class="item flex">
-                            <div class="itemPhoto">
-
-                            </div>
-                            <div class="itemName">
-                                <b>Пицца</b>
-                            </div>
-                            <div class="itemDescription">
-
-                            </div>
-                            <div class="itemPrice">
-                                300$
-                            </div>
-                        </div>
-                        <div class="item flex">
-                            <div class="itemPhoto">
-
-                            </div>
-                            <div class="itemName">
-                                <b>Пицца</b>
-                            </div>
-                            <div class="itemDescription">
-
-                            </div>
-                            <div class="itemPrice">
-                                300$
-                            </div>
-                        </div>
-                        <div class="item flex">
-                            <div class="itemPhoto">
-
-                            </div>
-                            <div class="itemName">
-                                <b>Пицца</b>
-                            </div>
-                            <div class="itemDescription">
-
-                            </div>
-                            <div class="itemPrice">
-                                300$
-                            </div>
-                        </div>
-                        <div class="item flex">
-                            <div class="itemPhoto">
-
-                            </div>
-                            <div class="itemName">
-                                <b>Пицца</b>
-                            </div>
-                            <div class="itemDescription">
-
-                            </div>
-                            <div class="itemPrice">
-                                300$
-                            </div>
-                        </div>
-                        <div class="item flex">
-                            <div class="itemPhoto">
-
-                            </div>
-                            <div class="itemName">
-                                Пицца
-                            </div>
-                            <div class="itemDescription">
-
-                            </div>
-                            <div class="itemPrice">
-                                300$
-                            </div>
-                        </div>
-                        <div class="item flex">
-                            <div class="itemPhoto">
-
-                            </div>
-                            <div class="itemName">
-                                Пицца
-                            </div>
-                            <div class="itemDescription">
-
-                            </div>
-                            <div class="itemPrice">
-                                300$
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

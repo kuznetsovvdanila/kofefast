@@ -33,14 +33,43 @@ $('#id_last_name').attr('placeholder','Фамилия');
 $('#id_password1').attr('placeholder','Пароль');
 $('#id_password2').attr('placeholder','Подтверждение пароля');
 
-
- $('.provider').click(function(){
-        var drink_id = $(this).attr('id').substring();
-        console.log("#item"+drink_id);
+$('.del').click(function(){
+    $(".item").addClass('show');
+    $(".item").removeClass('active');
+    $(".provider").removeClass('active');
+    $(".del").addClass('active');
+})
+$('.provider:not(.del)').click(function(){
+    $(".del").removeClass('active');
+    $(this).toggleClass("active");
+    var drink_id = $(this).attr('id').substring();
+    console.log("#item"+drink_id);
+    $(".item").removeClass('show');
+    $("#item" + String(drink_id)).toggleClass('active');
+    var element = document.getElementsByClassName('item');
+    console.log(element);
+    counter = 0
+    counterHas = 0
+    for(var i = 0; i < element.length; i++) {
+        if(!element[i].classList.contains('active')) {
+            counter++;
+        }
+        if(element[i].classList.contains('active')) {
+            counterHas++;
+        }
+    }
+    if(counter == element.length) {
+        $(".item").toggleClass('show');
+        $(".del").addClass('active');
+    }
+    console.log(counter, counterHas, element.length);
+    if(counterHas == element.length) {
+        console.log('povezlo_povezlo');
+        $(".item").addClass('show');
         $(".item").removeClass('active');
-        $("#item"+String(drink_id)).addClass('active');
-
-
+        $(".provider").removeClass('active');
+        $(".del").addClass('active');
+    }
 })
 
 let map;
