@@ -12,9 +12,9 @@ $('.addAnAddress').click(function(){
 $('.closeIt').click(function(){
     $('.addressMenu').removeClass('active');
 })
-$('#prokryti').click(function(){
-    $('.addresses').toggleClass('active');
-    $('.opn').toggleClass('active');
-    const el = document.getElementById('prokryti');
-    el.scrollIntoView();
-})
+//$('#prokryti').click(function(){
+//    $('.addresses').toggleClass('active');
+//    $('.opn').toggleClass('active');
+//    const el = document.getElementById('prokryti');
+//    el.scrollIntoView();
+//})
