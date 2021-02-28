@@ -1,0 +1,14 @@
+$('.ord').click(function(){
+    $('.orders').addClass('active');
+    $('.addresses').removeClass('active');
+})
+$('.adr').click(function(){
+    $('.addresses').addClass('active');
+    $('.orders').removeClass('active');
+})
+$('.addAnAddress').click(function(){
+    $('.addressMenu').addClass('active');
+})
+$('.closeIt').click(function(){
+    $('.addressMenu').removeClass('active');
+})
