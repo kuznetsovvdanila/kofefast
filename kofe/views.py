@@ -4,9 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 from PIL import Image
-import cv2 as cv
 import numpy as np
-import matplotlib.pyplot as plt
 
 from sklearn.cluster import KMeans
 
