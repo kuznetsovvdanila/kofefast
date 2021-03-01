@@ -31,7 +31,7 @@ input {
     border-radius: 30px;
 }
 .reallySoftBorder {
-    border-radius: 45px;
+    border-radius: 0 42px 42px 0;
 }
 .pointer {
     cursor: pointer;
@@ -212,7 +212,7 @@ input {
     width: 50% !important;
     min-height: 100% !important;
     background-repeat: no-repeat !important;
-    background-size: 100% !important;
+    background-size: cover !important;
     transition: .2s !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -277,9 +277,14 @@ input {
     margin-top: 5%;
 }
 .information.active, .registration.active, .authorization.active {
-    left: 50%;
+    left: 51%;
     opacity: 1;
     transition: .5s;
+}
+.frm {
+    text-align: left;
+    font-size: 2em;
+    margin: 0 0 0 20px;
 }
 form {
     text-align: center;
@@ -341,8 +346,55 @@ form input[type='submit'] {
         min-width: 42%;
         height: 400px;
     }
+    .item.active {
+        max-width: 42%;
+        min-width: 42%;
+        height: 400px;
+    }
     .list {
         flex-wrap: wrap;
+    }
+    .description {
+        font-size: 4em;
+        max-width: 400px;
+        left: 23%;
+    }
+    .registrationButton {
+        top: 680px;
+        left: 20%;
+    }
+    .registrationButton.active {
+        border-radius: 50px;
+        font-size: 3em;
+        padding: 5px 15px 5px 15px;
+    }
+    .information, .registration, .authorization {
+        max-width: 550px;
+    }
+    .registration {
+        top: 21%;
+    }
+    .information {
+        font-size: 2em;
+    }
+    .frm {
+        font-size: 2.5em;
+    }
+    .closeIt {
+        font-size: 2.5em;
+        height: 55px;
+        width: 55px;
+        border-radius: 30px;
+    }
+    form {
+        width: 400px;
+    }
+    form input {
+        height: 65px;
+        border-radius: 35px;
+    }
+    form input[type='submit'] {
+        font-size: 2.5em;
     }
 }
 ::-webkit-scrollbar {
