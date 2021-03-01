@@ -350,7 +350,7 @@ form input[type='submit'] {
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #333333;
+    background-color: #111111;
     border-radius: 0px;
 }
 

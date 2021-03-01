@@ -156,6 +156,16 @@ body {
 
 
 @media screen and (min-width: 1500px) {
+    .addresses, .orders {
+        height: 215px;
+    }
+    .address, .order {
+        min-height: 195px;
+        width: 90%;
+    }
+    .info {
+        max-height: 620px;
+    }
     .person {
         width: 600px;
     }
@@ -172,7 +182,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #333333;
+    background-color: #111111;
     border-radius: 0px;
 }
 
