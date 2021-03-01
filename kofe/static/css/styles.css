@@ -213,6 +213,7 @@ input {
     min-height: 100% !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
+    background-position: right center !important;
     transition: .2s !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -344,14 +345,18 @@ form input[type='submit'] {
     .item.show {
         max-width: 42%;
         min-width: 42%;
-        height: 400px;
+        height: 450px;
     }
     .item.active {
         max-width: 42%;
         min-width: 42%;
-        height: 400px;
+        height: 450px;
+    }
+    .itemPhoto {
+        background-position: right center !important;
     }
     .list {
+        margin: 0 60px 0 60px !important;
         flex-wrap: wrap;
     }
     .description {

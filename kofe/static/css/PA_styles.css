@@ -161,7 +161,7 @@ body {
     }
     .address, .order {
         min-height: 195px;
-        width: 90%;
+        width: 80%;
     }
     .info {
         max-height: 620px;
