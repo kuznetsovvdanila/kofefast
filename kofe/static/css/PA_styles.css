@@ -36,6 +36,11 @@ body {
     flex-direction: column;
     overflow: auto;
 }
+.adr, .ord {
+    font-size: 2.5em;
+    margin: 20px 0 10px 70px;
+    width: 76%;
+}
 .underln {
     cursor: pointer;
 }
