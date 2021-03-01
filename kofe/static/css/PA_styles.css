@@ -148,6 +148,20 @@ body {
     transform: rotate(180deg);
     transition: .2s;
 }
+
+
+@media screen and (min-width: 1400px) {
+    .person {
+        width: 600px;
+    }
+    .photo {
+        width: 500px;
+        height: 500px;
+        border-radius: 250px;
+    }
+}
+
+
 ::-webkit-scrollbar {
     width: 10px;
 }

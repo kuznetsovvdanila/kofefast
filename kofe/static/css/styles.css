@@ -209,7 +209,7 @@ input {
     font-size: 3em;
 }
 .itemPhoto {
-    min-width: 50% !important;
+    width: 50% !important;
     min-height: 100% !important;
     background-repeat: no-repeat !important;
     background-size: 100% !important;
@@ -335,9 +335,15 @@ form input[type='submit'] {
 }
 
 
-/* чтобы вернулась регистрация, уберите то, что снизу */
-.authIn {
-    display: none;
+@media screen and (min-width: 1400px) {
+    .item.show {
+        max-width: 42%;
+        min-width: 42%;
+        height: 400px;
+    }
+    .list {
+        flex-wrap: wrap;
+    }
 }
 ::-webkit-scrollbar {
     width: 10px;
