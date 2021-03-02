@@ -346,7 +346,7 @@ form input[type='submit'] {
 }
 
 
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1500px) {
     .item.show {
         max-width: 42%;
         min-width: 42%;
