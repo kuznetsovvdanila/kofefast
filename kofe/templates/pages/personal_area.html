@@ -37,10 +37,10 @@
 
                 </div>
                 <div class="personInfo">
-                    <div style="font-size: 3em; margin: 0 0 10px 0;">
+                    <div>
                         <b>{{ user.first_name }} {{ user.last_name }}</b>
                     </div>
-                    <div style="font-size: 2em;">
+                    <div>
                         {{ user.email }}
                     </div>
                 </div>
@@ -63,17 +63,20 @@
                                 {{ adr.city }}, улица {{ adr.street }}, дом {{ adr.house }}, подъезд {{ adr.entrance }}
                             </div>
                         {% endfor %}
+                    <div class="addAnAddress">
+                        <b>+</b>
+                    </div>
                     {% else %}
-                        <div class="address">
-                            <div>
-                                <b>Добавьте адрес ᐁ</b>
+                        <div class="address flex btw vCenter">
+                            <div style="font-size: 3em;">
+                                <span class="addressName"><b>Добавьте адрес</b></span>
+                            </div>
+                            <div class="addAnAddress">
+                                <b>+</b>
                             </div>
                         </div>
                     {% endif %}
 
-                    <div class="addAnAddress">
-                        <b>+</b>
-                    </div>
                 </div>
                 <div class="ord pointer">
                     <div class="flex btw">
@@ -86,18 +89,19 @@
                     </div>
                 </div>
                 <div class="orders flex">
-                    <div class="order">
+                    <div class="order flex btw vCenter">
+                        <div style="font-size: 3em;">
+                            <span class="orderName"><b>Сделайте ваш первый заказ</b></span>
+                        </div>
                         <div>
-                            Сделайте ваш первый заказ, нажав на кнопку ниже
+                            <a href="{% url 'index' %}">
+                                <div class="makeAnOrder">
+                                    <b>+</b>
+                                </div>
+                            </a>
                         </div>
                     </div>
-                    <a href="{% url 'index' %}">
-                        <div class="makeAnOrder">
-                            <b>+</b>
-                        </div>
-                    </a>
                 </div>
-
             </div>
         </div>
         <div class="addressMenu flex">

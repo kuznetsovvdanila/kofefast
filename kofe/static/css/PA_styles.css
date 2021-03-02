@@ -27,6 +27,13 @@ body {
     height: 400px;
     transition: .2s;
 }
+.personInfo > div:first-child {
+    font-size: 3em;
+    margin: 0 0 10px 0;
+}
+.personInfo > div:last-child {
+    font-size: 2em;
+}
 .info {
     display: block;
     margin: 50px 50px 0 30px;
@@ -93,15 +100,21 @@ body {
     min-height: 150px;
     border: 5px solid #eeeeee;
 }
+.addressName, .orderName {
+    background-color: #deb887;
+    color: #111111;
+}
 .order > div, .address > div {
     margin: 20px 30px 20px 30px;
     font-size: 2em;
 }
 .makeAnOrder {
     color: #111111;
+    width: 50px;
+    height: 50px;
     background-color: #eeeeee;
-    padding: 0 17px 5px 17px;
-    font-size: 3em;
+    padding: 0px 16px 32px 16px;
+    font-size: 2em !important;
     border-radius: 40px;
     text-align: center;
     margin: 10px 0 0 15px;
@@ -114,9 +127,11 @@ body {
 }
 .addAnAddress {
     color: #111111;
+    width: 50px;
+    height: 50px;
     background-color: #eeeeee;
-    padding: 0 17px 5px 17px;
-    font-size: 3em;
+    padding: 0px 15px 32px 15px;
+    font-size: 4em !important;
     border-radius: 40px;
     text-align: center;
     margin: 10px 0 0 15px;
@@ -157,14 +172,14 @@ body {
 
 @media screen and (min-width: 1500px) {
     .addresses, .orders {
-        height: 215px;
+        height: 225px;
     }
     .address, .order {
         min-height: 195px;
         width: 80%;
     }
     .info {
-        max-height: 620px;
+        max-height: 660px;
     }
     .person {
         width: 600px;
@@ -173,6 +188,18 @@ body {
         width: 500px;
         height: 500px;
         border-radius: 250px;
+    }
+    .adr, .ord {
+        font-size: 3em;
+        margin: 20px 0 10px 110px;
+        width: 76%;
+    }
+    .personInfo > div:first-child {
+        font-size: 3.5em;
+        margin: 0 0 10px 0;
+    }
+    .personInfo > div:last-child {
+        font-size: 2.5em;
     }
 }
 

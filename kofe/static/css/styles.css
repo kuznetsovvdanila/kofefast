@@ -27,6 +27,9 @@ input {
 .btw {
     justify-content: space-between;
 }
+.vCenter {
+    align-items: center;
+}
 .softBorder {
     border-radius: 30px;
 }
@@ -44,6 +47,7 @@ input {
 .defaultUserPhoto {
     background-image: url('../img/person.png');
     background-repeat: no-repeat;
+    background-size: cover;
     margin: 10px;
     width: 60px;
     height: 60px;
@@ -66,6 +70,7 @@ input {
 .defaultUserPhotoAuth {
     background-image: url('../img/person.png');
     background-repeat: no-repeat;
+    background-size: cover;
     margin: 10px;
     width: 60px;
     height: 60px;
@@ -179,7 +184,7 @@ input {
 }
 .cntnr {
     margin: 0 0 0 50px;
-    max-width: 50%;
+    max-width: 70%;
     min-height: 80%;
     flex-direction: column;
     align-items: left;
@@ -351,6 +356,17 @@ form input[type='submit'] {
         max-width: 42%;
         min-width: 42%;
         height: 450px;
+    }
+    .itemName b > span {
+        font-size: 3.5em;
+        background-color: #deb887;
+        color: #111111;
+    }
+    .itemDescription {
+        font-size: 2em;
+    }
+    .itemPrice {
+        font-size: 3.5em;
     }
     .itemPhoto {
         background-position: right center !important;
