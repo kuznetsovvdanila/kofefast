@@ -38,7 +38,7 @@ body {
     display: block;
     margin: 50px 50px 0 30px;
     align-items: center;
-    max-height: 530px;
+    max-height: 560px;
     width: 50%;
     flex-direction: column;
     overflow: auto;
@@ -52,7 +52,7 @@ body {
     cursor: pointer;
 }
 .orders {
-    height: 170px;
+    height: 180px;
     width: 100%;
     align-items: center;
     flex-direction: column;
@@ -63,7 +63,7 @@ body {
     overflow: hidden;
 }
 .addresses {
-    height: 170px;
+    height: 180px;
     width: 100%;
     align-items: center;
     flex-direction: column;
@@ -101,6 +101,7 @@ body {
     border: 5px solid #eeeeee;
 }
 .addressName, .orderName {
+    font-size: 1.3em;
     background-color: #deb887;
     color: #111111;
 }
@@ -200,6 +201,9 @@ body {
     }
     .personInfo > div:last-child {
         font-size: 2.5em;
+    }
+    .addressName, .orderName {
+        font-size: 3em;
     }
 }
 
