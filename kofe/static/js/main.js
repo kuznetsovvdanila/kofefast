@@ -50,6 +50,7 @@ $('.provider:not(.del)').click(function(){
     $(".del").removeClass('active');
     $(this).toggleClass("active");
     var drink_id = $(this).attr('id').substring();
+    console.log(drink_id)
     console.log("#item"+drink_id);
     $(".item").removeClass('show');
     $("#item" + String(drink_id)).toggleClass('active');
