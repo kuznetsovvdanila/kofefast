@@ -2,7 +2,7 @@ body {
     overflow: hidden;
 }
 .mainPA {
-    justify-content: space-around;
+    justify-content: center;
     width: 100%;
     height: 100%;
 }
@@ -42,6 +42,12 @@ body {
     width: 50%;
     flex-direction: column;
     overflow: auto;
+    opacity: 1;
+    transition: .3s;
+}
+.info.hidden {
+    opacity: 0;
+    transition: .3s;
 }
 .adr, .ord {
     font-size: 2.5em;
@@ -203,7 +209,7 @@ body {
         font-size: 2.5em;
     }
     .addressName, .orderName {
-        font-size: 3em;
+        font-size: 1.7em;
     }
 }
 

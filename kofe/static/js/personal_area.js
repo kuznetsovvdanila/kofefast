@@ -8,9 +8,11 @@ $('.adr').click(function(){
 })
 $('.addAnAddress').click(function(){
     $('.addressMenu').addClass('active');
+    $('.info').addClass('hidden');
 })
 $('.closeIt').click(function(){
     $('.addressMenu').removeClass('active');
+    $('.info').removeClass('hidden');
 })
 //$('#prokryti').click(function(){
 //    $('.addresses').toggleClass('active');
