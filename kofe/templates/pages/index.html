@@ -107,7 +107,7 @@
                 <div class="list">
                     <div class="coffee flex active">
                         {% for drink in drinks %}
-                            <div id="item{{ drink.provided.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ drink.primary_color }}) 60%, transparent);">
+                            <div id="{{ drink.provided.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ drink.primary_color }}) 60%, transparent);">
                                 <div class="cntnr flex">
                                     <div class="itemName">
                                         <b><span>{{ drink.name }} - {{ drink.provided }}</span></b>

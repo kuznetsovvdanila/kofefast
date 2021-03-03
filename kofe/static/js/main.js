@@ -50,15 +50,14 @@ $('.provider:not(.del)').click(function(){
     $(".del").removeClass('active');
     $(this).toggleClass("active");
     var drink_id = $(this).attr('id').substring();
-    console.log(drink_id)
-    console.log("#item"+drink_id);
     $(".item").removeClass('show');
-    $("#item" + String(drink_id)).toggleClass('active');
     var element = document.getElementsByClassName('item');
-    console.log(element);
-    counter = 0
-    counterHas = 0
+    counter = 0;
+    counterHas = 0;
     for(var i = 0; i < element.length; i++) {
+        if(element[i].id == String(drink_id)) {
+            $(element[i]).toggleClass('active');
+        }
         if(!element[i].classList.contains('active')) {
             counter++;
         }
@@ -72,7 +71,6 @@ $('.provider:not(.del)').click(function(){
     }
     console.log(counter, counterHas, element.length);
     if(counterHas == element.length) {
-        console.log('povezlo_povezlo');
         $(".item").addClass('show');
         $(".item").removeClass('active');
         $(".provider").removeClass('active');
