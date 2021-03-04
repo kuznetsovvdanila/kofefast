@@ -115,7 +115,7 @@ class Account(AbstractBaseUser):
     is_staff				= models.BooleanField(default=False)
     is_superuser			= models.BooleanField(default=False)
 
-    addresses = models.ManyToManyField(AddressUser, blank=True)
+    chosen_address = models.ManyToManyField(AddressUser, blank=True, verbose_name="Выбранный адрес")
     phone_number = models.CharField(max_length=13, default="89142185648")
 
     USERNAME_FIELD = 'email'

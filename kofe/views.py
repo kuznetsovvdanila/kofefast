@@ -94,7 +94,9 @@ def personal_area_page(request):
                 adr.entrance = request.POST.get('entrance')
 
             adr.save()
-            request.user.addresses.add(adr)
+            if request.user.chosen_address.all():
+                request.user.addresses.remove(request.user.chosen_address.all()[0])
+            request.user.chosen_address.add(adr)
             request.user.save()
 
         return redirect('personal_area')
@@ -102,6 +104,8 @@ def personal_area_page(request):
     addresses = []
 
     for adrs in AddressUser.objects.all().filter(owner=request.user):
+        if request.user.chosen_address.all().filter(id=adrs.id):
+            adrs.chosen = True
         addresses.append(adrs)
 
     context = {
