@@ -91,6 +91,7 @@ def personal_area_page(request):
             if request.POST.get('entrance'):
                 adr.entrance = request.POST.get('entrance')
 
+            print(adr)
             adr.save()
         if request.POST.get('action_type') == 'prefer_address':
             for i in request.user.chosen_address.all():
