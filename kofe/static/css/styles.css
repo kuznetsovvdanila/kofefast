@@ -200,6 +200,10 @@ input {
     align-items: left;
     justify-content: space-between;
 }
+.itemPrice > span {
+    background-color: #deb887;
+    color: #111111;
+}
 .itemName b > span {
     font-size: 3em;
     background-color: #deb887;

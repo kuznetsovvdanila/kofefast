@@ -52,22 +52,43 @@ def index_page(request):
             if item.not_has_color:
                 item.primary_color = ""
                 img = Image.open(item.preview)
-                img = img.resize((500, 500))
-                img = img.crop((0, 0, img.width / 2, img.height))
+                if not img.mode == 'P':
+                    img = img.resize((500, 500))
 
-                img = img.getdata()
-                img = np.array(img)
+                    def remove_transparency(im, bg_colour=(255, 255, 255)):
+                        if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
+                            alpha = im.convert('RGBA').split()[-1]
+                            bg = Image.new("RGB", im.size, bg_colour + (255,))
+                            bg.paste(im, mask=alpha)
+                            return bg
 
-                clt = KMeans(n_clusters=3)
-                clt.fit(img)
+                        else:
+                            return im
 
-                for cluster in enumerate(clt.cluster_centers_):
-                    for color in cluster[1]:
-                        item.primary_color += str(int(color)) + ", "
-                    item.primary_color = item.primary_color[:-2]
-                    item.not_has_color = False
-                    item.save()
-                    break
+                    t = Image.open(item.preview)
+                    t = remove_transparency(t)
+                    t.convert('RGB')
+                    t = t.resize((500, 500))
+                    t_io = BytesIO()
+                    t.save(t_io, 'JPEG')
+                    t_result = File(t_io, name=item.preview.name)
+                    item.preview = t_result
+
+                    img = img.crop((0, 0, img.width / 2, img.height))
+
+                    img = img.getdata()
+                    img = np.array(img)
+
+                    clt = KMeans(n_clusters=3)
+                    clt.fit(img)
+
+                    for cluster in enumerate(clt.cluster_centers_):
+                        for color in cluster[1]:
+                            item.primary_color += str(int(color)) + ", "
+                        item.primary_color = item.primary_color[:-2]
+                        item.not_has_color = False
+                        item.save()
+                        break
 
             drinkable.append(item)
 
