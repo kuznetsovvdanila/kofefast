@@ -1,3 +1,12 @@
+$('.arrowMobile').click(function(){
+    $('.arrow').toggleClass('active');
+    $('.arrowMobile').toggleClass('active');
+    $('.addressMenuMainPage').toggleClass('active');
+})
+$('.mainAuth').click(function(){
+    $('.arrow').removeClass('active');
+    $('.addressMenuMainPage').removeClass('active');
+})
 $('.registrationButton').click(function(){
     $('.registration').addClass('active');
     $('.authorization').removeClass('active');
@@ -26,14 +35,16 @@ $('.closeIt').click(function(){
     $('.registrationButton').addClass('active');
     $('.description').removeClass('active');
 })
-$('.eat').click(function(){
-    $('.coffee').removeClass('active');
-    $('.breakfast').addClass('active');
-})
-$('.drink').click(function(){
-    $('.coffee').addClass('active');
-    $('.breakfast').removeClass('active');
-})
+
+//$('.eat').click(function(){
+//    $('.coffee').removeClass('active');
+//    $('.breakfast').addClass('active');
+//})
+//$('.drink').click(function(){
+//    $('.coffee').addClass('active');
+//    $('.breakfast').removeClass('active');
+//})
+
 $('#id_username').attr('placeholder','Логин');
 $('#id_first_name').attr('placeholder','Имя');
 $('#id_last_name').attr('placeholder','Фамилия');
@@ -69,7 +80,6 @@ $('.provider:not(.del)').click(function(){
         $(".item").toggleClass('show');
         $(".del").addClass('active');
     }
-    console.log(counter, counterHas, element.length);
     if(counterHas == element.length) {
         $(".item").addClass('show');
         $(".item").removeClass('active');

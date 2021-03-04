@@ -11,8 +11,8 @@
     </head>
     <body>
         <div class="topMenu flex">
-            <div style="font-size: 3.5em;">
-                <a href="{% url 'index' %}" style="color: #eeeeee">kofefast</a>
+            <div class="logo">
+                kofefast
             </div>
             {% if not request.user.is_authenticated %}
                 <div class="defaultUserPhoto softBorder pointer">
@@ -30,6 +30,7 @@
                 </div>
             {% endif %}
         </div>
+        <hr class="lineMobile">
         {% if not request.user.is_authenticated %}
             <div class="main flex">
                 <div class="leftSide flex">
@@ -119,11 +120,41 @@
                                         <span><b>{{ drink.price }}$</b></span>
                                     </div>
                                 </div>
-                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">
+<!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->
 
-                                </div>
+<!--                                </div>-->
                             </div>
                         {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="addressMenuMainPage flex">
+                <div class="arrowMobile">
+                    <div class="arrow">
+                        <b>ᐃ</b>
+                    </div>
+                </div>
+                <div class="addressList flex">
+                    <div>
+                        Выберите адрес:
+                    </div>
+                    {% if addresses %}
+                        {% for adr in addresses %}
+                            <div class="address">
+                                {{ adr.city }}, улица {{ adr.street }}, дом {{ adr.house }}, подъезд {{ adr.entrance }}
+                            </div>
+                        {% endfor %}
+                        <div class="addAnAddress">
+                            <b>+</b>
+                        </div>
+                    {% endif %}
+                    <div class="address flex btw vCenter">
+                        <div>
+                            <span class="addressName"><b>Добавьте адрес</b></span>
+                        </div>
+                        <div class="addAnAddress">
+                            <b>+</b>
+                        </div>
                     </div>
                 </div>
             </div>

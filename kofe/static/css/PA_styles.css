@@ -175,6 +175,33 @@ body {
     transition: .2s;
 }
 
+@media screen and (max-width: 980px) {
+    .address, .order {
+        border: 15px solid #eeeeee;
+        border-radius: 70px;
+        min-height: 350px;
+        width: 85%;
+        padding: 0 0 0 10px;
+    }
+    .addressName, .orderName {
+        font-size: 3.5em;
+        background-color: #deb887;
+        color: #111111;
+    }
+    .addAnAddress {
+        color: #111111;
+        min-width: 200px;
+        height: 200px;
+        background-color: #eeeeee;
+        padding: 0px 15px 32px 15px;
+        font-size: 10.2em !important;
+        border-radius: 120px;
+        text-align: center;
+        margin: 10px 0 0 15px;
+        cursor: pointer;
+        transition: .2s;
+    }
+}
 
 @media screen and (min-width: 1500px) {
     .addresses, .orders {

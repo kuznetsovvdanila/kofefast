@@ -2,6 +2,7 @@ body {
     font-family: "ProductSans-Regular";
     background: #111111;
     color: #eeeeee;
+    overflow: auto;
 }
 a {
     color: #111111;
@@ -43,6 +44,12 @@ input {
     justify-content: space-between;
     padding: 15px 30px 0 30px;
     height: 100px;
+}
+.logo {
+    font-size: 3.5em;
+}
+.arrowMobile {
+    display: none;
 }
 .defaultUserPhoto {
     background-image: url('../img/person.png');
@@ -145,6 +152,9 @@ input {
     height: 5px;
     border: none;
 }
+.lineMobile {
+    display: none;
+}
 .list {
     padding: 80px 0 0 0 !important;
     /*margin: 0 20px 0 20px !important;
@@ -215,7 +225,7 @@ input {
 }
 .itemPhoto {
     width: 50% !important;
-    min-height: 100% !important;
+    height: 100% !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     background-position: right center !important;
@@ -345,6 +355,234 @@ form input[type='submit'] {
   height: 768px;
 }
 
+@media screen and (max-width: 980px) {
+    .address, .order {
+        border: 15px solid #eeeeee;
+        border-radius: 70px;
+        min-height: 320px;
+        max-width: 80%;
+        padding: 0 40px 0 40px;
+        margin: 20px 0 20px 0;
+    }
+    .addressName, .orderName {
+        font-size: 6em;
+        background-color: #deb887;
+        color: #111111;
+    }
+    .addAnAddress {
+        color: #111111;
+        min-width: 200px;
+        height: 200px;
+        background-color: #eeeeee;
+        padding: 0px 15px 32px 15px;
+        font-size: 10.2em !important;
+        border-radius: 120px;
+        text-align: center;
+        margin: 10px 0 0 15px;
+        cursor: pointer;
+        transition: .2s;
+    }
+    .topMenu {
+        justify-content: space-between;
+        padding: 10px 30px 0 30px;
+        height: 250px;
+        max-height: 250px;
+        justify-content: center;
+        align-items: center;
+    }
+    .topMenu.active {
+        max-height: auto;
+
+    }
+    .defaultUserPhotoAuth {
+        display: none;
+    }
+    .defaultUserPhoto {
+        display: none;
+    }
+    .logo {
+        font-size: 10em;
+    }
+    .arrowMobile {
+        color: #eeeeee;
+        min-width: 100%;
+        text-align: center;
+        display: block;
+        margin: 0 !important;
+        padding: 10px 0 0 0;
+        background: linear-gradient(to top, #111111, rgba(0, 0, 0, .0));
+    }
+    .arrow {
+        font-size: 9em;
+        transition: .2s;
+    }
+    .arrow.active {
+        transform: rotate(180deg);
+        transition: .2s;
+    }
+    .addressMenuMainPage {
+        left: 0;
+        bottom: 0;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        bottom: -670px;
+        display: flex;
+        position: fixed;
+        margin: 0 !important;
+        padding: 0 !important;
+        transition: .3s;
+    }
+    .addressMenuMainPage.active {
+        bottom: 0;
+        transition: .3s;
+    }
+    .addressMenuMainPage.active > .addressList {
+        height: auto;
+    }
+    .addressList {
+        height: auto;
+        padding: 30px 0 30px 0;
+        box-shadow: inset 0 15px 0 0 #333333;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #111111;
+    }
+    .addressList > div:first-child {
+        margin: 40px 20px 50px 20px;
+        text-align: center;
+        font-size: 6.5em;
+    }
+    .hd {
+        text-align: center;
+        font-size: 8em;
+        margin: 50px 0 60px 0 !important;
+    }
+    .categories {
+        margin: 0 0 70px 0 !important;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .categories > div:not(.item) {
+        margin: 20px 15px 0 15px;
+        font-size: 5em;
+        cursor: pointer;
+        text-align: center;
+        transition: .2s;
+    }
+    .categories > div:hover {
+        box-shadow: none;
+        transition: .2s;
+    }
+    .provider {
+        padding: 15px 20px 15px 20px;
+        border-radius: 70px;
+        background-color: #111111;
+        color: #eeeeee;
+        transition: .2s;
+    }
+    .provider.active {
+        background-color: #deb887;
+        color: #111111;
+        transition: .2s;
+    }
+    .line {
+        background-color: #333333;
+        width: 85%;
+        height: 15px;
+        border: none;
+    }
+    .lineMobile {
+        display: block;
+        background-color: #333333;
+        width: 85%;
+        height: 15px;
+        border: none;
+    }
+    .item {
+        border-radius: 70px !important;
+        min-height: 700px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .item.show {
+        align-items: flex-start;
+        border: 15px solid #eeeeee;
+    }
+    .item.active {
+        align-items: flex-start;
+        border: 15px solid #eeeeee;
+    }
+    .itemName b > span {
+        font-size: 6.5em;
+        background-color: #deb887;
+        color: #111111;
+    }
+    .itemDescription {
+        font-size: 3.2em;
+    }
+    .itemPrice {
+        font-size: 5em;
+    }
+    .itemPhoto {
+        background-position: right center !important;
+    }
+    .cntnr {
+        margin: 50px 0 50px 50px !important;
+        max-width: 90%;
+        min-height: 88%;
+        flex-direction: column;
+        align-items: left;
+        justify-content: space-between;
+    }
+    .list {
+        margin: 0 60px 80px 60px !important;
+        flex-wrap: wrap;
+    }
+    .description {
+        font-size: 4em;
+        max-width: 400px;
+        left: 23%;
+    }
+    .registrationButton {
+        top: 680px;
+        left: 20%;
+    }
+    .registrationButton.active {
+        border-radius: 50px;
+        font-size: 3em;
+        padding: 5px 15px 5px 15px;
+    }
+    .information, .registration, .authorization {
+        max-width: 550px;
+    }
+    .registration {
+        top: 21%;
+    }
+    .information {
+        font-size: 2em;
+    }
+    .frm {
+        font-size: 2.5em;
+    }
+    .closeIt {
+        font-size: 2.5em;
+        height: 55px;
+        width: 55px;
+        border-radius: 30px;
+    }
+    form {
+        width: 400px;
+    }
+    form input {
+        height: 65px;
+        border-radius: 35px;
+    }
+    form input[type='submit'] {
+        font-size: 2.5em;
+    }
+}
 
 @media screen and (min-width: 1500px) {
     .item.show {
