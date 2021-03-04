@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'kofe',
 ]
 
+AUTH_USER_MODEL = 'kofe.Account'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

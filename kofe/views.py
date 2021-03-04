@@ -8,6 +8,7 @@ import numpy as np
 
 from sklearn.cluster import KMeans
 
+from kofe.forms import RegistrationForm
 from kofe.models import Provider, AddressUser
 
 
@@ -17,33 +18,21 @@ def index_page(request):
 
     if request.method == 'POST':
         if request.POST.get('action_type') == 'authen':
-            password = request.POST.get('password1')
-            t = User.objects.all().filter(email=request.POST.get('email'))
-            if t:
-                username = t[0]
-                user = authenticate(request, username=username, password=password)
-                if user is not None:
-                    login(request, user)
-                    return redirect('index')
-                else:
-                    print('ne')
-                    errors = True
-            else:
-                print('nene')
+            account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
+            if account:
+                login(request, account)
+                return redirect('index')
 
         if request.POST.get('action_type') == 'registr':
             request.POST = request.POST.copy()
-            t = list(map(str, request.POST.get('email').split('@')))
-            request.POST['username'] = t[0] + t[1]
-            form = UserCreationForm(request.POST)
+            request.POST['username'] = "lox"
+            form = RegistrationForm(request.POST)
             if form.is_valid():
-                user = form.save(commit=False)
-                user.is_active = True
-                user.email = request.POST.get('email')
-                user.first_name = request.POST.get('first_name')
-                user.last_name = request.POST.get('last_name')
-                user.save()
-                login(request, user)
+                form.save()
+                email = form.cleaned_data.get('email')
+                raw_password = form.cleaned_data.get('password1')
+                account = authenticate(email=email, password=raw_password)
+                login(request, account)
                 return redirect('index')
             else:
                 print(form.errors)
@@ -60,27 +49,9 @@ def index_page(request):
             if item.not_has_color:
                 item.primary_color = ""
                 img = Image.open(item.preview)
-                img = img.resize((200, 200))
+                img = img.resize((500, 500))
+                img = img.crop((0, 0, img.width / 2, img.height))
 
-                def remove_transparency(im, bg_colour=(255, 255, 255)):
-
-                    # Only process if image has transparency (http://stackoverflow.com/a/1963146)
-                    if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
-
-                        # Need to convert to RGBA if LA format due to a bug in PIL (http://stackoverflow.com/a/1963146)
-                        alpha = im.convert('RGBA').split()[-1]
-
-                        # Create a new background image of our matt color.
-                        # Must be RGBA because paste requires both images have the same format
-                        # (http://stackoverflow.com/a/8720632  and  http://stackoverflow.com/a/9459208)
-                        bg = Image.new("RGBA", im.size, bg_colour + (255,))
-                        bg.paste(im, mask=alpha)
-                        return bg
-
-                    else:
-                        return im
-
-                img = remove_transparency(img)
                 img = img.getdata()
                 img = np.array(img)
 
@@ -101,7 +72,7 @@ def index_page(request):
         # 'items': Provider.item_set.all().filter(type='d'),
         'providers': Provider.objects.all(),
         'drinks': drinkable,
-        'form': form if form else UserCreationForm(),
+        'form': form if form else RegistrationForm(),
         'errors': errors
     }
     #for provider in providers:
@@ -123,12 +94,18 @@ def personal_area_page(request):
                 adr.entrance = request.POST.get('entrance')
 
             adr.save()
+            if request.user.chosen_address.all():
+                request.user.addresses.remove(request.user.chosen_address.all()[0])
+            request.user.chosen_address.add(adr)
+            request.user.save()
 
         return redirect('personal_area')
 
     addresses = []
 
     for adrs in AddressUser.objects.all().filter(owner=request.user):
+        if request.user.chosen_address.all().filter(id=adrs.id):
+            adrs.chosen = True
         addresses.append(adrs)
 
     context = {

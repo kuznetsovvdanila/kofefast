@@ -61,6 +61,9 @@
                         {% for adr in addresses %}
                             <div class="address">
                                 {{ adr.city }}, улица {{ adr.street }}, дом {{ adr.house }}, подъезд {{ adr.entrance }}
+                                {% if adr.chosen %}
+                                Этот адресс выбран (он был ластовый, потом будет функционал выбора со стороны фронта)
+                                {% endif %}
                             </div>
                         {% endfor %}
                     <div class="addAnAddress">
