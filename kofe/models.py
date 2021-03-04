@@ -20,7 +20,8 @@ class AddressUser(models.Model):
     entrance = models.IntegerField('Подъезд', default=None)
 
     def __str__(self):
-        return str(self.owner)
+        return 'Клиент - ' + str(self.owner.first_name) + " " + str(self.owner.last_name) + " по адресу: " \
+               + str(self.city) + ', улица ' + str(self.street) + ', дом ' + str(self.house)
 
     class Meta:
         verbose_name = "Адрес Пользователя"
@@ -28,7 +29,7 @@ class AddressUser(models.Model):
 
 
 class AddressCafe(models.Model):
-    owner = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
+    owner = models.ForeignKey('Provider', on_delete=models.CASCADE, verbose_name='Владелец')
     city = models.CharField('Город', max_length=30, default='Москва')
     street = models.CharField('Улица', max_length=30, default='Арбат')
     house = models.IntegerField('Дом', default=1)
@@ -58,18 +59,19 @@ class Item(models.Model):
         ('d', 'Drinkable'),
     ]
 
-    type = models.CharField(max_length=1, choices=FoodTypes, default='e')
+    type = models.CharField(max_length=1, choices=FoodTypes, default='d')
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = "Итем"
-        verbose_name_plural = "Айтемы"
+        verbose_name = "Продукт"
+        verbose_name_plural = "Продукция"
 
 
 class Provider(models.Model):
     name = models.CharField('Название', max_length=50)
+    cafe_addresses = models.ManyToManyField('AddressCafe', blank=True)
     production = models.ManyToManyField('Item', blank=True)
 
     def __str__(self):
@@ -113,19 +115,20 @@ class MyAccountManager(BaseUserManager):
 
 class Account(AbstractBaseUser):
     username = models.CharField(max_length=60, default='LOX')
-    email 					= models.EmailField(verbose_name="email", max_length=60, unique=True)
-    date_joined				= models.DateTimeField(verbose_name='date joined', auto_now_add=True)
-    last_login				= models.DateTimeField(verbose_name='last login', auto_now=True)
+    email 					= models.EmailField(verbose_name="Почта", max_length=60, unique=True)
+    date_joined				= models.DateTimeField(verbose_name='Дата регистрации', auto_now_add=True)
+    last_login				= models.DateTimeField(verbose_name='Последний вход', auto_now=True)
     is_admin				= models.BooleanField(default=False)
     is_active				= models.BooleanField(default=True)
     is_staff				= models.BooleanField(default=False)
+    is_cafe_owner		    = models.BooleanField(default=False)
     is_superuser			= models.BooleanField(default=False)
 
-    first_name = models.CharField(max_length=60, default='Антон')
-    last_name = models.CharField(max_length=60, default='Крутой')
+    first_name = models.CharField('Имя', max_length=60, default='Антон')
+    last_name = models.CharField('Фамилия', max_length=60, default='Крутой')
 
     chosen_address = models.ManyToManyField(AddressUser, blank=True, verbose_name="Выбранный адрес")
-    phone_number = models.CharField(max_length=13, default="89142185648")
+    phone_number = models.CharField('Номер телефона', max_length=13, default="89142185648")
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

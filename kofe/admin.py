@@ -13,8 +13,8 @@ class ItemInLine(admin.StackedInline):
     extra = 0
 
 
-class AdrInLine(admin.StackedInline):
-    model = AddressUser
+class CafeAddressesInLine(admin.StackedInline):
+    model = AddressCafe
     extra = 0
 
 
@@ -22,7 +22,7 @@ class Cafe(admin.ModelAdmin):
     fieldsets = [
         ('Название', {'fields': ['name']}),
     ]
-    inlines = [ItemInLine]
+    inlines = [ItemInLine, CafeAddressesInLine]
 
 
 class AccountAdmin(UserAdmin):
@@ -33,8 +33,6 @@ class AccountAdmin(UserAdmin):
     filter_horizontal = ()
     list_filter = ()
     fieldsets = ()
-
-    inlines = [AdrInLine]
 
 
 admin.site.register(Account, AccountAdmin)
