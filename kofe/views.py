@@ -99,6 +99,8 @@ def personal_area_page(request):
             print(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
             request.user.chosen_address.add(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
             request.user.save()
+        if request.POST.get('action_type') == 'delete_an_address':
+            AddressUser.objects.all().filter(id=request.POST.get('delete_adr_id')).delete()
 
         return redirect('personal_area')
 

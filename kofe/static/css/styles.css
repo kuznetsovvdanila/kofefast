@@ -249,23 +249,19 @@ input {
     transition: .2s;
 }
 .registrationButton {
-    max-height: 0;
     opacity: 0;
     transition: .2s;
     position: absolute;
-    top: 580px;
-    left: 20%;
+    top: 560px;
+    left: 19%;
 }
 .registrationButton.active {
     position: absolute;
-    max-height: 100px;
+    height: 50px;
+    min-width: 330px;
     opacity: 1;
-    margin: 5px 0 0 0;
     background-color: #deb887;
     color: #111111;
-    font-size: 2em;
-    padding: 10px;
-    text-align: center;
     transition: .2s;
     margin: 5px 0 0 35px;
 }
@@ -307,21 +303,21 @@ form {
     flex-direction: column;
     width: 350px;
 }
-form input {
+input {
     border: none;
     height: 55px;
     border-radius: 30px;
     text-align: center;
     margin: 10px 0 0 0;
 }
-form input:not([type='submit']) {
+input:not([type='submit']) {
     /*background-color: #333333;*/
     border: 5px solid #eeeeee;
     background-color: #111111;
     color: #eeeeee;
     font-size: 1.5em;
 }
-form input[type='submit'] {
+input[type='submit'] {
     background-color: #deb887;
     font-size: 2em;
     font-weight: bold;
@@ -349,13 +345,143 @@ form input[type='submit'] {
 }
 
 
-
+.mainMobile {
+    display: none;
+}
 
 #map {
   height: 768px;
 }
 
 @media screen and (max-width: 980px) {
+    /*.leftSide {
+        left: 0;
+        margin: 0;
+    }
+    .description.active {
+        top: 300px;
+        position: absolute;
+        box-shadow: none;
+        font-size: 10em !important;
+        left: 0;
+        margin: 0;
+        max-width: 100%;
+        width: auto;
+    }
+    .registrationButton {
+        top: 1800px;
+        position: absolute;
+        font-size: 5em !important;
+        left: 0;
+        margin: 0;
+    }
+    .registrationButton.active {
+        top: 1800px;
+        position: absolute;
+        font-size: 5em !important;
+        left: 0;
+        margin: 0;
+
+    }*/
+    body {
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+    .main {
+        display: none;
+    }
+    .mainMobile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .descriptionMobile {
+        background-color: #111111;
+        z-index: 2000;
+        position: absolute;
+        font-size: 9.5em;
+        padding: 30px 20px 30px 60px;
+    }
+    .registrationButtonMobile {
+
+    }
+    .registrationButtonMobile.active {
+        background-color: #111111;
+        z-index: 2000;
+        position: absolute;
+        opacity: 1;
+        top: 1460px;
+        padding: 100px 30px 40px 30px;
+        border-radius: 75px;
+        font-size: 6em !important;
+        transition: .3s;
+        text-align: right;
+    }
+    .registrationButtonMobile.active > span {
+        font-size: 1.1em !important;
+        background-color: #deb887;
+        color: #111111;
+        text-align: right;
+    }
+    .informationMobile {
+        background-color: #111111;
+        z-index: 0;
+        max-height: 0;
+        position: absolute;
+        left: 0;
+        top: 300px;
+        padding: 130px 50px 50px 50px;
+        font-size: 5em;
+        opacity: 0;
+        transition: .5s;
+    }
+    .informationMobile.active {
+        text-overflow: ellipsis;
+        top: 1980px;
+        z-index: 1000;
+        max-height: auto;
+        opacity: 1;
+        transition: .5s;
+    }
+
+    .registrationMobile {
+        position: absolute;
+        left: 0;
+        opacity: 0;
+        top: 2000px;
+        z-index: 0;
+        width: 100%;
+        transition: .3s;
+    }
+    .registrationMobile.active {
+        opacity: 1;
+        z-index: 1000;
+        height: auto;
+        transition: .3s;
+    }
+
+    .registrationMobile div form, .authorizationMobile div form {
+        width: 100% !important;
+    }
+    .registrationMobile div form > input, .authorizationMobile div form > input {
+        height: 200px;
+        margin: 30px !important;
+    }
+    .authorizationMobile {
+        left: 0;
+        position: absolute;
+        top: 2000px;
+        opacity: 0;
+        z-index: 0;
+        width: 100%;
+        transition: .3s;
+    }
+    .authorizationMobile.active {
+        opacity: 1;
+        z-index: 1000;
+        height: auto;
+        transition: .3s;
+    }
     .address, .order {
         border: 15px solid #eeeeee;
         border-radius: 70px;
@@ -572,16 +698,6 @@ form input[type='submit'] {
         width: 55px;
         border-radius: 30px;
     }
-    form {
-        width: 400px;
-    }
-    form input {
-        height: 65px;
-        border-radius: 35px;
-    }
-    form input[type='submit'] {
-        font-size: 2.5em;
-    }
 }
 
 @media screen and (min-width: 1500px) {
@@ -624,6 +740,7 @@ form input[type='submit'] {
     }
     .registrationButton.active {
         border-radius: 50px;
+        height: 70px;
         font-size: 3em;
         padding: 5px 15px 5px 15px;
     }

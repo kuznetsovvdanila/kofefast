@@ -14,12 +14,24 @@ $('.registrationButton').click(function(){
     $('.registrationButton').removeClass('active');
     $('.description').addClass('active');
 })
+$('.registrationButtonMobile').click(function(){
+    $('.registrationMobile').addClass('active');
+    $('.authorizationMobile').removeClass('active');
+    $('.informationMobile').removeClass('active');
+    $('.descriptionMobile').addClass('active');
+})
 $('.openAuth').click(function(){
     $('.registration').removeClass('active');
     $('.authorization').addClass('active');
     $('.information').removeClass('active');
     $('.registrationButton').addClass('active');
     $('.description').removeClass('active');
+})
+$('.openAuthMobile').click(function(){
+    $('.registrationMobile').removeClass('active');
+    $('.authorizationMobile').addClass('active');
+    $('.informationMobile').removeClass('active');
+    $('.descriptionMobile').removeClass('active');
 })
 $('.defaultUserPhoto').click(function(){
     $('.registration').removeClass('active');
@@ -34,6 +46,12 @@ $('.closeIt').click(function(){
     $('.information').addClass('active');
     $('.registrationButton').addClass('active');
     $('.description').removeClass('active');
+})
+$('.closeIt').click(function(){
+    $('.registrationMobile').removeClass('active');
+    $('.authorizationMobile').removeClass('active');
+    $('.informationMobile').addClass('active');
+    $('.descriptionMobile').removeClass('active');
 })
 
 //$('.eat').click(function(){

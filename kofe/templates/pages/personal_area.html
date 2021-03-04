@@ -59,19 +59,41 @@
                 <div class="addresses flex">
                     {% if addresses %}
                         {% for adr in addresses %}
-                            <div class="address">
-                                {{ adr.city }}, улица {{ adr.street }}, дом {{ adr.house }}, подъезд {{ adr.entrance }}
+                            <div style="font-size: 0.9em;" class="address flex btw vCenter">
+                                <div>
+                                    <span class="addressName">
+                                        {{ adr.city }},
+                                        улица {{ adr.street }},
+                                        дом {{ adr.house }},
+                                        подъезд {{ adr.entrance }}
+                                    </span>
+                                </div>
 
                                 {% if adr.chosen %}
                                     Этот адресс выбран (он был ластовый, потом будет функционал выбора со стороны фронта)
                                 {% else %}
-                                    <form action="" method="POST" class="flex">
+                                <div class="flex" style="flex-direction: column;">
+                                    <form action="" method="POST" class="inside flex">
                                         <input name="action_type" type="text" value="prefer_address" style="display: none;">
                                         <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
                                         {% csrf_token %}
-                                        <input type="submit" value="Сделать Предпочтительным" class="pointer">
+                                        <input type="submit" value="✔" class="chooseAnAddress pointer">
                                     </form>
+                                    <form action="" method="POST" class="inside">
+                                        <input name="action_type" type="text" value="delete_an_address" style="display: none;">
+                                        <input name="delete_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                        {% csrf_token %}
+                                        <input type="submit" class="deleteAnAddress" value="X">
+                                    </form>
+                                </div>
                                 {% endif %}
+
+<!--                                    <form action="" method="POST" class="inside">-->
+<!--                                        {% csrf_token %}-->
+<!--                                        <input type="submit" class="chooseAnAddress" value="Доставлять сюда">-->
+<!--                                    </form>-->
+
+
                             </div>
                         {% endfor %}
                     <div class="addAnAddress">

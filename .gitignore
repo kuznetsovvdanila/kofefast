@@ -1,3 +1,5 @@
 /venv/
 /db.sqlite3
 /media/item_picture/
+/.idea/
+/migrations/
