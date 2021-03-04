@@ -124,6 +124,8 @@ class Account(AbstractBaseUser):
     is_cafe_owner		    = models.BooleanField(default=False)
     is_superuser			= models.BooleanField(default=False)
 
+    profile_picture = models.ImageField(null=True, blank=True, upload_to="profile_pictures", default=None)
+
     first_name = models.CharField('Имя', max_length=60, default='Антон')
     last_name = models.CharField('Фамилия', max_length=60, default='Крутой')
 

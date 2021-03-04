@@ -33,9 +33,16 @@
         </div>
         <div class="mainPA flex">
             <div class="person flex">
-                <div class="photo">
+                <div class="photo" style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); {% else %} background-image: url('../media/person.png'); {% endif %}">
 
                 </div>
+                <form action="" method="POST" enctype="multipart/form-data">
+                    <input name="action_type" type="text" value="changing_picture" style="display: none;">
+                    <input type="file" id="pro_pic" name="profile_picture" accept=".jpg, .jpeg, .png">
+
+                    {% csrf_token %}
+                    <input type="submit" value="Изменить пикчуу">
+                </form>
                 <div class="personInfo">
                     <div>
                         <b>{{ user.first_name }} {{ user.last_name }}</b>
@@ -70,7 +77,12 @@
                                 </div>
 
                                 {% if adr.chosen %}
-                                    Этот адресс выбран (он был ластовый, потом будет функционал выбора со стороны фронта)
+                                    <form action="" method="POST" class="inside flex">
+                                        <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">
+                                        <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                        {% csrf_token %}
+                                        <input type="submit" value="✔" class="chooseAnAddress pointer">
+                                    </form>
                                 {% else %}
                                 <div class="flex" style="flex-direction: column;">
                                     <form action="" method="POST" class="inside flex">

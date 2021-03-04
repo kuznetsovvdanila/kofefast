@@ -1,6 +1,9 @@
+from io import BytesIO
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.files import File
 from django.shortcuts import render, redirect
 
 from PIL import Image
@@ -91,13 +94,38 @@ def personal_area_page(request):
             if request.POST.get('entrance'):
                 adr.entrance = request.POST.get('entrance')
 
-            print(adr)
             adr.save()
         if request.POST.get('action_type') == 'prefer_address':
             for i in request.user.chosen_address.all():
                 request.user.chosen_address.remove(i)
-            print(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
             request.user.chosen_address.add(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
+            request.user.save()
+
+        if request.POST.get('action_type') == 'delete_prefer_address':
+            for i in request.user.chosen_address.all():
+                request.user.chosen_address.remove(i)
+            request.user.save()
+
+        if request.POST.get('action_type') == 'changing_picture':
+            def remove_transparency(im, bg_colour=(255, 255, 255)):
+                if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
+                    alpha = im.convert('RGBA').split()[-1]
+                    bg = Image.new("RGB", im.size, bg_colour + (255,))
+                    bg.paste(im, mask=alpha)
+                    return bg
+
+                else:
+                    return im
+
+            request.user.profile_picture = request.FILES['profile_picture']
+            t = Image.open(request.user.profile_picture)
+            t = remove_transparency(t)
+            t.convert('RGB')
+            t.thumbnail((400, 400))
+            t_io = BytesIO()
+            t.save(t_io, 'JPEG')
+            t_result = File(t_io, name=request.user.profile_picture.name)
+            request.user.profile_picture = t_result
             request.user.save()
         if request.POST.get('action_type') == 'delete_an_address':
             AddressUser.objects.all().filter(id=request.POST.get('delete_adr_id')).delete()
