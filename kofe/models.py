@@ -81,9 +81,13 @@ class Provider(models.Model):
 
 
 class MyAccountManager(BaseUserManager):
-    def create_user(self, email, password=None):
+    def create_user(self, email, first_name, last_name, password=None):
         if not email:
             raise ValueError('Users must have an email address')
+        if not first_name:
+            raise ValueError('Users must have an name')
+        if not last_name:
+            raise ValueError('Users must have an surname')
 
         user = self.model(
             email=self.normalize_email(email),
@@ -97,6 +101,8 @@ class MyAccountManager(BaseUserManager):
         user = self.create_user(
             email=self.normalize_email(email),
             password=password,
+            first_name="Антон",
+            last_name="Крутой",
         )
         user.is_admin = True
         user.is_staff = True
@@ -114,6 +120,9 @@ class Account(AbstractBaseUser):
     is_active				= models.BooleanField(default=True)
     is_staff				= models.BooleanField(default=False)
     is_superuser			= models.BooleanField(default=False)
+
+    first_name = models.CharField(max_length=60, default='Антон')
+    last_name = models.CharField(max_length=60, default='Крутой')
 
     chosen_address = models.ManyToManyField(AddressUser, blank=True, verbose_name="Выбранный адрес")
     phone_number = models.CharField(max_length=13, default="89142185648")
