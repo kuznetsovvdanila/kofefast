@@ -61,8 +61,16 @@
                         {% for adr in addresses %}
                             <div class="address">
                                 {{ adr.city }}, улица {{ adr.street }}, дом {{ adr.house }}, подъезд {{ adr.entrance }}
+
                                 {% if adr.chosen %}
-                                Этот адресс выбран (он был ластовый, потом будет функционал выбора со стороны фронта)
+                                    Этот адресс выбран (он был ластовый, потом будет функционал выбора со стороны фронта)
+                                {% else %}
+                                    <form action="" method="POST" class="flex">
+                                        <input name="action_type" type="text" value="prefer_address" style="display: none;">
+                                        <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                        {% csrf_token %}
+                                        <input type="submit" value="Сделать Предпочтительным" class="pointer">
+                                    </form>
                                 {% endif %}
                             </div>
                         {% endfor %}
@@ -113,7 +121,6 @@
                     <span class="frm"><b>Адрес</b></span>
                     <span class="closeIt" style=""><b>x</b></span>
                 </div>
-                <input name="action_type" type="text" value="add_address" style="display: none;">
                 <input type="text" name="city" maxlength="150" required="" id="city" placeholder="Город">
                 <input type="text" name="street" maxlength="150" required="" id="street" placeholder="Улица">
                 <input type="text" name="house" maxlength="150" required="" id="house" placeholder="Дом, корпус">

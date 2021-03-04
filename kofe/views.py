@@ -86,17 +86,17 @@ def personal_area_page(request):
 
     if request.method == 'POST':
         if request.POST.get('action_type') == 'add_address':
-            adr = AddressUser(owner=request.user,
-                          city=request.POST.get('city'),
-                          street=request.POST.get('street'),
-                          house=int(request.POST.get('house')))
+            adr = AddressUser(owner=request.user, city=request.POST.get('city'), street=request.POST.get('street'),
+                              house=request.POST.get('house'))
             if request.POST.get('entrance'):
                 adr.entrance = request.POST.get('entrance')
 
             adr.save()
-            if request.user.chosen_address.all():
-                request.user.addresses.remove(request.user.chosen_address.all()[0])
-            request.user.chosen_address.add(adr)
+        if request.POST.get('action_type') == 'prefer_address':
+            for i in request.user.chosen_address.all():
+                request.user.chosen_address.remove(i)
+            print(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
+            request.user.chosen_address.add(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
             request.user.save()
 
         return redirect('personal_area')

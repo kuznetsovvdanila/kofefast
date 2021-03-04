@@ -32,7 +32,7 @@ class AddressCafe(models.Model):
     owner = models.ForeignKey('Provider', on_delete=models.CASCADE, verbose_name='Владелец')
     city = models.CharField('Город', max_length=30, default='Москва')
     street = models.CharField('Улица', max_length=30, default='Арбат')
-    house = models.IntegerField('Дом', default=1)
+    house = models.CharField('Дом', max_length=30, default='1')
     entrance = models.IntegerField('Подъезд', default=None)
 
     def __str__(self):
