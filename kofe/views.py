@@ -43,6 +43,17 @@ def index_page(request):
         if request.POST.get('action_type') == 'logout':
             return redirect('logout')
 
+        if request.POST.get('action_type') == 'prefer_address':
+            for i in request.user.chosen_address.all():
+                request.user.chosen_address.remove(i)
+            request.user.chosen_address.add(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
+            request.user.save()
+
+        if request.POST.get('action_type') == 'delete_prefer_address':
+            for i in request.user.chosen_address.all():
+                request.user.chosen_address.remove(i)
+            request.user.save()
+
     providers = Provider.objects.all()
 
     drinkable = []
@@ -92,8 +103,16 @@ def index_page(request):
 
             drinkable.append(item)
 
+    addresses = []
+
+    for adrs in AddressUser.objects.all().filter(owner=request.user):
+        if request.user.chosen_address.all().filter(id=adrs.id):
+            adrs.chosen = True
+        addresses.append(adrs)
+
     context = {
         # 'items': Provider.item_set.all().filter(type='d'),
+        'addresses': addresses,
         'providers': Provider.objects.all(),
         'drinks': drinkable,
         'form': form if form else RegistrationForm(),

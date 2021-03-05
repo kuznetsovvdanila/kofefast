@@ -182,28 +182,66 @@
                         <b>ᐃ</b>
                     </div>
                 </div>
-                <div class="addressList flex">
+                <div class="addressList">
                     <div>
                         Выберите адрес:
                     </div>
                     {% if addresses %}
                         {% for adr in addresses %}
-                            <div class="address">
-                                {{ adr.city }}, улица {{ adr.street }}, дом {{ adr.house }}, подъезд {{ adr.entrance }}
-                            </div>
+                            {% if adr.chosen %}
+                                <div style="border: 15px solid #deb887 !important;" class="address flex btw vCenter">
+                                    <div>
+                                        <span style="background-color: #eeeeee;" class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>
+                                    </div>
+                                    <div class="">
+                                        <form action="" method="POST" class="inside flex">
+                                            <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">
+                                            <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                            {% csrf_token %}
+                                            <input type="submit" value="X" class="chooseAnAddress pointer">
+                                        </form>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="address flex btw vCenter">
+                                    <div>
+                                        <span class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>
+                                    </div>
+                                    <div class="">
+                                        <form action="" method="POST" class="inside flex">
+                                            <input name="action_type" type="text" value="prefer_address" style="display: none;">
+                                            <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                            {% csrf_token %}
+                                            <input type="submit" value="✔" class="chooseAnAddress pointer">
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endif %}
                         {% endfor %}
-                        <div class="addAnAddress">
-                            <b>+</b>
-                        </div>
-                    {% endif %}
-                    <div class="address flex btw vCenter">
-                        <div>
-                            <span class="addressName"><b>Добавьте адрес</b></span>
-                        </div>
-                        <div class="addAnAddress">
-                            <b>+</b>
+                        <div class="address flex btw vCenter">
+                            <div>
+                                <span class="addressNameAdd"><b>Добавьте адрес</b></span>
+                            </div>
+                            <div class="addAnAddress">
+                                <b>+</b>
                         </div>
                     </div>
+                    {% else %}
+
+                        <div class="address flex btw vCenter">
+                            <div>
+                                <span class="addressNameAdd"><b>Добавьте адрес</b></span>
+                            </div>
+                            <div class="addAnAddress">
+                                <b>+</b>
+                            </div>
+                        </div>
+                        <div class="emptyAddressField">
+                            Пока нет ни одного адреса
+                        </div>
+                    {% endif %}
+
+
                 </div>
             </div>
 <!--            <div id="map"></div>-->
