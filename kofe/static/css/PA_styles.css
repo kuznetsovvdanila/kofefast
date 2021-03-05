@@ -172,7 +172,7 @@ body {
     font-size: 1em !important;
     border-radius: 40px;
     text-align: center;
-    margin: 0 20px 15px 0 !important;
+    margin: 0 0px 15px 0 !important;
     cursor: pointer;
     transition: .2s;
     font-weight: bold;
@@ -191,7 +191,7 @@ body {
     font-size: 1em !important;
     border-radius: 40px;
     text-align: center;
-    margin: 0 20px 0 0 !important;
+    margin: 0 !important;
     cursor: pointer;
     transition: .2s;
     font-weight: bolder !important;
