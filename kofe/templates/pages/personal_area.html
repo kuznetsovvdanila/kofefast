@@ -40,13 +40,6 @@
                         </div>
                     </div>
                 </div>
-<!--                <form action="" method="POST" enctype="multipart/form-data">-->
-<!--                    <input name="action_type" type="text" value="changing_picture" style="display: none;">-->
-<!--                    <input type="file" id="pro_pic" name="profile_picture" accept=".jpg, .jpeg, .png">-->
-
-<!--                    {% csrf_token %}-->
-<!--                    <input type="submit" value="Изменить пикчуу">-->
-<!--                </form>-->
                 <div class="personInfo">
                     <div>
                         <span style="background-color: #deb887; color: #111111;"><b>{{ user.first_name }} {{ user.last_name }}</b></span>
@@ -171,6 +164,33 @@
                 {% csrf_token %}
                 <input type="submit" value="Добавить" class="pointer">
             </form>
+        </div>
+
+        <div class="edit flex">
+            <form action="" method="POST" class="input_file flex">
+                <div class="flex btw">
+                    <span class="frm"><b>Изменить</b></span>
+                    <span class="closeIt" style=""><b>x</b></span>
+                </div>
+                <input name="action_type" type="text" value="changing_info" style="display: none;">
+                <input type="text" name="first_name" maxlength="150" required="" id="first_name" placeholder="Имя" value="{{ request.user.first_name }}">
+                <input type="text" name="last_name" maxlength="150" required="" id="last_name" placeholder="Фамилия" value="{{ request.user.last_name }}">
+                <input type="text" name="email" maxlength="150" required="" id="email" placeholder="Почта" value="{{ request.user.email }}">
+                <input type="text" name="phone_number" maxlength="150" required="" id="phone_number" placeholder="Телефон" value="{{ request.user.phone_number }}">
+<!--                <input type="file" id="pro_pic" name="profile_picture" accept=".jpg, .jpeg, .png">-->
+
+                <input class="" type="file" id="pro_pic" name="profile_picture" accept=".jpg, .jpeg, .png">
+                <div class="fake_file">
+                    <input type="text" class="fake_file_input" value="Добавить фото">
+                </div>
+                <a href="#" class="clear_input">Очистить</a>
+                {% csrf_token %}
+<!--                <input type="submit" value="Изменить пикчуу" class="pointer">-->
+<!--                {% csrf_token %}-->
+<!--                <input type="submit" value="Добавить" class="pointer">-->
+                <input type="submit" value="Готово" class="pointer rltv editSubmit">
+            </form>
+
         </div>
 
 <!--        <div class="bottom">-->

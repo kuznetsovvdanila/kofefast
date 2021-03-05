@@ -25,6 +25,9 @@ input {
 .flex {
     display: flex;
 }
+.rltv {
+    position: relative !important;
+}
 .btw {
     justify-content: space-between;
 }
@@ -771,14 +774,15 @@ input[type='submit'] {
         border-radius: 30px;
     }
     form {
-        width: 400px;
+        width: 450px;
     }
     form input {
-        height: 65px;
-        border-radius: 35px;
+        height: 75px;
+        border-radius: 40px;
+        font-size: 2em !important;
     }
-    form input[type='submit'] {
-        font-size: 2.5em;
+    form input[type='submit']:not(.deleteAnAddress, .chooseAnAddress) {
+        font-size: 3em !important;
     }
 }
 ::-webkit-scrollbar {

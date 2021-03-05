@@ -127,7 +127,7 @@ def personal_area_page(request):
                 request.user.chosen_address.remove(i)
             request.user.save()
 
-        if request.POST.get('action_type') == 'changing_picture':
+        if request.POST.get('action_type') == 'changing_info':
             def remove_transparency(im, bg_colour=(255, 255, 255)):
                 if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
                     alpha = im.convert('RGBA').split()[-1]
@@ -138,16 +138,39 @@ def personal_area_page(request):
                 else:
                     return im
 
-            request.user.profile_picture = request.FILES['profile_picture']
-            t = Image.open(request.user.profile_picture)
-            t = remove_transparency(t)
-            t.convert('RGB')
-            t.thumbnail((400, 400))
-            t_io = BytesIO()
-            t.save(t_io, 'JPEG')
-            t_result = File(t_io, name=request.user.profile_picture.name)
-            request.user.profile_picture = t_result
-            request.user.save()
+            if request.POST.get('first_name'):
+                first_name = request.POST.get('first_name')
+                request.user.first_name = first_name
+                request.user.save()
+
+            if request.POST.get('last_name'):
+                last_name = request.POST.get('last_name')
+                request.user.last_name = last_name
+                request.user.save()
+
+            if request.POST.get('email'):
+                email = request.POST.get('email')
+                request.user.email = email
+                request.user.save()
+
+            if request.POST.get('phone_number'):
+                phone_number = request.POST.get('phone_number')
+                request.user.phone_number = phone_number
+                request.user.save()
+
+            if request.FILES['profile_picture']:
+                print('aeeee')
+                request.user.profile_picture = request.FILES['profile_picture']
+                t = Image.open(request.user.profile_picture)
+                t = remove_transparency(t)
+                t.convert('RGB')
+                t.thumbnail((400, 400))
+                t_io = BytesIO()
+                t.save(t_io, 'JPEG')
+                t_result = File(t_io, name=request.user.profile_picture.name)
+                request.user.profile_picture = t_result
+                request.user.save()
+
         if request.POST.get('action_type') == 'delete_an_address':
             AddressUser.objects.all().filter(id=request.POST.get('delete_adr_id')).delete()
 
