@@ -33,8 +33,12 @@
         </div>
         <div class="mainPA flex">
             <div class="person flex">
-                <div class="photo" style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); {% else %} background-image: url('../media/person.png'); {% endif %} background-position: 50% 50%; background-size: cover;">
+                <div>
+                    <div class="photo pointer" style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); {% else %} background-image: url('../media/person.png'); {% endif %} background-position: 50% 50%; background-size: cover;">
+                        <div class="changePhoto">
 
+                        </div>
+                    </div>
                 </div>
 <!--                <form action="" method="POST" enctype="multipart/form-data">-->
 <!--                    <input name="action_type" type="text" value="changing_picture" style="display: none;">-->
@@ -80,7 +84,7 @@
                                 </div>
 
                                 {% if adr.chosen %}
-                                <div class="flex" style="flex-direction: column;">
+                                <div class="flex" style="flex-direction: column; margin-left: 0;">
                                     <form action="" method="POST" class="inside flex">
                                         <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">
                                         <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">

@@ -19,14 +19,36 @@ body {
 .person > .photo {
     margin: 0 0 20px 0;
 }
+.changePhoto {
+    filter: invert();
+    transform: filter;
+    position: relative;
+    top: 170px;
+    left: 170px;
+    opacity: 0;
+    background-image: url('../img/edit.svg');
+    width: 60px;
+    height: 60px;
+    transition: .3s;
+}
 .photo {
     background-repeat: repeat;
     border-radius: 200px;
-    box-shadow: 0 0 0 10px #eeeeee;
     width: 400px;
     height: 400px;
     transition: .2s;
+}
+.person > div:first-child {
+    border-radius: 200px;
+    box-shadow: 0 0 0 10px #eeeeee;
     margin: 0 0 30px 0 !important;
+}
+.person div:first-child:hover > .photo:not(.changePhoto) {
+    opacity: .5;
+}
+.person div:first-child:hover > .changePhoto {
+    opacity: 1;
+    transition: .3s;
 }
 .personInfo > div:first-child {
     font-size: 3em;
