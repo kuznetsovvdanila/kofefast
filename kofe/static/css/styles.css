@@ -114,7 +114,7 @@ input {
 .categories {
     justify-content: center;
     max-width: 85%;
-    margin: 0 0 50px 0 !important;
+    margin: 0 0 40px 0 !important;
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -173,20 +173,20 @@ input {
 .item.show {
     display: flex;
     margin: 0 0 60px 0;
-    min-width: 85%;
+    min-width: 100%;
     height: 350px;
     border-radius: 50px;
     align-items: center;
-    border: 10px solid #eeeeee;
+    box-shadow: 0 0 0 10px #eeeeee;
     transition: .2s;
     justify-content: space-between;
     color: #eeeeee;
 }
 .item.active {
-    border: 10px solid #eeeeee;
+    box-shadow: 0 0 0 10px #eeeeee;
     display: flex;
     margin: 0 0 60px 0;
-    min-width: 85%;
+    min-width: 100%;
     height: 350px;
     border-radius: 50px;
     align-items: center;
@@ -197,6 +197,7 @@ input {
 .cntnr {
     margin: 0 0 0 50px;
     min-height: 80%;
+    max-width: 80%;
     flex-direction: column;
     align-items: left;
     justify-content: space-between;
@@ -206,12 +207,12 @@ input {
     color: #111111;
 }
 .itemName b > span {
-    font-size: 3em;
+    font-size: 4em;
     background-color: #deb887;
     color: #111111;
 }
 .itemDescription {
-    font-size: 1.5em;
+    font-size: 2.5em;
 }
 .item.show > div:not(:first-child) {
     margin: 0 10px 10px 20px;
@@ -226,7 +227,7 @@ input {
     margin: 0 10px 20px 20px;
 }
 .itemPrice {
-    font-size: 3em;
+    font-size: 3.5em;
 }
 .itemPhoto {
     width: 50% !important;
@@ -709,6 +710,9 @@ input[type='submit'] {
         max-width: 46%;
         min-width: 46%;
         height: 450px;
+    }
+    .cntnr {
+        max-width: auto;
     }
     .item.active {
         max-width: 46%;
