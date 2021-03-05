@@ -102,33 +102,36 @@ input {
 .mainAuth {
     padding: 10px 30px 30px 30px;
     flex-direction: column;
+    align-items: center;
 }
 .mainAuth > div {
     margin: 0 0 50px 0;
 }
 .hd {
     text-align: center;
-    font-size: 4em;
+    font-size: 5em;
 }
 .categories {
-    margin: 0 0 70px 0 !important;
+    justify-content: center;
+    max-width: 85%;
+    margin: 0 0 50px 0 !important;
     flex-wrap: wrap;
     justify-content: center;
 }
 .categories > div:not(.item) {
     margin: 0 15px 0 15px;
-    font-size: 2em;
+    font-size: 3em;
     cursor: pointer;
     text-align: center;
     transition: .2s;
 }
 .categories > div:hover {
-    box-shadow: inset 0 0 0 5px #eeeeee;
+    box-shadow: inset 0 0 0 5px #deb887;
     transition: .2s;
 }
 .provider {
     padding: 5px 10px 5px 10px;
-    border-radius: 30px;
+    border-radius: 35px;
     background-color: #111111;
     color: #eeeeee;
     transition: .2s;
@@ -154,14 +157,15 @@ input {
     display: none;
 }
 .list {
-    padding: 80px 0 0 0 !important;
+    padding: 60px 0 0 0 !important;
+    width: 85%;
     /*margin: 0 20px 0 20px !important;
     border-top: 5px solid #333333;*/
 }
 .coffee, .breakfast {
     min-width: 100%;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 .item {
     display: none;
@@ -192,7 +196,6 @@ input {
 }
 .cntnr {
     margin: 0 0 0 50px;
-    max-width: 70%;
     min-height: 80%;
     flex-direction: column;
     align-items: left;
@@ -703,25 +706,25 @@ input[type='submit'] {
 
 @media screen and (min-width: 1500px) {
     .item.show {
-        max-width: 42%;
-        min-width: 42%;
+        max-width: 46%;
+        min-width: 46%;
         height: 450px;
     }
     .item.active {
-        max-width: 42%;
-        min-width: 42%;
+        max-width: 46%;
+        min-width: 46%;
         height: 450px;
     }
     .itemName b > span {
-        font-size: 3.5em;
+        font-size: 4em;
         background-color: #deb887;
         color: #111111;
     }
     .itemDescription {
-        font-size: 2em;
+        font-size: 2.5em;
     }
     .itemPrice {
-        font-size: 3.5em;
+        font-size: 4em;
     }
     .itemPhoto {
         background-position: right center !important;
