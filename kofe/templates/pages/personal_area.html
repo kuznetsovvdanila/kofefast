@@ -70,7 +70,7 @@
                     {% if addresses %}
                         {% for adr in addresses %}
                             <div style="font-size: 0.8em;" class="address flex btw vCenter">
-                                <div style="max-width: 70%">
+                                <div style="max-width: 60%;  margin-right: 0;">
                                     <span style="" class="addressName">
                                         <b>{{ adr.city }},
                                         улица {{ adr.street }},
@@ -95,7 +95,7 @@
                                     </form>
                                 </div>
                                 {% else %}
-                                <div class="flex" style="flex-direction: column;">
+                                <div class="flex" style="flex-direction: column; margin-left: 0;">
                                     <form action="" method="POST" class="inside flex">
                                         <input name="action_type" type="text" value="prefer_address" style="display: none;">
                                         <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
