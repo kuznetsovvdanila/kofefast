@@ -54,7 +54,6 @@ input {
 .defaultUserPhoto {
     background-image: url('../img/person.png');
     background-repeat: no-repeat;
-    background-size: cover;
     margin: 10px;
     width: 60px;
     height: 60px;
@@ -77,7 +76,6 @@ input {
 .defaultUserPhotoAuth {
     background-image: url('../img/person.png');
     background-repeat: no-repeat;
-    background-size: cover;
     margin: 10px;
     width: 60px;
     height: 60px;
@@ -149,7 +147,7 @@ input {
 .line {
     background-color: #333333;
     width: 85%;
-    height: 5px;
+    height: 10px;
     border: none;
 }
 .lineMobile {
@@ -175,13 +173,13 @@ input {
     height: 350px;
     border-radius: 50px;
     align-items: center;
-    border: 5px solid #eeeeee;
+    border: 10px solid #eeeeee;
     transition: .2s;
     justify-content: space-between;
     color: #eeeeee;
 }
 .item.active {
-    border: 5px solid #eeeeee;
+    border: 10px solid #eeeeee;
     display: flex;
     margin: 0 0 60px 0;
     min-width: 85%;

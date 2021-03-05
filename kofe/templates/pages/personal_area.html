@@ -12,8 +12,8 @@
     </head>
     <body>
         <div class="topMenu flex">
-            <div style="font-size: 3.5em;">
-                <a href="{% url 'index' %}" style="color: #eeeeee">kofefast</a>
+            <div style="font-size: 4.5em;">
+                <a href="{% url 'index' %}" style="color: #eeeeee;">kofefast</a>
             </div>
             {% if not request.user.is_authenticated %}
                 <div class="defaultUserPhoto softBorder pointer">
@@ -33,22 +33,25 @@
         </div>
         <div class="mainPA flex">
             <div class="person flex">
-                <div class="photo" style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); {% else %} background-image: url('../media/person.png'); {% endif %}">
+                <div class="photo" style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); {% else %} background-image: url('../media/person.png'); {% endif %} background-position: 50% 50%; background-size: cover;">
 
                 </div>
-                <form action="" method="POST" enctype="multipart/form-data">
-                    <input name="action_type" type="text" value="changing_picture" style="display: none;">
-                    <input type="file" id="pro_pic" name="profile_picture" accept=".jpg, .jpeg, .png">
+<!--                <form action="" method="POST" enctype="multipart/form-data">-->
+<!--                    <input name="action_type" type="text" value="changing_picture" style="display: none;">-->
+<!--                    <input type="file" id="pro_pic" name="profile_picture" accept=".jpg, .jpeg, .png">-->
 
-                    {% csrf_token %}
-                    <input type="submit" value="Изменить пикчуу">
-                </form>
+<!--                    {% csrf_token %}-->
+<!--                    <input type="submit" value="Изменить пикчуу">-->
+<!--                </form>-->
                 <div class="personInfo">
                     <div>
-                        <b>{{ user.first_name }} {{ user.last_name }}</b>
+                        <span style="background-color: #deb887; color: #111111;"><b>{{ user.first_name }} {{ user.last_name }}</b></span>
                     </div>
                     <div>
-                        {{ user.email }} - {{ user.phone_number }}
+                        {{ user.email }}
+                    </div>
+                    <div>
+                        <b>{{ user.phone_number }}</b>
                     </div>
                 </div>
             </div>
@@ -66,46 +69,47 @@
                 <div class="addresses flex">
                     {% if addresses %}
                         {% for adr in addresses %}
-                            <div style="font-size: 0.9em;" class="address flex btw vCenter">
-                                <div>
-                                    <span class="addressName">
-                                        {{ adr.city }},
+                            <div style="font-size: 0.8em;" class="address flex btw vCenter">
+                                <div style="max-width: 70%">
+                                    <span style="" class="addressName">
+                                        <b>{{ adr.city }},
                                         улица {{ adr.street }},
                                         дом {{ adr.house }},
-                                        подъезд {{ adr.entrance }}
+                                        подъезд {{ adr.entrance }}</b>
                                     </span>
                                 </div>
 
                                 {% if adr.chosen %}
+                                <div class="flex" style="flex-direction: column;">
                                     <form action="" method="POST" class="inside flex">
                                         <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">
                                         <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
                                         {% csrf_token %}
-                                        <input type="submit" value="✔" class="chooseAnAddress pointer">
+                                        <input type="submit" value="Отменить выбор" class="chooseAnAddress pointer">
                                     </form>
+                                    <form action="" method="POST" class="inside">
+                                        <input name="action_type" type="text" value="delete_an_address" style="display: none;">
+                                        <input name="delete_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                        {% csrf_token %}
+                                        <input type="submit" class="deleteAnAddress" value="Удалить">
+                                    </form>
+                                </div>
                                 {% else %}
                                 <div class="flex" style="flex-direction: column;">
                                     <form action="" method="POST" class="inside flex">
                                         <input name="action_type" type="text" value="prefer_address" style="display: none;">
                                         <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
                                         {% csrf_token %}
-                                        <input type="submit" value="✔" class="chooseAnAddress pointer">
+                                        <input type="submit" value="Доставлять сюда" class="chooseAnAddress pointer">
                                     </form>
                                     <form action="" method="POST" class="inside">
                                         <input name="action_type" type="text" value="delete_an_address" style="display: none;">
                                         <input name="delete_adr_id" type="text" value="{{adr.id}}" style="display: none;">
                                         {% csrf_token %}
-                                        <input type="submit" class="deleteAnAddress" value="X">
+                                        <input type="submit" class="deleteAnAddress" value="Удалить">
                                     </form>
                                 </div>
                                 {% endif %}
-
-<!--                                    <form action="" method="POST" class="inside">-->
-<!--                                        {% csrf_token %}-->
-<!--                                        <input type="submit" class="chooseAnAddress" value="Доставлять сюда">-->
-<!--                                    </form>-->
-
-
                             </div>
                         {% endfor %}
                     <div class="addAnAddress">
