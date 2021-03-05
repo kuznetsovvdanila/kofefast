@@ -346,7 +346,6 @@ input[type='submit'] {
     transition: .2s;
 }
 
-
 .mainMobile {
     display: none;
 }
@@ -356,6 +355,67 @@ input[type='submit'] {
 }
 
 @media screen and (max-width: 980px) {
+    }
+    .itemName b > span {
+        font-size: 3.5em;
+        background-color: #deb887;
+        color: #111111;
+    }
+    .itemDescription {
+        font-size: 2em;
+    }
+    .itemPrice {
+        font-size: 3.5em;
+    }
+    .itemPhoto {
+        background-position: right center !important;
+    }
+    .list {
+        margin: 0 60px 0 60px !important;
+        flex-wrap: wrap;
+    }
+    .description {
+        font-size: 4em;
+        max-width: 400px;
+        left: 23%;
+    }
+    .registrationButton {
+        top: 680px;
+        left: 20%;
+    }
+    .registrationButton.active {
+        border-radius: 50px;
+        font-size: 3em;
+        padding: 5px 15px 5px 15px;
+    }
+    .information, .registration, .authorization {
+        max-width: 550px;
+    }
+    .registration {
+        top: 21%;
+    }
+    .information {
+        font-size: 2em;
+    }
+    .frm {
+        font-size: 2.5em;
+    }
+    .closeIt {
+        font-size: 2.5em;
+        height: 55px;
+        width: 55px;
+        border-radius: 30px;
+    }
+    form {
+        width: 400px;
+    }
+    form input {
+        height: 65px;
+        border-radius: 35px;
+    }
+    form input[type='submit'] {
+        font-size: 2.5em;
+    }
     /*.leftSide {
         left: 0;
         margin: 0;
@@ -529,7 +589,7 @@ input[type='submit'] {
         display: none;
     }
     .logo {
-        font-size: 10em;
+        font-size: 10em !important;
     }
     .arrowMobile {
         color: #eeeeee;
