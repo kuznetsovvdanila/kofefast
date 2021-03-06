@@ -304,6 +304,9 @@ input[type='file'] {
 .afterAddressMenu {
     display: none;
 }
+.addAnAddressMobile {
+    display: none;
+}
 
 @media screen and (max-width: 980px) {
     body {
@@ -457,6 +460,7 @@ input[type='file'] {
         display: none;
     }
     .addAnAddressMobile {
+        display: block;
         color: #111111;
         min-width: 85%;
         height: 125px;

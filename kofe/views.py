@@ -79,7 +79,7 @@ def index_page(request):
                     t = Image.open(item.preview)
                     t = remove_transparency(t)
                     t.convert('RGB')
-                    t = t.resize((500, 500))
+                    t = t.resize((int(500 * t.width / t.height), 500))
                     t_io = BytesIO()
                     t.save(t_io, 'JPEG')
                     t_result = File(t_io, name=item.preview.name)
