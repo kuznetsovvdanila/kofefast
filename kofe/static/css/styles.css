@@ -315,7 +315,7 @@ form {
 input {
     border: none;
     height: 55px;
-    border-radius: 30px;
+    border-radius: 35px;
     text-align: center;
     margin: 10px 0 0 0;
 }
@@ -330,6 +330,7 @@ input[type='submit'] {
     background-color: #deb887;
     font-size: 2em;
     font-weight: bold;
+    height: 63px;
 }
 .bottom {
     position: fixed;
@@ -814,9 +815,11 @@ input[type='submit'] {
         height: 75px;
         border-radius: 40px;
         font-size: 2em !important;
+        border-radius: 40px;
     }
     form input[type='submit']:not(.deleteAnAddress, .chooseAnAddress) {
         font-size: 3em !important;
+        height: 75px;
     }
 }
 ::-webkit-scrollbar {

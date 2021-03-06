@@ -79,7 +79,12 @@ body {
 }
 .adr, .ord {
     font-size: 2.5em;
-    margin: 20px 0 10px 80px;
+    margin: 0px 0 5px 80px;
+    width: 76%;
+}
+.ord {
+    font-size: 2.5em;
+    margin: 20px 0 5px 80px;
     width: 76%;
 }
 .underln {
@@ -250,34 +255,32 @@ body {
     opacity: 0;
 }
 .editSubmit {
-    bottom: 107px;
+    bottom: 97px;
 }
 .input_file {
     position: relative !important;
     margin: 0 0 10px 0 !important;
-}
-input#file-upload-button {
-    cursor: pointer;
 }
 .input_file > input[type=file] {
     opacity: 0;
     filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
     position: relative !important;
     z-index: 2 !important;
-    height: 77px !important;
+    height: 67px !important;
     width: 440px !important;
 }
 .fake_file {
     position: relative;
-    bottom: 88px;
+    height: 67px;
+    bottom: 78px;
     width: 100%;
 }
 .fake_file input:not([type="button"]) {
     color: #111111;
     font-weight: bold;
-    font-size: 3em !important;
+    font-size: 2em !important;
     background-color: #eeeeee;
-    max-width: 436px;
+    max-width: 336px;
     margin: 0;
 }
 input[type='file'] {
@@ -288,7 +291,7 @@ input[type='file'] {
 }
 .edit.active {
     opacity: 1;
-    right: 0;
+    right: 2%;
     transition: .5s;
 }
 .cls, .opn {
@@ -328,6 +331,40 @@ input[type='file'] {
 }
 
 @media screen and (min-width: 1500px) {
+    .editSubmit {
+        bottom: 89px;
+    }
+    .input_file {
+        position: relative !important;
+        margin: 0 0 10px 0 !important;
+    }
+    .input_file > input[type=file] {
+        opacity: 0;
+        filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+        position: relative !important;
+        z-index: 2 !important;
+        height: 77px !important;
+        width: 440px !important;
+    }
+    .fake_file {
+        position: relative;
+        bottom: 88px;
+        width: 100%;
+    }
+    .fake_file input:not([type="button"]) {
+        color: #111111;
+        font-weight: bold;
+        font-size: 3em !important;
+        background-color: #eeeeee;
+        max-width: 436px;
+        margin: 0;
+    }
+    input[type='file'] {
+        background-color: #eeeeee;
+    }
+    .edit form {
+        margin: 10% 15% 0 0;
+    }
     .addresses, .orders {
         height: 225px;
     }
