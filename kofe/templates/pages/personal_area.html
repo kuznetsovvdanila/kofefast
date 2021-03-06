@@ -12,7 +12,7 @@
     </head>
     <body>
         <div class="topMenu flex">
-            <div style="font-size: 4.5em;">
+            <div class="logo" style="font-size: 4.5em;">
                 <a href="{% url 'index' %}" style="color: #eeeeee;">kofefast</a>
             </div>
             {% if not request.user.is_authenticated %}
@@ -31,6 +31,7 @@
                 </div>
             {% endif %}
         </div>
+        <hr class="lineMobile">
         <div class="mainPA flex">
             <div class="person flex">
                 <div>
@@ -68,7 +69,7 @@
                         {% for adr in addresses %}
                             <div style="font-size: 0.8em;" class="address flex btw vCenter">
                                 <div style="max-width: 60%;  margin-right: 0;">
-                                    <span style="" class="addressName">
+                                    <span class="addressName">
                                         <b>{{ adr.city }},
                                         улица {{ adr.street }},
                                         дом {{ adr.house }},
@@ -108,9 +109,45 @@
                                 </div>
                                 {% endif %}
                             </div>
+                            <div class="afterAddressMenu">
+                                {% if adr.chosen %}
+                                <div class="flex" style="margin-left: 0;">
+                                    <form action="" method="POST" class="inside flex">
+                                        <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">
+                                        <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                        {% csrf_token %}
+                                        <input type="submit" value="Отменить выбор" class="chooseAnAddress pointer">
+                                    </form>
+                                    <form action="" method="POST" class="inside">
+                                        <input name="action_type" type="text" value="delete_an_address" style="display: none;">
+                                        <input name="delete_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                        {% csrf_token %}
+                                        <input type="submit" class="deleteAnAddress" value="Удалить">
+                                    </form>
+                                </div>
+                                {% else %}
+                                <div class="flex" style="margin-left: 0;">
+                                    <form action="" method="POST" class="inside flex">
+                                        <input name="action_type" type="text" value="prefer_address" style="display: none;">
+                                        <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                        {% csrf_token %}
+                                        <input type="submit" value="Доставлять сюда" class="chooseAnAddress pointer">
+                                    </form>
+                                    <form action="" method="POST" class="inside">
+                                        <input name="action_type" type="text" value="delete_an_address" style="display: none;">
+                                        <input name="delete_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                        {% csrf_token %}
+                                        <input type="submit" class="deleteAnAddress" value="Удалить">
+                                    </form>
+                                </div>
+                                {% endif %}
+                            </div>
                         {% endfor %}
                     <div class="addAnAddress">
                         <b>+</b>
+                    </div>
+                    <div class="addAnAddressMobile">
+                        <b>Добавить адрес</b>
                     </div>
                     {% else %}
                         <div class="address flex btw vCenter">
