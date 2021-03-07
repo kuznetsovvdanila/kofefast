@@ -16,7 +16,7 @@ class AddressUser(models.Model):
     owner = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
     city = models.CharField('Город', max_length=30, default='Москва')
     street = models.CharField('Улица', max_length=30, default='Арбат')
-    house = models.IntegerField('Дом', default=1)
+    house = models.CharField('Дом', max_length=30, default='1')
     entrance = models.IntegerField('Подъезд', default=None)
 
     def __str__(self):
@@ -80,6 +80,27 @@ class Provider(models.Model):
     class Meta:
         verbose_name = "Кафе"
         verbose_name_plural = "Кофейни"
+
+
+class Order(models.Model):
+    customer = models.ForeignKey(AUTH_USER_MODEL, related_name='customer', on_delete=models.CASCADE,
+                                 verbose_name='Заказчик', unique=True)
+    chosen_items = models.ManyToManyField(Item, blank=True, verbose_name="Выбранные продукты")
+    chosen_cafe = models.ForeignKey('AddressCafe', on_delete=models.CASCADE, verbose_name='Выбранное кафе')
+    courier = models.ForeignKey(AUTH_USER_MODEL, related_name='courier', on_delete=models.CASCADE,
+                                verbose_name='Курьер', unique=True)
+    chosen_delivery_address = models.ForeignKey('AddressUser', on_delete=models.CASCADE,
+                                                verbose_name='Выбранное адрес доставки')
+    time_created = models.TimeField('Время создания заказа', auto_now_add=True, auto_now=False)
+    time_requested = models.IntegerField('Время на выполнение заказа', default=15)
+    time_over = models.TimeField('Время завершения заказа', auto_now_add=False, auto_now=False)
+
+    def __str__(self):
+        return "Заказ от " + str(self.customer) + "Из " + str(self.chosen_cafe) + ", курьер:" + str(self.courier)
+
+    class Meta:
+        verbose_name = "Заказ"
+        verbose_name_plural = "Заказы"
 
 
 class MyAccountManager(BaseUserManager):
