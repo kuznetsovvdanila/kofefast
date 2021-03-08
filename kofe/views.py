@@ -104,15 +104,15 @@ def index_page(request):
             drinkable.append(item)
 
     addresses = []
-
-    for adrs in AddressUser.objects.all().filter(owner=request.user):
-        if request.user.chosen_address.all().filter(id=adrs.id):
-            adrs.chosen = True
-        addresses.append(adrs)
+    if request.user.is_authenticated:
+        for adrs in AddressUser.objects.all().filter(owner=request.user):
+            if request.user.chosen_address.all().filter(id=adrs.id):
+                adrs.chosen = True
+            addresses.append(adrs)
 
     context = {
         # 'items': Provider.item_set.all().filter(type='d'),
-        'addresses': addresses,
+        'addresses': addresses if request.user.is_authenticated else None,
         'providers': Provider.objects.all(),
         'drinks': drinkable,
         'form': form if form else RegistrationForm(),
