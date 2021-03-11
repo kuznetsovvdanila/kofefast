@@ -177,7 +177,7 @@ def personal_area_page(request):
                 request.user.phone_number = phone_number
                 request.user.save()
 
-            if request.FILES['profile_picture']:
+            if request.FILES:
                 print('aeeee')
                 request.user.profile_picture = request.FILES['profile_picture']
                 t = Image.open(request.user.profile_picture)

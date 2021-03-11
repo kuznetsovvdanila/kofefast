@@ -359,6 +359,87 @@ input[type='submit'] {
     display: none;
 }
 
+
+
+.addressMenuMainPage {
+    display: none;
+}
+.arrowMobileNotMobile {
+    color: #eeeeee;
+    min-width: 100%;
+    text-align: center;
+    display: block;
+    margin: 0 !important;
+    padding: 10px 0 0 0;
+    background: linear-gradient(to top, #111111, rgba(0, 0, 0, .0));
+}
+.arrowNotMobile {
+    font-size: 5em;
+    transition: .2s;
+}
+.arrowNotMobile.active {
+    transform: rotate(180deg);
+    transition: .2s;
+}
+.addressMenuMainPageNotMobile {
+    display: block;
+    left: 0;
+    bottom: 0;
+    flex-direction: column;
+    width: 85%;
+    height: auto;
+    bottom: -110px;
+    display: flex;
+    position: fixed;
+    margin: 0 0 0 7.5% !important;
+    padding: 0 !important;
+    transition: .3s;
+}
+.addressMenuMainPageNotMobile.active {
+    bottom: 0;
+    transition: .3s;
+}
+.addressMenuMainPageNotMobile.active > .addressListNotMobile {
+    height: auto;
+}
+.addressListNotMobile {
+    display: block;
+    max-height: 700px;
+    overflow: auto;
+    padding: 30px 0 30px 0;
+    float: right;
+    background-color: #111111;
+}
+.inside {
+    max-width: 20%;
+    margin: 0 !important;
+    width: auto;
+}
+.chooseAnAddress {
+    color: #111111 !important;
+    background-color: #eeeeee !important;
+    width: 30px !important;
+    height: 230px !important;
+    min-width: 230px;
+    margin: 0 !important;
+    padding: 0px 15px 0px 15px;
+    background-color: #eeeeee;
+    font-size: 7em !important;
+    border-radius: 120px;
+    text-align: center;
+    margin: 0 !important;
+    cursor: pointer;
+    transition: .2s;
+    font-weight: bolder !important;
+}
+.addressList > div:first-child {
+    margin: 40px 20px 90px 20px;
+    text-align: center;
+    font-size: 6.5em;
+}
+
+
+
 #map {
   height: 768px;
 }
@@ -551,6 +632,9 @@ input[type='submit'] {
     .logo {
         font-size: 10em !important;
     }
+    .addressMenuMainPageNotMobile {
+        display: none;
+    }
     .arrowMobile {
         color: #eeeeee;
         min-width: 100%;
@@ -569,6 +653,7 @@ input[type='submit'] {
         transition: .2s;
     }
     .addressMenuMainPage {
+        display: block;
         left: 0;
         bottom: 0;
         flex-direction: column;

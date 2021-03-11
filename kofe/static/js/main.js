@@ -3,9 +3,16 @@ $('.arrowMobile').click(function(){
     $('.arrowMobile').toggleClass('active');
     $('.addressMenuMainPage').toggleClass('active');
 })
+$('.arrowMobileNotMobile').click(function(){
+    $('.arrowNotMobile').toggleClass('active');
+    $('.arrowMobileNotMobile').toggleClass('active');
+    $('.addressMenuMainPageNotMobile').toggleClass('active');
+})
 $('.mainAuth').click(function(){
     $('.arrow').removeClass('active');
+    $('.arrowNotMobile').removeClass('active');
     $('.addressMenuMainPage').removeClass('active');
+    $('.addressMenuMainPageNotMobile').removeClass('active');
 })
 $('.registrationButton').click(function(){
     $('.registration').addClass('active');
