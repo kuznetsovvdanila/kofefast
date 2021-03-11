@@ -18,6 +18,11 @@ class CafeAddressesInLine(admin.StackedInline):
     extra = 0
 
 
+class UserBasketsInLine(admin.StackedInline):
+    model = Basket
+    extra = 1
+
+
 class Cafe(admin.ModelAdmin):
     fieldsets = [
         ('Название', {'fields': ['name']}),
@@ -33,6 +38,7 @@ class AccountAdmin(UserAdmin):
     filter_horizontal = ()
     list_filter = ()
     fieldsets = ()
+    inlines = [UserBasketsInLine]
 
 
 admin.site.register(Account, AccountAdmin)

@@ -118,7 +118,7 @@ class Basket(models.Model):
         return cost
 
     def __str__(self):
-        return "Корзина " + str(self.customer) + "Из " + str(self.chosen_cafe)
+        return "Корзина " + str(self.customer) + " Из " + str(self.chosen_cafe)
 
     class Meta:
         verbose_name = "Корзина"
@@ -172,7 +172,7 @@ class Account(AbstractBaseUser):
     first_name = models.CharField('Имя', max_length=60, default='Антон')
     last_name = models.CharField('Фамилия', max_length=60, default='Крутой')
 
-    user_basket = models.OneToOneField(Basket, on_delete=models.CASCADE, verbose_name="Пользовательская корзина", default=None)
+    user_basket = models.ManyToManyField(Basket, blank=True, verbose_name="Пользовательские корзины корзина")
     chosen_address = models.ManyToManyField(AddressUser, blank=True, verbose_name="Выбранный адрес")
     phone_number = models.CharField('Номер телефона', max_length=13, default="89142185648")
 
