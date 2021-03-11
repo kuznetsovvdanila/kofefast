@@ -111,6 +111,7 @@ class Busket(models.Model):
 
     def all_cost(self):
         cost = 0
+
         for i in self.chosen_items:
             cost += i.price
 
