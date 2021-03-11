@@ -103,6 +103,27 @@ class Order(models.Model):
         verbose_name_plural = "Заказы"
 
 
+class Busket(models.Model):
+    customer = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Заказчик', unique=True)
+    chosen_items = models.ManyToManyField(Item, blank=True, verbose_name="Выбранные продукты")
+    chosen_cafe = models.ForeignKey('AddressCafe', on_delete=models.CASCADE, verbose_name='Выбранное кафе')
+    time_requested = models.IntegerField('Ближайшее время доставки', default=15)
+
+    def all_cost(self):
+        cost = 0
+        for i in self.chosen_items:
+            cost += i.price
+
+        return cost
+
+    def __str__(self):
+        return "Корзина " + str(self.customer) + "Из " + str(self.chosen_cafe)
+
+    class Meta:
+        verbose_name = "Корзина"
+        verbose_name_plural = "Корзины"
+
+
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, password=None):
         if not email:
