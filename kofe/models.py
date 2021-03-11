@@ -103,7 +103,7 @@ class Order(models.Model):
         verbose_name_plural = "Заказы"
 
 
-class Busket(models.Model):
+class Basket(models.Model):
     customer = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Заказчик', unique=True)
     chosen_items = models.ManyToManyField(Item, blank=True, verbose_name="Выбранные продукты")
     chosen_cafe = models.ForeignKey('AddressCafe', on_delete=models.CASCADE, verbose_name='Выбранное кафе')
@@ -172,6 +172,7 @@ class Account(AbstractBaseUser):
     first_name = models.CharField('Имя', max_length=60, default='Антон')
     last_name = models.CharField('Фамилия', max_length=60, default='Крутой')
 
+    user_basket = models.OneToOneField(Basket, on_delete=models.CASCADE, verbose_name="Пользовательская корзина", default=None)
     chosen_address = models.ManyToManyField(AddressUser, blank=True, verbose_name="Выбранный адрес")
     phone_number = models.CharField('Номер телефона', max_length=13, default="89142185648")
 
