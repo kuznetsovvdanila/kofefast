@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>
+            kofefast
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+    <body>
+        <div class="topMenu flex">
+            <div class="logo" style="font-size: 4.5em;">
+                <a href="{% url 'personal_area' %}" style="color: #eeeeee;">kofefast</a>
+            </div>
+            {% if not request.user.is_authenticated %}
+                <div class="defaultUserPhoto softBorder pointer">
+                    <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <b>Войти</b>
+                    </div>
+                </div>
+            {% else %}
+                <div class="defaultUserPhotoAuth softBorder pointer">
+                    <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <a href="{% url 'personal_area' %}">
+                            <b>Личный кабинет</b>
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <hr class="lineMobile">
+        {% if not request.user.is_authenticated %}
+            <div class="main flex">
+                <div class="description">
+                    мы реально крутые, пользуйтесь нашим офигенным сайтом
+                </div>
+                <input type="submit" class="registrationButton active pointer" value="Зарегистрироваться">
+                <div class="rightSide">
+                    <div class="information active">
+                        Открытие кофе относится приблизительно к 850 г. н. э., но полное признание его пришло много веков спустя. Первоначально в качестве тонизирующего средства употреблялся не отвар обжаренных зёрен, а непосредственно сырые кофейные ягоды.
+                    </div>
+
+                    <div class="registration">
+                        <div class="flex btw">
+                            <span class="frm">Регистрация</span>
+                            <span class="closeIt" style=""><b>x</b></span>
+                        </div>
+                        <div class="">
+                            <form action="" method="POST" class="flex">
+                                <input name="action_type" type="text" value="registr" style="display: none;">
+                                <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
+                                <input type="text" name="first_name" autocomplete="none" required="" id="id_first_name" placeholder="Имя">
+                                <input type="text" name="last_name" autocomplete="none" required="" id="id_last_name" placeholder="Фамилия">
+                                {{ form.password1 }}
+                                {{ form.password2 }}
+                                {% csrf_token %}
+                                <input type="submit" value="Зарегистрироваться" class="pointer">
+                                <div class="openAuth pointer" style="font-size: 1.5em; margin: 15px;">
+                                    Уже с нами? Войти
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="authorization">
+                        <div class="">
+                            <div class="flex btw">
+                                <span class="frm">Вход</span>
+                                <span class="closeIt" style=""><b>x</b></span>
+                            </div>
+                            <form action="" method="POST" class="flex">
+                                <input name="action_type" type="text" value="authen" style="display: none;">
+                                <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
+                                <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" aria-autocomplete="list" placeholder="Пароль">
+                                {% csrf_token %}
+                                <input type="submit" value="Войти" class="pointer">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mainMobile flex">
+                <div class="descriptionMobile">
+                    мы реально крутые, пользуйтесь нашим офигенным сайтом
+                </div>
+                <div class="registrationButtonMobile active">
+                    <span>
+                        <b>Ещё не с нами? Жми сюда, давай мы это исправим</b>
+                    </span>
+                </div>
+                <div class="rightSideMobile flex">
+                    <div class="informationMobile active">
+                        Открытие кофе относится приблизительно к 850 г. н. э., но полное признание его пришло много веков спустя. Первоначально в качестве тонизирующего средства употреблялся...
+                    </div>
+
+                    <div class="registrationMobile">
+                        <div class="flex btw">
+                            <span class="frm">Регистрация</span>
+                            <span class="closeIt" style=""><b>x</b></span>
+                        </div>
+                        <div class="">
+                            <form action="" method="POST" class="flex">
+                                <input name="action_type" type="text" value="registr" style="display: none;">
+                                <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
+                                <input type="text" name="first_name" autocomplete="none" required="" id="id_first_name" placeholder="Имя">
+                                <input type="text" name="last_name" autocomplete="none" required="" id="id_last_name" placeholder="Фамилия">
+                                {{ form.password1 }}
+                                {{ form.password2 }}
+                                {% csrf_token %}
+                                <input type="submit" value="Зарегистрироваться" class="pointer">
+                                <div class="openAuthMobile pointer" style="font-size: 1.5em; margin: 15px;">
+                                    Уже с нами? Войти
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="authorizationMobile">
+                        <div class="">
+                            <div class="flex btw">
+                                <span class="frm">Вход</span>
+                                <span class="closeIt" style=""><b>x</b></span>
+                            </div>
+                            <form action="" method="POST" class="flex">
+                                <input name="action_type" type="text" value="authen" style="display: none;">
+                                <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
+                                <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" aria-autocomplete="list" placeholder="Пароль">
+                                {% csrf_token %}
+                                <input type="submit" value="Войти" class="pointer">
+                                <div class="registrationButtonMobile pointer" style="font-size: 1.5em; margin: 15px;">
+                                    Ещё не с нами? Войти
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="mainAuth flex">
+                <div class="hd">
+                    Выберите кофейню:
+                </div>
+                <div class="categories flex">
+                    <div class="provider del active">
+                        Любая
+                    </div>
+                    {% for provider in providers %}
+                        <div id="{{ provider.id }}" class="provider">
+                            {{ provider.name }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <hr class="line">
+                <div class="list">
+                    <div class="coffee flex active">
+                        {% for drink in drinks %}
+                            <div id="{{ drink.provided.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ drink.primary_color }}) 60%, transparent); background-image: url('{{ drink.preview.url }}'); background-size: cover; background-position: right 50%">
+                                <div class="cntnr flex">
+                                    <div class="itemName">
+                                        <b><span>{{ drink.name }} - {{ drink.provided }}</span></b>
+                                    </div>
+                                    <div class="itemDescription">
+                                        <span style="background-color: #111111; color: #eeeeee;">{{ drink.description }}</span>
+                                    </div>
+                                    <div class="itemPrice">
+                                        <span><b>{{ drink.price }}$</b></span>
+                                    </div>
+                                </div>
+<!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->
+
+<!--                                </div>-->
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="addressMenuMainPageNotMobile flex">
+                <div class="arrowMobileNotMobile">
+                    <div class="arrowNotMobile pointer">
+                        <b>ᐃ</b>
+                    </div>
+                </div>
+                <div class="addressListNotMobile">
+                    <div>
+                        Выберите адрес:
+                    </div>
+                    {% if addresses %}
+                        {% for adr in addresses %}
+                            {% if adr.chosen %}
+                                <div style="border: 15px solid #deb887 !important;" class="address flex btw vCenter">
+                                    <div>
+                                        <span style="background-color: #eeeeee;" class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>
+                                    </div>
+                                    <div class="">
+                                        <form action="" method="POST" class="inside flex">
+                                            <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">
+                                            <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                            {% csrf_token %}
+                                            <input type="submit" value="X" class="chooseAnAddress pointer">
+                                        </form>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="address flex btw vCenter">
+                                    <div>
+                                        <span class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>
+                                    </div>
+                                    <div class="">
+                                        <form action="" method="POST" class="inside flex">
+                                            <input name="action_type" type="text" value="prefer_address" style="display: none;">
+                                            <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                            {% csrf_token %}
+                                            <input type="submit" value="✔" class="chooseAnAddress pointer">
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="address flex btw vCenter">
+                            <div>
+                                <span class="addressNameAdd"><b>Добавьте адрес</b></span>
+                            </div>
+                            <div class="addAnAddress">
+                                <b>+</b>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="address flex btw vCenter">
+                            <div>
+                                <span class="addressNameAdd"><b>Добавьте адрес</b></span>
+                            </div>
+                            <div class="addAnAddress">
+                                <b>+</b>
+                            </div>
+                        </div>
+                        <div class="emptyAddressField">
+                            Пока нет ни одного адреса
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <div class="addressMenuMainPage flex">
+                <div class="arrowMobile">
+                    <div class="arrow">
+                        <b>ᐃ</b>
+                    </div>
+                </div>
+                <div class="addressList">
+                    <div>
+                        Выберите адрес:
+                    </div>
+                    {% if addresses %}
+                        {% for adr in addresses %}
+                            {% if adr.chosen %}
+                                <div style="border: 15px solid #deb887 !important;" class="address flex btw vCenter">
+                                    <div>
+                                        <span style="background-color: #eeeeee;" class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>
+                                    </div>
+                                    <div class="">
+                                        <form action="" method="POST" class="inside flex">
+                                            <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">
+                                            <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                            {% csrf_token %}
+                                            <input type="submit" value="X" class="chooseAnAddress pointer">
+                                        </form>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="address flex btw vCenter">
+                                    <div>
+                                        <span class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>
+                                    </div>
+                                    <div class="">
+                                        <form action="" method="POST" class="inside flex">
+                                            <input name="action_type" type="text" value="prefer_address" style="display: none;">
+                                            <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                            {% csrf_token %}
+                                            <input type="submit" value="✔" class="chooseAnAddress pointer">
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="address flex btw vCenter">
+                            <div>
+                                <span class="addressNameAdd"><b>Добавьте адрес</b></span>
+                            </div>
+                            <div class="addAnAddress">
+                                <b>+</b>
+                        </div>
+                    </div>
+                    {% else %}
+                        <div class="address flex btw vCenter">
+                            <div>
+                                <span class="addressNameAdd"><b>Добавьте адрес</b></span>
+                            </div>
+                            <div class="addAnAddress">
+                                <b>+</b>
+                            </div>
+                        </div>
+                        <div class="emptyAddressField">
+                            Пока нет ни одного адреса
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+<!--            <div id="map"></div>-->
+        {% endif %}
+<!--        <div class="bottom">-->
+<!--            Designed by somebody, 2021-->
+<!--        </div>-->
+
+        <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAU8R6Wit9mEiBzIoDmt3m49Hz4XAJ1Og&callback=initMap">
+        </script>
+    </body>
+</html>

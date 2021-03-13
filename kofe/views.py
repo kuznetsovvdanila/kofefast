@@ -208,6 +208,14 @@ def personal_area_page(request):
     return render(request, 'pages/personal_area.html', context)
 
 
+def basket_page(request):
+
+    context = {
+
+    }
+    return render(request, 'pages/basket.html', context)
+
+
 def logoutUser(request):
     logout(request)
     return redirect('index')
