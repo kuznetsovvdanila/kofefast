@@ -12,23 +12,41 @@
     <body>
         <div class="topMenu flex">
             <div class="logo" style="font-size: 4.5em;">
-                <a href="{% url 'personal_area' %}" style="color: #eeeeee;">kofefast</a>
+                <a href="{% url 'index' %}" style="color: #eeeeee;">kofefast</a>
             </div>
-            {% if not request.user.is_authenticated %}
-                <div class="defaultUserPhoto softBorder pointer">
-                    <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        <b>Войти</b>
+            {% if request.user.is_authenticated %}
+            <div style="display: flex; justify-content: space-around; align-items: center; width: 200px;">
+                <a href="{% url 'basket' %}">
+                    <div class="basketImage pointer">
+
                     </div>
-                </div>
+                </a>
+                <a href="{% url 'personal_area' %}" style="color: #eeeeee;">
+                    <div class="defaultUserPhoto pointer">
+
+                    </div>
+                </a>
+            </div>
             {% else %}
-                <div class="defaultUserPhotoAuth softBorder pointer">
-                    <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        <a href="{% url 'personal_area' %}">
-                            <b>Личный кабинет</b>
-                        </a>
-                    </div>
-                </div>
+            <div>
+
+            </div>
             {% endif %}
+<!--            {% if not request.user.is_authenticated %}-->
+<!--                <div class="defaultUserPhoto softBorder pointer">-->
+<!--                    <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">-->
+<!--                        <b>Войти</b>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            {% else %}-->
+<!--                <div class="defaultUserPhotoAuth softBorder pointer">-->
+<!--                    <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">-->
+<!--                        <a href="{% url 'personal_area' %}">-->
+<!--                            <b>Личный кабинет</b>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            {% endif %}-->
         </div>
         <hr class="lineMobile">
         {% if not request.user.is_authenticated %}

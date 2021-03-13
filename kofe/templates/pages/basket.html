@@ -8,164 +8,80 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <link rel="stylesheet" href="{% static 'css/basket.css' %}">
     </head>
     <body>
+
         <div class="topMenu flex">
             <div class="logo" style="font-size: 4.5em;">
-                <a href="{% url 'personal_area' %}" style="color: #eeeeee;">kofefast</a>
+                <a href="{% url 'index' %}" style="color: #eeeeee;">kofefast</a>
             </div>
-            {% if not request.user.is_authenticated %}
-                <div class="defaultUserPhoto softBorder pointer">
-                    <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        <b>Войти</b>
+            {% if request.user.is_authenticated %}
+            <div style="display: flex; justify-content: space-around; align-items: center; width: 200px;">
+                <a href="{% url 'basket' %}">
+                    <div class="basketImage pointer">
+
                     </div>
-                </div>
+                </a>
+                <a href="{% url 'personal_area' %}" style="color: #eeeeee;">
+                    <div class="defaultUserPhoto pointer">
+
+                    </div>
+                </a>
+            </div>
             {% else %}
-                <div class="defaultUserPhotoAuth softBorder pointer">
-                    <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        <a href="{% url 'personal_area' %}">
-                            <b>Личный кабинет</b>
-                        </a>
-                    </div>
-                </div>
+            <div>
+
+            </div>
             {% endif %}
+<!--            {% if not request.user.is_authenticated %}-->
+<!--                <div class="defaultUserPhoto softBorder pointer">-->
+<!--                    <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">-->
+<!--                        <b>Войти</b>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            {% else %}-->
+<!--                <div class="defaultUserPhotoAuth softBorder pointer">-->
+<!--                    <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">-->
+<!--                        <a href="{% url 'personal_area' %}">-->
+<!--                            <b>Личный кабинет</b>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            {% endif %}-->
         </div>
+
         <hr class="lineMobile">
         {% if not request.user.is_authenticated %}
-            <div class="main flex">
-                <div class="description">
-                    мы реально крутые, пользуйтесь нашим офигенным сайтом
-                </div>
-                <input type="submit" class="registrationButton active pointer" value="Зарегистрироваться">
-                <div class="rightSide">
-                    <div class="information active">
-                        Открытие кофе относится приблизительно к 850 г. н. э., но полное признание его пришло много веков спустя. Первоначально в качестве тонизирующего средства употреблялся не отвар обжаренных зёрен, а непосредственно сырые кофейные ягоды.
-                    </div>
-
-                    <div class="registration">
-                        <div class="flex btw">
-                            <span class="frm">Регистрация</span>
-                            <span class="closeIt" style=""><b>x</b></span>
-                        </div>
-                        <div class="">
-                            <form action="" method="POST" class="flex">
-                                <input name="action_type" type="text" value="registr" style="display: none;">
-                                <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
-                                <input type="text" name="first_name" autocomplete="none" required="" id="id_first_name" placeholder="Имя">
-                                <input type="text" name="last_name" autocomplete="none" required="" id="id_last_name" placeholder="Фамилия">
-                                {{ form.password1 }}
-                                {{ form.password2 }}
-                                {% csrf_token %}
-                                <input type="submit" value="Зарегистрироваться" class="pointer">
-                                <div class="openAuth pointer" style="font-size: 1.5em; margin: 15px;">
-                                    Уже с нами? Войти
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="authorization">
-                        <div class="">
-                            <div class="flex btw">
-                                <span class="frm">Вход</span>
-                                <span class="closeIt" style=""><b>x</b></span>
-                            </div>
-                            <form action="" method="POST" class="flex">
-                                <input name="action_type" type="text" value="authen" style="display: none;">
-                                <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
-                                <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" aria-autocomplete="list" placeholder="Пароль">
-                                {% csrf_token %}
-                                <input type="submit" value="Войти" class="pointer">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mainMobile flex">
-                <div class="descriptionMobile">
-                    мы реально крутые, пользуйтесь нашим офигенным сайтом
-                </div>
-                <div class="registrationButtonMobile active">
-                    <span>
-                        <b>Ещё не с нами? Жми сюда, давай мы это исправим</b>
-                    </span>
-                </div>
-                <div class="rightSideMobile flex">
-                    <div class="informationMobile active">
-                        Открытие кофе относится приблизительно к 850 г. н. э., но полное признание его пришло много веков спустя. Первоначально в качестве тонизирующего средства употреблялся...
-                    </div>
-
-                    <div class="registrationMobile">
-                        <div class="flex btw">
-                            <span class="frm">Регистрация</span>
-                            <span class="closeIt" style=""><b>x</b></span>
-                        </div>
-                        <div class="">
-                            <form action="" method="POST" class="flex">
-                                <input name="action_type" type="text" value="registr" style="display: none;">
-                                <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
-                                <input type="text" name="first_name" autocomplete="none" required="" id="id_first_name" placeholder="Имя">
-                                <input type="text" name="last_name" autocomplete="none" required="" id="id_last_name" placeholder="Фамилия">
-                                {{ form.password1 }}
-                                {{ form.password2 }}
-                                {% csrf_token %}
-                                <input type="submit" value="Зарегистрироваться" class="pointer">
-                                <div class="openAuthMobile pointer" style="font-size: 1.5em; margin: 15px;">
-                                    Уже с нами? Войти
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="authorizationMobile">
-                        <div class="">
-                            <div class="flex btw">
-                                <span class="frm">Вход</span>
-                                <span class="closeIt" style=""><b>x</b></span>
-                            </div>
-                            <form action="" method="POST" class="flex">
-                                <input name="action_type" type="text" value="authen" style="display: none;">
-                                <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
-                                <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" aria-autocomplete="list" placeholder="Пароль">
-                                {% csrf_token %}
-                                <input type="submit" value="Войти" class="pointer">
-                                <div class="registrationButtonMobile pointer" style="font-size: 1.5em; margin: 15px;">
-                                    Ещё не с нами? Войти
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
         {% else %}
             <div class="mainAuth flex">
                 <div class="hd">
-                    Выберите кофейню:
+                    Корзина
                 </div>
-                <div class="categories flex">
-                    <div class="provider del active">
-                        Любая
-                    </div>
-                    {% for provider in providers %}
-                        <div id="{{ provider.id }}" class="provider">
-                            {{ provider.name }}
-                        </div>
-                    {% endfor %}
-                </div>
+<!--                <div class="categories flex">-->
+<!--                    <div class="provider del active">-->
+<!--                        Любая-->
+<!--                    </div>-->
+<!--                    {% for provider in providers %}-->
+<!--                        <div id="{{ provider.id }}" class="provider">-->
+<!--                            {{ provider.name }}-->
+<!--                        </div>-->
+<!--                    {% endfor %}-->
+<!--                </div>-->
                 <hr class="line">
                 <div class="list">
                     <div class="coffee flex active">
-                        {% for drink in drinks %}
-                            <div id="{{ drink.provided.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ drink.primary_color }}) 60%, transparent); background-image: url('{{ drink.preview.url }}'); background-size: cover; background-position: right 50%">
+                        {% for chosen_item in request.user.chosen_items %}
+                            <div id="{{ chosen_item.provider.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ drink.primary_color }}) 60%, transparent); background-image: url('{{ drink.preview.url }}'); background-size: cover; background-position: right 50%">
                                 <div class="cntnr flex">
                                     <div class="itemName">
-                                        <b><span>{{ drink.name }} - {{ drink.provided }}</span></b>
+                                        <b><span>{{ chosen_item.name }} - {{ chosen_item.provided }}</span></b>
                                     </div>
                                     <div class="itemDescription">
-                                        <span style="background-color: #111111; color: #eeeeee;">{{ drink.description }}</span>
+                                        <span style="background-color: #111111; color: #eeeeee;">{{ chosen_item.description }}</span>
                                     </div>
                                     <div class="itemPrice">
-                                        <span><b>{{ drink.price }}$</b></span>
+                                        <span><b>{{ chosen_item.price }}$</b></span>
                                     </div>
                                 </div>
 <!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->

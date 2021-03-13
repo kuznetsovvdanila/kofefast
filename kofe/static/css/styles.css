@@ -54,48 +54,20 @@ input {
 .arrowMobile {
     display: none;
 }
+.basketImage {
+    filter: invert();
+    transform: filter;
+    width: 70px;
+    height: 70px;
+    background-image: url('../img/basket.svg');
+}
 .defaultUserPhoto {
-    background-image: url('../img/person.png');
-    background-repeat: no-repeat;
-    margin: 10px;
-    width: 60px;
-    height: 60px;
-    transition: .2s;
-}
-.defaultUserPhoto:hover {
-    width: 150px;
-    background-image: none;
-    background-color: #deb887;
-    transition: .2s;
-}
-.defaultUserPhoto > div {
-    display: none;
-}
-.defaultUserPhoto:hover > div {
-    display: block;
-    color: #111111;
-}
-
-.defaultUserPhotoAuth {
-    background-image: url('../img/person.png');
-    background-repeat: no-repeat;
-    margin: 10px;
-    width: 60px;
-    height: 60px;
-    transition: .2s;
-}
-.defaultUserPhotoAuth:hover {
-    width: 300px;
-    background-image: none;
-    background-color: #deb887;
-    transition: .2s;
-}
-.defaultUserPhotoAuth > div {
-    display: none;
-}
-.defaultUserPhotoAuth:hover > div {
-    display: block;
-    color: #111111;
+    filter: invert();
+    transform: filter;
+    background-image: url('../img/anonymous.svg');
+    background-size: 100%;
+    width: 70px;
+    height: 70px;
 }
 
 .main {
