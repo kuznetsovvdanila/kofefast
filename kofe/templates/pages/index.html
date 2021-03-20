@@ -21,7 +21,7 @@
 
                     </div>
                 </a>
-                <a href="{% url 'personal_area' %}" style="color: #eeeeee;">
+                <a href="{% url 'index' %}" style="color: #eeeeee;">
                     <div style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; border: 5px solid #eeeeee; border-radius: 40px; height: 70px !important; width: 70px !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %} background-position: 50% 50%; background-size: cover;" class="defaultUserPhoto pointer">
 
                     </div>
@@ -246,17 +246,19 @@
                             </div>
                         </div>
                     {% else %}
-                        <div class="address flex btw vCenter">
-                            <div>
-                                <span class="addressNameAdd"><b>Добавьте адрес</b></span>
+                        <a href="{% url 'personal_area' %}">
+                            <div class="address flex btw vCenter">
+                                <div>
+                                    <span class="addressNameAdd"><b>Добавьте адрес</b></span>
+                                </div>
+                                <div class="addAnAddress">
+                                    <b>+</b>
+                                </div>
                             </div>
-                            <div class="addAnAddress">
-                                <b>+</b>
+                            <div class="emptyAddressField">
+                                Пока нет ни одного адреса
                             </div>
-                        </div>
-                        <div class="emptyAddressField">
-                            Пока нет ни одного адреса
-                        </div>
+                        </a>
                     {% endif %}
                 </div>
 
@@ -313,14 +315,16 @@
                         </div>
                     </div>
                     {% else %}
-                        <div class="address flex btw vCenter">
-                            <div>
-                                <span class="addressNameAdd"><b>Добавьте адрес</b></span>
+                        <a href="{% url 'personal_area' %}">
+                            <div class="address flex btw vCenter">
+                                <div>
+                                    <span class="addressNameAdd"><b>Добавьте адрес</b></span>
+                                </div>
+                                <div class="addAnAddress">
+                                    <b>+</b>
+                                </div>
                             </div>
-                            <div class="addAnAddress">
-                                <b>+</b>
-                            </div>
-                        </div>
+                        </a>
                         <div class="emptyAddressField">
                             Пока нет ни одного адреса
                         </div>

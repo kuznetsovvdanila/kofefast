@@ -692,7 +692,7 @@ input[type='submit'] {
     }
     .hd {
         text-align: center;
-        font-size: 7em;
+        font-size: 7.5em;
         margin: 50px 0 50px 0 !important;
     }
     .categories {
@@ -750,8 +750,12 @@ input[type='submit'] {
         align-items: flex-start;
         box-shadow: 0 0 0 15px #eeeeee;
     }
+    .itemName {
+        text-overflow: ellipsis;
+    }
     .itemName b > span {
-        font-size: 6.5em;
+        text-overflow: ellipsis;
+        font-size: 6em;
         background-color: #deb887;
         color: #111111;
     }
