@@ -16,14 +16,14 @@
                 <a href="{% url 'index' %}" style="color: #eeeeee;">kofefast</a>
             </div>
             {% if request.user.is_authenticated %}
-            <div style="display: flex; justify-content: space-around; align-items: center; width: 200px;">
+            <div class="topMenuNotMobile" style="display: flex; justify-content: space-around; align-items: center; width: 200px;">
                 <a href="{% url 'basket' %}">
                     <div class="basketImage pointer">
 
                     </div>
                 </a>
                 <a href="{% url 'personal_area' %}" style="color: #eeeeee;">
-                    <div class="defaultUserPhoto pointer">
+                    <div style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; border: 5px solid #eeeeee; border-radius: 40px; height: 70px !important; width: 70px !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %} background-position: 50% 50%; background-size: cover;" class="defaultUserPhoto pointer">
 
                     </div>
                 </a>
@@ -38,7 +38,7 @@
         <div class="mainPA flex">
             <div class="person flex">
                 <div>
-                    <div class="photo pointer" style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); {% else %} background-image: url('../media/person.png'); {% endif %} background-position: 50% 50%; background-size: cover;">
+                    <div class="photo pointer" style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); {% else %} background-image: url('../../static/img/anonymous.svg'); filter: invert(); background-size: 15% !important; background-repeat: repeat !important;{% endif %} background-position: 50% 50%; background-size: cover;">
                         <div class="changePhoto">
 
                         </div>
@@ -70,18 +70,15 @@
                 <div class="addresses flex">
                     {% if addresses %}
                         {% for adr in addresses %}
-                            <div style="font-size: 0.8em;" class="address flex btw vCenter">
+                            <div style="font-size: 1em;" class="address flex btw vCenter">
                                 <div style="max-width: 60%;  margin-right: 0;">
                                     <span class="addressName">
-                                        <b>{{ adr.city }},
-                                        улица {{ adr.street }},
-                                        дом {{ adr.house }},
-                                        подъезд {{ adr.entrance }}</b>
+                                        <b>{{ adr.name }}</b>
                                     </span>
                                 </div>
 
                                 {% if adr.chosen %}
-                                <div class="flex" style="flex-direction: column; margin-left: 0;">
+                                <div class="flex" style="flex-direction: column; margin-left: 0; min-width: 50%;">
                                     <form action="" method="POST" class="inside flex">
                                         <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">
                                         <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
@@ -96,7 +93,7 @@
                                     </form>
                                 </div>
                                 {% else %}
-                                <div class="flex" style="flex-direction: column; margin-left: 0;">
+                                <div class="flex" style="flex-direction: column; margin-left: 0; min-width: 60%;">
                                     <form action="" method="POST" class="inside flex">
                                         <input name="action_type" type="text" value="prefer_address" style="display: none;">
                                         <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
@@ -153,7 +150,7 @@
                         <b>Добавить адрес</b>
                     </div>
                     {% else %}
-                        <div class="address flex btw vCenter">
+                        <div class="address flex btw vCenter addressOpen">
                             <div>
                                 <span class="addressName"><b>Добавьте адрес</b></span>
                             </div>
@@ -197,6 +194,7 @@
                     <span class="closeIt" style=""><b>x</b></span>
                 </div>
                 <input name="action_type" type="text" value="add_address" style="display: none;">
+                <input type="text" name="name" maxlength="150" required="" id="name" placeholder="Название адреса">
                 <input type="text" name="city" maxlength="150" required="" id="city" placeholder="Город">
                 <input type="text" name="street" maxlength="150" required="" id="street" placeholder="Улица">
                 <input type="text" name="house" maxlength="150" required="" id="house" placeholder="Дом, корпус">

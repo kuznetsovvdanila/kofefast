@@ -6,7 +6,13 @@ $('.adr').click(function(){
     $('.addresses').toggleClass('active');
     $('.opn').toggleClass('active');
 })
+$('.addressOpen').click(function(){
+    $('.edit').removeClass('active');
+    $('.addressMenu').addClass('active');
+    $('.info').addClass('hidden');
+})
 $('.addAnAddress').click(function(){
+    $('.edit').removeClass('active');
     $('.addressMenu').addClass('active');
     $('.info').addClass('hidden');
 })
@@ -16,6 +22,7 @@ $('.closeIt').click(function(){
     $('.info').removeClass('hidden');
 })
 $('.photo').click(function(){
+    $('.addressMenu').removeClass('active');
     $('.edit').addClass('active');
     $('.info').addClass('hidden');
 })

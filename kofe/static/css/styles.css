@@ -57,17 +57,17 @@ input {
 .basketImage {
     filter: invert();
     transform: filter;
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     background-image: url('../img/basket.svg');
+    border-radius: 20px;
 }
 .defaultUserPhoto {
-    filter: invert();
-    transform: filter;
-    background-image: url('../img/anonymous.svg');
-    background-size: 100%;
-    width: 70px;
-    height: 70px;
+    filter: invert() !important;
+    transform: filter !important;
+    background-size: 100% !important;
+    width: 60px !important;
+    height: 60px !important;
 }
 
 .main {
@@ -216,8 +216,8 @@ input {
     padding: 0 !important;
 }
 .description {
-    font-size: 3em;
-    max-width: 300px;
+    font-size: 3.5em;
+    max-width: 350px;
     padding: 0 40px 0 0;
     text-align: right;
     position: fixed;
@@ -234,18 +234,19 @@ input {
     opacity: 0;
     transition: .2s;
     position: absolute;
-    top: 560px;
-    left: 19%;
+    top: 630px;
+    left: 20%;
 }
 .registrationButton.active {
     position: absolute;
-    height: 50px;
-    min-width: 330px;
+    height: 60px;
+    min-width: 360px;
     opacity: 1;
     background-color: #deb887;
     color: #111111;
     transition: .2s;
     margin: 5px 0 0 35px;
+    font-size: 2.3em;
 }
 .registrationButton.active:hover {
     margin: 2px 0 0 35px;
@@ -265,7 +266,9 @@ input {
 }
 .information {
     margin-top: 30px;
-    font-size: 1.5em;
+    max-width: 400px;
+    max-height: 100%;
+    font-size: 2em;
 }
 .authorization {
     margin-top: 5%;
@@ -409,6 +412,9 @@ input[type='submit'] {
     text-align: center;
     font-size: 6.5em;
 }
+.topMenuNotMobile {
+    display: flex;
+}
 
 
 
@@ -417,6 +423,9 @@ input[type='submit'] {
 }
 
 @media screen and (max-width: 1000px) {
+    .topMenuNotMobile {
+        display: none !important;
+    }
     /*.leftSide {
         left: 0;
         margin: 0;
@@ -602,7 +611,7 @@ input[type='submit'] {
         display: none;
     }
     .logo {
-        font-size: 10em !important;
+        font-size: 9em !important;
     }
     .addressMenuMainPageNotMobile {
         display: none;
@@ -683,7 +692,7 @@ input[type='submit'] {
     }
     .hd {
         text-align: center;
-        font-size: 8em;
+        font-size: 7em;
         margin: 50px 0 50px 0 !important;
     }
     .categories {

@@ -16,8 +16,8 @@ body {
     text-align: center;
     border-right: 10px solid #deb887;
 }
-.person > .photo {
-    margin: 0 0 20px 0;
+.person .photo {
+    padding: 0 10px 20px 10px;
 }
 .changePhoto {
     filter: invert();
@@ -34,8 +34,8 @@ body {
 .photo {
     background-repeat: repeat;
     border-radius: 200px;
-    width: 400px;
-    height: 400px;
+    width: 350px;
+    height: 350px;
     transition: .2s;
 }
 .person > div:first-child {
@@ -52,7 +52,7 @@ body {
 }
 .personInfo > div:first-child {
     font-size: 3em;
-    margin: 0 0 10px 0;
+    margin: 10px 0 15px 0;
 }
 .personInfo > div:nth-child(2) {
     font-size: 2em;
@@ -127,14 +127,21 @@ body {
 }
 .order {
     margin: 10px 0 10px 0;
-    border-radius: 30px;
+    border-radius: 40px;
     width: 85%;
     min-height: 180px;
     border: 10px solid #eeeeee;
 }
+.order:hover  .makeAnOrder {
+    background-color: #34a853;
+    transition: .2s;
+}
+.order:hover {
+    cursor: pointer;
+}
 .address {
     margin: 10px 0 10px 0;
-    border-radius: 30px;
+    border-radius: 40px;
     width: 85%;
     min-height: 180px;
     max-height: 180px;
@@ -144,9 +151,10 @@ body {
     min-width: 55%;
 }
 .addressName, .orderName {
-    font-size: 1.3em;
+    font-size: 1.5em;
     background-color: #deb887;
     color: #111111;
+    max-width: 40%;
 }
 .order > div, .address > div {
     margin: 20px 30px 20px 30px;
@@ -168,6 +176,13 @@ body {
 .makeAnOrder:hover {
     background-color: #34a853;
     transition: .2s;
+}
+.address:hover > .addAnAddress {
+    background-color: #34a853;
+    transition: .2s;
+}
+.address:hover {
+    cursor: pointer;
 }
 .addAnAddress {
     color: #111111;
@@ -229,7 +244,7 @@ body {
 .addressMenu {
     justify-content: center;
     position: absolute;
-    top: 150px;
+    top: 100px;
     right: -50%;
     width: 52%;
     transition: .5s;
@@ -525,17 +540,22 @@ input[type='file'] {
     .person {
         width: 600px;
     }
+    .person .photo {
+        padding: 0 10px 20px 10px;
+
+    }
     .changePhoto {
         top: 220px;
         left: 220px;
+
     }
     .photo {
-        border-radius: 250px;
-        width: 500px;
-        height: 500px;
+        border-radius: 300px;
+        width: 450px;
+        height: 450px;
     }
     .person > div:first-child {
-        border-radius: 250px;
+        border-radius: 300px;
     }
     .adr, .ord {
         font-size: 3em;
@@ -554,7 +574,7 @@ input[type='file'] {
         font-size: 2.5em;
     }
     .addressName, .orderName {
-        font-size: 1.7em;
+        font-size: 1.9em;
     }
 }
 

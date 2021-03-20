@@ -129,7 +129,7 @@ def personal_area_page(request):
 
     if request.method == 'POST':
         if request.POST.get('action_type') == 'add_address':
-            adr = AddressUser(owner=request.user, city=request.POST.get('city'), street=request.POST.get('street'),
+            adr = AddressUser(owner=request.user, name=request.POST.get('name'), city=request.POST.get('city'), street=request.POST.get('street'),
                               house=request.POST.get('house'))
             if request.POST.get('entrance'):
                 adr.entrance = request.POST.get('entrance')

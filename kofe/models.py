@@ -14,6 +14,7 @@ from kofeFast.settings import AUTH_USER_MODEL
 
 class AddressUser(models.Model):
     owner = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
+    name = models.CharField('Имя', max_length=30, default='Дом')
     city = models.CharField('Город', max_length=30, default='Москва')
     street = models.CharField('Улица', max_length=30, default='Арбат')
     house = models.CharField('Дом', max_length=30, default='1')
