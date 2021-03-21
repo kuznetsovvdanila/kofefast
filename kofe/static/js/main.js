@@ -113,11 +113,36 @@ $('.provider:not(.del)').click(function(){
     }
 })
 
-let map;
 
-function initMap() {
-map = new google.maps.Map(document.getElementById("map"), {
-  center: { lat: 55.7601296, lng: 37.6025209 },
-  zoom: 12,
-});
+//местоположение пользователя
+window.onload = function() {
+  var startPos;
+  var geoOptions = {
+    enableHighAccuracy: true
+  }
+
+  var geoSuccess = function(position) {
+    startPos = position;
+    document.getElementById('startLat').innerHTML = startPos.coords.latitude;
+    document.getElementById('startLon').innerHTML = startPos.coords.longitude;
+  };
+  var geoError = function(error) {
+    console.log('Error occurred. Error code: ' + error.code);
+    // error.code can be:
+    //   0: unknown error
+    //   1: permission denied
+    //   2: position unavailable (error response from location provider)
+    //   3: timed out
+  };
+
+  navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
+};
+
+//инициализация карт
+ymaps.ready(init);
+function init(){
+    var myMap = new ymaps.Map("map", {
+    center: [55.753596, 37.621696],
+    zoom: 7
+    });
 }

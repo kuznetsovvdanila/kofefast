@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 
 from PIL import Image
 import numpy as np
+from geopy import Nominatim
 
 from sklearn.cluster import KMeans
 
