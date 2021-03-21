@@ -195,73 +195,105 @@
                 </div>
             </div>
 
-            <div class="addressMenuMainPageNotMobile flex">
-                <div class="arrowMobileNotMobile">
-                    <div class="arrowNotMobile pointer">
-                        <b>ᐃ</b>
-                    </div>
-                </div>
-                <div class="addressListNotMobile">
-                    <div>
-                        Выберите адрес:
-                    </div>
-                    {% if addresses %}
-                        {% for adr in addresses %}
-                            {% if adr.chosen %}
-                                <div style="border: 15px solid #deb887 !important;" class="address flex btw vCenter">
-                                    <div>
-                                        <span style="background-color: #eeeeee;" class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>
-                                    </div>
-                                    <div class="">
-                                        <form action="" method="POST" class="inside flex">
-                                            <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">
-                                            <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
-                                            {% csrf_token %}
-                                            <input type="submit" value="X" class="chooseAnAddress pointer">
-                                        </form>
-                                    </div>
-                                </div>
+<!--            <div class="addressMenuMainPageNotMobile flex">-->
+<!--                <div class="arrowMobileNotMobile">-->
+<!--                    <div class="arrowNotMobile pointer">-->
+<!--                        <b>ᐃ</b>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="addressListNotMobile">-->
+<!--                    <div>-->
+<!--                        Выберите адрес:-->
+<!--                    </div>-->
+<!--                    {% if addresses %}-->
+<!--                        {% for adr in addresses %}-->
+<!--                            {% if adr.chosen %}-->
+<!--                                <div style="border: 15px solid #deb887 !important;" class="address flex btw vCenter">-->
+<!--                                    <div>-->
+<!--                                        <span style="background-color: #eeeeee;" class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>-->
+<!--                                    </div>-->
+<!--                                    <div class="">-->
+<!--                                        <form action="" method="POST" class="inside flex">-->
+<!--                                            <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">-->
+<!--                                            <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">-->
+<!--                                            {% csrf_token %}-->
+<!--                                            <input type="submit" value="X" class="chooseAnAddress pointer">-->
+<!--                                        </form>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            {% else %}-->
+<!--                                <div class="address flex btw vCenter">-->
+<!--                                    <div>-->
+<!--                                        <span class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>-->
+<!--                                    </div>-->
+<!--                                    <div class="">-->
+<!--                                        <form action="" method="POST" class="inside flex">-->
+<!--                                            <input name="action_type" type="text" value="prefer_address" style="display: none;">-->
+<!--                                            <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">-->
+<!--                                            {% csrf_token %}-->
+<!--                                            <input type="submit" value="✔" class="chooseAnAddress pointer">-->
+<!--                                        </form>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            {% endif %}-->
+<!--                        {% endfor %}-->
+<!--                        <div class="address flex btw vCenter">-->
+<!--                            <div>-->
+<!--                                <span class="addressNameAdd"><b>Добавьте адрес</b></span>-->
+<!--                            </div>-->
+<!--                            <div class="addAnAddress">-->
+<!--                                <b>+</b>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    {% else %}-->
+<!--                        <a href="{% url 'personal_area' %}">-->
+<!--                            <div class="address flex btw vCenter">-->
+<!--                                <div>-->
+<!--                                    <span class="addressNameAdd"><b>Добавьте адрес</b></span>-->
+<!--                                </div>-->
+<!--                                <div class="addAnAddress">-->
+<!--                                    <b>+</b>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="emptyAddressField">-->
+<!--                                Пока нет ни одного адреса-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+
+<!--            </div>-->
+            <div class="menuMainPageShadow">
+
+            </div>
+            <div class="menuMainPage flex vCenter">
+                <div class="addressPart flex">
+                    <form>
+                        <select id="" name="addresses">
+                            <option value="">Выберите адрес</option>
+                            {% if addresses %}
+                                {% for adr in addresses %}
+                                    <option value="{{ adr.name }}">{{ adr.name }}</option>
+                                {% endfor %}
                             {% else %}
-                                <div class="address flex btw vCenter">
-                                    <div>
-                                        <span class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>
-                                    </div>
-                                    <div class="">
-                                        <form action="" method="POST" class="inside flex">
-                                            <input name="action_type" type="text" value="prefer_address" style="display: none;">
-                                            <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
-                                            {% csrf_token %}
-                                            <input type="submit" value="✔" class="chooseAnAddress pointer">
-                                        </form>
-                                    </div>
-                                </div>
+
                             {% endif %}
-                        {% endfor %}
-                        <div class="address flex btw vCenter">
+                            <option value="{{ adr.name }}">{{ adr.name }}</option>
+                        </select>
+                    </form>
+                </div>
+                <div class="basketPart">
+                    <div style="font-size: 3em;">
+                        Корзина:
+                    </div>
+                    {% if user.Basket.chosen_items %}
+                        {% for item in user.Basket.chosen_items %}
                             <div>
-                                <span class="addressNameAdd"><b>Добавьте адрес</b></span>
+                                {{ item.name }}
                             </div>
-                            <div class="addAnAddress">
-                                <b>+</b>
-                            </div>
-                        </div>
-                    {% else %}
-                        <a href="{% url 'personal_area' %}">
-                            <div class="address flex btw vCenter">
-                                <div>
-                                    <span class="addressNameAdd"><b>Добавьте адрес</b></span>
-                                </div>
-                                <div class="addAnAddress">
-                                    <b>+</b>
-                                </div>
-                            </div>
-                            <div class="emptyAddressField">
-                                Пока нет ни одного адреса
-                            </div>
-                        </a>
+                        {% endfor %}
                     {% endif %}
                 </div>
-
             </div>
 
             <div class="addressMenuMainPage flex">

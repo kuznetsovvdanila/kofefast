@@ -28,6 +28,9 @@ input {
 .rltv {
     position: relative !important;
 }
+.clmn {
+    flex-direction: column !important;
+}
 .btw {
     justify-content: space-between;
 }
@@ -310,8 +313,8 @@ input[type='submit'] {
 }
 .bottom {
     position: fixed;
+    width: 100%;
     bottom: 5%;
-    left: 44%;
 }
 .closeIt {
     text-align: center;
@@ -335,56 +338,56 @@ input[type='submit'] {
 }
 
 
+.menuMainPage {
+    justify-content: space-around;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    height: 100px;
 
+}
 .addressMenuMainPage {
     display: none;
 }
-.arrowMobileNotMobile {
-    color: #eeeeee;
-    min-width: 100%;
-    text-align: center;
-    display: block;
-    margin: 0 !important;
-    padding: 10px 0 0 0;
-    background: linear-gradient(to top, #111111, rgba(0, 0, 0, .0));
-}
-.arrowNotMobile {
-    font-size: 5em;
-    transition: .2s;
-}
-.arrowNotMobile.active {
-    transform: rotate(180deg);
-    transition: .2s;
-}
-.addressMenuMainPageNotMobile {
-    display: block;
-    left: 0;
-    bottom: 0;
-    flex-direction: column;
-    width: 85%;
-    height: auto;
-    bottom: -110px;
-    display: flex;
+.menuMainPageShadow {
     position: fixed;
-    margin: 0 0 0 7.5% !important;
-    padding: 0 !important;
-    transition: .3s;
-}
-.addressMenuMainPageNotMobile.active {
     bottom: 0;
-    transition: .3s;
+    box-shadow: 0 0 30px 80px #111111;
+    width: 100%;
 }
-.addressMenuMainPageNotMobile.active > .addressListNotMobile {
-    height: auto;
+.addressPart {
+    justify-content: space-around;
+    width: 50%;
 }
-.addressListNotMobile {
-    display: block;
-    max-height: 700px;
-    overflow: auto;
-    padding: 30px 0 30px 0;
-    float: right;
+.addressPart > form {
+    width: auto;
+}
+.addressPart form > select {
+    font-size: 2em;
+    padding: 10px;
+    border-radius: 30px;
+    font-family: "ProductSans-Regular";
+    outline: none;
+    font-weight: bold;
+    border: none;
+    background-color: #111111;
+    box-shadow: 0 0 0 5px #eeeeee;
+    color: #eeeeee;
+}
+select option {
+    background-color: transparent !important;
+}
+option:not(:checked) {
     background-color: #111111;
 }
+.basketPart {
+    justify-content: space-around;
+    max-width: 70%;
+    width: 70%;
+}
+
+
+
 .inside {
     max-width: 20%;
     margin: 0 !important;

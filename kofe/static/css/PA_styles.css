@@ -148,7 +148,7 @@ body {
     border: 10px solid #eeeeee;
 }
 .address > div:first-child, .order > div:first-child{
-    min-width: 55%;
+    min-width: 50%;
 }
 .addressName, .orderName {
     font-size: 1.5em;
@@ -207,11 +207,11 @@ body {
 .chooseAnAddress {
     color: #111111 !important;
     background-color: #eeeeee !important;
-    width: 225px !important;
+    width: 260px !important;
     height: 70px !important;
     margin: 0 !important;
     background-color: #eeeeee;
-    font-size: 1em !important;
+    font-size: 0.9em !important;
     border-radius: 40px;
     text-align: center;
     margin: 0 0px 15px 0 !important;
@@ -226,7 +226,7 @@ body {
 .deleteAnAddress {
     color: #111111 !important;
     background-color: #eeeeee !important;
-    width: 225px !important;
+    width: 260px !important;
     height: 70px !important;
     margin: 0 !important;
     background-color: #eeeeee;
