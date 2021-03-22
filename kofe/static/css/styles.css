@@ -209,15 +209,49 @@ input {
 .itemPrice {
     font-size: 3.5em;
 }
-.itemPhoto {
-    width: 50% !important;
-    height: 100% !important;
-    background-repeat: no-repeat !important;
-    background-size: cover !important;
-    background-position: right center !important;
-    transition: .2s !important;
-    margin: 0 !important;
+.addToBasket {
+    justify-content: center;
+    align-items: center;
+    max-width: 80px;
+    margin: 0 30px 0 0 !important;
+}
+.addToBasket > div:nth-child(2) {
+    margin: 20px 0 20px 0;
+    height: 70px;
+    width: 70px;
+    border-radius: 60px;
+    background-color: #eeeeee;
+    color: #111111;
+    padding: 20px;
+    font-size: 3em;
+    text-align: center;
+}
+.addToBasket div:first-child form:hover > input {
+    background-color: #34a853;
+    transition: .2s;
+}
+.addToBasket div:last-child form:hover > input {
+    background-color: #ea4335;
+    transition: .2s;
+}
+.addToBasket div > form {
+
+    width: auto !important;
+    height: auto !important;
+}
+.addToBasket form > input {
+    margin: 0;
     padding: 0 !important;
+    height: 70px;
+    width: 73px;
+    border-radius: 60px;
+    background-color: #eeeeee;
+    color: #111111;
+    padding: 0 20px 73px 20px !important;
+    font-size: 3.5em;
+    text-align: center;
+    transition: .2s;
+    box-sizing: border-box;
 }
 .description {
     font-size: 3.5em;
@@ -345,16 +379,10 @@ input[type='submit'] {
     position: fixed;
     bottom: 0;
     height: 100px;
-
+    background: linear-gradient(to top, rgba(17, 17, 17, 1), rgba(17, 17, 17, .7), rgba(10, 10, 10, 0));
 }
 .addressMenuMainPage {
     display: none;
-}
-.menuMainPageShadow {
-    position: fixed;
-    bottom: 0;
-    box-shadow: 0 0 30px 80px #111111;
-    width: 100%;
 }
 .addressPart > form {
     width: auto;
@@ -805,8 +833,8 @@ option:not(:checked) {
     .itemPrice {
         font-size: 5em;
     }
-    .itemPhoto {
-        background-position: right center !important;
+    .addToBasket {
+        display: none;
     }
     .cntnr {
         margin: 50px 0 50px 50px !important;
