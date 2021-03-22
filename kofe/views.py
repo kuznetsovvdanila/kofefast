@@ -51,6 +51,13 @@ def index_page(request):
                 request.user.chosen_address.add(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
                 request.user.save()
 
+        # ниже нужно написать кусок кода, отвечающий за добавление и удаление элементов из корзины
+        if request.POST.get('action_type') == 'add':
+            pass
+
+        if request.POST.get('action_type') == 'delete':
+            pass
+
         if request.POST.get('action_type') == 'delete_prefer_address':
             for i in request.user.chosen_address.all():
                 request.user.chosen_address.remove(i)

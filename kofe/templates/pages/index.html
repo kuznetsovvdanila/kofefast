@@ -210,6 +210,25 @@
 <!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->
 
 <!--                                </div>-->
+                                <div class="addToBasket flex reallySoftBorder clmn">
+                                    <div>
+                                        <form action="" method="POST">
+                                            <input name="action_type" type="text" value="add" style="display: none;">
+                                            {% csrf_token %}
+                                            <input type="submit" value="+" class="pointer">
+                                        </form>
+                                    </div>
+                                    <div class="counter" style="font-size: 0.75em;">
+                                        Тут должно быть количество, но никто ничего не сделал
+                                    </div>
+                                    <div>
+                                        <form action="" method="POST">
+                                            <input name="action_type" type="text" value="delete" style="display: none;">
+                                            {% csrf_token %}
+                                            <input type="submit" value="-" class="pointer">
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         {% endfor %}
                     </div>
@@ -284,23 +303,20 @@
 <!--                </div>-->
 
 <!--            </div>-->
-            <div class="menuMainPageShadow">
-
-            </div>
-            <div class="menuMainPage flex vCenter">
-                <div class="basketPart">
-                    <div style="font-size: 3em;">
-                        Корзина:
-                    </div>
-                    {% if user.Basket.chosen_items %}
-                        {% for item in user.Basket.chosen_items %}
-                            <div>
-                                {{ item.name }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-            </div>
+<!--            <div class="menuMainPage flex vCenter">-->
+<!--                <div class="basketPart">-->
+<!--                    <div style="font-size: 3em;">-->
+<!--                        Корзина:-->
+<!--                    </div>-->
+<!--                    {% if user.Basket.chosen_items %}-->
+<!--                        {% for item in user.Basket.chosen_items %}-->
+<!--                            <div>-->
+<!--                                {{ item.name }}-->
+<!--                            </div>-->
+<!--                        {% endfor %}-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--            </div>-->
 
             <div class="addressMenuMainPage flex">
                 <div class="arrowMobile">
