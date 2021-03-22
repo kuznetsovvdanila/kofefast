@@ -419,9 +419,8 @@ option:not(:checked) {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 660px;
+    width: 540px;
     border-radius: 60px;
-    box-shadow: inset 0 0 0 5px #eeeeee;
 }
 .choose {
     background-color: transparent !important;

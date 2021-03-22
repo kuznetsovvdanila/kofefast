@@ -21,19 +21,20 @@
             {% if request.user.is_authenticated %}
             <div class="topMenuNotMobile">
                 <div class="addressPart flex">
-                    <form action="" method="POST" class="flex">
-                        <select id="" name="addresses">
+                    <form action="" method="POST" class="sendIt flex">
+                        <input name="action_type" type="text" value="prefer_address" style="display: none;">
+                        <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                        <select id="" name="prefered_adr_id">
                             <option value="">Выберите адрес</option>
                             {% if addresses %}
                                 {% for adr in addresses %}
-                                    <option style="text-overflow: ellipsis;" {% if adr.chosen %} selected="selected"{% endif %} value="{{ adr.name }}">{{ adr.name }} ({{ adr.street }} {{ adr.house }})</option>
+                                    <option value="{{adr.id}}" style="text-overflow: ellipsis;" {% if adr.chosen %} selected="selected"{% endif %} value="{{ adr.name }}">{{ adr.name }} ({{ adr.street }} {{ adr.house }})</option>
                                 {% endfor %}
                             {% else %}
                                 <option value="" class="addAnAddressMainPage">Добавить адрес</option>
                             {% endif %}
                         </select>
                         {% csrf_token %}
-                        <input class="choose pointer" type="submit" value="Выбрать">
                     </form>
                 </div>
                 <a href="{% url 'basket' %}">

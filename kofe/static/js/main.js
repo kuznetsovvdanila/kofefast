@@ -61,6 +61,11 @@ $('.closeIt').click(function(){
     $('.descriptionMobile').removeClass('active');
 })
 
+$(".sendIt select").change(function() {
+    $(this).closest('form').submit();
+});
+
+
 //$('.eat').click(function(){
 //    $('.coffee').removeClass('active');
 //    $('.breakfast').addClass('active');
