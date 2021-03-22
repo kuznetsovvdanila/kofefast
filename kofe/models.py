@@ -19,6 +19,8 @@ class AddressUser(models.Model):
     street = models.CharField('Улица', max_length=30, default='Арбат')
     house = models.CharField('Дом', max_length=30, default='1')
     entrance = models.IntegerField('Подъезд', default=None)
+    latitude = models.CharField('Широта', max_length=20, default='0deg')
+    longitude = models.CharField('Долгота', max_length=20, default='0deg')
 
     def __str__(self):
         return 'Клиент - ' + str(self.owner.first_name) + " " + str(self.owner.last_name) + " по адресу: " \
@@ -35,6 +37,8 @@ class AddressCafe(models.Model):
     street = models.CharField('Улица', max_length=30, default='Арбат')
     house = models.CharField('Дом', max_length=30, default='1')
     entrance = models.IntegerField('Подъезд', default=None)
+    latitude = models.CharField('Широта', max_length=20, default='0deg')
+    longitude = models.CharField('Долгота', max_length=20, default='0deg')
 
     def __str__(self):
         return str(self.owner)
@@ -81,6 +85,19 @@ class Provider(models.Model):
     class Meta:
         verbose_name = "Кафе"
         verbose_name_plural = "Кофейни"
+
+
+class Review(models.Model):
+    author = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор', unique=True)
+    content = models.CharField('Содержание', max_length=500, default='Мы лучшие')
+    time_created = models.TimeField('Время создания отзыва', auto_now_add=False, auto_now=False)
+
+    def __str__(self):
+        return 'Отзыв от ' + str(self.author)
+
+    class Meta:
+        verbose_name = "Отзыв"
+        verbose_name_plural = "Отзывы"
 
 
 class Order(models.Model):
