@@ -47,8 +47,9 @@ def index_page(request):
         if request.POST.get('action_type') == 'prefer_address':
             for i in request.user.chosen_address.all():
                 request.user.chosen_address.remove(i)
-            request.user.chosen_address.add(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
-            request.user.save()
+            if request.POST.get('prefered_adr_id'):
+                request.user.chosen_address.add(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
+                request.user.save()
 
         if request.POST.get('action_type') == 'delete_prefer_address':
             for i in request.user.chosen_address.all():
