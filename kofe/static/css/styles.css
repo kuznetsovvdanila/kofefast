@@ -3,6 +3,7 @@ body {
     background: #111111;
     color: #eeeeee;
     overflow: auto;
+    overflow-x: hidden;
 }
 a {
     color: #111111;
@@ -69,8 +70,8 @@ input {
     filter: invert() !important;
     transform: filter !important;
     background-size: 100% !important;
-    width: 60px !important;
-    height: 60px !important;
+    width: 50px !important;
+    height: 50px !important;
 }
 
 .main {
@@ -88,7 +89,7 @@ input {
 .hd {
     text-align: center;
     font-size: 5em;
-    margin: 0px 0 40px 0 !important;
+    margin: 30px 0 40px 0 !important;
 }
 .categories {
     justify-content: center;
@@ -355,27 +356,25 @@ input[type='submit'] {
     box-shadow: 0 0 30px 80px #111111;
     width: 100%;
 }
-.addressPart {
-    justify-content: space-around;
-    width: 50%;
-}
 .addressPart > form {
     width: auto;
+    flex-direction: row;
 }
 .addressPart form > select {
-    font-size: 2em;
+    font-size: 2.2em;
     padding: 10px;
     border-radius: 30px;
     font-family: "ProductSans-Regular";
     outline: none;
     font-weight: bold;
     border: none;
-    background-color: #111111;
-    box-shadow: 0 0 0 5px #eeeeee;
+    background-color: transparent;
     color: #eeeeee;
+    max-width: 310px;
 }
 select option {
-    background-color: transparent !important;
+    background-color: #111111 !important;
+    border: none;
 }
 option:not(:checked) {
     background-color: #111111;
@@ -417,6 +416,45 @@ option:not(:checked) {
 }
 .topMenuNotMobile {
     display: flex;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 660px;
+    border-radius: 60px;
+    box-shadow: inset 0 0 0 5px #eeeeee;
+}
+.choose {
+    background-color: transparent !important;
+    color: #eeeeee;
+    box-shadow: inset 0 0 0 5px #eeeeee;
+    padding: 0 10px 0 10px;
+    margin: 0 0 0 10px;
+    transition: .2s;
+}
+.choose:hover {
+    background-color: #deb887 !important;
+    color: #111111;
+    box-shadow: none;
+    transition: .2s;
+}
+
+.addressMenu {
+    justify-content: center;
+    position: absolute;
+    top: 100px;
+    right: -50%;
+    width: 52%;
+    transition: .5s;
+    height: 100%;
+    opacity: 0;
+}
+.addressMenu form {
+    margin: 10% 15% 0 0;
+}
+.addressMenu.active {
+    opacity: 1;
+    right: 0;
+    transition: .5s;
 }
 
 

@@ -15,14 +15,30 @@
                 <a href="{% url 'index' %}" style="color: #eeeeee;">kofefast</a>
             </div>
             {% if request.user.is_authenticated %}
-            <div class="topMenuNotMobile" style="display: flex; justify-content: space-around; align-items: center; width: 200px;">
+            <div class="topMenuNotMobile">
+                <div class="addressPart flex">
+                    <form action="" method="POST" class="flex">
+                        <select id="" name="addresses">
+                            <option value="">Выберите адрес</option>
+                            {% if addresses %}
+                                {% for adr in addresses %}
+                                    <option style="text-overflow: ellipsis;" {% if adr.chosen %} selected="selected"{% endif %} value="{{ adr.name }}">{{ adr.name }} ({{ adr.street }} {{ adr.house }})</option>
+                                {% endfor %}
+                            {% else %}
+                                <option value="" class="addAnAddressMainPage">Добавить адрес</option>
+                            {% endif %}
+                        </select>
+                        {% csrf_token %}
+                        <input class="choose pointer" type="submit" value="Выбрать">
+                    </form>
+                </div>
                 <a href="{% url 'basket' %}">
                     <div class="basketImage pointer">
 
                     </div>
                 </a>
                 <a href="{% url 'personal_area' %}" style="color: #eeeeee;">
-                    <div style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; border: 5px solid #eeeeee; border-radius: 40px; height: 70px !important; width: 70px !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %} background-position: 50% 50%; background-size: cover;" class="defaultUserPhoto pointer">
+                    <div style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; border: 5px solid #eeeeee; border-radius: 40px; height: 60px !important; width: 60px !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %} background-position: 50% 50%; background-size: cover;" class="defaultUserPhoto pointer">
 
                     </div>
                 </a>
@@ -267,21 +283,6 @@
 
             </div>
             <div class="menuMainPage flex vCenter">
-                <div class="addressPart flex">
-                    <form>
-                        <select id="" name="addresses">
-                            <option value="">Выберите адрес</option>
-                            {% if addresses %}
-                                {% for adr in addresses %}
-                                    <option value="{{ adr.name }}">{{ adr.name }}</option>
-                                {% endfor %}
-                            {% else %}
-
-                            {% endif %}
-                            <option value="{{ adr.name }}">{{ adr.name }}</option>
-                        </select>
-                    </form>
-                </div>
                 <div class="basketPart">
                     <div style="font-size: 3em;">
                         Корзина:
@@ -363,8 +364,25 @@
                     {% endif %}
                 </div>
             </div>
+        <div class="addressMenu flex">
+            <form action="" method="POST" class="flex">
+                <div class="flex btw">
+                    <span class="frm"><b>Адрес</b></span>
+                    <span class="closeIt" style=""><b>x</b></span>
+                </div>
+                <input name="action_type" type="text" value="add_address" style="display: none;">
+                <input type="text" name="name" maxlength="150" required="" id="name" placeholder="Название адреса">
+                <input type="text" name="city" maxlength="150" required="" id="city" placeholder="Город">
+                <input type="text" name="street" maxlength="150" required="" id="street" placeholder="Улица">
+                <input type="text" name="house" maxlength="150" required="" id="house" placeholder="Дом, корпус">
+                <input type="text" name="entrance" maxlength="150" required="" id="entrance" placeholder="Подъезд (при наличии)">
+                {% csrf_token %}
+                <input type="submit" value="Добавить" class="pointer">
+            </form>
+        </div>
 <!--            <div id="map"></div>-->
         {% endif %}
+
 <!--        <div class="bottom">-->
 <!--            Designed by somebody, 2021-->
 <!--        </div>-->
