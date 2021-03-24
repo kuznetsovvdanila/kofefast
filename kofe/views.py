@@ -48,8 +48,12 @@ def index_page(request):
             for i in request.user.chosen_address.all():
                 request.user.chosen_address.remove(i)
             if request.POST.get('prefered_adr_id'):
-                request.user.chosen_address.add(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
-                request.user.save()
+                if request.POST.get('prefered_adr_id') == 'addAnAddress':
+                    return redirect('personal_area')
+                else:
+                    request.user.chosen_address.add(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
+                    request.user.save()
+
 
         # ниже нужно написать кусок кода, отвечающий за добавление и удаление элементов из корзины
         if request.POST.get('action_type') == 'add':
