@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from kofe.models import Item, Provider, AddressUser, AddressCafe, Account, Order, Basket
+from kofe.models import Item, Provider, AddressUser, AddressCafe, Account, Order, Basket, Review
 
 from django.utils.translation import gettext, gettext_lazy as _
 
@@ -46,5 +46,6 @@ admin.site.register(Account, AccountAdmin)
 admin.site.register(AddressUser)
 admin.site.register(Basket)
 admin.site.register(AddressCafe)
+admin.site.register(Review)
 admin.site.register(Order)
 admin.site.register(Provider, Cafe)
