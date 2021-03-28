@@ -18,7 +18,7 @@ class AddressUser(models.Model):
     city = models.CharField('Город', max_length=30, default='Москва')
     street = models.CharField('Улица', max_length=30, default='Арбат')
     house = models.CharField('Дом', max_length=30, default='1')
-    entrance = models.IntegerField('Подъезд', default=None)
+    entrance = models.IntegerField('Подъезд', default=1)
     latitude = models.CharField('Широта', max_length=20, default='0deg')
     longitude = models.CharField('Долгота', max_length=20, default='0deg')
 
@@ -36,7 +36,7 @@ class AddressCafe(models.Model):
     city = models.CharField('Город', max_length=30, default='Москва')
     street = models.CharField('Улица', max_length=30, default='Арбат')
     house = models.CharField('Дом', max_length=30, default='1')
-    entrance = models.IntegerField('Подъезд', default=None)
+    entrance = models.IntegerField('Подъезд', default=1)
     latitude = models.CharField('Широта', max_length=20, default='0deg')
     longitude = models.CharField('Долгота', max_length=20, default='0deg')
 
@@ -74,6 +74,34 @@ class Item(models.Model):
         verbose_name_plural = "Продукция"
 
 
+class ItemsSlotOrder(models.Model):
+    count = models.IntegerField('Количество', default=1)
+    good = models.ForeignKey('Item', on_delete=models.CASCADE, verbose_name='Продукт')
+    order_connection = models.ForeignKey('Order', on_delete=models.CASCADE,
+                                         verbose_name='К какому заказу привязан', default=None)
+
+    def __str__(self):
+        return str(self.good.name) + ' в количестве ' + str(self.count)
+
+    class Meta:
+        verbose_name = "Слот в корзине"
+        verbose_name_plural = "Слоты в корзине"
+
+
+class ItemsSlotBasket(models.Model):
+    count = models.IntegerField('Количество', default=1)
+    good = models.ForeignKey('Item', on_delete=models.CASCADE, verbose_name='Продукт')
+    basket_connection = models.ForeignKey('Basket', on_delete=models.CASCADE,
+                                          verbose_name='К какой корзине привязан', default=None)
+
+    def __str__(self):
+        return str(self.good.name) + ' в количестве ' + str(self.count)
+
+    class Meta:
+        verbose_name = "Слот в корзине"
+        verbose_name_plural = "Слоты в корзине"
+
+
 class Provider(models.Model):
     name = models.CharField('Название', max_length=50)
     cafe_addresses = models.ManyToManyField('AddressCafe', blank=True)
@@ -103,15 +131,17 @@ class Review(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(AUTH_USER_MODEL, related_name='customer', on_delete=models.CASCADE,
                                  verbose_name='Заказчик', unique=True)
-    chosen_items = models.ManyToManyField(Item, blank=True, verbose_name="Выбранные продукты")
+    chosen_items = models.ManyToManyField(ItemsSlotOrder, blank=True, verbose_name="Выбранные продукты")
     chosen_cafe = models.ForeignKey('AddressCafe', on_delete=models.CASCADE, verbose_name='Выбранное кафе')
+    type_of_delivery = models.CharField('Тип доставки', max_length=10, default='Самовывоз')
     courier = models.ForeignKey(AUTH_USER_MODEL, related_name='courier', on_delete=models.CASCADE,
-                                verbose_name='Курьер', unique=True)
+                                verbose_name='Курьер', unique=True, default=None)
     chosen_delivery_address = models.ForeignKey('AddressUser', on_delete=models.CASCADE,
-                                                verbose_name='Выбранное адрес доставки')
+                                                verbose_name='Выбранный адрес доставки')
     time_created = models.TimeField('Время создания заказа', auto_now_add=True, auto_now=False)
-    time_requested = models.IntegerField('Время на выполнение заказа', default=15)
-    time_over = models.TimeField('Время завершения заказа', auto_now_add=False, auto_now=False)
+    time_requested = models.TimeField('Время на выполнение заказа', default=datetime.now()+timedelta(minutes=15))
+    time_over = models.DateTimeField('Время завершения заказа', auto_now=True)
+    is_over = models.BooleanField('Окончен ли заказ?', default=False)
 
     def __str__(self):
         return "Заказ от " + str(self.customer) + "Из " + str(self.chosen_cafe) + ", курьер:" + str(self.courier)
@@ -123,15 +153,15 @@ class Order(models.Model):
 
 class Basket(models.Model):
     customer = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Заказчик', unique=True)
-    chosen_items = models.ManyToManyField(Item, blank=True, verbose_name="Выбранные продукты")
+    chosen_items = models.ManyToManyField(ItemsSlotBasket, blank=True, verbose_name="Выбранные продукты")
     chosen_cafe = models.ForeignKey('AddressCafe', on_delete=models.CASCADE, verbose_name='Выбранное кафе')
-    time_requested = models.IntegerField('Ближайшее время доставки', default=15)
-
+    chosen_delivery_address = models.ForeignKey('AddressUser', on_delete=models.CASCADE,
+                                                verbose_name='Выбранный адрес доставки')
     def all_cost(self):
         cost = 0
 
         for i in self.chosen_items:
-            cost += i.price
+            cost += i.item.price
 
         return cost
 

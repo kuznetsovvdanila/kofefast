@@ -71,17 +71,17 @@
                 <hr class="line">
                 <div class="list">
                     <div class="coffee flex active">
-                        {% for chosen_item in request.user.chosen_items %}
-                            <div id="{{ chosen_item.provider.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ drink.primary_color }}) 60%, transparent); background-image: url('{{ drink.preview.url }}'); background-size: cover; background-position: right 50%">
+                        {% for chosen_item in chosen_items %}
+                            <div id="{{ chosen_item.good.provider.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ drink.primary_color }}) 60%, transparent); background-image: url('{{ drink.preview.url }}'); background-size: cover; background-position: right 50%">
                                 <div class="cntnr flex">
                                     <div class="itemName">
-                                        <b><span>{{ chosen_item.name }} - {{ chosen_item.provided }}</span></b>
+                                        <b><span>{{ chosen_item.count }} штук {{ chosen_item.good.name }} - {{ chosen_item.good.provided }}</span></b>
                                     </div>
                                     <div class="itemDescription">
-                                        <span style="background-color: #111111; color: #eeeeee;">{{ chosen_item.description }}</span>
+                                        <span style="background-color: #111111; color: #eeeeee;">{{ chosen_item.good.description }}</span>
                                     </div>
                                     <div class="itemPrice">
-                                        <span><b>{{ chosen_item.price }}$</b></span>
+                                        <span><b>{{ chosen_item.good.price }}$</b></span>
                                     </div>
                                 </div>
 <!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->

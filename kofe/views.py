@@ -1,6 +1,7 @@
 from io import BytesIO
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.files import File
@@ -13,7 +14,7 @@ from geopy import Nominatim
 from sklearn.cluster import KMeans
 
 from kofe.forms import RegistrationForm
-from kofe.models import Provider, AddressUser
+from kofe.models import Provider, AddressUser, ItemsSlotBasket
 
 
 def index_page(request):
@@ -218,9 +219,20 @@ def personal_area_page(request):
 
 
 def basket_page(request):
+    if not request.user.is_authenticated:
+        return redirect('index')
 
+    chosen_items = None
+    if request.user.user_basket:
+        basket = request.user.basket_set.all()[0]
+        chosen_items = []
+        for item in ItemsSlotBasket.objects.all().filter(basket_connection=basket):
+            print(item)
+            chosen_items.append(item)
+
+    print(chosen_items)
     context = {
-
+        'chosen_items': chosen_items,
     }
     return render(request, 'pages/basket.html', context)
 
