@@ -40,7 +40,7 @@ def index_page(request):
                 login(request, account)
                 return redirect('index')
             else:
-                print(form.errors)
+                return redirect(form.errors, 'index')
 
         if request.POST.get('action_type') == 'logout':
             return redirect('logout')
