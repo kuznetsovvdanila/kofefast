@@ -23,9 +23,8 @@
                 <div class="addressPart flex">
                     <form action="" method="POST" class="sendIt flex">
                         <input name="action_type" type="text" value="prefer_address" style="display: none;">
-                        <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
-                        <select id="" name="prefered_adr_id">
-                            <option value="">Выберите адрес</option>
+                        <select class="pointer" id="" name="prefered_adr_id">
+                            <option value="">Приду и заберу</option>
                             {% if addresses %}
                                 {% for adr in addresses %}
                                     <option value="{{adr.id}}" style="text-overflow: ellipsis;" {% if adr.chosen %} selected="selected"{% endif %} value="{{ adr.name }}">{{ adr.name }} ({{ adr.street }} {{ adr.house }})</option>
@@ -33,6 +32,7 @@
                             {% else %}
                                 <option value="" class="addAnAddressMainPage">Добавить адрес</option>
                             {% endif %}
+                            <option value="addAnAddress">Добавить адрес</option>
                         </select>
                         {% csrf_token %}
                     </form>
@@ -186,8 +186,13 @@
                         Любая
                     </div>
                     {% for provider in providers %}
-                        <div id="{{ provider.id }}" class="provider">
-                            {{ provider.name }}
+                        <div id="{{ provider.id }}" class="provider flex vCenter btw">
+                            <div>
+                                {{ provider.name }}
+                            </div>
+                            <div class="mapPointImage">
+
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
@@ -235,88 +240,7 @@
                 </div>
             </div>
 
-<!--            <div class="addressMenuMainPageNotMobile flex">-->
-<!--                <div class="arrowMobileNotMobile">-->
-<!--                    <div class="arrowNotMobile pointer">-->
-<!--                        <b>ᐃ</b>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="addressListNotMobile">-->
-<!--                    <div>-->
-<!--                        Выберите адрес:-->
-<!--                    </div>-->
-<!--                    {% if addresses %}-->
-<!--                        {% for adr in addresses %}-->
-<!--                            {% if adr.chosen %}-->
-<!--                                <div style="border: 15px solid #deb887 !important;" class="address flex btw vCenter">-->
-<!--                                    <div>-->
-<!--                                        <span style="background-color: #eeeeee;" class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>-->
-<!--                                    </div>-->
-<!--                                    <div class="">-->
-<!--                                        <form action="" method="POST" class="inside flex">-->
-<!--                                            <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">-->
-<!--                                            <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">-->
-<!--                                            {% csrf_token %}-->
-<!--                                            <input type="submit" value="X" class="chooseAnAddress pointer">-->
-<!--                                        </form>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            {% else %}-->
-<!--                                <div class="address flex btw vCenter">-->
-<!--                                    <div>-->
-<!--                                        <span class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>-->
-<!--                                    </div>-->
-<!--                                    <div class="">-->
-<!--                                        <form action="" method="POST" class="inside flex">-->
-<!--                                            <input name="action_type" type="text" value="prefer_address" style="display: none;">-->
-<!--                                            <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">-->
-<!--                                            {% csrf_token %}-->
-<!--                                            <input type="submit" value="✔" class="chooseAnAddress pointer">-->
-<!--                                        </form>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            {% endif %}-->
-<!--                        {% endfor %}-->
-<!--                        <div class="address flex btw vCenter">-->
-<!--                            <div>-->
-<!--                                <span class="addressNameAdd"><b>Добавьте адрес</b></span>-->
-<!--                            </div>-->
-<!--                            <div class="addAnAddress">-->
-<!--                                <b>+</b>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    {% else %}-->
-<!--                        <a href="{% url 'personal_area' %}">-->
-<!--                            <div class="address flex btw vCenter">-->
-<!--                                <div>-->
-<!--                                    <span class="addressNameAdd"><b>Добавьте адрес</b></span>-->
-<!--                                </div>-->
-<!--                                <div class="addAnAddress">-->
-<!--                                    <b>+</b>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="emptyAddressField">-->
-<!--                                Пока нет ни одного адреса-->
-<!--                            </div>-->
-<!--                        </a>-->
-<!--                    {% endif %}-->
-<!--                </div>-->
 
-<!--            </div>-->
-<!--            <div class="menuMainPage flex vCenter">-->
-<!--                <div class="basketPart">-->
-<!--                    <div style="font-size: 3em;">-->
-<!--                        Корзина:-->
-<!--                    </div>-->
-<!--                    {% if user.Basket.chosen_items %}-->
-<!--                        {% for item in user.Basket.chosen_items %}-->
-<!--                            <div>-->
-<!--                                {{ item.name }}-->
-<!--                            </div>-->
-<!--                        {% endfor %}-->
-<!--                    {% endif %}-->
-<!--                </div>-->
-<!--            </div>-->
 
             <div class="addressMenuMainPage flex">
                 <div class="arrowMobile">
@@ -403,15 +327,18 @@
         </div>
 <!--            <div id="map"></div>-->
         {% endif %}
+        <div class="mapForProvider">
+            <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A7a4f00480f85b19cd6d0ffbcd262547cbdbf06e381ac7c8518fe3061cab635ec&amp;source=constructor" width="500" height="400" frameborder="0">
 
-<!--        <div class="bottom">-->
+            </iframe>
+        </div>
+        <!--        <div class="bottom">-->
 <!--            Designed by somebody, 2021-->
 <!--        </div>-->
 
         <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
         <script src="{% static 'js/main.js' %}"></script>
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-        <script src="https://api-maps.yandex.ru/2.1/?apikey=37a70fdb-72f1-4d85-a872-a1be173b3791
-&lang=ru_RU" type="text/javascript"></script>
+        <script src="https://api-maps.yandex.ru/2.1/?apikey=37a70fdb-72f1-4d85-a872-a1be173b3791&lang=ru_RU" type="text/javascript"></script>
     </body>
 </html>

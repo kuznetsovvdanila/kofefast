@@ -60,6 +60,12 @@ $('.closeIt').click(function(){
     $('.informationMobile').addClass('active');
     $('.descriptionMobile').removeClass('active');
 })
+$('.mapPointImage').click(function(){
+    $('.mapForProvider').addClass('active');
+})
+$('.mapForProvider:not(iframe)').click(function(){
+    $('.mapForProvider').removeClass('active');
+})
 
 $(".sendIt select").change(function() {
     $(this).closest('form').submit();
