@@ -237,12 +237,12 @@ def basket_page(request):
             chosen_slot = ItemsSlotBasket.objects.all().filter(id=int(input_command[1]))[0]
             if input_command[0] == 'add':
                 chosen_slot.count += 1
-                chosen_slot.save()
             if input_command[0] == 'reduce':
                 chosen_slot.count -= 1
-                chosen_slot.save()
-                if chosen_slot.count <= 0:
-                    chosen_slot.delete()
+
+            chosen_slot.save()
+            if chosen_slot.count <= 0:
+                chosen_slot.delete()
 
         return redirect('basket')
 
