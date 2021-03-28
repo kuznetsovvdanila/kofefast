@@ -71,22 +71,41 @@
                 <hr class="line">
                 <div class="list">
                     <div class="coffee flex active">
-                        {% for chosen_item in chosen_items %}
-                            <div id="{{ chosen_item.good.provider.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ drink.primary_color }}) 60%, transparent); background-image: url('{{ drink.preview.url }}'); background-size: cover; background-position: right 50%">
+                        {% for slot in chosen_items %}
+                            <div id="{{ slot.good.provider.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ slot.good.primary_color }}) 60%, transparent); background-image: url('{{ slot.good.preview.url }}'); background-size: cover; background-position: right 50%">
                                 <div class="cntnr flex">
                                     <div class="itemName">
-                                        <b><span>{{ chosen_item.count }} штук {{ chosen_item.good.name }} - {{ chosen_item.good.provided }}</span></b>
+                                        <b><span>{{ slot.good.name }} - {{ slot.good.provided }}</span></b>
                                     </div>
                                     <div class="itemDescription">
-                                        <span style="background-color: #111111; color: #eeeeee;">{{ chosen_item.good.description }}</span>
+                                        <span style="background-color: #111111; color: #eeeeee;">{{ slot.good.description }}</span>
                                     </div>
                                     <div class="itemPrice">
-                                        <span><b>{{ chosen_item.good.price }}$</b></span>
+                                        <span><b>{{ slot.good.price }}$</b></span>
                                     </div>
                                 </div>
 <!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->
 
 <!--                                </div>-->
+                            </div>
+                            <div class="addToBasket flex reallySoftBorder clmn">
+                                    <div>
+                                        <form action="" method="POST">
+                                            <input name="action_type" type="text" value="add {{ slot.id }}" style="display: none;">
+                                            {% csrf_token %}
+                                            <input type="submit" value="+" class="pointer">
+                                        </form>
+                                    </div>
+                                    <div class="counter" style="font-size: 0.75em;">
+                                        {{ slot.count }}
+                                    </div>
+                                    <div>
+                                        <form action="" method="POST">
+                                            <input name="action_type" type="text" value="reduce {{ slot.id }}" style="display: none;">
+                                            {% csrf_token %}
+                                            <input type="submit" value="-" class="pointer">
+                                        </form>
+                                    </div>
                             </div>
                         {% endfor %}
                     </div>

@@ -55,7 +55,6 @@ def index_page(request):
                     request.user.chosen_address.add(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
                     request.user.save()
 
-
         # ниже нужно написать кусок кода, отвечающий за добавление и удаление элементов из корзины
         if request.POST.get('action_type') == 'add':
             pass
@@ -67,6 +66,8 @@ def index_page(request):
             for i in request.user.chosen_address.all():
                 request.user.chosen_address.remove(i)
             request.user.save()
+
+        return redirect('index')
 
     providers = Provider.objects.all()
 
@@ -226,15 +227,29 @@ def basket_page(request):
     if not request.user.is_authenticated:
         return redirect('index')
 
-    chosen_items = None
     if request.user.user_basket:
         basket = request.user.basket_set.all()[0]
-        chosen_items = []
-        for item in ItemsSlotBasket.objects.all().filter(basket_connection=basket):
-            print(item)
-            chosen_items.append(item)
 
-    print(chosen_items)
+    if request.method == 'POST':
+        input_command = list(request.POST.get('action_type').split())
+        print(input_command)
+        if len(input_command) == 2:
+            chosen_slot = ItemsSlotBasket.objects.all().filter(id=int(input_command[1]))[0]
+            if input_command[0] == 'add':
+                chosen_slot.count += 1
+                chosen_slot.save()
+            if input_command[0] == 'reduce':
+                chosen_slot.count -= 1
+                chosen_slot.save()
+                if chosen_slot.count <= 0:
+                    chosen_slot.delete()
+
+        return redirect('basket')
+
+    chosen_items = []
+    for item in ItemsSlotBasket.objects.all().filter(basket_connection=basket):
+        chosen_items.append(item)
+
     context = {
         'chosen_items': chosen_items,
     }
