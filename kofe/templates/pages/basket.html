@@ -87,7 +87,7 @@
                                 <div class="addToBasket flex reallySoftBorder clmn">
                                     <div>
                                         <form action="" method="POST">
-                                            <input name="action_type" type="text" value="add {{ slot.id }}" style="display: none;">
+                                            <input name="action_type" type="text" value="add {{ slot.good.id }}" style="display: none;">
                                             {% csrf_token %}
                                             <input type="submit" value="+" class="pointer">
                                         </form>
@@ -97,7 +97,7 @@
                                     </div>
                                     <div>
                                         <form action="" method="POST">
-                                            <input name="action_type" type="text" value="reduce {{ slot.id }}" style="display: none;">
+                                            <input name="action_type" type="text" value="reduce {{ slot.good.id }}" style="display: none;">
                                             {% csrf_token %}
                                             <input type="submit" value="-" class="pointer">
                                         </form>
