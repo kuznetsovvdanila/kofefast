@@ -146,6 +146,20 @@ input {
     box-shadow: inset 0 0 0 5px #deb887;
     transition: .2s;
 }
+
+.option {
+    padding: 5px 10px 5px 10px;
+    border-radius: 35px;
+    background-color: #111111;
+    color: #eeeeee;
+    transition: .2s;
+}
+.option.active {
+    background-color: #deb887;
+    color: #111111;
+    transition: .2s;
+}
+
 .provider {
     padding: 5px 10px 5px 10px;
     border-radius: 35px;
@@ -158,10 +172,10 @@ input {
     color: #111111;
     transition: .2s;
 }
-.coffee, .breakfast {
+.coffee, .food {
     display: none;
 }
-.coffee.active, .breakfast.active {
+.coffee.active, .food.active {
     display: flex;
 }
 .line {
@@ -174,12 +188,12 @@ input {
     display: none;
 }
 .list {
-    padding: 60px 0 0 0 !important;
+    padding: 0 0 0 0 !important;
     width: 85%;
     /*margin: 0 20px 0 20px !important;
     border-top: 5px solid #333333;*/
 }
-.coffee, .breakfast {
+.coffee, .food {
     min-width: 100%;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -187,9 +201,11 @@ input {
 .item {
     display: none;
 }
+.item:not(:last-child) {
+    margin: 0 0 60px 0;
+}
 .item.show {
     display: flex;
-    margin: 0 0 60px 0;
     min-width: 100%;
     height: 350px;
     border-radius: 50px;

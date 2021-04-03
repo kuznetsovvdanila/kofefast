@@ -72,6 +72,7 @@ def index_page(request):
     providers = Provider.objects.all()
 
     drinkable = []
+    eatable = []
 
     for provider in providers:
         for item in provider.item_set.all().filter(type='d'):
@@ -118,6 +119,50 @@ def index_page(request):
 
             drinkable.append(item)
 
+        for item in provider.item_set.all().filter(type='e'):
+            if item.not_has_color:
+                item.primary_color = ""
+                img = Image.open(item.preview)
+                if not img.mode == 'P':
+                    img = img.resize((500, 500))
+
+                    def remove_transparency(im, bg_colour=(255, 255, 255)):
+                        if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
+                            alpha = im.convert('RGBA').split()[-1]
+                            bg = Image.new("RGB", im.size, bg_colour + (255,))
+                            bg.paste(im, mask=alpha)
+                            return bg
+
+                        else:
+                            return im
+
+                    t = Image.open(item.preview)
+                    t = remove_transparency(t)
+                    t.convert('RGB')
+                    t = t.resize((int(500 * t.width / t.height), 500))
+                    t_io = BytesIO()
+                    t.save(t_io, 'JPEG')
+                    t_result = File(t_io, name=item.preview.name)
+                    item.preview = t_result
+
+                    img = img.crop((0, 0, img.width / 2, img.height))
+
+                    img = img.getdata()
+                    img = np.array(img)
+
+                    clt = KMeans(n_clusters=3)
+                    clt.fit(img)
+
+                    for cluster in enumerate(clt.cluster_centers_):
+                        for color in cluster[1]:
+                            item.primary_color += str(int(color)) + ", "
+                        item.primary_color = item.primary_color[:-2]
+                        item.not_has_color = False
+                        item.save()
+                        break
+
+            eatable.append(item)
+
     addresses = []
     if request.user.is_authenticated:
         for adrs in AddressUser.objects.all().filter(owner=request.user):
@@ -129,6 +174,7 @@ def index_page(request):
         # 'items': Provider.item_set.all().filter(type='d'),
         'addresses': addresses if request.user.is_authenticated else None,
         'providers': Provider.objects.all(),
+        'food': eatable,
         'drinks': drinkable,
         'form': form if form else RegistrationForm(),
         'errors': errors

@@ -29,8 +29,6 @@
                                 {% for adr in addresses %}
                                     <option value="{{adr.id}}" style="text-overflow: ellipsis;" {% if adr.chosen %} selected="selected"{% endif %} value="{{ adr.name }}">{{ adr.name }} ({{ adr.street }} {{ adr.house }})</option>
                                 {% endfor %}
-                            {% else %}
-                                <option value="" class="addAnAddressMainPage">Добавить адрес</option>
                             {% endif %}
                             <option value="addAnAddress">Добавить адрес</option>
                         </select>
@@ -199,6 +197,9 @@
                 <hr class="line">
                 <div class="list">
                     <div class="coffee flex active">
+                        <div class="hd" style="width: 100%; text-align: center;">
+                            Напитки
+                        </div>
                         {% for drink in drinks %}
                             <div id="{{ drink.provided.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ drink.primary_color }}) 60%, transparent); background-image: url('{{ drink.preview.url }}'); background-size: cover; background-position: right 50%">
                                 <div class="cntnr flex">
@@ -209,7 +210,49 @@
                                         <span style="background-color: #111111; color: #eeeeee;">{{ drink.description }}</span>
                                     </div>
                                     <div class="itemPrice">
-                                        <span><b>{{ drink.price }}$</b></span>
+                                        <span><b>{{ drink.price }}₽</b></span>
+                                    </div>
+                                </div>
+<!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->
+
+<!--                                </div>-->
+                                <div class="addToBasket flex reallySoftBorder clmn">
+                                    <div>
+                                        <form action="" method="POST">
+                                            <input name="action_type" type="text" value="add" style="display: none;">
+                                            {% csrf_token %}
+                                            <input type="submit" value="+" class="pointer">
+                                        </form>
+                                    </div>
+                                    <div class="counter" style="font-size: 0.75em;">
+                                        Тут должно быть количество, но никто ничего не сделал
+                                    </div>
+                                    <div>
+                                        <form action="" method="POST">
+                                            <input name="action_type" type="text" value="delete" style="display: none;">
+                                            {% csrf_token %}
+                                            <input type="submit" value="-" class="pointer">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="food flex active">
+                        <div class="hd" style="width: 100%; text-align: center;">
+                            Еда
+                        </div>
+                        {% for dish in food %}
+                            <div id="{{ dish.provided.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ dish.primary_color }}) 60%, transparent); background-image: url('{{ dish.preview.url }}'); background-size: cover; background-position: right 50%">
+                                <div class="cntnr flex">
+                                    <div class="itemName">
+                                        <b><span>{{ dish.name }} - {{ dish.provided }}</span></b>
+                                    </div>
+                                    <div class="itemDescription">
+                                        <span style="background-color: #111111; color: #eeeeee;">{{ dish.description }}</span>
+                                    </div>
+                                    <div class="itemPrice">
+                                        <span><b>{{ dish.price }}₽</b></span>
                                     </div>
                                 </div>
 <!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->
@@ -309,22 +352,22 @@
                     {% endif %}
                 </div>
             </div>
-        <div class="addressMenu flex">
-            <form action="" method="POST" class="flex">
-                <div class="flex btw">
-                    <span class="frm"><b>Адрес</b></span>
-                    <span class="closeIt" style=""><b>x</b></span>
-                </div>
-                <input name="action_type" type="text" value="add_address" style="display: none;">
-                <input type="text" name="name" maxlength="150" required="" id="name" placeholder="Название адреса">
-                <input type="text" name="city" maxlength="150" required="" id="city" placeholder="Город">
-                <input type="text" name="street" maxlength="150" required="" id="street" placeholder="Улица">
-                <input type="text" name="house" maxlength="150" required="" id="house" placeholder="Дом, корпус">
-                <input type="text" name="entrance" maxlength="150" required="" id="entrance" placeholder="Подъезд (при наличии)">
-                {% csrf_token %}
-                <input type="submit" value="Добавить" class="pointer">
-            </form>
-        </div>
+<!--        <div class="addressMenu flex">-->
+<!--            <form action="" method="POST" class="flex">-->
+<!--                <div class="flex btw">-->
+<!--                    <span class="frm"><b>Адрес</b></span>-->
+<!--                    <span class="closeIt" style=""><b>x</b></span>-->
+<!--                </div>-->
+<!--                <input name="action_type" type="text" value="add_address" style="display: none;">-->
+<!--                <input type="text" name="name" maxlength="150" required="" id="name" placeholder="Название адреса">-->
+<!--                <input type="text" name="city" maxlength="150" required="" id="city" placeholder="Город">-->
+<!--                <input type="text" name="street" maxlength="150" required="" id="street" placeholder="Улица">-->
+<!--                <input type="text" name="house" maxlength="150" required="" id="house" placeholder="Дом, корпус">-->
+<!--                <input type="text" name="entrance" maxlength="150" required="" id="entrance" placeholder="Подъезд (при наличии)">-->
+<!--                {% csrf_token %}-->
+<!--                <input type="submit" value="Добавить" class="pointer">-->
+<!--            </form>-->
+<!--        </div>-->
 <!--            <div id="map"></div>-->
         {% endif %}
         <div class="mapForProvider">
