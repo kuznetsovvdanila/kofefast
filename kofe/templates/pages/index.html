@@ -219,17 +219,17 @@
                                 <div class="addToBasket flex reallySoftBorder clmn">
                                     <div>
                                         <form action="" method="POST">
-                                            <input name="action_type" type="text" value="add" style="display: none;">
+                                            <input name="action_type" type="text" value="add {{ drink.id }}" style="display: none;">
                                             {% csrf_token %}
                                             <input type="submit" value="+" class="pointer">
                                         </form>
                                     </div>
-                                    <div class="counter" style="font-size: 0.75em;">
-                                        Тут должно быть количество, но никто ничего не сделал
+                                    <div class="counter" style="">
+                                        {{ drink.count }}
                                     </div>
                                     <div>
                                         <form action="" method="POST">
-                                            <input name="action_type" type="text" value="delete" style="display: none;">
+                                            <input name="action_type" type="text" value="reduce {{ drink.id }}" style="display: none;">
                                             {% csrf_token %}
                                             <input type="submit" value="-" class="pointer">
                                         </form>
@@ -261,17 +261,17 @@
                                 <div class="addToBasket flex reallySoftBorder clmn">
                                     <div>
                                         <form action="" method="POST">
-                                            <input name="action_type" type="text" value="add" style="display: none;">
+                                            <input name="action_type" type="text" value="add {{ dish.id }}" style="display: none;">
                                             {% csrf_token %}
                                             <input type="submit" value="+" class="pointer">
                                         </form>
                                     </div>
-                                    <div class="counter" style="font-size: 0.75em;">
-                                        Тут должно быть количество, но никто ничего не сделал
+                                    <div class="counter" style="">
+                                        {{ dish.count }}
                                     </div>
                                     <div>
                                         <form action="" method="POST">
-                                            <input name="action_type" type="text" value="delete" style="display: none;">
+                                            <input name="action_type" type="text" value="reduce {{ dish.id }}" style="display: none;">
                                             {% csrf_token %}
                                             <input type="submit" value="-" class="pointer">
                                         </form>

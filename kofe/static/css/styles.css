@@ -241,8 +241,8 @@ input {
 }
 .itemName b > span {
     font-size: 4em;
-    background-color: #deb887;
-    color: #111111;
+    background-color: #111111;
+    color: #deb887;
 }
 .itemDescription {
     font-size: 2.5em;
@@ -266,16 +266,20 @@ input {
     justify-content: center;
     align-items: center;
     max-width: 80px;
-    margin: 0 30px 0 0 !important;
+    margin: 0 40px 0 0 !important;
+}
+.counter {
+
 }
 .addToBasket > div:nth-child(2) {
     margin: 20px 0 20px 0;
     height: 70px;
     width: 70px;
     border-radius: 60px;
-    background-color: #eeeeee;
-    color: #111111;
-    padding: 20px;
+    box-shadow: 0 0 0 5px #eeeeee;
+    background-color: #111111;
+    color: #eeeeee;
+    padding: 25px 20px 15px 20px;
     font-size: 3em;
     text-align: center;
 }
@@ -297,8 +301,9 @@ input {
     height: 70px;
     width: 73px;
     border-radius: 60px;
-    background-color: #eeeeee;
-    color: #111111;
+    background-color: #111111;
+    box-shadow: 0 0 0 5px #eeeeee;
+    color: #eeeeee;
     padding: 0 20px 73px 20px !important;
     font-size: 3.5em;
     text-align: center;

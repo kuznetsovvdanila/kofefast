@@ -68,7 +68,7 @@
 <!--                        </div>-->
 <!--                    {% endfor %}-->
 <!--                </div>-->
-                <hr class="line">
+                <hr class="line" style="margin-bottom: 70px;">
                 <div class="list">
                     <div class="coffee flex active">
                         {% for slot in chosen_items %}
@@ -84,11 +84,7 @@
                                         <span><b>{{ slot.good.price }}$</b></span>
                                     </div>
                                 </div>
-<!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->
-
-<!--                                </div>-->
-                            </div>
-                            <div class="addToBasket flex reallySoftBorder clmn">
+                                <div class="addToBasket flex reallySoftBorder clmn">
                                     <div>
                                         <form action="" method="POST">
                                             <input name="action_type" type="text" value="add {{ slot.id }}" style="display: none;">
@@ -96,7 +92,7 @@
                                             <input type="submit" value="+" class="pointer">
                                         </form>
                                     </div>
-                                    <div class="counter" style="font-size: 0.75em;">
+                                    <div class="counter" style="">
                                         {{ slot.count }}
                                     </div>
                                     <div>
@@ -106,77 +102,11 @@
                                             <input type="submit" value="-" class="pointer">
                                         </form>
                                     </div>
+                                </div>
                             </div>
                         {% endfor %}
                     </div>
                 </div>
-            </div>
-
-            <div class="addressMenuMainPageNotMobile flex">
-                <div class="arrowMobileNotMobile">
-                    <div class="arrowNotMobile pointer">
-                        <b>ᐃ</b>
-                    </div>
-                </div>
-                <div class="addressListNotMobile">
-                    <div>
-                        Выберите адрес:
-                    </div>
-                    {% if addresses %}
-                        {% for adr in addresses %}
-                            {% if adr.chosen %}
-                                <div style="border: 15px solid #deb887 !important;" class="address flex btw vCenter">
-                                    <div>
-                                        <span style="background-color: #eeeeee;" class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>
-                                    </div>
-                                    <div class="">
-                                        <form action="" method="POST" class="inside flex">
-                                            <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">
-                                            <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
-                                            {% csrf_token %}
-                                            <input type="submit" value="X" class="chooseAnAddress pointer">
-                                        </form>
-                                    </div>
-                                </div>
-                            {% else %}
-                                <div class="address flex btw vCenter">
-                                    <div>
-                                        <span class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>
-                                    </div>
-                                    <div class="">
-                                        <form action="" method="POST" class="inside flex">
-                                            <input name="action_type" type="text" value="prefer_address" style="display: none;">
-                                            <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
-                                            {% csrf_token %}
-                                            <input type="submit" value="✔" class="chooseAnAddress pointer">
-                                        </form>
-                                    </div>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                        <div class="address flex btw vCenter">
-                            <div>
-                                <span class="addressNameAdd"><b>Добавьте адрес</b></span>
-                            </div>
-                            <div class="addAnAddress">
-                                <b>+</b>
-                            </div>
-                        </div>
-                    {% else %}
-                        <div class="address flex btw vCenter">
-                            <div>
-                                <span class="addressNameAdd"><b>Добавьте адрес</b></span>
-                            </div>
-                            <div class="addAnAddress">
-                                <b>+</b>
-                            </div>
-                        </div>
-                        <div class="emptyAddressField">
-                            Пока нет ни одного адреса
-                        </div>
-                    {% endif %}
-                </div>
-
             </div>
 
             <div class="addressMenuMainPage flex">

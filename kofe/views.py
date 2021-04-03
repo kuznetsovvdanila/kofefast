@@ -15,7 +15,7 @@ from geopy import Nominatim
 from sklearn.cluster import KMeans
 
 from kofe.forms import RegistrationForm
-from kofe.models import Provider, AddressUser, ItemsSlotBasket, Basket
+from kofe.models import Provider, AddressUser, ItemsSlotBasket, Basket, Item
 
 
 def add_user_buc(func):
@@ -28,7 +28,7 @@ def add_user_buc(func):
                 print("here")
                 new_basket = Basket(customer=user)
                 new_basket.save()
-                user.user_basket = new_basket
+                user.user_basket.add(new_basket)
                 user.save()
 
         return func(*args, **kwargs)
@@ -74,12 +74,25 @@ def index_page(request):
                     request.user.chosen_address.add(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
                     request.user.save()
 
-        # ниже нужно написать кусок кода, отвечающий за добавление и удаление элементов из корзины
-        if request.POST.get('action_type') == 'add':
-            pass
+        input_command = list(request.POST.get('action_type').split())
+        print(input_command)
+        if len(input_command) == 2:
+            f = ItemsSlotBasket.objects.all().filter(good=Item.objects.all().filter(id=int(input_command[1]))[0])
+            if f:
+                chosen_slot = f[0]
+                if input_command[0] == 'add':
+                    chosen_slot.count += 1
+                if input_command[0] == 'reduce':
+                    chosen_slot.count -= 1
 
-        if request.POST.get('action_type') == 'delete':
-            pass
+                chosen_slot.save()
+                if chosen_slot.count <= 0:
+                    chosen_slot.delete()
+            else:
+                te = ItemsSlotBasket(good=Item.objects.all().filter(id=int(input_command[1])), count=1)
+                te.save()
+                request.user.basket_set.all()[0].chosen_items.add(te)[0]
+                request.user.save()
 
         if request.POST.get('action_type') == 'delete_prefer_address':
             for i in request.user.chosen_address.all():
@@ -136,6 +149,11 @@ def index_page(request):
                         item.save()
                         break
 
+            found = ItemsSlotBasket.objects.all().filter(good=item)
+            if found:
+                item.count = found[0].count
+            else:
+                item.count = 0
             drinkable.append(item)
 
         for item in provider.item_set.all().filter(type='e'):
@@ -180,7 +198,16 @@ def index_page(request):
                         item.save()
                         break
 
+            found = ItemsSlotBasket.objects.all().filter(good=item)
+            if found:
+                item.count = found[0].count
+            else:
+                item.count = 0
+
             eatable.append(item)
+
+    if request.user.basket_set.all():
+        basket = request.user.basket_set.all()[0]
 
     addresses = []
     if request.user.is_authenticated:
