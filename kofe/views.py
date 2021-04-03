@@ -89,10 +89,13 @@ def index_page(request):
                 if chosen_slot.count <= 0:
                     chosen_slot.delete()
             else:
-                te = ItemsSlotBasket(good=Item.objects.all().filter(id=int(input_command[1])), count=1)
-                te.save()
-                request.user.basket_set.all()[0].chosen_items.add(te)[0]
-                request.user.save()
+                if input_command[0] == 'add':
+                    te = ItemsSlotBasket(good=Item.objects.all().filter(id=int(input_command[1]))[0],
+                                         count=1,
+                                         basket_connection=request.user.basket_set.all()[0])
+                    te.save()
+                    request.user.basket_set.all()[0].chosen_items.add(te)
+                    request.user.save()
 
         if request.POST.get('action_type') == 'delete_prefer_address':
             for i in request.user.chosen_address.all():
