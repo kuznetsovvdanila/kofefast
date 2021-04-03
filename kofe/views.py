@@ -209,9 +209,6 @@ def index_page(request):
 
             eatable.append(item)
 
-    if request.user.basket_set.all():
-        basket = request.user.basket_set.all()[0]
-
     addresses = []
     if request.user.is_authenticated:
         for adrs in AddressUser.objects.all().filter(owner=request.user):
