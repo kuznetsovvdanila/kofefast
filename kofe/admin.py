@@ -57,8 +57,6 @@ class OrderAdmin(admin.ModelAdmin):
 class BasketAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Заказчик', {'fields': ['customer']}),
-        ('Выбранное кафе', {'fields': ['chosen_cafe']}),
-        ('Адрес доставки', {'fields': ['chosen_delivery_address']}),
     ]
     inlines = [ItemsSlotBasketInLine]
 

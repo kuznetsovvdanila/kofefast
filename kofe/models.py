@@ -154,9 +154,7 @@ class Order(models.Model):
 class Basket(models.Model):
     customer = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Заказчик', unique=True)
     chosen_items = models.ManyToManyField(ItemsSlotBasket, blank=True, verbose_name="Выбранные продукты")
-    chosen_cafe = models.ForeignKey('AddressCafe', on_delete=models.CASCADE, verbose_name='Выбранное кафе')
-    chosen_delivery_address = models.ForeignKey('AddressUser', on_delete=models.CASCADE,
-                                                verbose_name='Выбранный адрес доставки')
+
     def all_cost(self):
         cost = 0
 
@@ -166,7 +164,7 @@ class Basket(models.Model):
         return cost
 
     def __str__(self):
-        return "Корзина " + str(self.customer) + " Из " + str(self.chosen_cafe)
+        return "Корзина " + str(self.customer)
 
     class Meta:
         verbose_name = "Корзина"

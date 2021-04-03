@@ -1,3 +1,4 @@
+import functools
 from io import BytesIO
 
 from django.contrib.auth import authenticate, login, logout
@@ -14,9 +15,27 @@ from geopy import Nominatim
 from sklearn.cluster import KMeans
 
 from kofe.forms import RegistrationForm
-from kofe.models import Provider, AddressUser, ItemsSlotBasket
+from kofe.models import Provider, AddressUser, ItemsSlotBasket, Basket
 
 
+def add_user_buc(func):
+    """Checks existence of basket"""
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        user = args[0].user
+        if user.is_authenticated:
+            if not user.basket_set.all():
+                print("here")
+                new_basket = Basket(customer=user)
+                new_basket.save()
+                user.user_basket = new_basket
+                user.save()
+
+        return func(*args, **kwargs)
+    return wrapper
+
+
+@add_user_buc
 def index_page(request):
     form = None
     errors = None
@@ -138,6 +157,7 @@ def index_page(request):
     return render(request, 'pages/index.html', context)
 
 
+@add_user_buc
 def personal_area_page(request):
     if not request.user.is_authenticated:
         return redirect('index')
@@ -223,11 +243,12 @@ def personal_area_page(request):
     return render(request, 'pages/personal_area.html', context)
 
 
+@add_user_buc
 def basket_page(request):
     if not request.user.is_authenticated:
         return redirect('index')
 
-    if request.user.user_basket:
+    if request.user.basket_set.all():
         basket = request.user.basket_set.all()[0]
 
     if request.method == 'POST':
