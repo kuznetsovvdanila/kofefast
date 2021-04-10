@@ -61,12 +61,14 @@ def basket_page(request):
     if request.method == 'POST':
         return redirect('basket')
 
+    basket = request.user.basket_set.all()[0]
     chosen_items = []
     for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
         chosen_items.append(item)
 
     context = {
         'chosen_items': chosen_items,
+        'basket': basket,
     }
     return render(request, 'pages/basket.html', context)
 

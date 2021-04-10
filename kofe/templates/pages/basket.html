@@ -24,7 +24,7 @@
                     </div>
                 </a>
                 <a href="{% url 'personal_area' %}" style="color: #eeeeee;">
-                    <div style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; border: 5px solid #eeeeee; border-radius: 40px; height: 70px !important; width: 70px !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %} background-position: 50% 50%; background-size: cover;" class="defaultUserPhoto pointer">
+                    <div style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; border: 5px solid #eeeeee; border-radius: 40px; height: 60px !important; width: 60px !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %} background-position: 50% 50%; background-size: cover;" class="defaultUserPhoto pointer">
 
                     </div>
                 </a>
@@ -34,21 +34,6 @@
 
             </div>
             {% endif %}
-<!--            {% if not request.user.is_authenticated %}-->
-<!--                <div class="defaultUserPhoto softBorder pointer">-->
-<!--                    <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">-->
-<!--                        <b>Войти</b>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            {% else %}-->
-<!--                <div class="defaultUserPhotoAuth softBorder pointer">-->
-<!--                    <div style="padding: 10px 0 10px 30px; font-size: 2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">-->
-<!--                        <a href="{% url 'personal_area' %}">-->
-<!--                            <b>Личный кабинет</b>-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            {% endif %}-->
         </div>
 
         <hr class="lineMobile">
@@ -81,7 +66,7 @@
                                         <span style="background-color: #111111; color: #eeeeee;">{{ slot.good.description }}</span>
                                     </div>
                                     <div class="itemPrice">
-                                        <span><b>{{ slot.good.price }}$</b></span>
+                                        <span><b>{{ slot.good.price }}₽</b></span>
                                     </div>
                                 </div>
                                 <div class="addToBasket flex reallySoftBorder clmn">
@@ -108,6 +93,27 @@
                     </div>
                 </div>
             </div>
+
+<!--            <div class="makeAnOrder flex vCenter btw">-->
+<!--                <div class="flex btw" style="font-size: 2.5em; margin: 0 20px 0 20px; max-width: 60%; text-overflow: ellipsis; box-sizing: border-box;">-->
+<!--                    {% for item in chosen_items %}-->
+<!--                        <div style="margin: 0 20px 0 0;">-->
+<!--                            {{ item.good.name }}-->
+<!--                        </div>-->
+<!--                    {% endfor %}-->
+<!--                </div>-->
+
+<!--                <div class="flex vCenter">-->
+<!--                    <div style="font-size: 2.5em; background-color: #111111; border-radius: 200px; border: 5px solid #eeeeee; padding: 5px 10px 5px 10px;">-->
+<!--                        {{ basket.all_cost }}-->
+<!--                    </div>-->
+<!--                    <form action="" method="POST">-->
+<!--                        <input name="action_type" type="text" value="order" style="display: none;">-->
+<!--                        {% csrf_token %}-->
+<!--                        <input type="submit" value="Заказать" class="pointer">-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <div class="addressMenuMainPage flex">
                 <div class="arrowMobile">

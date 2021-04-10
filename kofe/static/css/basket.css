@@ -1,0 +1,7 @@
+.makeAnOrder {
+    position: fixed;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    background: linear-gradient(to top, rgba(17, 17, 17, 1), rgba(17, 17, 17, 0));
+}

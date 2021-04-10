@@ -151,9 +151,8 @@ body {
     min-width: 50%;
 }
 .addressName, .orderName {
-    font-size: 1.5em;
-    background-color: #deb887;
-    color: #111111;
+    font-size: 1.2em;
+    color: #deb887;
     max-width: 40%;
 }
 .order > div, .address > div {
@@ -468,8 +467,7 @@ input[type='file'] {
     .addressName, .orderName {
         max-width: 100%;
         font-size: 3em;
-        background-color: #deb887;
-        color: #111111;
+        color: #deb887;
     }
     .addAnAddress {
         display: none;

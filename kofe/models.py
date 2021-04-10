@@ -158,8 +158,9 @@ class Basket(models.Model):
     def all_cost(self):
         cost = 0
 
-        for i in self.chosen_items:
-            cost += i.item.price
+        for i in self.chosen_items.all():
+            print(i.good.price, i.count)
+            cost += i.good.price * i.count
 
         return cost
 
