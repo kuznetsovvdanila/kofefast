@@ -14,7 +14,7 @@ from geopy import Nominatim
 
 from sklearn.cluster import KMeans
 
-from kofe.additional_func import calculate_color, collect_items, collect_addresses
+from kofe.additional_func import calculate_color, collect_items, collect_addresses, collect_relevant_coffeeshops
 from kofe.decorators import add_user_buc, check_POST, check_proms
 from kofe.forms import RegistrationForm
 from kofe.models import Provider, AddressUser, ItemsSlotBasket, Basket, Item
@@ -28,9 +28,10 @@ def index_page(request):
 
     drinkable, eatable = collect_items(request)
     addresses = collect_addresses(request)
-
+    coffeeshops = collect_relevant_coffeeshops(request)
     context = {
         'addresses': addresses if request.user.is_authenticated else None,
+        'coffeeshops': coffeeshops if request.user.is_authenticated else None,
         'providers': Provider.objects.all(),
         'food': eatable,
         'drinks': drinkable,

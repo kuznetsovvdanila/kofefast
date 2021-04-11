@@ -5,8 +5,10 @@ from PIL import Image
 from django.core.files import File
 from sklearn.cluster import KMeans
 
-from kofe.models import AddressUser, Provider, ItemsSlotBasket
+from kofe.models import AddressUser, Provider, ItemsSlotBasket, AddressCafe
 
+from geopy import Nominatim
+from geopy import distance
 
 def collect_addresses(request):
     addresses = []
@@ -17,6 +19,16 @@ def collect_addresses(request):
             addresses.append(adrs)
     return addresses
 
+def collect_relevant_coffeeshops(request, geoposition):
+    coffeeshops = []
+    geolocator = Nominatim(user_agent="kofefast")
+    if request.user.is_authenticated:
+        for adrs in AddressCafe.objects.all():
+            adress = geolocator.geocode(adrs)
+            location = (adress.latitude, adress.longitude)
+            if distance.distance(location, geoposition).m < 710:
+                coffeeshops.append(adrs)
+    return coffeeshops
 
 def collect_items(request):
     providers = Provider.objects.all()
