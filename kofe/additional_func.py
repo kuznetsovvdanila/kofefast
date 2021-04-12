@@ -1,7 +1,8 @@
 from io import BytesIO
+from math import sqrt
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageEnhance
 from django.core.files import File
 from sklearn.cluster import KMeans
 
@@ -9,6 +10,7 @@ from kofe.models import AddressUser, Provider, ItemsSlotBasket, AddressCafe
 
 from geopy import Nominatim
 from geopy import distance
+
 
 def collect_addresses(request):
     addresses = []
@@ -19,7 +21,8 @@ def collect_addresses(request):
             addresses.append(adrs)
     return addresses
 
-def collect_relevant_coffeeshops(request, geoposition):
+
+def collect_relevant_coffeeshops(request, geoposition=None):
     coffeeshops = []
     geolocator = Nominatim(user_agent="kofefast")
     if request.user.is_authenticated:
@@ -29,6 +32,7 @@ def collect_relevant_coffeeshops(request, geoposition):
             if distance.distance(location, geoposition).m < 710:
                 coffeeshops.append(adrs)
     return coffeeshops
+
 
 def collect_items(request):
     providers = Provider.objects.all()
@@ -59,7 +63,6 @@ def calculate_color(item):
     item.primary_color = ""
     img = Image.open(item.preview)
     if not img.mode == 'P':
-        img = img.resize((500, 500))
 
         def remove_transparency(im, bg_colour=(255, 255, 255)):
             if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
@@ -74,10 +77,11 @@ def calculate_color(item):
         t = Image.open(item.preview)
         t = remove_transparency(t)
         t.convert('RGB')
-        t = t.resize((int(500 * t.width / t.height), 500))
+        t = t.resize((int(800 * t.width / t.height), 800))
+        t = ImageEnhance.Color(t).enhance(0.25)
         t_io = BytesIO()
         t.save(t_io, 'JPEG')
-        t_result = File(t_io, name=item.preview.name)
+        t_result = File(t_io, name=list(item.preview.name.split('/'))[1])
         item.preview = t_result
 
         img = img.crop((0, 0, img.width / 2, img.height))
@@ -85,12 +89,14 @@ def calculate_color(item):
         img = img.getdata()
         img = np.array(img)
 
-        clt = KMeans(n_clusters=3)
+        clt = KMeans(n_clusters=2)
         clt.fit(img)
 
         for cluster in enumerate(clt.cluster_centers_):
+            teta = []
             for color in cluster[1]:
                 item.primary_color += str(int(color)) + ", "
+                teta.append(int(color))
             item.primary_color = item.primary_color[:-2]
             item.not_has_color = False
             item.save()

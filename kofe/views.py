@@ -29,6 +29,7 @@ def index_page(request):
     drinkable, eatable = collect_items(request)
     addresses = collect_addresses(request)
     coffeeshops = collect_relevant_coffeeshops(request)
+
     context = {
         'addresses': addresses if request.user.is_authenticated else None,
         'coffeeshops': coffeeshops if request.user.is_authenticated else None,
@@ -40,7 +41,6 @@ def index_page(request):
     return render(request, 'pages/index.html', context)
 
 
-@add_user_buc
 @check_proms
 @check_POST
 def personal_area_page(request):
