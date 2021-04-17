@@ -129,7 +129,7 @@
                 </div>
                 <div class="rightSideMobile flex">
                     <div class="informationMobile active">
-                        Открытие кофе относится приблизительно к 850 г. н. э., но полное признание его пришло много веков спустя. Первоначально в качестве тонизирующего средства употреблялся...
+                        Уже целых 0 лет мы занимаемся доставкой кофе и ещё там чего-то из менее чем 1 кофейни города Москвы и только
                     </div>
 
                     <div class="registrationMobile">
@@ -147,7 +147,7 @@
                                 {{ form.password2 }}
                                 {% csrf_token %}
                                 <input type="submit" value="Зарегистрироваться" class="pointer">
-                                <div class="openAuthMobile pointer" style="font-size: 1.5em; margin: 15px;">
+                                <div class="openAuthMobile pointer" style="font-size: 5em; margin: 0px 50px 50px 50px;">
                                     Уже с нами? Войти
                                 </div>
                             </form>
@@ -155,20 +155,17 @@
                     </div>
 
                     <div class="authorizationMobile">
+                        <div class="flex btw">
+                            <span class="frm">Вход</span>
+                            <span class="closeIt" style=""><b>x</b></span>
+                        </div>
                         <div class="">
-                            <div class="flex btw">
-                                <span class="frm">Вход</span>
-                                <span class="closeIt" style=""><b>x</b></span>
-                            </div>
                             <form action="" method="POST" class="flex">
                                 <input name="action_type" type="text" value="authen" style="display: none;">
                                 <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
                                 <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" aria-autocomplete="list" placeholder="Пароль">
                                 {% csrf_token %}
                                 <input type="submit" value="Войти" class="pointer">
-                                <div class="registrationButtonMobile pointer" style="font-size: 1.5em; margin: 15px;">
-                                    Ещё не с нами? Войти
-                                </div>
                             </form>
                         </div>
                     </div>
@@ -201,7 +198,7 @@
                             Напитки
                         </div>
                         {% for drink in drinks %}
-                            <div id="{{ drink.provided.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ drink.primary_color }}) 60%, transparent); background-image: url('{{ drink.preview.url }}'); background-size: cover; background-position: right 50%">
+                            <div id="{{ drink.provided.id }}" class="btw item show" style="background: linear-gradient(to left, rgba({{ drink.primary_color }}) 60%, transparent); background-image: url('{{ drink.preview.url }}'); background-size: cover; background-position: right 50%">
                                 <div class="cntnr flex">
                                     <div class="itemName">
                                         <b><span>{{ drink.name }} - {{ drink.provided }}</span></b>
@@ -286,9 +283,23 @@
 
 
             <div class="addressMenuMainPage flex">
-                <div class="arrowMobile">
+                <div class="arrowMobile flex btw">
+                    <div>
+                        <a href="{% url 'basket' %}">
+                            <div class="basketImage">
+
+                            </div>
+                        </a>
+                    </div>
                     <div class="arrow">
                         <b>ᐃ</b>
+                    </div>
+                    <div>
+                        <a href="{% url 'personal_area' %}">
+                            <div style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; border: 5px solid #eeeeee; border-radius: 40px; height: 150px !important; width: 150px !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %} background-position: 50% 50%; background-size: cover;" class="defaultUserPhoto pointer">
+
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="addressList">

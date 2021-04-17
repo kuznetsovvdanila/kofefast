@@ -37,12 +37,15 @@
         <hr class="lineMobile">
         <div class="mainPA flex">
             <div class="person flex">
-                <div>
+                <div class="photoNotMobile">
                     <div class="photo pointer" style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); {% else %} background-image: url('../../static/img/anonymous.svg'); filter: invert(); background-size: 15% !important; background-repeat: repeat !important;{% endif %} background-position: 50% 50%; background-size: cover;">
                         <div class="changePhoto">
 
                         </div>
                     </div>
+                </div>
+                <div class="photoMobile" style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); {% else %} background-image: url('../../static/img/anonymous.svg'); filter: invert(); background-size: 15% !important; background-repeat: repeat !important;{% endif %} background-position: 50% 50%; background-size: cover;">
+
                 </div>
                 <div class="personInfo">
                     <div>
@@ -53,6 +56,14 @@
                     </div>
                     <div>
                         <b>{{ user.phone_number }}</b>
+                    </div>
+                    <div class="func flex btw vCenter">
+                        <div>
+                            Изменить
+                        </div>
+                        <div>
+                            <a style="color: #eeeeee;" href="{% url 'logout' %}">Выйти</a>
+                        </div>
                     </div>
                 </div>
             </div>

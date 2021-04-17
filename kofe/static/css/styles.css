@@ -648,24 +648,45 @@ option:not(:checked) {
         position: absolute;
         left: 0;
         opacity: 0;
-        top: 2000px;
+        top: 0;
         z-index: 0;
         width: 100%;
         transition: .3s;
     }
     .registrationMobile.active {
+        top: 2000px;
         opacity: 1;
         z-index: 1000;
         height: auto;
         transition: .3s;
     }
-
+    .registrationMobile > div:first-child, .authorizationMobile > div:first-child {
+        font-size: 2.5em;
+        margin: 50px;
+    }
     .registrationMobile div form, .authorizationMobile div form {
         width: 100% !important;
     }
+    .closeIt {
+        font-size: 2.5em;
+        height: 100px;
+        width: 140px;
+        border-radius: 80px;
+        padding: 0 0 40px 0;
+    }
     .registrationMobile div form > input, .authorizationMobile div form > input {
-        height: 200px;
-        margin: 30px !important;
+        height: 150px;
+        margin: 50px !important;
+        text-align: left;
+        font-size: 4em;
+        border-radius: 0;
+        border: none;
+        border-bottom: 15px solid #333333;
+    }
+    .registrationMobile div form > input[type='submit'], .authorizationMobile div form > input[type='submit'] {
+        text-align: center;
+        border-radius: 100px;
+        border: none;
     }
     .authorizationMobile {
         left: 0;
@@ -704,8 +725,7 @@ option:not(:checked) {
     .addressName, .orderName {
         max-width: 70%;
         font-size: 4.5em;
-        background-color: #deb887;
-        color: #111111;
+        color: #deb887;
     }
     .addAnAddress {
         color: #111111;
@@ -746,12 +766,25 @@ option:not(:checked) {
     }
     .arrowMobile {
         color: #eeeeee;
-        min-width: 100%;
+        min-width: 95%;
         text-align: center;
-        display: block;
+        display: flex;
         margin: 0 !important;
-        padding: 10px 0 0 0;
+        padding: 10px 30px 0 30px;
         background: linear-gradient(to top, #111111, rgba(0, 0, 0, .0));
+    }
+    .arrowMobile > div:first-child {
+        padding: 20px 0 0 0;
+        width: 130px;
+        height: 130px;
+    }
+    .basketImage {
+        width: 130px;
+        height: 130px;
+    }
+    .arrowMobile > div:last-child {
+        width: 150px;
+        height: 150px;
     }
     .arrow {
         font-size: 9em;
@@ -866,9 +899,11 @@ option:not(:checked) {
     }
     .item {
         border-radius: 70px !important;
-        min-height: 700px;
+        min-height: 800px;
         flex-direction: column;
-        align-items: flex-start;
+        justify-content: center;
+        align-items: center;
+
     }
     .item.show {
         align-items: flex-start;
@@ -893,13 +928,33 @@ option:not(:checked) {
     .itemPrice {
         font-size: 5em;
     }
+    .itemPrice > span {
+        box-shadow: none;
+        color: #deb887;
+        border-radius: 0;
+    }
     .addToBasket {
-        display: none;
+        flex-direction: row !important;
+        min-width: 100%;
+        align-items: center;
+    }
+    .addToBasket form > input {
+        width: 100px;
+        height: 100px;
+        font-size: 5em;
+        box-shadow: 0 0 0 15px #eeeeee;
+    }
+    .addToBasket > div:nth-child(2) {
+        font-size: 4.7em;
+        width: 100px;
+        height: 100px;
+        border-radius: 100px;
+        margin: 0 50px 30px 50px;
+        box-shadow: 0 0 0 15px #eeeeee;
     }
     .cntnr {
         margin: 50px 0 50px 50px !important;
-        max-width: 90%;
-        min-height: 88%;
+        min-height: auto;
         flex-direction: column;
         align-items: left;
         justify-content: space-between;
@@ -933,12 +988,6 @@ option:not(:checked) {
     }
     .frm {
         font-size: 2.5em;
-    }
-    .closeIt {
-        font-size: 2.5em;
-        height: 55px;
-        width: 55px;
-        border-radius: 30px;
     }
 }
 

@@ -38,6 +38,12 @@ body {
     height: 350px;
     transition: .2s;
 }
+.photoMobile {
+    display: none;
+}
+.photoNotMobile {
+    display: flex;
+}
 .person > div:first-child {
     border-radius: 200px;
     box-shadow: 0 0 0 10px #eeeeee;
@@ -364,19 +370,41 @@ input[type='file'] {
         padding: 0 0 20px 0;
         border-bottom: 15px solid #333333;
     }
-    .personInfo > div:last-child {
+    .personInfo > div:nth-child(3) {
         font-size: 5em;
+        margin: 50px 0 60px 0;
+    }
+    .personInfo > div:last-child {
+        font-size: 4em;
     }
     .photo {
-        width: 100%;
+        width: 99%;
         min-height: 100%;
         border-radius: 500px;
+    }
+    .photoNotMobile {
+        display: none;
+    }
+    .photoMobile {
+        display: flex;
+        width: 95%;
+        height: 850px;
+        border-radius: 500px;
+        border: 15px solid #eeeeee;
+        margin: 0 0 40px 0;
+    }
+    .func {
+        box-shadow: 0 0 0 15px #eeeeee;
+        border-radius: 60px;
+        padding: 10px 40px 10px 40px;
+        height: 100px;
+        margin: 20px;
     }
     .info {
         position: absolute;
         z-index: 2000;
         margin: 0;
-        top: 1700px;
+        top: 1900px;
         width: 100%;
         height: auto;
         padding: 60px 0 0 0;
