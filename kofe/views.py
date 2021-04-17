@@ -25,14 +25,14 @@ from kofe.models import Provider, AddressUser, ItemsSlotBasket, Basket, Item
 def index_page(request):
     if request.method == 'POST':
         return redirect('index')
-
     drinkable, eatable = collect_items(request)
     addresses = collect_addresses(request)
-    # coffeeshops = collect_relevant_coffeeshops(request)
+    adrs_user = AddressUser.objects.all()
+    coffeeshops = collect_relevant_coffeeshops(request, adrs_user.__str__())
 
     context = {
         'addresses': addresses if request.user.is_authenticated else None,
-        # 'coffeeshops': coffeeshops if request.user.is_authenticated else None,
+        'coffeeshops': coffeeshops if request.user.is_authenticated else None,
         'providers': Provider.objects.all(),
         'food': eatable,
         'drinks': drinkable,

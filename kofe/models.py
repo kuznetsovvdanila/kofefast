@@ -23,7 +23,7 @@ class AddressUser(models.Model):
     longitude = models.CharField('Долгота', max_length=20, default='0deg')
 
     def __str__(self):
-        return str(self.city) + ', улица ' + str(self.street) + ', дом ' + str(self.house)
+        return str(self.city) + ', ' + str(self.street) + ', ' + str(self.house) + ', ' + str(self.entrance)
 
     class Meta:
         verbose_name = "Адрес Пользователя"

@@ -22,14 +22,16 @@ def collect_addresses(request):
     return addresses
 
 
-def collect_relevant_coffeeshops(request, geoposition=None):
+def collect_relevant_coffeeshops(request, geoposition):
     coffeeshops = []
     geolocator = Nominatim(user_agent="kofefast")
+    user_address = geolocator.geocode(geoposition)
     if request.user.is_authenticated:
         for adrs in AddressCafe.objects.all():
-            adress = geolocator.geocode(adrs)
-            location = (adress.latitude, adress.longitude)
-            if distance.distance(location, geoposition).m < 710:
+            coffeeshops_address = geolocator.geocode(adrs)
+            coffeeshops_location = (coffeeshops_address.latitude, coffeeshops_address.longitude)
+            user_location = (user_address.latitude, user_address.longitude)
+            if distance.distance(coffeeshops_location, ).m < 710:
                 coffeeshops.append(adrs)
     return coffeeshops
 
