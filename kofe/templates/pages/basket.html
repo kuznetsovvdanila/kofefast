@@ -41,7 +41,7 @@
         {% else %}
             <div class="mainAuth flex">
                 <div class="hd">
-                    Корзина {{ basket.all_cost }}
+                    Корзина - {{ basket.all_cost }}₽
                 </div>
 <!--                <div class="categories flex">-->
 <!--                    <div class="provider del active">-->
@@ -102,11 +102,10 @@
 <!--                        </div>-->
 <!--                    {% endfor %}-->
 <!--                </div>-->
-
-<!--                <div class="flex vCenter">-->
-<!--                    <div style="font-size: 2.5em; background-color: #111111; border-radius: 200px; border: 5px solid #eeeeee; padding: 5px 10px 5px 10px;">-->
+<!--                <div style="font-size: 2.5em; background-color: #111111; border-radius: 200px; border: 5px solid #eeeeee; padding: 5px 10px 5px 10px;">-->
 <!--                        {{ basket.all_cost }}-->
 <!--                    </div>-->
+<!--                <div class="flex vCenter">-->
 <!--                    <form action="" method="POST">-->
 <!--                        <input name="action_type" type="text" value="order" style="display: none;">-->
 <!--                        {% csrf_token %}-->
@@ -119,7 +118,7 @@
                 <div class="arrowMobile flex btw">
                     <div>
                         <a href="{% url 'basket' %}">
-                            <div class="basketImage">
+                            <div style="width: 0;" class="basketImage">
 
                             </div>
                         </a>

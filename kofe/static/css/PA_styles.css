@@ -44,6 +44,9 @@ body {
 .photoNotMobile {
     display: flex;
 }
+.func {
+    display: none;
+}
 .person > div:first-child {
     border-radius: 200px;
     box-shadow: 0 0 0 10px #eeeeee;
@@ -64,7 +67,7 @@ body {
     font-size: 2em;
     margin: 0 0 10px 0;
 }
-.personInfo > div:last-child {
+.personInfo > div:nth-child(3) {
     font-size: 2em;
 }
 
@@ -329,6 +332,9 @@ input[type='file'] {
 }
 
 @media screen and (max-width: 980px) {
+    .func {
+        display: flex;
+    }
     body {
         overflow-y: auto;
     }

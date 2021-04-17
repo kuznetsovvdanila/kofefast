@@ -616,11 +616,12 @@ option:not(:checked) {
         font-size: 6em !important;
         transition: .3s;
         text-align: right;
+        width: 87%;
     }
     .registrationButtonMobile.active > span {
         font-size: 1.1em !important;
-        background-color: #deb887;
-        color: #111111;
+
+        color: #eeeeee;
         text-align: right;
     }
     .informationMobile {
@@ -637,7 +638,7 @@ option:not(:checked) {
     }
     .informationMobile.active {
         text-overflow: ellipsis;
-        top: 1980px;
+        top: 2000px;
         z-index: 1000;
         max-height: auto;
         opacity: 1;
@@ -652,6 +653,7 @@ option:not(:checked) {
         z-index: 0;
         width: 100%;
         transition: .3s;
+        padding: 0 0 0 10px;
     }
     .registrationMobile.active {
         top: 2000px;
@@ -662,7 +664,7 @@ option:not(:checked) {
     }
     .registrationMobile > div:first-child, .authorizationMobile > div:first-child {
         font-size: 2.5em;
-        margin: 50px;
+        margin: 30px;
     }
     .registrationMobile div form, .authorizationMobile div form {
         width: 100% !important;
