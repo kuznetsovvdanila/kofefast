@@ -490,7 +490,7 @@ input[type='file'] {
     }
 }
 
-@media screen and (min-width: 1500px) {
+@media screen and (min-width: 3000px) {
     .editSubmit {
         bottom: 89px;
     }
@@ -558,7 +558,7 @@ input[type='file'] {
     .adr, .ord {
         font-size: 3em;
         margin: 20px 0 10px 110px;
-        width: 76%;
+        width: 80%;
     }
     .personInfo > div:first-child {
         font-size: 4em;

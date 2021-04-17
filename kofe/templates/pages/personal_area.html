@@ -46,7 +46,7 @@
                 </div>
                 <div class="personInfo">
                     <div>
-                        <span style="background-color: #deb887; color: #111111;"><b>{{ user.first_name }} {{ user.last_name }}</b></span>
+                        <span style="color: #deb887;"><b>{{ user.first_name }} {{ user.last_name }}</b></span>
                     </div>
                     <div>
                         {{ user.email }}
@@ -78,7 +78,7 @@
                                 </div>
 
                                 {% if adr.chosen %}
-                                <div class="flex" style="flex-direction: column; margin-left: 0; min-width: 50%;">
+                                <div class="flex" style="flex-direction: column; margin-left: 0; margin-right: 0; min-width: 50%;">
                                     <form action="" method="POST" class="inside flex">
                                         <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">
                                         <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
