@@ -28,11 +28,11 @@ def index_page(request):
 
     drinkable, eatable = collect_items(request)
     addresses = collect_addresses(request)
-    coffeeshops = collect_relevant_coffeeshops(request)
+    # coffeeshops = collect_relevant_coffeeshops(request)
 
     context = {
         'addresses': addresses if request.user.is_authenticated else None,
-        'coffeeshops': coffeeshops if request.user.is_authenticated else None,
+        # 'coffeeshops': coffeeshops if request.user.is_authenticated else None,
         'providers': Provider.objects.all(),
         'food': eatable,
         'drinks': drinkable,
