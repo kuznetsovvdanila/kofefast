@@ -35,7 +35,6 @@ def logout_user(request):
 
 
 def set_prefer_address(request):
-    print(request.POST)
     for i in request.user.chosen_address.all():
         request.user.chosen_address.remove(i)
     if request.POST.get('prefered_adr_id'):
