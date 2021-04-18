@@ -58,7 +58,7 @@
                         <b>{{ user.phone_number }}</b>
                     </div>
                     <div class="func flex btw vCenter">
-                        <div>
+                        <div class="chng">
                             Изменить
                         </div>
                         <div>
@@ -82,14 +82,14 @@
                     {% if addresses %}
                         {% for adr in addresses %}
                             <div style="font-size: 1em;" class="address flex btw vCenter">
-                                <div style="width: 100px;  margin-right: 0;">
+                                <div style="max-width: 100px;  margin-right: 0; text-overflow: ellipsis;">
                                     <span class="addressName">
                                         <b>{{ adr.name }}, {{ adr.street }} {{ adr.house }}</b>
                                     </span>
                                 </div>
 
                                 {% if adr.chosen %}
-                                <div class="flex" style="flex-direction: column; margin-left: 0; margin-right: 0; min-width: 50%;">
+                                <div class="flex" style="flex-direction: column; margin-left: 0; margin-right: 0;">
                                     <form action="" method="POST" class="inside flex">
                                         <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">
                                         <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
@@ -104,7 +104,7 @@
                                     </form>
                                 </div>
                                 {% else %}
-                                <div class="flex" style="flex-direction: column; margin-left: 0; min-width: 60%;">
+                                <div class="flex" style="flex-direction: column; margin-left: 0;">
                                     <form action="" method="POST" class="inside flex">
                                         <input name="action_type" type="text" value="prefer_address" style="display: none;">
                                         <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
@@ -156,9 +156,6 @@
                         {% endfor %}
                     <div class="addAnAddress">
                         <b>+</b>
-                    </div>
-                    <div class="addAnAddressMobile">
-                        <b>Добавить адрес</b>
                     </div>
                     {% else %}
                         <div class="address flex btw vCenter addressOpen">

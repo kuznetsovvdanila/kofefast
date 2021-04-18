@@ -15,16 +15,30 @@ $('.addAnAddress').click(function(){
     $('.edit').removeClass('active');
     $('.addressMenu').addClass('active');
     $('.info').addClass('hidden');
+    $('.info').removeClass('move');
+    $('.person').removeClass('hidden');
+    $('.personInfo').removeClass('hidden');
 })
 $('.closeIt').click(function(){
     $('.addressMenu').removeClass('active');
     $('.edit').removeClass('active');
     $('.info').removeClass('hidden');
+    $('.info').removeClass('move');
+    $('.person').removeClass('hidden');
+    $('.personInfo').removeClass('hidden');
 })
 $('.photo').click(function(){
     $('.addressMenu').removeClass('active');
     $('.edit').addClass('active');
     $('.info').addClass('hidden');
+})
+$('.chng').click(function(){
+    $('.info').addClass('move');
+    $('.person').addClass('hidden');
+    $('.personInfo').addClass('hidden');
+    $('.addressMenu').removeClass('active');
+    $('.edit').addClass('active');
+    $('.personInfo').addClass('hidden');
 })
 
 $('.input_file input[type=file]').change(function(){

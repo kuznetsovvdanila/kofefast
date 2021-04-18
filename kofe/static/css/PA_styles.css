@@ -163,10 +163,14 @@ body {
     font-size: 1.2em;
     color: #deb887;
     max-width: 40%;
+    text-overflow: ellipsis;
 }
 .order > div, .address > div {
     margin: 20px 30px 20px 30px;
     font-size: 2em;
+}
+.order > div:last-child, .address > div:last-child {
+    margin: 20px 15px 20px 30px !important;
 }
 .makeAnOrder {
     color: #111111;
@@ -332,6 +336,18 @@ input[type='file'] {
 }
 
 @media screen and (max-width: 980px) {
+    .topMenu {
+        width: 100%;
+        text-align: center;
+        padding: 10px 0 0 0;
+        position: absolute;
+        z-index: 2000;
+    }
+    .lineMobile {
+        position: absolute;
+        top: 268px;
+        margin-left: 72.297px;
+    }
     .func {
         display: flex;
     }
@@ -358,6 +374,7 @@ input[type='file'] {
         padding: 0;
         border: none;
         width: 90%;
+        height: 1500px;
     }
     .person > div:first-child {
         margin: 0 0 70px 0 !important;
@@ -408,18 +425,94 @@ input[type='file'] {
     }
     .info {
         position: absolute;
-        z-index: 2000;
+        z-index: 1000;
         margin: 0;
         top: 1900px;
         width: 100%;
         height: auto;
         padding: 60px 0 0 0;
     }
-    .addressMenu {
-        right: 0;
+    .info.hidden {
+        z-index: 0;
+    }
+    .info.move {
+        top: 2070px;
+    }
+    form {
+        width: 100% !important;
+    }
+    .closeIt {
+        font-size: 2.5em;
+        height: 100px;
+        width: 140px;
+        border-radius: 80px;
+        padding: 0 0 40px 0;
+    }
+    .addressMenu form > input, .edit form > input {
+        height: 150px;
+        margin: 50px !important;
+        text-align: left;
+        font-size: 4em;
+        border-radius: 0;
+        border: none;
+        border-bottom: 15px solid #333333;
+    }
+    .addressMenu form > input[type='submit'], .edit form > input[type='submit'] {
+        text-align: center;
+        border-radius: 100px;
+        border: none;
+    }
+    .addressMenu form  > div:first-child, .edit form > div:first-child {
+        font-size: 2.5em;
+        margin: 30px;
+    }
+    .addressMenu form, .edit form {
+        width: 100% !important;
+        margin: 0;
     }
     .edit {
+        position: absolute;
+        left: 0;
+        opacity: 0;
+        top: 400px;
+        z-index: 0;
+        width: 100%;
+        transition: .3s;
+        padding: 0 0 0 10px;
         right: 0;
+    }
+    .edit.active {
+        opacity: 1;
+        z-index: 2000;
+    }
+    .personInfo.hidden {
+        opacity: 0;
+        z-index: 0;
+    }
+    .person.hidden {
+        opacity: 0;
+        z-index: 0;
+    }
+    .person, .personInfo {
+        transition: .3s;
+    }
+    .addressMenu {
+        position: absolute;
+        left: 0;
+        opacity: 0;
+        top: 0;
+        z-index: 0;
+        width: 100%;
+        transition: .3s;
+        padding: 0 0 0 10px;
+        top: 0;
+        height: auto;
+    }
+    .addressMenu.active {
+        opacity: 1;
+        z-index: 2000;
+        transition: .3s;
+        top: 2000px;
     }
     .addresses, .orders {
         height: 400px;
@@ -443,8 +536,8 @@ input[type='file'] {
         max-width: 100%;
     }
     .chooseAnAddress {
-        color: #111111 !important;
-        background-color: #eeeeee !important;
+        color: #eeeeee !important;
+        background-color: #111111 !important;
         width: 550px !important;
         height: 150px !important;
         margin: 0 !important;
@@ -459,11 +552,11 @@ input[type='file'] {
         border: 15px solid #eeeeee;
     }
     .chooseAnAddress:hover {
-        background-color: #eeeeee !important;
+        background-color: #34a853 !important;
     }
     .deleteAnAddress {
-        color: #111111 !important;
-        background-color: #eeeeee !important;
+        color: #eeeeee !important;
+        background-color: #111111 !important;
         width: 300px !important;
         height: 150px !important;
         margin: 0 !important;
@@ -478,7 +571,7 @@ input[type='file'] {
         border: 15px solid #eeeeee;
     }
     .deleteAnAddress:hover {
-        background-color: #eeeeee !important;
+        background-color: #ea4335 !important;
     }
 
 
@@ -504,17 +597,23 @@ input[type='file'] {
         color: #deb887;
     }
     .addAnAddress {
-        display: none;
+        height: 100px;
+        width: 50px;
+        padding: 0px 0 100px 0 !important;
+        border-radius: 200px;
+        font-size: 9.7em !important;
+        border: 15px solid #eeeeee;
+        color: #eeeeee;
+        background-color: #111111;
     }
     .addAnAddressMobile {
         display: block;
-        color: #111111;
+        color: #eeeeee;
         min-width: 85%;
         height: 125px;
-        background-color: #eeeeee;
-        padding: 25px 0 0 0 !important;
-        border-left: 15px solid #eeeeee;
-        border-right: 15px solid #eeeeee;
+        background-color: #111111;
+        padding: 0px 0 0 0 !important;
+        border: 15px solid #eeeeee;
         font-size: 5em !important;
         border-radius: 120px;
         text-align: center;
@@ -524,8 +623,8 @@ input[type='file'] {
     }
 }
 
-@media screen and (min-width: 3000px) {
-    .editSubmit {
+@media screen and (min-width: 1500px) {
+    /*.editSubmit {
         bottom: 89px;
     }
     .input_file {
@@ -607,6 +706,13 @@ input[type='file'] {
     }
     .addressName, .orderName {
         font-size: 1.9em;
+    }
+    */
+    .address, .order {
+        width: 80%;
+    }
+    .adr, .ord {
+        padding: 0 0 0 30px;
     }
 }
 
