@@ -283,26 +283,19 @@
 
 
             <div class="addressMenuMainPage flex">
-                <div class="arrowMobile flex btw">
-                    <div>
-                        <a href="{% url 'basket' %}">
-                            <div class="basketImage">
-
-                            </div>
-                        </a>
-                    </div>
+                <div class="arrowMobile flex">
                     <div class="arrow">
                         <b>ᐃ</b>
                     </div>
-                    <div>
-                        <a href="{% url 'personal_area' %}">
-                            <div style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; border: 5px solid #eeeeee; border-radius: 40px; height: 150px !important; width: 150px !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %} background-position: 50% 50%; background-size: cover;" class="defaultUserPhoto pointer">
-
-                            </div>
-                        </a>
-                    </div>
                 </div>
                 <div class="addressList">
+                    <div>
+                        <a href="{% url 'personal_area' %}">Личный кабинет</a>
+                    </div>
+                    <div>
+                        <a href="{% url 'basket' %}">Корзина</a>
+                    </div>
+                    <hr class="lineMobile">
                     <div>
                         Выберите адрес:
                     </div>
@@ -311,7 +304,7 @@
                             {% if adr.chosen %}
                                 <div style="border: 15px solid #deb887 !important;" class="address flex btw vCenter">
                                     <div>
-                                        <span style="background-color: #eeeeee;" class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>
+                                        <span style="background-color: #eeeeee;" class="addressName"><b>{{ adr.name }}, {{ adr.street }} {{ adr.house }}</b></span>
                                     </div>
                                     <div class="">
                                         <form action="" method="POST" class="inside flex">
@@ -325,7 +318,7 @@
                             {% else %}
                                 <div class="address flex btw vCenter">
                                     <div>
-                                        <span class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>
+                                        <span class="addressName"><b>{{ adr.name }}, {{ adr.street }} {{ adr.house }}</b></span>
                                     </div>
                                     <div class="">
                                         <form action="" method="POST" class="inside flex">

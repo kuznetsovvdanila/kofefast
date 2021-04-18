@@ -82,8 +82,8 @@
                     {% if addresses %}
                         {% for adr in addresses %}
                             <div style="font-size: 1em;" class="address flex btw vCenter">
-                                <div style="max-width: 100px;  margin-right: 0; text-overflow: ellipsis;">
-                                    <span class="addressName">
+                                <div style="margin-right: 0; text-overflow: ellipsis;">
+                                    <span style="text-overflow: ellipsis; width: 100%;" class="addressName">
                                         <b>{{ adr.name }}, {{ adr.street }} {{ adr.house }}</b>
                                     </span>
                                 </div>

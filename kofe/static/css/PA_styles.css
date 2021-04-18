@@ -73,6 +73,7 @@ body {
 
 .info {
     display: block;
+    display: block;
     margin: 30px 50px 0 30px;
     align-items: center;
     height: 585px;
@@ -157,7 +158,6 @@ body {
     border: 10px solid #eeeeee;
 }
 .address > div:first-child, .order > div:first-child{
-    min-width: 50%;
 }
 .addressName, .orderName {
     font-size: 1.2em;

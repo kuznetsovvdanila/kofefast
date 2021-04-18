@@ -497,11 +497,7 @@ option:not(:checked) {
     transition: .2s;
     font-weight: bolder !important;
 }
-.addressList > div:first-child {
-    margin: 40px 20px 90px 20px;
-    text-align: center;
-    font-size: 6.5em;
-}
+
 .topMenuNotMobile {
     display: flex;
     display: flex;
@@ -543,6 +539,11 @@ option:not(:checked) {
     right: 0;
     transition: .5s;
 }
+.emptyBasket {
+    margin: 0 0 0 100px;
+    width: 500px;
+    font-size: 3em;
+}
 
 
 
@@ -553,6 +554,10 @@ option:not(:checked) {
 @media screen and (max-width: 1000px) {
     .topMenuNotMobile {
         display: none !important;
+    }
+    .emptyBasket {
+        font-size: 6.5em;
+        margin: 150px 50px 0 50px;
     }
     /*.leftSide {
         left: 0;
@@ -721,8 +726,8 @@ option:not(:checked) {
     }
     .addressNameAdd{
         font-size: 6em;
-        background-color: #deb887;
-        color: #111111;
+        background-color: #111111;
+        color: #deb887;
     }
     .addressName, .orderName {
         max-width: 70%;
@@ -767,26 +772,13 @@ option:not(:checked) {
         display: none;
     }
     .arrowMobile {
+        justify-content: center;
         color: #eeeeee;
         min-width: 95%;
         text-align: center;
         display: flex;
         margin: 0 !important;
-        padding: 10px 30px 0 30px;
         background: linear-gradient(to top, #111111, rgba(0, 0, 0, .0));
-    }
-    .arrowMobile > div:first-child {
-        padding: 20px 0 0 0;
-        width: 130px;
-        height: 130px;
-    }
-    .basketImage {
-        width: 130px;
-        height: 130px;
-    }
-    .arrowMobile > div:last-child {
-        width: 150px;
-        height: 150px;
     }
     .arrow {
         font-size: 9em;
@@ -818,7 +810,7 @@ option:not(:checked) {
         height: auto;
     }
     .addressList {
-        box-shadow: 0 0 0 15px #333333;
+        box-shadow: 0 0 0 3px #111111;
         display: block;
         max-height: 700px;
         overflow: auto;
@@ -848,10 +840,19 @@ option:not(:checked) {
         transition: .2s;
         font-weight: bolder !important;
     }
-    .addressList > div:first-child {
+    .addressList > div:nth-child(4) {
         margin: 40px 20px 90px 20px;
         text-align: center;
         font-size: 6.5em;
+    }
+    .addressList > div:first-child, .addressList > div:nth-child(2) {
+        margin: 0px 20px 40px 80px;
+        text-align: center;
+        font-size: 6.5em;
+        text-align: left;
+    }
+    a {
+        color: #eeeeee;
     }
     .hd {
         text-align: center;

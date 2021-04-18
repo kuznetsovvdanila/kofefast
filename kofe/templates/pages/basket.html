@@ -41,8 +41,11 @@
         {% else %}
             <div class="mainAuth flex">
                 <div class="hd">
-                    Корзина - {{ basket.all_cost }}₽
+                    Корзина {% if chosen_items %} - {{ basket.all_cost }}₽ {% endif %}
                 </div>
+
+
+
 <!--                <div class="categories flex">-->
 <!--                    <div class="provider del active">-->
 <!--                        Любая-->
@@ -53,7 +56,10 @@
 <!--                        </div>-->
 <!--                    {% endfor %}-->
 <!--                </div>-->
-                <hr class="line" style="margin-bottom: 70px;">
+                <hr class="line" style="margin-bottom: 80px;">
+                {% if not chosen_items %}
+                    <span class="emptyBasket">Здесь пока пусто, добавь товар в корзину на <a style="background-color: #deb887; color: #111111; font-weight: bold;" href="{% url 'index' %}">главной странице!</a></span>
+                {% endif %}
                 <div class="list">
                     <div class="coffee flex active">
                         {% for slot in chosen_items %}
@@ -115,26 +121,19 @@
 <!--            </div>-->
 
             <div class="addressMenuMainPage flex">
-                <div class="arrowMobile flex btw">
-                    <div>
-                        <a href="{% url 'basket' %}">
-                            <div style="width: 0;" class="basketImage">
-
-                            </div>
-                        </a>
-                    </div>
+                <div class="arrowMobile flex">
                     <div class="arrow">
                         <b>ᐃ</b>
                     </div>
-                    <div>
-                        <a href="{% url 'personal_area' %}">
-                            <div style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; border: 5px solid #eeeeee; border-radius: 40px; height: 150px !important; width: 150px !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %} background-position: 50% 50%; background-size: cover;" class="defaultUserPhoto pointer">
-
-                            </div>
-                        </a>
-                    </div>
                 </div>
                 <div class="addressList">
+                    <div>
+                        <a href="{% url 'personal_area' %}">Личный кабинет</a>
+                    </div>
+                    <div>
+                        <a href="{% url 'index' %}">На главную</a>
+                    </div>
+                    <hr class="lineMobile">
                     <div>
                         Выберите адрес:
                     </div>
@@ -143,7 +142,7 @@
                             {% if adr.chosen %}
                                 <div style="border: 15px solid #deb887 !important;" class="address flex btw vCenter">
                                     <div>
-                                        <span style="background-color: #eeeeee;" class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>
+                                        <span style="background-color: #eeeeee;" class="addressName"><b>{{ adr.name }}, {{ adr.street }} {{ adr.house }}</b></span>
                                     </div>
                                     <div class="">
                                         <form action="" method="POST" class="inside flex">
@@ -157,7 +156,7 @@
                             {% else %}
                                 <div class="address flex btw vCenter">
                                     <div>
-                                        <span class="addressName"><b>{{ adr.city }}, {{ adr.street }} {{ adr.house }}, подъезд {{ adr.entrance }}</b></span>
+                                        <span class="addressName"><b>{{ adr.name }}, {{ adr.street }} {{ adr.house }}</b></span>
                                     </div>
                                     <div class="">
                                         <form action="" method="POST" class="inside flex">
@@ -179,14 +178,16 @@
                         </div>
                     </div>
                     {% else %}
-                        <div class="address flex btw vCenter">
-                            <div>
-                                <span class="addressNameAdd"><b>Добавьте адрес</b></span>
+                        <a href="{% url 'personal_area' %}">
+                            <div class="address flex btw vCenter">
+                                <div>
+                                    <span class="addressNameAdd"><b>Добавьте адрес</b></span>
+                                </div>
+                                <div class="addAnAddress">
+                                    <b>+</b>
+                                </div>
                             </div>
-                            <div class="addAnAddress">
-                                <b>+</b>
-                            </div>
-                        </div>
+                        </a>
                         <div class="emptyAddressField">
                             Пока нет ни одного адреса
                         </div>
