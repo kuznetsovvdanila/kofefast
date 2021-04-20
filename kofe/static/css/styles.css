@@ -136,7 +136,7 @@ input {
     justify-content: center;
 }
 .categories > div:not(.item) {
-    margin: 0 15px 0 15px;
+    margin: 0 15px 15px 15px;
     font-size: 3em;
     cursor: pointer;
     text-align: center;
