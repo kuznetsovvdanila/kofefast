@@ -27,12 +27,14 @@ def index_page(request):
         return redirect('index')
     drinkable, eatable = collect_items(request)
     addresses = collect_addresses(request)
-    adrs_user = AddressUser.objects.all()
-    coffeeshops = collect_relevant_coffeeshops(request, adrs_user.__str__())
+
+    if request.user.chosen_address:
+        adrs_user = request.user.chosen_address
+        coffeeshops = collect_relevant_coffeeshops(request, adrs_user)
 
     context = {
         'addresses': addresses if request.user.is_authenticated else None,
-        'coffeeshops': coffeeshops if request.user.is_authenticated else None,
+        'coffeeshops': coffeeshops if request.user.chosen_address else None,
         'providers': Provider.objects.all(),
         'food': eatable,
         'drinks': drinkable,
