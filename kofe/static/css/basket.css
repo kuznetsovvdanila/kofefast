@@ -1,7 +1,8 @@
 .makeAnOrder {
-    position: fixed;
-    bottom: 0;
-    height: 100px;
+    font-size: 3em;
+    width: 85%;
+}
+form {
     width: 100%;
-    background: linear-gradient(to top, rgba(17, 17, 17, 1), rgba(17, 17, 17, 0));
+    justify-content: space-between;
 }

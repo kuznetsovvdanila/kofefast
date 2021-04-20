@@ -43,19 +43,37 @@
                 <div class="hd">
                     Корзина {% if chosen_items %} - {{ basket.all_cost }}₽ {% endif %}
                 </div>
-
-
-
-<!--                <div class="categories flex">-->
-<!--                    <div class="provider del active">-->
-<!--                        Любая-->
-<!--                    </div>-->
-<!--                    {% for provider in providers %}-->
-<!--                        <div id="{{ provider.id }}" class="provider">-->
-<!--                            {{ provider.name }}-->
-<!--                        </div>-->
-<!--                    {% endfor %}-->
-<!--                </div>-->
+                {% if chosen_items %}
+                    <div class="makeAnOrder">
+                        <form class="flex">
+                            <div class="flex">
+                                <div style="text-align: left;" class="flex clmn">
+                                    <div>
+                                        Выбранная кофейня: <span style="margin: 0 10px 0 10px; padding: 5px 10px 5px 10px; border-radius: 70px; background-color: #deb887; color: #111111;"><b>{{ provider }}</b></span>
+                                    </div>
+                                    <div>
+                                        <span>
+                                            Адрес:
+                                        </span>
+                                        {% for adr in user.addresses %}
+                                            {% if adr.chosen %}
+                                                <select class="pointer" id="" name="prefered_adr_id">
+                                                    <option value="">Приду и заберу</option>
+                                                    {% if addresses %}
+                                                        {% for adr in addresses %}
+                                                            <option value="{{adr.id}}" style="text-overflow: ellipsis;" {% if adr.chosen %} selected="selected"{% endif %} value="{{ adr.name }}">{{ adr.name }} ({{ adr.street }} {{ adr.house }})</option>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                    <option value="addAnAddress">Добавить адрес</option>
+                                                </select>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                {% endif %}
                 <hr class="line" style="margin-bottom: 80px;">
                 {% if not chosen_items %}
                     <span class="emptyBasket">Здесь пока пусто, добавь товар в корзину на <a style="background-color: #deb887; color: #111111; font-weight: bold;" href="{% url 'index' %}">главной странице!</a></span>
@@ -99,26 +117,6 @@
                     </div>
                 </div>
             </div>
-
-<!--            <div class="makeAnOrder flex vCenter btw">-->
-<!--                <div class="flex btw" style="font-size: 2.5em; margin: 0 20px 0 20px; max-width: 60%; text-overflow: ellipsis; box-sizing: border-box;">-->
-<!--                    {% for item in chosen_items %}-->
-<!--                        <div style="margin: 0 20px 0 0;">-->
-<!--                            {{ item.good.name }}-->
-<!--                        </div>-->
-<!--                    {% endfor %}-->
-<!--                </div>-->
-<!--                <div style="font-size: 2.5em; background-color: #111111; border-radius: 200px; border: 5px solid #eeeeee; padding: 5px 10px 5px 10px;">-->
-<!--                        {{ basket.all_cost }}-->
-<!--                    </div>-->
-<!--                <div class="flex vCenter">-->
-<!--                    <form action="" method="POST">-->
-<!--                        <input name="action_type" type="text" value="order" style="display: none;">-->
-<!--                        {% csrf_token %}-->
-<!--                        <input type="submit" value="Заказать" class="pointer">-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </div>-->
 
             <div class="addressMenuMainPage flex">
                 <div class="arrowMobile flex">

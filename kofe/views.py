@@ -68,6 +68,7 @@ def basket_page(request):
         chosen_items.append(item)
 
     context = {
+        'provider': chosen_items[0].good.provided if chosen_items else None,
         'chosen_items': chosen_items,
         'basket': basket,
     }

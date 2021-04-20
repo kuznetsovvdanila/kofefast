@@ -556,8 +556,9 @@ option:not(:checked) {
         display: none !important;
     }
     .emptyBasket {
+        width: auto;
         font-size: 6.5em;
-        margin: 150px 50px 0 50px;
+        margin: 150px 50px 0 70px;
     }
     /*.leftSide {
         left: 0;
@@ -663,7 +664,7 @@ option:not(:checked) {
     .registrationMobile.active {
         top: 2000px;
         opacity: 1;
-        z-index: 1000;
+        z-index: 2001;
         height: auto;
         transition: .3s;
     }
@@ -706,7 +707,7 @@ option:not(:checked) {
     }
     .authorizationMobile.active {
         opacity: 1;
-        z-index: 1000;
+        z-index: 2001;
         height: auto;
         transition: .3s;
     }
@@ -917,9 +918,16 @@ option:not(:checked) {
         box-shadow: 0 0 0 15px #eeeeee;
     }
     .itemName {
+        max-height: 30%;
+        text-overflow: ellipsis;
+        box-sizing: border-box;
+    }
+    .itemName > b {
+        max-height: 100%;
         text-overflow: ellipsis;
     }
     .itemName b > span {
+        max-height: 100%;
         text-overflow: ellipsis;
         font-size: 6em;
         background-color: #111111;
@@ -961,6 +969,8 @@ option:not(:checked) {
         flex-direction: column;
         align-items: left;
         justify-content: space-between;
+        height: 60%;
+        max-height: 60%;
     }
     .list {
         margin: 0 60px 80px 60px !important;
