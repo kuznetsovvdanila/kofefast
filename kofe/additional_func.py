@@ -22,16 +22,22 @@ def collect_addresses(request):
     return addresses
 
 def collect_relevant_coffeeshops(request, user_adrs):
-    coffeeshops = []
+    coffeeshops = Provider.objects.all()
+    cafe_addresses = AddressCafe.objects.all()
     geolocator = Nominatim(user_agent="kofefast")
-    user_location = geolocator.geocode(user_adrs)
-    if request.user.is_authenticated:
-        for adrs in AddressCafe.objects.all():
-            coffeeshop_address = str(adrs.city) + str(adrs.street) + str(adrs.house) + str(adrs.entrance)
-            coffeeshop_location = geolocator.geocode(coffeeshop_address)
-            if distance.distance((user_location.longitude, user_location.latitude), (coffeeshop_location.longitude, coffeeshop_location.latitude)).m < 710:
-                coffeeshops += adrs
-    return coffeeshops
+    if user_adrs.all():
+        coffeeshops = []
+        cafe_addresses = []
+        user_adrs = user_adrs.all()[0]
+        user_location = geolocator.geocode(user_adrs)
+        if request.user.is_authenticated:
+            for adrs in AddressCafe.objects.all():
+                coffeeshop_address = str(adrs.city) + ', ' + str(adrs.street) + ', ' + str(adrs.house)
+                coffeeshop_location = geolocator.geocode(coffeeshop_address)
+                if distance.distance((user_location.longitude, user_location.latitude), (coffeeshop_location.longitude, coffeeshop_location.latitude)).m < 1000:
+                    coffeeshops.append(adrs.owner)
+                    cafe_addresses.append(adrs)
+    return coffeeshops, cafe_addresses
 
 def collect_items(request):
     providers = Provider.objects.all()

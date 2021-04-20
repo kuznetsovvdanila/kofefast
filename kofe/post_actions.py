@@ -18,13 +18,14 @@ def login_user(request):
 
 def registration_user(request):
     request.POST = request.POST.copy()
-    request.POST['username'] = "lox"
+    request.POST['username'] = "chel"
     form = RegistrationForm(request.POST)
     if form.is_valid():
         form.save()
         email = form.cleaned_data.get('email')
         raw_password = form.cleaned_data.get('password1')
-        account = authenticate(email=email, password=raw_password)
+        phone_number = form.cleaned_data.get('phone_number')
+        account = authenticate(email=email, password=raw_password, phone_number=phone_number)
         login(request, account)
     else:
         return redirect(form.errors, 'index')
@@ -80,6 +81,12 @@ def add_address(request):
                       house=request.POST.get('house'))
     if request.POST.get('entrance'):
         adr.entrance = request.POST.get('entrance')
+    if request.POST.get('building'):
+        adr.building = request.POST.get('building')
+    if request.POST.get('floor'):
+        adr.floor = request.POST.get('floor')
+    if request.POST.get('flat'):
+        adr.flat = request.POST.get('flat')
 
     adr.save()
 

@@ -18,12 +18,13 @@ class AddressUser(models.Model):
     city = models.CharField('Город', max_length=30, default='Москва')
     street = models.CharField('Улица', max_length=30, default='Арбат')
     house = models.CharField('Дом', max_length=30, default='1')
+    building = models.CharField('Корпус', max_length=30, default='1')
     entrance = models.IntegerField('Подъезд', default=1)
-    latitude = models.CharField('Широта', max_length=20, default='0deg')
-    longitude = models.CharField('Долгота', max_length=20, default='0deg')
+    floor = models.IntegerField('Этаж', default=1)
+    flat = models.IntegerField('Квартира', default=1)
 
     def __str__(self):
-        return str(self.city) + ', ' + str(self.street) + ', ' + str(self.house) + ', ' + str(self.entrance)
+        return str(self.city) + ' ' + str(self.street) + ' ' + str(self.house)
 
     class Meta:
         verbose_name = "Адрес Пользователя"
@@ -35,9 +36,8 @@ class AddressCafe(models.Model):
     city = models.CharField('Город', max_length=30, default='Москва')
     street = models.CharField('Улица', max_length=30, default='Арбат')
     house = models.CharField('Дом', max_length=30, default='1')
+    building = models.CharField('Корпус', max_length=30, default='1')
     entrance = models.IntegerField('Подъезд', default=1)
-    latitude = models.CharField('Широта', max_length=20, default='0deg')
-    longitude = models.CharField('Долгота', max_length=20, default='0deg')
 
     def __str__(self):
         return str(self.owner)

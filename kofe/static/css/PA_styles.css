@@ -259,7 +259,7 @@ body {
 .addressMenu {
     justify-content: center;
     position: absolute;
-    top: 100px;
+    top: 40px;
     right: -50%;
     width: 52%;
     transition: .5s;
@@ -273,6 +273,15 @@ body {
     opacity: 1;
     right: 0;
     transition: .5s;
+}
+.inARow > input {
+    width: 50%;
+}
+.inARow > input:first-child {
+    margin-right: 5px;
+}
+.inARow > input:last-child {
+    margin-left: 5px;
 }
 .edit {
     justify-content: center;
@@ -452,6 +461,15 @@ input[type='file'] {
         padding: 0 0 40px 0;
     }
     .addressMenu form > input, .edit form > input {
+        height: 150px;
+        margin: 50px !important;
+        text-align: left;
+        font-size: 4em;
+        border-radius: 0;
+        border: none;
+        border-bottom: 15px solid #333333;
+    }
+    .addressMenu form div > input {
         height: 150px;
         margin: 50px !important;
         text-align: left;

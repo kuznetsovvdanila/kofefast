@@ -69,7 +69,7 @@ input {
 .defaultUserPhoto {
     filter: invert() !important;
     transform: filter !important;
-    background-size: 100% !important;
+    background-size: cover !important;
     width: 50px !important;
     height: 50px !important;
 }

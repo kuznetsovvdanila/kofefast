@@ -17,25 +17,35 @@ from sklearn.cluster import KMeans
 from kofe.additional_func import calculate_color, collect_items, collect_addresses, collect_relevant_coffeeshops
 from kofe.decorators import add_user_buc, check_POST, check_proms
 from kofe.forms import RegistrationForm
-from kofe.models import Provider, AddressUser, ItemsSlotBasket, Basket, Item
+from kofe.models import Provider, AddressUser, AddressCafe, ItemsSlotBasket, Basket, Item
 
 
 @add_user_buc
 @check_POST
+
+
 def index_page(request):
     if request.method == 'POST':
         return redirect('index')
     drinkable, eatable = collect_items(request)
     addresses = collect_addresses(request)
+    coffeeshops = Provider.objects.all()
+    cafe_addresses = AddressCafe.objects.all()
 
-    if request.user.chosen_address:
-        adrs_user = request.user.chosen_address
-        coffeeshops = collect_relevant_coffeeshops(request, adrs_user)
+    flagCoffeeshops = False
+
+    if request.user.is_authenticated:
+        if request.user.chosen_address:
+            flagCoffeeshops = True
+
+    if flagCoffeeshops:
+        adrs_user = request.user.chosen_address.all()
+        coffeeshops, cafe_addresses = collect_relevant_coffeeshops(request, adrs_user)
 
     context = {
         'addresses': addresses if request.user.is_authenticated else None,
-        'coffeeshops': coffeeshops if request.user.chosen_address else None,
-        'providers': Provider.objects.all(),
+        'coffeeshops': coffeeshops if flagCoffeeshops else None,
+        'providers': coffeeshops,
         'food': eatable,
         'drinks': drinkable,
         'form': RegistrationForm(),
@@ -70,6 +80,7 @@ def basket_page(request):
         chosen_items.append(item)
 
     context = {
+        'cafe_addresses': AddressCafe.objects.all(),
         'provider': chosen_items[0].good.provided if chosen_items else None,
         'chosen_items': chosen_items,
         'basket': basket,

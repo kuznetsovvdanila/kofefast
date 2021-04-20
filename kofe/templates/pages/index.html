@@ -90,6 +90,7 @@
                                 <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
                                 <input type="text" name="first_name" autocomplete="none" required="" id="id_first_name" placeholder="Имя">
                                 <input type="text" name="last_name" autocomplete="none" required="" id="id_last_name" placeholder="Фамилия">
+                                <input type="text" name="phone_number" autocomplete="none" required="" id="phone_number" placeholder="Телефон">
                                 {{ form.password1 }}
                                 {{ form.password2 }}
                                 {% csrf_token %}
@@ -198,41 +199,43 @@
                             Напитки
                         </div>
                         {% for drink in drinks %}
-                            <div id="{{ drink.provided.id }}" class="btw item show" style="background: linear-gradient(to left, rgba({{ drink.primary_color }}) 60%, transparent); background-image: url('{{ drink.preview.url }}'); background-size: cover; background-position: right 50%">
-                                <div class="cntnr flex">
-                                    <div class="itemName">
-                                        <b><span>{{ drink.name }} - {{ drink.provided }}</span></b>
+                            {% if drink.provided in coffeeshops %}
+                                <div id="{{ drink.provided.id }}" class="btw item show" style="background: linear-gradient(to left, rgba({{ drink.primary_color }}) 60%, transparent); background-image: url('{{ drink.preview.url }}'); background-size: cover; background-position: right 50%">
+                                    <div class="cntnr flex">
+                                        <div class="itemName">
+                                            <b><span>{{ drink.name }} - {{ drink.provided }}</span></b>
+                                        </div>
+                                        <div class="itemDescription">
+                                            <span style="background-color: #111111; color: #eeeeee;">{{ drink.description }}</span>
+                                        </div>
+                                        <div class="itemPrice">
+                                            <span><b>{{ drink.price }}₽</b></span>
+                                        </div>
                                     </div>
-                                    <div class="itemDescription">
-                                        <span style="background-color: #111111; color: #eeeeee;">{{ drink.description }}</span>
-                                    </div>
-                                    <div class="itemPrice">
-                                        <span><b>{{ drink.price }}₽</b></span>
-                                    </div>
-                                </div>
-<!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->
+    <!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->
 
-<!--                                </div>-->
-                                <div class="addToBasket flex reallySoftBorder clmn">
-                                    <div>
-                                        <form action="" method="POST">
-                                            <input name="action_type" type="text" value="add {{ drink.id }}" style="display: none;">
-                                            {% csrf_token %}
-                                            <input type="submit" value="+" class="pointer">
-                                        </form>
-                                    </div>
-                                    <div class="counter" style="">
-                                        {{ drink.count }}
-                                    </div>
-                                    <div>
-                                        <form action="" method="POST">
-                                            <input name="action_type" type="text" value="reduce {{ drink.id }}" style="display: none;">
-                                            {% csrf_token %}
-                                            <input type="submit" value="-" class="pointer">
-                                        </form>
+    <!--                                </div>-->
+                                    <div class="addToBasket flex reallySoftBorder clmn">
+                                        <div>
+                                            <form action="" method="POST">
+                                                <input name="action_type" type="text" value="add {{ drink.id }}" style="display: none;">
+                                                {% csrf_token %}
+                                                <input type="submit" value="+" class="pointer">
+                                            </form>
+                                        </div>
+                                        <div class="counter" style="">
+                                            {{ drink.count }}
+                                        </div>
+                                        <div>
+                                            <form action="" method="POST">
+                                                <input name="action_type" type="text" value="reduce {{ drink.id }}" style="display: none;">
+                                                {% csrf_token %}
+                                                <input type="submit" value="-" class="pointer">
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         {% endfor %}
                     </div>
                     <div class="food flex active">
@@ -240,40 +243,42 @@
                             Еда
                         </div>
                         {% for dish in food %}
-                            <div id="{{ dish.provided.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ dish.primary_color }}) 60%, transparent); background-image: url('{{ dish.preview.url }}'); background-size: cover; background-position: right 50%">
-                                <div class="cntnr flex">
-                                    <div class="itemName">
-                                        <b><span>{{ dish.name }} - {{ dish.provided }}</span></b>
+                            {% if dish.provided in coffeeshops %}
+                                <div id="{{ dish.provided.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ dish.primary_color }}) 60%, transparent); background-image: url('{{ dish.preview.url }}'); background-size: cover; background-position: right 50%">
+                                    <div class="cntnr flex">
+                                        <div class="itemName">
+                                            <b><span>{{ dish.name }} - {{ dish.provided }}</span></b>
+                                        </div>
+                                        <div class="itemDescription">
+                                            <span style="background-color: #111111; color: #eeeeee;">{{ dish.description }}</span>
+                                        </div>
+                                        <div class="itemPrice">
+                                            <span><b>{{ dish.price }}₽</b></span>
+                                        </div>
                                     </div>
-                                    <div class="itemDescription">
-                                        <span style="background-color: #111111; color: #eeeeee;">{{ dish.description }}</span>
-                                    </div>
-                                    <div class="itemPrice">
-                                        <span><b>{{ dish.price }}₽</b></span>
-                                    </div>
-                                </div>
-<!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->
+    <!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->
 
-<!--                                </div>-->
-                                <div class="addToBasket flex reallySoftBorder clmn">
-                                    <div>
-                                        <form action="" method="POST">
-                                            <input name="action_type" type="text" value="add {{ dish.id }}" style="display: none;">
-                                            {% csrf_token %}
-                                            <input type="submit" value="+" class="pointer">
-                                        </form>
+    <!--                                </div>-->
+                                    <div class="addToBasket flex reallySoftBorder clmn">
+                                        <div>
+                                            <form action="" method="POST">
+                                                <input name="action_type" type="text" value="add {{ dish.id }}" style="display: none;">
+                                                {% csrf_token %}
+                                                <input type="submit" value="+" class="pointer">
+                                            </form>
+                                        </div>
+                                        <div class="counter" style="">
+                                            {{ dish.count }}
+                                        </div>
+                                        <div>
+                                            <form action="" method="POST">
+                                                <input name="action_type" type="text" value="reduce {{ dish.id }}" style="display: none;">
+                                                {% csrf_token %}
+                                                <input type="submit" value="-" class="pointer">
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div class="counter" style="">
-                                        {{ dish.count }}
-                                    </div>
-                                    <div>
-                                        <form action="" method="POST">
-                                            <input name="action_type" type="text" value="reduce {{ dish.id }}" style="display: none;">
-                                            {% csrf_token %}
-                                            <input type="submit" value="-" class="pointer">
-                                        </form>
-                                    </div>
-                                </div>
+                                {% endif %}
                             </div>
                         {% endfor %}
                     </div>
@@ -331,13 +336,16 @@
                                 </div>
                             {% endif %}
                         {% endfor %}
-                        <div class="address flex btw vCenter">
-                            <div>
-                                <span class="addressNameAdd"><b>Добавьте адрес</b></span>
+                        <a href="{% url 'personal_area' %}">
+                            <div class="address flex btw vCenter">
+                                <div>
+                                    <span class="addressNameAdd"><b>Добавьте адрес</b></span>
+                                </div>
+                                <div class="addAnAddress">
+                                    <b>+</b>
+                                </div>
                             </div>
-                            <div class="addAnAddress">
-                                <b>+</b>
-                        </div>
+                        </a>
                     </div>
                     {% else %}
                         <a href="{% url 'personal_area' %}">

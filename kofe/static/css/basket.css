@@ -1,8 +1,26 @@
+form {
+    width: 100%;
+    justify-content: space-between;
+}
 .makeAnOrder {
     font-size: 3em;
     width: 85%;
 }
-form {
-    width: 100%;
-    justify-content: space-between;
+select {
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 30px;
+    font-family: "ProductSans-Regular";
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: #eeeeee;
+    max-width: 400px;
+}
+select option {
+    background-color: #111111 !important;
+    border: none;
+}
+option:not(:checked) {
+    background-color: #111111;
 }

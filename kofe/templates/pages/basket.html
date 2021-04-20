@@ -44,35 +44,31 @@
                     Корзина {% if chosen_items %} - {{ basket.all_cost }}₽ {% endif %}
                 </div>
                 {% if chosen_items %}
-                    <div class="makeAnOrder">
-                        <form class="flex">
-                            <div class="flex">
-                                <div style="text-align: left;" class="flex clmn">
-                                    <div>
-                                        Выбранная кофейня: <span style="margin: 0 10px 0 10px; padding: 5px 10px 5px 10px; border-radius: 70px; background-color: #deb887; color: #111111;"><b>{{ provider }}</b></span>
-                                    </div>
-                                    <div>
-                                        <span>
-                                            Адрес:
-                                        </span>
-                                        {% for adr in user.addresses %}
-                                            {% if adr.chosen %}
-                                                <select class="pointer" id="" name="prefered_adr_id">
-                                                    <option value="">Приду и заберу</option>
-                                                    {% if addresses %}
-                                                        {% for adr in addresses %}
-                                                            <option value="{{adr.id}}" style="text-overflow: ellipsis;" {% if adr.chosen %} selected="selected"{% endif %} value="{{ adr.name }}">{{ adr.name }} ({{ adr.street }} {{ adr.house }})</option>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                    <option value="addAnAddress">Добавить адрес</option>
-                                                </select>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+<!--                    <div class="makeAnOrder">-->
+<!--                        <form class="flex">-->
+<!--                            <div class="flex">-->
+<!--                                <div style="text-align: left;" class="flex clmn">-->
+<!--                                    <div>-->
+<!--                                        Выбранная кофейня: <span style="margin: 0 10px 0 10px; padding: 5px 10px 5px 10px; border-radius: 70px; background-color: #deb887; color: #111111;"><b>{{ provider }}</b></span>-->
+<!--                                    </div>-->
+<!--                                    <div>-->
+<!--                                        <span>-->
+<!--                                            Адрес:-->
+<!--                                        </span>-->
+<!--                                        {% if not user.chosen_address %}-->
+<!--                                            {{ provider.addresses }}-->
+<!--                                        {% else %}-->
+<!--                                            <select class="pointer" id="" name="prefered_adr_id">-->
+<!--                                                {% for adr in cafe_addresses %}-->
+<!--                                                <option value="">{{ adr.street }}, {{ adr.house }}</option>-->
+<!--                                                {% endfor %}-->
+<!--                                            </select>-->
+<!--                                        {% endif %}-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
                 {% endif %}
                 <hr class="line" style="margin-bottom: 80px;">
                 {% if not chosen_items %}

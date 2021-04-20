@@ -205,8 +205,16 @@
                 <input type="text" name="name" maxlength="150" required="" id="name" placeholder="Название адреса">
                 <input type="text" name="city" maxlength="150" required="" id="city" placeholder="Город">
                 <input type="text" name="street" maxlength="150" required="" id="street" placeholder="Улица">
-                <input type="text" name="house" maxlength="150" required="" id="house" placeholder="Дом, корпус">
-                <input type="text" name="entrance" maxlength="150" id="entrance" placeholder="Подъезд (при наличии)">
+                <div class="inARow flex">
+                    <input type="text" name="house" maxlength="150" required="" id="house" placeholder="Дом">
+                    <input type="text" name="building" maxlength="150" id="building" placeholder="Корпус">
+                </div>
+                <input type="text" name="entrance" maxlength="150" id="entrance" placeholder="Подъезд">
+                <div class="inARow flex">
+                    <input type="text" name="floor" maxlength="150" id="floor" placeholder="Этаж">
+                    <input type="text" name="flat" maxlength="150" id="flat" placeholder="Квартира">
+                </div>
+
                 {% csrf_token %}
                 <input type="submit" value="Добавить" class="pointer">
             </form>
