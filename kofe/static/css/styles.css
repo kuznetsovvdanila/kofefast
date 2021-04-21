@@ -941,7 +941,7 @@ option:not(:checked) {
         flex-direction: column;
         width: 100%;
         height: auto;
-        bottom: -775px;
+        bottom: -550px;
         display: flex;
         position: fixed;
         margin: 0 !important;
@@ -960,7 +960,7 @@ option:not(:checked) {
         display: block;
         max-height: 700px;
         overflow: auto;
-        padding: 30px 0 30px 0;
+        padding: 30px 0 30px 10%;
         float: right;
         background-color: #111111;
     }
@@ -970,32 +970,41 @@ option:not(:checked) {
         margin: 0 !important;
         width: auto;
     }
-    .chooseAnAddress {
-        color: #111111 !important;
-        background-color: #eeeeee !important;
-        width: 30px !important;
-        height: 230px !important;
-        min-width: 230px;
-        margin: 0 !important;
-        padding: 0px 15px 0px 15px;
-        background-color: #eeeeee;
-        font-size: 7em !important;
-        border-radius: 120px;
-        text-align: center;
-        margin: 0 !important;
-        cursor: pointer;
-        transition: .2s;
-        font-weight: bolder !important;
+    .itemAddress {
+
     }
-    .addressList > div:nth-child(4) {
-        margin: 40px 20px 90px 20px;
-        text-align: center;
-        font-size: 6.5em;
+    .itemAddress:not(:first-child) {
+        margin: 20px 0 0 0;
     }
-    .addressList > div:first-child, .addressList > div:nth-child(2) {
+    .itemAddress > div:last-child {
+        right: 100%;
+    }
+    .itemAddress div form {
+        margin: 0 10% 0 0 !important;
+
+
+    }
+    .itemAddressName {
+        font-size: 3.5em;
+        font-weight: normal;
+    }
+    .chooseAnAddressMobile {
+        opacity: 0;
+        color: #eeeeee;
+        width: 550px;
+        background-color: #111111 !important;
+    }
+    .addressList > div:nth-child(3), .addressList > div:last-child {
+        font-weight: bold;
+        margin: 45px 20px 45px 0;
+        text-align: left;
+        font-size: 5em;
+    }
+    .addressList > div:first-child {
+        font-weight: bold;
         margin: 0 0 40px 0;
-        text-align: center;
-        font-size: 6.5em;
+        text-align: left;
+        font-size: 5em;
     }
     a {
         color: #eeeeee;
