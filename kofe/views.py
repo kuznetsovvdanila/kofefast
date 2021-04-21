@@ -31,6 +31,7 @@ def index_page(request):
     addresses = collect_addresses(request)
     coffeeshops = Provider.objects.all()
     cafe_addresses = AddressCafe.objects.all()
+    chosen_items = []
 
     flagCoffeeshops = False
 
@@ -42,6 +43,9 @@ def index_page(request):
         adrs_user = request.user.chosen_address.all()
         coffeeshops, cafe_addresses = collect_relevant_coffeeshops(request, adrs_user)
 
+    for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
+        chosen_items.append(item)
+
     context = {
         'addresses': addresses if request.user.is_authenticated else None,
         'coffeeshops': coffeeshops if flagCoffeeshops else None,
@@ -49,6 +53,10 @@ def index_page(request):
         'food': eatable,
         'drinks': drinkable,
         'form': RegistrationForm(),
+        'chosen_items': chosen_items,
+        'prvdr': chosen_items[0].good.provided if chosen_items else None,
+        'basket': request.user.basket_set.all()[0],
+        'chosen_address': request.user.chosen_address.all()[0] if request.user.chosen_address.all() else None,
     }
     return render(request, 'pages/index.html', context)
 

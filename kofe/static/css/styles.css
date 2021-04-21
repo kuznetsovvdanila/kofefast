@@ -124,9 +124,62 @@ input {
     margin: 0 0 50px 0;
 }
 .hd {
+    align-items: center;
+    justify-content: center;
     text-align: center;
     font-size: 5em;
     margin: 30px 0 40px 0 !important;
+}
+.chs {
+    font-size: 0.8em;
+    margin: 10px 10px 0 20px;
+    padding: 0px 10px 0px 10px;
+    border-radius: 70px;
+    background-color: #111111;
+    color: #eeeeee;
+}
+.cancel > form {
+    border-left: 7px solid #deb887;
+    padding: 0 0 0 10px;
+    width: auto;
+    height: 80px;
+}
+.cancel form > input {
+    font-weight: normal;
+    color: #eeeeee;
+    font-size: 1em;
+    border-radius: 50px;
+    width: 500px;
+    height: 70px;
+    padding: 7px 7px 17px 7px;
+    box-sizing: border-box;
+    line-height: 10px;
+    margin: 16px 0 0 0;
+    background-color: #111111;
+    transition: .2s;
+}
+.cancel form > input:hover {
+    background-color: #ea4335;
+    transition: .2s;
+}
+.makeAnOrder {
+    text-align: left;
+    flex-direction: row;
+    width: 100%;
+    font-size: 2em;
+}
+.basketList {
+    border-left: 6px solid #deb887;
+    padding: 0 0 0 15px;
+}
+.basketAddress {
+    border-left: 6px solid #deb887;
+    padding: 0 0 0 15px;
+}
+.basketHd {
+    font-weight: bold;
+    font-size: 1.3em;
+    margin: 15px 0 15px 0;
 }
 .categories {
     justify-content: center;

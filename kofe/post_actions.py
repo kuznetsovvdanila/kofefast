@@ -69,6 +69,10 @@ def change_basket(request, input_command):
                 request.user.save()
 
 
+def clear_the_basket(request):
+    ItemsSlotBasket.objects.all().delete()
+
+
 def delete_prefer_address(request):
     for i in request.user.chosen_address.all():
         request.user.chosen_address.remove(i)

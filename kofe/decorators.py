@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 
 from kofe.models import Basket
 from kofe.post_actions import login_user, registration_user, logout_user, set_prefer_address, change_basket, \
-    delete_prefer_address, add_address, user_changing_info, delete_an_address
+    delete_prefer_address, add_address, user_changing_info, delete_an_address, clear_the_basket
 
 
 def add_user_buc(func):
@@ -46,6 +46,7 @@ def check_POST(func):
             'add_address': add_address,
             'changing_info': user_changing_info,
             'delete_an_address': delete_an_address,
+            'clear_the_basket': clear_the_basket,
         }
 
         if request.method == 'POST':

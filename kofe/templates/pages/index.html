@@ -72,6 +72,7 @@
             <div class="main flex">
                 <div class="description">
                     мы реально крутые, пользуйтесь нашим офигенным сайтом
+                    кофе ещё никогда не был так близко,
                 </div>
                 <input type="submit" class="registrationButton active pointer" value="Зарегистрироваться">
                 <div class="rightSide">
@@ -174,24 +175,88 @@
             </div>
         {% else %}
             <div class="mainAuth flex">
-                <div class="hd">
-                    Выберите кофейню:
-                </div>
-                <div class="categories flex">
-                    <div class="provider del active">
-                        Любая
+                {% if not chosen_items %}
+                    <div class="hd">
+                        Выберите кофейню:
                     </div>
-                    {% for provider in providers %}
-                        <div id="{{ provider.id }}" class="provider flex vCenter btw">
-                            <div>
-                                {{ provider.name }}
-                            </div>
-                            <div class="mapPointImage">
+                    <div class="categories flex">
+                        <div class="provider del active">
+                            Любая
+                        </div>
+                        {% for provider in providers %}
+                            <div id="{{ provider.id }}" class="provider flex vCenter btw">
+                                <div>
+                                    {{ provider.name }}
+                                </div>
+                                <div class="mapPointImage">
 
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div style="flex-wrap: wrap;" class="hd flex clmn">
+                        <div>
+                            Выбранная кофейня:
+                        </div>
+                        <div class="chs flex vCenter btw">
+                            <div style="margin: 0 20px 0 0; font-size: 1.1em;">
+                                {{ prvdr }}
+                            </div>
+                            <div class="cancel" style="">
+                                <form action="" method="POST" class="flex">
+                                    <input name="action_type" type="text" value="clear_the_basket" style="display: none;">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Отменить выбор" class="pointer">
+                                </form>
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
+                    </div>
+                    <hr class="line">
+                    <div style="width: 85%;">
+                        <form class="makeAnOrder flex btw">
+                            <div class="flex clmn">
+                                <div class="basketHd">
+                                    Что у вас в корзине:
+                                </div>
+                                <div class="basketList">
+                                    {% for item in chosen_items %}
+                                        <div>
+                                            {{ item.good.price }}₽ -  {{ item.good.name }}, {{ item.count }} шт.
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="basketHd">
+                                    Итого: {{ basket.all_cost }}₽
+                                </div>
+                            </div>
+                            <div class="prmtrs">
+                                <div>
+                                    {% if chosen_address %}
+                                        <div class="basketHd">
+                                            Адрес доставки:
+                                        </div>
+                                        <div class="basketAddress">
+                                            {{ chosen_address.name }} ({{ chosen_address.street }}, {{ chosen_address.house }}, к{{ chosen_address.building }})
+                                        </div>
+                                        <div style="max-width: 400px; margin: 10px 0 0 0; font-size: 0.7em;">
+                                            Мы хотим, чтобы вы получили свежий, только что приготовленный продукт, поэтому все кофейни привязаны к определённым адресам. Изменить адрес доставки невозможно
+                                        </div>
+                                    {% else %}
+                                        <div class="basketHd">
+                                            Самовывоз
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="time flex">
+                                <div class="basketHd">
+                                    Желаемое время получения:
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                {% endif %}
                 <hr class="line">
                 <div class="list">
                     <div class="coffee flex active">
@@ -383,8 +448,8 @@
 <!--            <div id="map"></div>-->
         {% endif %}
         <div class="mapForProvider">
-            <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A7a4f00480f85b19cd6d0ffbcd262547cbdbf06e381ac7c8518fe3061cab635ec&amp;source=constructor" width="500" height="400" frameborder="0">
-
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2692.396739189686!2d37.70401737743941!3d55.64590975658826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTXCsDM4JzQ1LjMiTiAzN8KwNDInMTQuNSJF!5e1!3m2!1sru!2sru!4v1618988358075!5m2!1sru!2sru" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+                                                                                                55.645909, 37.704017
             </iframe>
         </div>
         <!--        <div class="bottom">-->
