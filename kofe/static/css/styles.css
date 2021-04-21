@@ -145,21 +145,23 @@ input {
     height: 80px;
 }
 .cancel form > input {
+    cursor: pointer;
     font-weight: normal;
+    box-shadow: none;
     color: #eeeeee;
-    font-size: 1em;
+    font-size: 1.1em;
     border-radius: 50px;
-    width: 500px;
+    width: 260px;
     height: 70px;
-    padding: 7px 7px 17px 7px;
+    padding: 11px 10px 17px 10px;
     box-sizing: border-box;
     line-height: 10px;
-    margin: 16px 0 0 0;
+    margin: 8px 0 0 0;
     background-color: #111111;
     transition: .2s;
 }
 .cancel form > input:hover {
-    background-color: #ea4335;
+    box-shadow: 0 0 0 5px #eeeeee;
     transition: .2s;
 }
 .makeAnOrder {
@@ -167,19 +169,39 @@ input {
     flex-direction: row;
     width: 100%;
     font-size: 2em;
+    flex-wrap: wrap;
+}
+.makeAnOrder > div:not(:last-child) {
+    margin: 0;
+    min-width: 30%;
+}
+.makeAnOrderButton {
+    text-align: center;
+    font-size: 1.5em !important;
+    padding: 0 20px 0 20px;
+    width: 230px;
+    margin: 0;
+    box-shadow: none;
+    background-color: #deb887 !important;
+    color: #111111;
 }
 .basketList {
     border-left: 6px solid #deb887;
     padding: 0 0 0 15px;
+    max-width: 97%;
 }
 .basketAddress {
     border-left: 6px solid #deb887;
     padding: 0 0 0 15px;
+    max-width: 97%;
 }
 .basketHd {
     font-weight: bold;
     font-size: 1.3em;
     margin: 15px 0 15px 0;
+}
+.sum {
+    margin: 0 20px 0 0;
 }
 .categories {
     justify-content: center;
@@ -501,7 +523,7 @@ input[type='submit'] {
     width: auto;
     flex-direction: row;
 }
-.addressPart form > select {
+select {
     font-size: 2.2em;
     padding: 10px;
     border-radius: 30px;
@@ -511,11 +533,17 @@ input[type='submit'] {
     border: none;
     background-color: transparent;
     color: #eeeeee;
-    max-width: 310px;
+    max-width: 350px;
 }
 select option {
     background-color: #111111 !important;
     border: none;
+}
+.timeSelect {
+    font-weight: normal;
+    padding: 0;
+    width: auto;
+    font-size: 1em;
 }
 option:not(:checked) {
     background-color: #111111;
@@ -597,7 +625,12 @@ option:not(:checked) {
     width: 500px;
     font-size: 3em;
 }
-
+.mobileInput {
+    display: none;
+}
+.notMobileInput {
+    display: block;
+}
 
 
 #map {
@@ -605,6 +638,65 @@ option:not(:checked) {
 }
 
 @media screen and (max-width: 1000px) {
+    .mobileInput {
+        display: block;
+    }
+    .notMobileInput {
+        display: none;
+    }
+    .cancel > form {
+        border-left: 15px solid #deb887;
+        padding: 0 0 0 10px;
+        width: auto;
+        height: 80px;
+    }
+    .cancel form > input {
+        font-weight: normal;
+        box-shadow: none;
+        color: #eeeeee;
+        font-size: 1.1em;
+        border-radius: 50px;
+        width: 95px;
+        height: 70px;
+        padding: 11px 10px 17px 10px;
+        box-sizing: border-box;
+        line-height: 10px;
+        margin: 10px 0 0 0;
+        background-color: #111111;
+        transition: .2s;
+    }
+    .basketHd {
+        font-size: 2.5em;
+    }
+    .makeAnOrder > div:first-child {
+        flex-direction: column;
+    }
+    .makeAnOrder div:first-child div:first-child > div:not(:first-child) {
+        margin: 30px 0 30px 0;
+        max-width: 100%;
+        font-size: 1.65em;
+        border-left: 15px solid #deb887;
+    }
+    .makeAnOrder div:first-child div:first-child div:not(:first-child) > div:not(:first-child) {
+        margin: 20px 0 0 0;
+    }
+    .makeAnOrder div:first-child .prmtrs > div:not(:first-child) {
+        margin: 30px 0 30px 0;
+        max-width: 100%;
+        font-size: 1.65em;
+        border-left: 15px solid #deb887;
+    }
+    .makeAnOrder div:first-child .time > div:not(:first-child) {
+        margin: 30px 0 30px 0;
+        max-width: 100%;
+        font-size: 1.65em;
+    }
+    .makeAnOrderButton {
+        height: 100px !important;
+        width: auto;
+        border-radius: 60px;
+        font-size: 2em !important;
+    }
     .topMenuNotMobile {
         display: none !important;
     }
@@ -872,6 +964,7 @@ option:not(:checked) {
         float: right;
         background-color: #111111;
     }
+
     .inside {
         max-width: 20%;
         margin: 0 !important;
@@ -900,10 +993,9 @@ option:not(:checked) {
         font-size: 6.5em;
     }
     .addressList > div:first-child, .addressList > div:nth-child(2) {
-        margin: 0px 20px 40px 80px;
+        margin: 0 0 40px 0;
         text-align: center;
         font-size: 6.5em;
-        text-align: left;
     }
     a {
         color: #eeeeee;
@@ -982,15 +1074,15 @@ option:not(:checked) {
     .itemName b > span {
         max-height: 100%;
         text-overflow: ellipsis;
-        font-size: 6em;
+        font-size: 5em;
         background-color: #111111;
         color: #deb887;
     }
     .itemDescription {
-        font-size: 3.2em;
+        font-size: 3em;
     }
     .itemPrice {
-        font-size: 5em;
+        font-size: 4em;
     }
     .itemPrice > span {
         box-shadow: none;
@@ -998,7 +1090,7 @@ option:not(:checked) {
         border-radius: 0;
     }
     .addToBasket {
-        flex-direction: row !important;
+        flex-direction: row-reverse !important;
         min-width: 100%;
         align-items: center;
     }

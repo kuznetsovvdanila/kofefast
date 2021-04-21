@@ -8,11 +8,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
         <script type="text/javascript">
 
-        }
-    </script>
+        </script>
+
     </head>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <body>
         <div class="topMenu flex">
             <div class="logo" style="font-size: 4.5em;">
@@ -20,26 +22,35 @@
             </div>
             {% if request.user.is_authenticated %}
             <div class="topMenuNotMobile">
+                <div>
+
+                </div>
                 <div class="addressPart flex">
                     <form action="" method="POST" class="sendIt flex">
                         <input name="action_type" type="text" value="prefer_address" style="display: none;">
+                        {% if not chosen_items %}
                         <select class="pointer" id="" name="prefered_adr_id">
                             <option value="">Приду и заберу</option>
                             {% if addresses %}
-                                {% for adr in addresses %}
-                                    <option value="{{adr.id}}" style="text-overflow: ellipsis;" {% if adr.chosen %} selected="selected"{% endif %} value="{{ adr.name }}">{{ adr.name }} ({{ adr.street }} {{ adr.house }})</option>
-                                {% endfor %}
+                                    {% for adr in addresses %}
+                                        <option value="{{ adr.id }}" style="text-overflow: ellipsis;" {% if adr.chosen %} selected="selected"{% endif %} value="{{ adr.name }}">{{ adr.name }} ({{ adr.street }} {{ adr.house }})</option>
+                                    {% endfor %}
+
                             {% endif %}
                             <option value="addAnAddress">Добавить адрес</option>
                         </select>
                         {% csrf_token %}
+                        {% else %}
+                            <div style="font-size: 2.2em; font-weight: bold;">
+                                {% if chosen_address %}
+                                    {{ chosen_address.name }} ({{ chosen_address.street }} {{ chosen_address.house }})
+                                {% else %}
+                                    Приду и заберу
+                                {% endif %}
+                            </div>
+                        {% endif %}
                     </form>
                 </div>
-                <a href="{% url 'basket' %}">
-                    <div class="basketImage pointer">
-
-                    </div>
-                </a>
                 <a href="{% url 'personal_area' %}" style="color: #eeeeee;">
                     <div style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; border: 5px solid #eeeeee; border-radius: 40px; height: 60px !important; width: 60px !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %} background-position: 50% 50%; background-size: cover;" class="defaultUserPhoto pointer">
 
@@ -72,7 +83,6 @@
             <div class="main flex">
                 <div class="description">
                     мы реально крутые, пользуйтесь нашим офигенным сайтом
-                    кофе ещё никогда не был так близко,
                 </div>
                 <input type="submit" class="registrationButton active pointer" value="Зарегистрироваться">
                 <div class="rightSide">
@@ -200,38 +210,36 @@
                             Выбранная кофейня:
                         </div>
                         <div class="chs flex vCenter btw">
-                            <div style="margin: 0 20px 0 0; font-size: 1.1em;">
+                            <div style="margin: 0 35px 0 0; font-size: 1.1em;">
                                 {{ prvdr }}
                             </div>
                             <div class="cancel" style="">
                                 <form action="" method="POST" class="flex">
                                     <input name="action_type" type="text" value="clear_the_basket" style="display: none;">
                                     {% csrf_token %}
-                                    <input type="submit" value="Отменить выбор" class="pointer">
+                                    <input class="mobileInput" type="submit" value="x" class="pointer">
+                                    <input class="notMobileInput" type="submit" value="убрать" class="pointer">
                                 </form>
                             </div>
                         </div>
                     </div>
                     <hr class="line">
-                    <div style="width: 85%;">
-                        <form class="makeAnOrder flex btw">
-                            <div class="flex clmn">
-                                <div class="basketHd">
-                                    Что у вас в корзине:
+                    <div style="width: 85%; margin-bottom: 0;">
+                        <form class="makeAnOrder flex clmn">
+                            <div class="flex btw">
+                                <div class="flex clmn">
+                                    <div class="basketHd">
+                                        Что у вас в корзине:
+                                    </div>
+                                    <div class="basketList">
+                                        {% for item in chosen_items %}
+                                            <div>
+                                                {{ item.good.price }}₽ -  {{ item.good.name }}, {{ item.count }} шт.
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                                <div class="basketList">
-                                    {% for item in chosen_items %}
-                                        <div>
-                                            {{ item.good.price }}₽ -  {{ item.good.name }}, {{ item.count }} шт.
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                                <div class="basketHd">
-                                    Итого: {{ basket.all_cost }}₽
-                                </div>
-                            </div>
-                            <div class="prmtrs">
-                                <div>
+                                <div class="prmtrs">
                                     {% if chosen_address %}
                                         <div class="basketHd">
                                             Адрес доставки:
@@ -240,7 +248,6 @@
                                             {{ chosen_address.name }} ({{ chosen_address.street }}, {{ chosen_address.house }}, к{{ chosen_address.building }})
                                         </div>
                                         <div style="max-width: 400px; margin: 10px 0 0 0; font-size: 0.7em;">
-                                            Мы хотим, чтобы вы получили свежий, только что приготовленный продукт, поэтому все кофейни привязаны к определённым адресам. Изменить адрес доставки невозможно
                                         </div>
                                     {% else %}
                                         <div class="basketHd">
@@ -248,10 +255,25 @@
                                         </div>
                                     {% endif %}
                                 </div>
+                                <div class="time flex clmn">
+                                    <div class="basketHd">
+                                        Получить:
+                                    </div>
+                                    <div class="flex clmn">
+                                        <div>
+                                            Как можно скорее
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
-                            <div class="time flex">
-                                <div class="basketHd">
-                                    Желаемое время получения:
+                            <hr style="width: 100%; margin-top: 30px;" class="line">
+                            <div style="margin: 0 0 10px 0;" class="vCenter flex btw">
+                                <div class="basketHd sum">
+                                    Итого: {{ basket.all_cost }}₽
+                                </div>
+                                <div style="">
+                                    <input class="makeAnOrderButton pointer" type="submit" value="Заказать">
                                 </div>
                             </div>
                         </form>
@@ -280,7 +302,7 @@
     <!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->
 
     <!--                                </div>-->
-                                    <div class="addToBasket flex reallySoftBorder clmn">
+                                    <div class="addToBasket flex clmn">
                                         <div>
                                             <form action="" method="POST">
                                                 <input name="action_type" type="text" value="add {{ drink.id }}" style="display: none;">
@@ -358,12 +380,12 @@
                         <b>ᐃ</b>
                     </div>
                 </div>
-                <div class="addressList">
+                <div class="addressList vCenter">
                     <div>
                         <a href="{% url 'personal_area' %}">Личный кабинет</a>
                     </div>
                     <div>
-                        <a href="{% url 'basket' %}">Корзина</a>
+
                     </div>
                     <hr class="lineMobile">
                     <div>
@@ -372,9 +394,9 @@
                     {% if addresses %}
                         {% for adr in addresses %}
                             {% if adr.chosen %}
-                                <div style="border: 15px solid #deb887 !important;" class="address flex btw vCenter">
+                                <div class="address flex btw vCenter">
                                     <div>
-                                        <span style="background-color: #eeeeee;" class="addressName"><b>{{ adr.name }}, {{ adr.street }} {{ adr.house }}</b></span>
+                                        <span class="addressName"><b>{{ adr.name }}, {{ adr.street }} {{ adr.house }}</b></span>
                                     </div>
                                     <div class="">
                                         <form action="" method="POST" class="inside flex">

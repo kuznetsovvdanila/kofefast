@@ -32,8 +32,10 @@ def index_page(request):
     coffeeshops = Provider.objects.all()
     cafe_addresses = AddressCafe.objects.all()
     chosen_items = []
+    CA = None
 
     flagCoffeeshops = False
+    flagCA = False
 
     if request.user.is_authenticated:
         if request.user.chosen_address:
@@ -43,8 +45,14 @@ def index_page(request):
         adrs_user = request.user.chosen_address.all()
         coffeeshops, cafe_addresses = collect_relevant_coffeeshops(request, adrs_user)
 
-    for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
-        chosen_items.append(item)
+    if request.user.is_authenticated:
+        if request.user.chosen_address.all():
+            flagCA = True
+        for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
+            chosen_items.append(item)
+
+    if flagCA:
+        CA = request.user.chosen_address.all()[0]
 
     context = {
         'addresses': addresses if request.user.is_authenticated else None,
@@ -55,9 +63,10 @@ def index_page(request):
         'form': RegistrationForm(),
         'chosen_items': chosen_items,
         'prvdr': chosen_items[0].good.provided if chosen_items else None,
-        'basket': request.user.basket_set.all()[0],
-        'chosen_address': request.user.chosen_address.all()[0] if request.user.chosen_address.all() else None,
+        'basket': request.user.basket_set.all()[0] if request.user.is_authenticated else None,
+        'chosen_address': CA if flagCA else None,
     }
+    print(chosen_items)
     return render(request, 'pages/index.html', context)
 
 
