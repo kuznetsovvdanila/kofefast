@@ -941,7 +941,8 @@ option:not(:checked) {
         flex-direction: column;
         width: 100%;
         height: auto;
-        bottom: -550px;
+        min-height: 950px;
+        bottom: -760px;
         display: flex;
         position: fixed;
         margin: 0 !important;
@@ -957,6 +958,7 @@ option:not(:checked) {
     }
     .addressList {
         box-shadow: 0 0 0 3px #111111;
+        box-shadow: 0 100px 0 0 #111111;
         display: block;
         max-height: 700px;
         overflow: auto;
