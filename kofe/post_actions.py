@@ -1,11 +1,12 @@
 from io import BytesIO
 
+from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.core.files import File
 from django.shortcuts import redirect
 
 from kofe.forms import RegistrationForm
-from kofe.models import AddressUser, ItemsSlotBasket, Item
+from kofe.models import AddressUser, ItemsSlotBasket, Item, Account
 
 from PIL import Image
 
@@ -13,25 +14,40 @@ from PIL import Image
 def login_user(request):
     account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
     if account:
+        messages.succes(request, 'Вы успешно вошли в свою учетную запись')
         login(request, account)
 
 
 def registration_user(request):
     request.POST = request.POST.copy()
-    request.POST['username'] = "chel"
     form = RegistrationForm(request.POST)
-    if form.is_valid():
-        form.save()
-        email = form.cleaned_data.get('email')
-        raw_password = form.cleaned_data.get('password1')
-        phone_number = form.cleaned_data.get('phone_number')
-        account = authenticate(email=email, password=raw_password, phone_number=phone_number)
-        login(request, account)
+    email = request.POST.get('email')
+    phone_number = request.POST.get('phone_number')
+    password1 = request.POST.get('password1')
+    password2 = request.POST.get('password2')
+
+    if Account.objects.filter(email=email).exists():
+        messages.error(request, 'Пользователь с этой электронной почтой уже зарегистрирован')
+    if Account.objects.filter(phone_number=phone_number).exists():
+        messages.error(request, 'Пользователь с этим номером телефона уже зарегистрирован')
+    if password1 != password2:
+        messages.error(request, 'Пароли не совпадают')
+
     else:
-        return redirect(form.errors, 'index')
+        if form.is_valid():
+            form.save()
+            email = form.cleaned_data.get('email')
+            raw_password = form.cleaned_data.get('password1')
+            phone_number = form.cleaned_data.get('phone_number')
+            account = authenticate(email=email, password=raw_password, phone_number=phone_number)
+            messages.success('Регистрация прошла успешно')
+            login(request, account)
+        else:
+            return redirect('index')
 
 
 def logout_user(request):
+    messages.success('Вы успешно вышли из своей учетной записи')
     return redirect('logout')
 
 

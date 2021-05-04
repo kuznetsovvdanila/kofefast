@@ -1,6 +1,8 @@
 import functools
 from io import BytesIO
 
+from django.contrib import messages
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -66,7 +68,6 @@ def index_page(request):
         'basket': request.user.basket_set.all()[0] if request.user.is_authenticated else None,
         'chosen_address': CA if flagCA else None,
     }
-    print(chosen_items)
     return render(request, 'pages/index.html', context)
 
 
