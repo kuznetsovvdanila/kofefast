@@ -31,7 +31,6 @@ def registration_user(request):
         messages.error(request, 'Пользователь с этой электронной почтой уже зарегистрирован')
     if Account.objects.filter(phone_number=phone_number).exists():
         messages.error(request, 'Пользователь с этим номером телефона уже зарегистрирован')
-
     if password1 != password2:
         messages.error(request, 'Пароли не совпадают')
 
