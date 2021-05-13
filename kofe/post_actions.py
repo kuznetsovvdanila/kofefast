@@ -1,5 +1,7 @@
 from io import BytesIO
 
+import re
+
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.core.files import File
@@ -9,7 +11,6 @@ from kofe.forms import RegistrationForm
 from kofe.models import AddressUser, ItemsSlotBasket, Item, Account
 
 from PIL import Image
-
 
 def login_user(request):
     account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
@@ -30,8 +31,13 @@ def registration_user(request):
         messages.error(request, 'Пользователь с этой электронной почтой уже зарегистрирован')
     if Account.objects.filter(phone_number=phone_number).exists():
         messages.error(request, 'Пользователь с этим номером телефона уже зарегистрирован')
+
     if password1 != password2:
         messages.error(request, 'Пароли не совпадают')
+
+    res = [re.search(r"[a-z]", password1), re.search(r"[A-Z]", password1), re.search(r"[0-9]", password1), re.search(r"\W", password1)]
+    if not all(res):
+        messages.error(request, 'Слишком слабый пароль')
 
     else:
         if form.is_valid():
