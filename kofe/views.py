@@ -29,6 +29,7 @@ context = {}
 def index_page(request):
     global context
     registration_error = email_exists = number_exists = dif_passwords = weak_password = False
+    login_error = False
 
     if request.method == 'POST':
         if request.POST.get('action_type') == 'registr':
@@ -59,6 +60,14 @@ def index_page(request):
                 phone_number = form.cleaned_data.get('phone_number')
                 account = authenticate(email=email, password=raw_password, phone_number=phone_number)
                 login(request, account)
+
+        elif request.POST.get('action_type') == 'authen':
+            account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
+            if account:
+                login(request, account)
+            else:
+                login_error = True
+
 
     if request.user.is_authenticated:
         drinkable, eatable = collect_items(request)
@@ -100,6 +109,7 @@ def index_page(request):
         'basket': request.user.basket_set.all()[0] if request.user.is_authenticated else None,
         'chosen_address': CA if flagCA else None,
         'errors': [email_exists, number_exists, dif_passwords, weak_password],
+        'login_error': login_error
     }
     print(context)
     return render(request, 'pages/index.html', context)
