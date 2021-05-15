@@ -68,7 +68,6 @@ def index_page(request):
             else:
                 login_error = True
 
-
     if request.user.is_authenticated:
         drinkable, eatable = collect_items(request)
     addresses = collect_addresses(request)
