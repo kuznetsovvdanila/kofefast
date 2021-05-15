@@ -668,25 +668,25 @@ option:not(:checked) {
     .basketHd {
         font-size: 2.5em;
     }
-    .makeAnOrder > div:first-child {
+    .makeAnOrder > div:nth-child(2) {
         flex-direction: column;
     }
-    .makeAnOrder div:first-child div:first-child > div:not(:first-child) {
+    .makeAnOrder div:nth-child(2) div:first-child > div:not(:first-child) {
         margin: 30px 0 30px 0;
         max-width: 100%;
         font-size: 1.65em;
         border-left: 15px solid #deb887;
     }
-    .makeAnOrder div:first-child div:first-child div:not(:first-child) > div:not(:first-child) {
+    .makeAnOrder div:nth-child(2) div:first-child div:not(:first-child) > div:not(:first-child) {
         margin: 20px 0 0 0;
     }
-    .makeAnOrder div:first-child .prmtrs > div:not(:first-child) {
+    .makeAnOrder div:nth-child(2) .prmtrs > div:not(:first-child) {
         margin: 30px 0 30px 0;
         max-width: 100%;
         font-size: 1.65em;
         border-left: 15px solid #deb887;
     }
-    .makeAnOrder div:first-child .time > div:not(:first-child) {
+    .makeAnOrder div:nth-child(2) .time > div:not(:first-child) {
         margin: 30px 0 30px 0;
         max-width: 100%;
         font-size: 1.65em;
@@ -958,7 +958,7 @@ option:not(:checked) {
     }
     .addressList {
         box-shadow: 0 0 0 3px #111111;
-        box-shadow: 0 100px 0 0 #111111;
+        box-shadow: 0 150px 0 0 #111111;
         display: block;
         max-height: 700px;
         overflow: auto;

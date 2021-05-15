@@ -1,5 +1,5 @@
 body {
-    overflow: hidden;
+
 }
 .mainPA {
     justify-content: center;
@@ -266,7 +266,7 @@ body {
     right: -50%;
     width: 52%;
     transition: .5s;
-    height: 100%;
+    height: auto;
     opacity: 0;
 }
 .addressMenu form {
@@ -295,6 +295,7 @@ body {
     transition: .5s;
     height: 100%;
     opacity: 0;
+    height: auto;
 }
 .editSubmit {
     bottom: 97px;
