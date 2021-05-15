@@ -15,7 +15,8 @@ from PIL import Image
 import numpy as np
 from geopy import Nominatim
 
-from kofe.additional_func import calculate_color, collect_items, collect_addresses, collect_relevant_coffeeshops
+from kofe.additional_func import calculate_color, collect_items, collect_addresses, collect_relevant_coffeeshops, \
+    collect_orders
 from kofe.decorators import add_user_buc, check_POST, check_proms, check_admin_link
 from kofe.forms import RegistrationForm
 from kofe.models import Provider, AddressUser, AddressCafe, ItemsSlotBasket, Basket, Item, Account
@@ -59,6 +60,9 @@ def index_page(request):
                 phone_number = form.cleaned_data.get('phone_number')
                 account = authenticate(email=email, password=raw_password, phone_number=phone_number)
                 login(request, account)
+                return redirect('index')
+        else:
+            return redirect('index')
 
     if request.user.is_authenticated:
         drinkable, eatable = collect_items(request)
@@ -112,10 +116,12 @@ def personal_area_page(request):
     if request.method == 'POST':
         return redirect('personal_area')
 
+    orders = collect_orders(request)
     addresses = collect_addresses(request)
 
     context = {
         'addresses': addresses,
+        'orders': orders,
     }
     return render(request, 'pages/personal_area.html', context)
 

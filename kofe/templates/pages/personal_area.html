@@ -173,18 +173,28 @@
                     </div>
                 </div>
                 <div class="orders flex">
-                    <div class="order flex btw vCenter">
-                        <div class="orderName">
-                            Сделайте ваш первый заказ
+                    {% if not orders %}
+                        <div class="order flex btw vCenter">
+                            <div class="orderName">
+                                Сделайте ваш первый заказ
+                            </div>
+                            <div>
+                                <a href="{% url 'index' %}">
+                                    <div class="makeAnOrder">
+                                        <b>+</b>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                        <div>
-                            <a href="{% url 'index' %}">
-                                <div class="makeAnOrder">
-                                    <b>+</b>
+                    {% else %}
+                        {% for order in orders %}
+                            <div class="order flex btw vCenter">
+                                <div class="orderName">
+                                    {{ order }} - {% if order.is_over %}завершен{% else %}в процессе{% endif %}
                                 </div>
-                            </a>
-                        </div>
-                    </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         </div>

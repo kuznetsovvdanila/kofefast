@@ -129,12 +129,12 @@ class Review(models.Model):
 
 class Order(models.Model):
     customer = models.ForeignKey(AUTH_USER_MODEL, related_name='customer', on_delete=models.CASCADE,
-                                 verbose_name='Заказчик', unique=True)
+                                 verbose_name='Заказчик')
     chosen_items = models.ManyToManyField(ItemsSlotOrder, blank=True, verbose_name="Выбранные продукты")
     chosen_cafe = models.ForeignKey('AddressCafe', on_delete=models.CASCADE, verbose_name='Выбранное кафе')
     type_of_delivery = models.CharField('Тип доставки', max_length=10, default='Самовывоз')
-    courier = models.ForeignKey(AUTH_USER_MODEL, related_name='courier', on_delete=models.CASCADE,
-                                verbose_name='Курьер', unique=True, default=None)
+    #courier = models.ForeignKey(AUTH_USER_MODEL, related_name='courier', on_delete=models.CASCADE,
+    #                            verbose_name='Курьер', unique=True, default=None)
     chosen_delivery_address = models.ForeignKey('AddressUser', on_delete=models.CASCADE,
                                                 verbose_name='Выбранный адрес доставки')
     time_created = models.TimeField('Время создания заказа', auto_now_add=True, auto_now=False)
@@ -143,7 +143,7 @@ class Order(models.Model):
     is_over = models.BooleanField('Окончен ли заказ?', default=False)
 
     def __str__(self):
-        return "Заказ от " + str(self.customer) + "Из " + str(self.chosen_cafe) + ", курьер:" + str(self.courier)
+        return "Заказ от " + str(self.customer) + " из " + str(self.chosen_cafe) + " время: " + str(self.time_created)
 
     class Meta:
         verbose_name = "Заказ"
