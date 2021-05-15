@@ -1,6 +1,7 @@
 from io import BytesIO
 
 import re
+from random import choice
 
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
@@ -9,8 +10,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse
 
+from kofe.additional_func import collect_relevant_coffeeshops
 from kofe.forms import RegistrationForm
-from kofe.models import AddressUser, ItemsSlotBasket, Item, Account
+from kofe.models import AddressUser, ItemsSlotBasket, Item, Account, Order, ItemsSlotOrder
 
 from PIL import Image
 
@@ -163,3 +165,30 @@ def user_changing_info(request):
 
 def delete_an_address(request):
     AddressUser.objects.all().filter(id=request.POST.get('delete_adr_id')).delete()
+
+
+def make_an_order(request):
+    user = request.user
+    provider = user.basket_set.all()[0].chosen_items.all()[0].good.provided
+    current_order = Order(customer=user)
+
+    adrs_user = request.user.chosen_address.all()
+    coffeeshops, cafe_addresses = collect_relevant_coffeeshops(request, adrs_user)
+
+    for adrs in cafe_addresses:
+        if adrs.owner == provider:
+            current_order.chosen_cafe = adrs
+
+    if request.user.chosen_address.all():
+        current_order.chosen_delivery_address = request.user.chosen_address.all()[0]
+    else:
+        current_order.type_of_delivery = 'Самовывоз'
+
+    current_order.save()
+
+    for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
+        i = ItemsSlotOrder(count=item.count, good=item.good, order_connection=current_order)
+        i.save()
+        current_order.chosen_items.add(i)
+    current_order.save()
+    clear_the_basket(request)

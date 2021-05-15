@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image, ImageEnhance
 from django.core.files import File
 
-from kofe.models import AddressUser, Provider, ItemsSlotBasket, AddressCafe
+from kofe.models import AddressUser, Provider, ItemsSlotBasket, AddressCafe, Order
 
 from geopy import Nominatim
 from geopy import distance
@@ -19,6 +19,14 @@ def collect_addresses(request):
                 adrs.chosen = True
             addresses.append(adrs)
     return addresses
+
+
+def collect_orders(request):
+    orders = []
+    if request.user.is_authenticated:
+        for order in Order.objects.all().filter(customer=request.user):
+            orders.append(order)
+    return orders
 
 
 def collect_relevant_coffeeshops(request, user_adrs):
@@ -46,7 +54,9 @@ def collect_items(request):
     eatable = []
 
     def set_count(current_item):
-        found = ItemsSlotBasket.objects.all().filter(good=current_item, basket_connection=request.user.basket_set.all()[0])
+        found = None
+        if request.user.is_authenticated:
+            found = ItemsSlotBasket.objects.all().filter(good=current_item, basket_connection=request.user.basket_set.all()[0])
         if found:
             current_item.count = found[0].count
         else:

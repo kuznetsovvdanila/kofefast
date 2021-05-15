@@ -46,7 +46,7 @@ class OrderAdmin(admin.ModelAdmin):
         ('Заказчик', {'fields': ['customer']}),
         ('Выбранное кафе', {'fields': ['chosen_cafe']}),
         ('Тип доставки', {'fields': ['type_of_delivery']}),
-        ('Курьер', {'fields': ['courier']}),
+        #('Курьер', {'fields': ['courier']}),
         ('Адрес доставки', {'fields': ['chosen_delivery_address']}),
         ('Выбранное время доставки', {'fields': ['time_requested']}),
         ('Закончен ли заказ?', {'fields': ['is_over']}),

@@ -139,7 +139,6 @@
                 <div class="registrationButtonMobile active">
                     <span>
                         Ещё не с нами? Жми <span style="background-color: #deb887; color: #111111;"><b>сюда</b></span>, давай мы это исправим
-                        Ещё не с нами? Жми <span style="background-color: #deb887; color: #111111;"><b>сюда</b></span>, давай мы это исправим
                     </span>
                 </div>
                 <div class="rightSideMobile flex">
@@ -159,8 +158,8 @@
                                 <input type="text" name="first_name" autocomplete="none" required="" id="id_first_name" placeholder="Имя">
                                 <input type="text" name="last_name" autocomplete="none" required="" id="id_last_name" placeholder="Фамилия">
                                 <input type="text" name="phone_number" autocomplete="none" required="" id="phone_number" placeholder="Телефон">
-                                {{ form.password1 }}
-                                {{ form.password2 }}
+                                <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" placeholder="Пароль">
+                                <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2" placeholder="Подтверждение пароля">
                                 {% csrf_token %}
                                 <input type="submit" value="Зарегистрироваться" class="pointer">
                                 <div class="openAuthMobile pointer" style="font-size: 5em; margin: 0px 50px 50px 50px;">
@@ -229,7 +228,8 @@
                     </div>
                     <hr class="line">
                     <div style="width: 85%; margin-bottom: 0;">
-                        <form class="makeAnOrder flex clmn">
+                        <form method="POST" class="makeAnOrder flex clmn">
+                            <input name="action_type" type="text" value="makeAnOrder" style="display: none;">
                             <div class="flex btw">
                                 <div class="flex clmn">
                                     <div class="basketHd">
@@ -277,6 +277,7 @@
                                     Итого: {{ basket.all_cost }}₽
                                 </div>
                                 <div style="">
+                                    {% csrf_token %}
                                     <input class="makeAnOrderButton pointer" type="submit" value="Заказать">
                                 </div>
                             </div>
