@@ -20,7 +20,6 @@ from PIL import Image
 def login_user(request):
     account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
     if account:
-        messages.success(request, 'Вы успешно вошли в свою учетную запись')
         login(request, account)
 
 
@@ -54,8 +53,8 @@ def registration_user(request):
         login(request, account)
 
 
+
 def logout_user(request):
-    messages.success('Вы успешно вышли из своей учетной записи')
     return redirect('logout')
 
 
