@@ -62,8 +62,6 @@ def index_page(request):
                 account = authenticate(email=email, password=raw_password, phone_number=phone_number)
                 login(request, account)
                 return redirect('index')
-        else:
-            return redirect('index')
 
         elif request.POST.get('action_type') == 'authen':
             account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
