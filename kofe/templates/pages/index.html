@@ -82,7 +82,7 @@
         {% if not request.user.is_authenticated %}
             <div class="main flex">
                 <div class="description">
-                    мы реально крутые, пользуйтесь нашим офигенным сайтом
+                    мы реально крутые, пользуйтесь нашим офигенным сайтом {{ errors }}
                 </div>
                 <input type="submit" class="registrationButton active pointer" value="Зарегистрироваться">
                 <div class="rightSide">

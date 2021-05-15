@@ -60,7 +60,7 @@ def check_POST(func):
         request = args[0]
         actions = {
             'authen': login_user,
-            'registr': registration_user,
+            #'registr': registration_user,
             'logout': logout_user,
             'prefer_address': set_prefer_address,
             'delete_prefer_address': delete_prefer_address,

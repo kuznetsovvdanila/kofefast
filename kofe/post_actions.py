@@ -15,9 +15,6 @@ from kofe.models import AddressUser, ItemsSlotBasket, Item, Account
 from PIL import Image
 
 
-errors = []
-
-
 def login_user(request):
     account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
     if account:
@@ -46,21 +43,13 @@ def registration_user(request):
     if not all(res):
         weak_password = True
 
-    global errors
-    errors = [email_exists, number_exists, dif_passwords, weak_password]
-
-    if True in errors:
-        return HttpResponseRedirect(reverse('index', args=errors))
-    else:
-        if form.is_valid():
-            form.save()
-            email = form.cleaned_data.get('email')
-            raw_password = form.cleaned_data.get('password1')
-            phone_number = form.cleaned_data.get('phone_number')
-            account = authenticate(email=email, password=raw_password, phone_number=phone_number)
-            login(request, account)
-        else:
-            return HttpResponseRedirect(reverse('index', args=errors))
+    if form.is_valid():
+        form.save()
+        email = form.cleaned_data.get('email')
+        raw_password = form.cleaned_data.get('password1')
+        phone_number = form.cleaned_data.get('phone_number')
+        account = authenticate(email=email, password=raw_password, phone_number=phone_number)
+        login(request, account)
 
 
 def logout_user(request):
