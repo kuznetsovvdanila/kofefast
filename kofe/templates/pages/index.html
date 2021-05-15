@@ -29,17 +29,17 @@
                     <form action="" method="POST" class="sendIt flex">
                         <input name="action_type" type="text" value="prefer_address" style="display: none;">
                         {% if not chosen_items %}
-                        <select class="pointer" id="" name="prefered_adr_id">
-                            <option value="">Приду и заберу</option>
-                            {% if addresses %}
-                                    {% for adr in addresses %}
-                                        <option value="{{ adr.id }}" style="text-overflow: ellipsis;" {% if adr.chosen %} selected="selected"{% endif %} value="{{ adr.name }}">{{ adr.name }} ({{ adr.street }} {{ adr.house }})</option>
-                                    {% endfor %}
+                            <select class="pointer" id="" name="prefered_adr_id">
+                                <option value="">Приду и заберу</option>
+                                {% if addresses %}
+                                        {% for adr in addresses %}
+                                            <option value="{{ adr.id }}" style="text-overflow: ellipsis;" {% if adr.chosen %} selected="selected"{% endif %} value="{{ adr.name }}">{{ adr.name }} ({{ adr.street }} {{ adr.house }})</option>
+                                        {% endfor %}
 
-                            {% endif %}
-                            <option value="addAnAddress">Добавить адрес</option>
-                        </select>
-                        {% csrf_token %}
+                                {% endif %}
+                                <option value="addAnAddress">Добавить адрес</option>
+                            </select>
+                            {% csrf_token %}
                         {% else %}
                             <div style="font-size: 2.2em; font-weight: bold;">
                                 {% if chosen_address %}
@@ -87,7 +87,7 @@
                 <input type="submit" class="registrationButton active pointer" value="Зарегистрироваться">
                 <div class="rightSide">
                     <div class="information active">
-                        Открытие кофе относится приблизительно к 850 г. н. э., но полное признание его пришло много веков спустя. Первоначально в качестве тонизирующего средства употреблялся не отвар обжаренных зёрен, а непосредственно сырые кофейные ягоды.
+                        Уже целых 0 лет мы занимаемся доставкой кофе и ещё там чего-то из менее чем 1 кофейни города Москвы и только
                     </div>
 
                     <div class="registration">
@@ -99,8 +99,10 @@
                             <form action="" method="POST" class="flex">
                                 <input name="action_type" type="text" value="registr" style="display: none;">
                                 <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
-                                <input type="text" name="first_name" autocomplete="none" required="" id="id_first_name" placeholder="Имя">
-                                <input type="text" name="last_name" autocomplete="none" required="" id="id_last_name" placeholder="Фамилия">
+                                <span style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+                                    <input type="text" name="first_name" autocomplete="none" required="" id="id_first_name" placeholder="Имя" style="max-width: 45%;">
+                                    <input type="text" name="last_name" autocomplete="none" required="" id="id_last_name" placeholder="Фамилия" style="max-width: 45%;">
+                                </span>
                                 <input type="text" name="phone_number" autocomplete="none" required="" id="phone_number" placeholder="Телефон">
                                 {{ form.password1 }}
                                 {{ form.password2 }}
@@ -136,6 +138,7 @@
                 </div>
                 <div class="registrationButtonMobile active">
                     <span>
+                        Ещё не с нами? Жми <span style="background-color: #deb887; color: #111111;"><b>сюда</b></span>, давай мы это исправим
                         Ещё не с нами? Жми <span style="background-color: #deb887; color: #111111;"><b>сюда</b></span>, давай мы это исправим
                     </span>
                 </div>
@@ -392,8 +395,8 @@
                     {% if addresses %}
                         {% if chosen_address %}
                             <div class="itemAddress flex btw vCenter">
-                                <div style="min-width: 100%;">
-                                    <span style="border-left: 15px solid #deb887; padding: 0 0 0 20px;" class="itemAddressName">{{ chosen_address.name }} ({{ chosen_address.street }} {{ chosen_address.house }})</span>
+                                <div style="font-size: 3.5em; min-width: 95%; border-left: 15px solid #deb887; padding: 0 0 0 20px;">
+                                    {{ chosen_address.name }} ({{ chosen_address.street }} {{ chosen_address.house }})
                                 </div>
                                 <div class="rltv">
                                     <form action="" method="POST" class="rltv inside flex">
@@ -405,8 +408,8 @@
                                 </div>
                             </div>
                             <div class="itemAddress flex btw vCenter">
-                                <div style="min-width: 100%;">
-                                    <span style="padding: 0 0 0 35px;" class="itemAddressName">Приду и заберу</span>
+                                <div style="font-size: 3.5em; min-width: 95%; padding: 0 0 0 35px;">
+                                    Приду и заберу
                                 </div>
                                 <div class="rltv">
                                     <form action="" method="POST" class="inside flex">
@@ -419,8 +422,8 @@
                             </div>
                         {% else %}
                             <div class="itemAddress flex btw vCenter">
-                                <div style="min-width: 100%;">
-                                    <span style="border-left: 15px solid #deb887; padding: 0 0 0 20px;" class="itemAddressName">Приду и заберу</span>
+                                <div style="font-size: 3.5em; min-width: 95%; border-left: 15px solid #deb887; padding: 0 0 0 20px;">
+                                    Приду и заберу
                                 </div>
                                 <div class="rltv">
                                     <form action="" method="POST" class="inside flex">
@@ -435,8 +438,8 @@
                         {% for adr in addresses %}
                             {% if not adr.chosen %}
                             <div class="itemAddress flex btw vCenter">
-                                <div style="min-width: 100%;">
-                                    <span style="padding: 0 0 0 35px;" class="itemAddressName">{{ adr.name }} ({{ adr.street }} {{ adr.house }})</span>
+                                <div style="font-size: 3.5em; min-width: 95%; padding: 0 0 0 35px;">
+                                    {{ adr.name }} ({{ adr.street }} {{ adr.house }})
                                 </div>
                                 <div class="rltv">
                                     <form action="" method="POST" class="inside flex">

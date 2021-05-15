@@ -147,7 +147,7 @@ input {
 .cancel form > input {
     cursor: pointer;
     font-weight: normal;
-    box-shadow: none;
+    text-decoration: none;
     color: #eeeeee;
     font-size: 1.1em;
     border-radius: 50px;
@@ -161,7 +161,7 @@ input {
     transition: .2s;
 }
 .cancel form > input:hover {
-    box-shadow: 0 0 0 5px #eeeeee;
+    text-decoration: underline 5px #eeeeee;
     transition: .2s;
 }
 .makeAnOrder {
@@ -976,19 +976,17 @@ option:not(:checked) {
 
     }
     .itemAddress:not(:first-child) {
-        margin: 20px 0 0 0;
+        margin: 25px 0 0 0;
     }
     .itemAddress > div:last-child {
         right: 100%;
     }
     .itemAddress div form {
+        height: 100%;
         margin: 0 10% 0 0 !important;
-
-
     }
-    .itemAddressName {
-        font-size: 3.5em;
-        font-weight: normal;
+    .itemAddress div form input {
+        min-height: 100%;
     }
     .chooseAnAddressMobile {
         opacity: 0;

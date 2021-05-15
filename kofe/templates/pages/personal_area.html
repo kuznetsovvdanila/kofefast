@@ -77,10 +77,8 @@
                     {% if addresses %}
                         {% for adr in addresses %}
                             <div style="font-size: 1em;" class="address flex btw vCenter">
-                                <div style="margin-right: 0; text-overflow: ellipsis;">
-                                    <span style="text-overflow: ellipsis; width: 100%;" class="addressName">
-                                        <b>{{ adr.name }}, {{ adr.street }} {{ adr.house }}</b>
-                                    </span>
+                                <div class="addressName">
+                                    {{ adr.name }}, {{ adr.street }} {{ adr.house }}
                                 </div>
 
                                 {% if adr.chosen %}
@@ -154,8 +152,8 @@
                     </div>
                     {% else %}
                         <div class="address flex btw vCenter addressOpen">
-                            <div>
-                                <span class="addressName"><b>Добавьте адрес</b></span>
+                            <div  class="addressName">
+                                Добавьте адрес
                             </div>
                             <div class="addAnAddress">
                                 <b>+</b>
@@ -176,8 +174,8 @@
                 </div>
                 <div class="orders flex">
                     <div class="order flex btw vCenter">
-                        <div>
-                            <span class="orderName"><b>Сделайте ваш первый заказ</b></span>
+                        <div class="orderName">
+                            Сделайте ваш первый заказ
                         </div>
                         <div>
                             <a href="{% url 'index' %}">
