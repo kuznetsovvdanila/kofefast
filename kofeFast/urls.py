@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from kofe import views
+from kofe import views, post_actions
 # from django.contrib.auth import views as auth_views
 
 # from kofe.views import get_menu_context

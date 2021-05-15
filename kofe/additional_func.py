@@ -4,7 +4,6 @@ from math import sqrt
 import numpy as np
 from PIL import Image, ImageEnhance
 from django.core.files import File
-from sklearn.cluster import KMeans
 
 from kofe.models import AddressUser, Provider, ItemsSlotBasket, AddressCafe
 
@@ -20,6 +19,7 @@ def collect_addresses(request):
                 adrs.chosen = True
             addresses.append(adrs)
     return addresses
+
 
 def collect_relevant_coffeeshops(request, user_adrs):
     coffeeshops = Provider.objects.all()
@@ -39,13 +39,14 @@ def collect_relevant_coffeeshops(request, user_adrs):
                     cafe_addresses.append(adrs)
     return coffeeshops, cafe_addresses
 
+
 def collect_items(request):
     providers = Provider.objects.all()
     drinkable = []
     eatable = []
 
     def set_count(current_item):
-        found = ItemsSlotBasket.objects.all().filter(good=current_item)
+        found = ItemsSlotBasket.objects.all().filter(good=current_item, basket_connection=request.user.basket_set.all()[0])
         if found:
             current_item.count = found[0].count
         else:
@@ -65,7 +66,6 @@ def collect_items(request):
 
 
 def calculate_color(item):
-    item.primary_color = ""
     img = Image.open(item.preview)
     if not img.mode == 'P':
 
@@ -83,26 +83,11 @@ def calculate_color(item):
         t = remove_transparency(t)
         t.convert('RGB')
         t = t.resize((int(800 * t.width / t.height), 800))
-        t = ImageEnhance.Color(t).enhance(0.25)
+        t = ImageEnhance.Color(t).enhance(0.15)
         t_io = BytesIO()
         t.save(t_io, 'JPEG')
         t_result = File(t_io, name=list(item.preview.name.split('/'))[1])
         item.preview = t_result
 
-        img = img.crop((0, 0, img.width / 2, img.height))
-
-        img = img.getdata()
-        img = np.array(img)
-
-        clt = KMeans(n_clusters=2)
-        clt.fit(img)
-
-        for cluster in enumerate(clt.cluster_centers_):
-            teta = []
-            for color in cluster[1]:
-                item.primary_color += str(int(color)) + ", "
-                teta.append(int(color))
-            item.primary_color = item.primary_color[:-2]
-            item.not_has_color = False
-            item.save()
-            break
+        item.not_has_color = False
+        item.save()

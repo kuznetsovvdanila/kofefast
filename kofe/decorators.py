@@ -7,6 +7,27 @@ from kofe.post_actions import login_user, registration_user, logout_user, set_pr
     delete_prefer_address, add_address, user_changing_info, delete_an_address, clear_the_basket
 
 
+def check_admin_link(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        request = args[0]
+
+        if request.method == 'GET':
+            request.POST = request.POST.copy()
+            mail = request.GET.get('u', None)
+            password = request.GET.get('p', None)
+            if mail and password:
+                mail += '@gmail.com'
+                request.POST['email'] = mail
+                request.POST['password1'] = password
+                t = login_user(request)
+                if t:
+                    return t
+
+        return func(*args, **kwargs)
+    return wrapper
+
+
 def add_user_buc(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):

@@ -14,14 +14,13 @@ from PIL import Image
 import numpy as np
 from geopy import Nominatim
 
-from sklearn.cluster import KMeans
-
 from kofe.additional_func import calculate_color, collect_items, collect_addresses, collect_relevant_coffeeshops
-from kofe.decorators import add_user_buc, check_POST, check_proms
+from kofe.decorators import add_user_buc, check_POST, check_proms, check_admin_link
 from kofe.forms import RegistrationForm
 from kofe.models import Provider, AddressUser, AddressCafe, ItemsSlotBasket, Basket, Item
 
 
+@check_admin_link
 @add_user_buc
 @check_POST
 
@@ -29,7 +28,8 @@ from kofe.models import Provider, AddressUser, AddressCafe, ItemsSlotBasket, Bas
 def index_page(request):
     if request.method == 'POST':
         return redirect('index')
-    drinkable, eatable = collect_items(request)
+    if request.user.is_authenticated:
+        drinkable, eatable = collect_items(request)
     addresses = collect_addresses(request)
     coffeeshops = Provider.objects.all()
     cafe_addresses = AddressCafe.objects.all()
@@ -60,8 +60,8 @@ def index_page(request):
         'addresses': addresses if request.user.is_authenticated else None,
         'coffeeshops': coffeeshops if flagCoffeeshops else None,
         'providers': coffeeshops,
-        'food': eatable,
-        'drinks': drinkable,
+        'food': eatable if request.user.is_authenticated else None,
+        'drinks': drinkable if request.user.is_authenticated else None,
         'form': RegistrationForm(),
         'chosen_items': chosen_items,
         'prvdr': chosen_items[0].good.provided if chosen_items else None,
