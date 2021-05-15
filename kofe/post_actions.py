@@ -1,37 +1,70 @@
 from io import BytesIO
 
+import re
+
+from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.core.files import File
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
+from django.urls import reverse
 
 from kofe.forms import RegistrationForm
-from kofe.models import AddressUser, ItemsSlotBasket, Item
+from kofe.models import AddressUser, ItemsSlotBasket, Item, Account
 
 from PIL import Image
+
+
+errors = []
 
 
 def login_user(request):
     account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
     if account:
+        messages.success(request, 'Вы успешно вошли в свою учетную запись')
         login(request, account)
 
 
 def registration_user(request):
+    registration_error = email_exists = number_exists = dif_passwords = weak_password = False
     request.POST = request.POST.copy()
-    request.POST['username'] = "chel"
     form = RegistrationForm(request.POST)
-    if form.is_valid():
-        form.save()
-        email = form.cleaned_data.get('email')
-        raw_password = form.cleaned_data.get('password1')
-        phone_number = form.cleaned_data.get('phone_number')
-        account = authenticate(email=email, password=raw_password, phone_number=phone_number)
-        login(request, account)
+    email = request.POST.get('email')
+    phone_number = request.POST.get('phone_number')
+    password1 = request.POST.get('password1')
+    password2 = request.POST.get('password2')
+
+    # проверка пароля на сложность #
+    res = [re.search(r"[a-z]", password1), re.search(r"[A-Z]", password1), re.search(r"[0-9]", password1), re.search(r"\W", password1)]
+
+    if Account.objects.filter(email=email).exists():
+        email_exists = True
+    if Account.objects.filter(phone_number=phone_number).exists():
+        number_exists = True
+    if password1 != password2:
+        dif_passwords = True
+    if not all(res):
+        weak_password = True
+
+    global errors
+    errors = [email_exists, number_exists, dif_passwords, weak_password]
+
+    if True in errors:
+        return HttpResponseRedirect(reverse('index', args=errors))
     else:
-        return redirect(form.errors, 'index')
+        if form.is_valid():
+            form.save()
+            email = form.cleaned_data.get('email')
+            raw_password = form.cleaned_data.get('password1')
+            phone_number = form.cleaned_data.get('phone_number')
+            account = authenticate(email=email, password=raw_password, phone_number=phone_number)
+            login(request, account)
+        else:
+            return HttpResponseRedirect(reverse('index', args=errors))
 
 
 def logout_user(request):
+    messages.success('Вы успешно вышли из своей учетной записи')
     return redirect('logout')
 
 
@@ -48,7 +81,7 @@ def set_prefer_address(request):
 
 def change_basket(request, input_command):
     if len(input_command) == 2:
-        f = ItemsSlotBasket.objects.all().filter(good=Item.objects.all().filter(id=int(input_command[1]))[0])
+        f = ItemsSlotBasket.objects.all().filter(good=Item.objects.all().filter(id=int(input_command[1]))[0], basket_connection=request.user.basket_set.all()[0])
         if f:
             chosen_slot = f[0]
             if input_command[0] == 'add':
