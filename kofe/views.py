@@ -105,7 +105,6 @@ def index_page(request):
         'chosen_address': CA if flagCA else None,
         'errors': [email_exists, number_exists, dif_passwords, weak_password],
     }
-    print(context)
     return render(request, 'pages/index.html', context)
 
 
@@ -124,28 +123,6 @@ def personal_area_page(request):
         'orders': orders,
     }
     return render(request, 'pages/personal_area.html', context)
-
-
-@add_user_buc
-@check_proms
-@check_POST
-def basket_page(request):
-    global context
-    if request.method == 'POST':
-        return redirect('basket')
-
-    basket = request.user.basket_set.all()[0]
-    chosen_items = []
-    for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
-        chosen_items.append(item)
-
-    context = {
-        'cafe_addresses': AddressCafe.objects.all(),
-        'provider': chosen_items[0].good.provided if chosen_items else None,
-        'chosen_items': chosen_items,
-        'basket': basket,
-    }
-    return render(request, 'pages/basket.html', context)
 
 
 def logoutUser(request):
