@@ -81,11 +81,11 @@ $(".sendIt select").change(function() {
 //    $('.breakfast').removeClass('active');
 //})
 
-$('#id_username').attr('placeholder','Логин');
-$('#id_first_name').attr('placeholder','Имя');
-$('#id_last_name').attr('placeholder','Фамилия');
-$('#id_password1').attr('placeholder','Пароль');
-$('#id_password2').attr('placeholder','Подтверждение пароля');
+//$('#id_username').attr('placeholder','Логин');
+//$('#id_first_name').attr('placeholder','Имя');
+//$('#id_last_name').attr('placeholder','Фамилия');
+//$('#id_password1').attr('placeholder','Пароль');
+//$('#id_password2').attr('placeholder','Подтверждение пароля');
 
 $('.del').click(function(){
     $(".item").addClass('show');

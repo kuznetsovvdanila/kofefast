@@ -29,7 +29,12 @@ context = {}
 @check_POST
 def index_page(request):
     global context
-    registration_error = email_exists = number_exists = dif_passwords = weak_password = False
+    registration_error = False
+    email_exists = False
+    number_exists = False
+    dif_passwords = False
+    weak_password = False
+
     login_error = False
 
     if request.method == 'POST':
@@ -44,15 +49,31 @@ def index_page(request):
             # проверка пароля на сложность #
             res = [re.search(r"[a-z]", password1), re.search(r"[A-Z]", password1), re.search(r"[0-9]", password1),
                    re.search(r"\W", password1)]
+            print(res)
 
             if Account.objects.filter(email=email).exists():
                 email_exists = True
+                registration_error = True
+            else:
+                email_exists = False
+
             if Account.objects.filter(phone_number=phone_number).exists():
                 number_exists = True
+                registration_error = True
+            else:
+                number_exists = False
+
             if password1 != password2:
                 dif_passwords = True
+                registration_error = True
+            else:
+                dif_passwords = False
+
             if not all(res):
                 weak_password = True
+                registration_error = True
+            else:
+                weak_password = False
 
             if form.is_valid():
                 form.save()
@@ -60,12 +81,20 @@ def index_page(request):
                 raw_password = form.cleaned_data.get('password1')
                 phone_number = form.cleaned_data.get('phone_number')
                 account = authenticate(email=email, password=raw_password, phone_number=phone_number)
+                email_exists = False
+                number_exists = False
+                dif_passwords = False
+                weak_password = False
+                registration_error = False
+                login_error = False
                 login(request, account)
                 return redirect('index')
 
         elif request.POST.get('action_type') == 'authen':
             account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
             if account:
+                login_error = False
+                registration_error = False
                 login(request, account)
             else:
                 login_error = True
@@ -92,8 +121,9 @@ def index_page(request):
     if request.user.is_authenticated:
         if request.user.chosen_address.all():
             flagCA = True
-        for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
-            chosen_items.append(item)
+        if ItemsSlotBasket.objects.all():
+            for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
+                chosen_items.append(item)
 
     if flagCA:
         CA = request.user.chosen_address.all()[0]
@@ -107,9 +137,13 @@ def index_page(request):
         'form': RegistrationForm(),
         'chosen_items': chosen_items,
         'prvdr': chosen_items[0].good.provided if chosen_items else None,
-        'basket': request.user.basket_set.all()[0] if request.user.is_authenticated else None,
+        'basket': request.user.basket_set.all()[0] if request.user.is_authenticated and ItemsSlotBasket.objects.all() else None,
         'chosen_address': CA if flagCA else None,
-        'errors': [email_exists, number_exists, dif_passwords, weak_password],
+        'email_exists': email_exists,
+        'number_exists': number_exists,
+        'dif_passwords': dif_passwords,
+        'weak_password': weak_password,
+        'registration_error': registration_error,
         'login_error': login_error
     }
     return render(request, 'pages/index.html', context)

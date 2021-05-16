@@ -34,7 +34,6 @@ def add_user_buc(func):
         user = args[0].user
         if user.is_authenticated:
             if not user.basket_set.all():
-                print("here")
                 new_basket = Basket(customer=user)
                 new_basket.save()
                 user.user_basket.add(new_basket)

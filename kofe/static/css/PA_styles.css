@@ -20,11 +20,9 @@ body {
     padding: 0 10px 20px 10px;
 }
 .changePhoto {
-    filter: invert();
-    transform: filter;
     position: relative;
-    top: 170px;
-    left: 170px;
+    top: 150px;
+    left: 150px;
     opacity: 0;
     background-image: url('../img/edit.svg');
     width: 60px;
@@ -575,6 +573,7 @@ input[type='file'] {
         transition: .2s;
         font-weight: bold;
         border: 15px solid #eeeeee;
+        box-shadow: none;
     }
     .chooseAnAddress:hover {
         background-color: #34a853 !important;
@@ -594,6 +593,7 @@ input[type='file'] {
         transition: .2s;
         font-weight: bolder !important;
         border: 15px solid #eeeeee;
+        box-shadow: none;
     }
     .deleteAnAddress:hover {
         background-color: #ea4335 !important;
@@ -618,18 +618,26 @@ input[type='file'] {
     }
     .addressName, .orderName {
         max-width: 100%;
-        font-size: 3em;
+        font-size: 6em !important;
         color: #deb887;
+        max-height: 100% !important;
+        margin: 30px 30px 30px 30px !important;
+    }
+    .makeAnOrder {
+        display: none;
     }
     .addAnAddress {
-        height: 100px;
-        width: 50px;
-        padding: 0px 0 100px 0 !important;
+        height: 120px;
+        min-width: 0 !important;
+        width: 120px;
+        max-width: 120px;
+        padding: 0 !important;
         border-radius: 200px;
-        font-size: 9.7em !important;
+        font-size: 5.7em !important;
         border: 15px solid #eeeeee;
         color: #eeeeee;
         background-color: #111111;
+        box-shadow: none;
     }
     .addAnAddressMobile {
         display: block;

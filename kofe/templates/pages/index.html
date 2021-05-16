@@ -12,6 +12,37 @@
         <script type="text/javascript">
 
         </script>
+        <style>
+            {% if email_exists %}
+                .registration #id_email::placeholder, .registrationMobile #id_email::placeholder {
+                    color: #ea4335;
+                }
+            {% endif %}
+
+            {% if number_exists %}
+                .registration #phone_number::placeholder, .registrationMobile #phone_number::placeholder {
+                    color: #ea4335;
+                }
+            {% endif %}
+
+            {% if weak_password %}
+                .registration #id_password1::placeholder, .registrationMobile #id_password1::placeholder {
+                    color: #ea4335;
+                }
+            {% endif %}
+
+            {% if dif_passwords %}
+                .registration #id_password2::placeholder, .registrationMobile #id_password2::placeholder {
+                    color: #ea4335;
+                }
+            {% endif %}
+
+            {% if login_error %}
+                .authorization #id_email::placeholder, .authorization #id_password1::placeholder, .authorizationMobile #id_email::placeholder, .authorizationMobile #id_password1::placeholder {
+                    color: #ea4335;
+                }
+            {% endif %}
+        </style>
 
     </head>
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
@@ -81,16 +112,16 @@
         <hr class="lineMobile">
         {% if not request.user.is_authenticated %}
             <div class="main flex">
-                <div class="description">
-                    мы реально крутые, пользуйтесь нашим офигенным сайтом {{ errors }}
+                <div class="description {% if registration_error %}active{% endif %}">
+                    мы реально крутые, пользуйтесь нашим офигенным сайтом
                 </div>
-                <input type="submit" class="registrationButton active pointer" value="Зарегистрироваться">
+                <input type="submit" class="registrationButton {% if not registration_error %}active{% endif %} pointer" value="Зарегистрироваться">
                 <div class="rightSide">
-                    <div class="information active">
+                    <div class="information {% if not registration_error %} {% if not login_error %}active{% endif %} {% endif %}">
                         Уже целых 0 лет мы занимаемся доставкой кофе и ещё там чего-то из менее чем 1 кофейни города Москвы и только
                     </div>
 
-                    <div class="registration">
+                    <div class="registration {% if registration_error %}active{% endif %}">
                         <div class="flex btw">
                             <span class="frm">Регистрация</span>
                             <span class="closeIt" style=""><b>x</b></span>
@@ -98,14 +129,30 @@
                         <div class="">
                             <form action="" method="POST" class="flex">
                                 <input name="action_type" type="text" value="registr" style="display: none;">
-                                <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
+                                {% if not email_exists %}
+                                    <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
+                                {% else %}
+                                    <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта уже существует">
+                                {% endif %}
                                 <span style="display: flex; flex-wrap: wrap; justify-content: space-between;">
                                     <input type="text" name="first_name" autocomplete="none" required="" id="id_first_name" placeholder="Имя" style="max-width: 45%;">
                                     <input type="text" name="last_name" autocomplete="none" required="" id="id_last_name" placeholder="Фамилия" style="max-width: 45%;">
                                 </span>
-                                <input type="text" name="phone_number" autocomplete="none" required="" id="phone_number" placeholder="Телефон">
-                                {{ form.password1 }}
-                                {{ form.password2 }}
+                                {% if not number_exists %}
+                                    <input type="text" name="phone_number" autocomplete="none" required="" id="phone_number" placeholder="Телефон">
+                                {% else %}
+                                    <input type="text" name="phone_number" autocomplete="none" required="" id="phone_number" placeholder="Телефон уже существует">
+                                {% endif %}
+                                {% if not weak_password %}
+                                    <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" placeholder="Пароль">
+                                {% else %}
+                                    <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" placeholder="Есть 8 символов? А цифры?">
+                                {% endif %}
+                                {% if not dif_passwords %}
+                                    <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2" placeholder="Подтверждение пароля">
+                                {% else %}
+                                    <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2" placeholder="Пароли не совпадают">
+                                {% endif %}
                                 {% csrf_token %}
                                 <input type="submit" value="Зарегистрироваться" class="pointer">
                                 <div class="openAuth pointer" style="font-size: 1.5em; margin: 15px;">
@@ -115,7 +162,7 @@
                         </div>
                     </div>
 
-                    <div class="authorization">
+                    <div class="authorization {% if login_error %}active{% endif %}">
                         <div class="">
                             <div class="flex btw">
                                 <span class="frm">Вход</span>
@@ -123,7 +170,11 @@
                             </div>
                             <form action="" method="POST" class="flex">
                                 <input name="action_type" type="text" value="authen" style="display: none;">
-                                <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
+                                {% if not login_error %}
+                                    <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
+                                {% else %}
+                                    <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Неправильная почта или...">
+                                {% endif %}
                                 <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" aria-autocomplete="list" placeholder="Пароль">
                                 {% csrf_token %}
                                 <input type="submit" value="Войти" class="pointer">
@@ -142,11 +193,11 @@
                     </span>
                 </div>
                 <div class="rightSideMobile flex">
-                    <div class="informationMobile active">
+                    <div class="informationMobile {% if not registration_error %} {% if not login_error %}active{% endif %} {% endif %}">
                         Уже целых 0 лет мы занимаемся доставкой кофе и ещё там чего-то из менее чем 1 кофейни города Москвы и только
                     </div>
 
-                    <div class="registrationMobile">
+                    <div class="registrationMobile {% if registration_error %}active{% endif %}">
                         <div class="flex btw">
                             <span class="frm">Регистрация</span>
                             <span class="closeIt" style=""><b>x</b></span>
@@ -154,12 +205,28 @@
                         <div class="">
                             <form action="" method="POST" class="flex">
                                 <input name="action_type" type="text" value="registr" style="display: none;">
-                                <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
+                                {% if not email_exists %}
+                                    <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
+                                {% else %}
+                                    <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта уже существует">
+                                {% endif %}
                                 <input type="text" name="first_name" autocomplete="none" required="" id="id_first_name" placeholder="Имя">
                                 <input type="text" name="last_name" autocomplete="none" required="" id="id_last_name" placeholder="Фамилия">
-                                <input type="text" name="phone_number" autocomplete="none" required="" id="phone_number" placeholder="Телефон">
-                                <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" placeholder="Пароль">
-                                <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2" placeholder="Подтверждение пароля">
+                                {% if not number_exists %}
+                                    <input type="text" name="phone_number" autocomplete="none" required="" id="phone_number" placeholder="Телефон">
+                                {% else %}
+                                    <input type="text" name="phone_number" autocomplete="none" required="" id="phone_number" placeholder="Телефон уже существует">
+                                {% endif %}
+                                {% if not weak_password %}
+                                    <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" placeholder="Пароль">
+                                {% else %}
+                                    <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" placeholder="Есть 8 символов? А цифры?">
+                                {% endif %}
+                                {% if not dif_passwords %}
+                                    <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2" placeholder="Подтверждение пароля">
+                                {% else %}
+                                    <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2" placeholder="Пароли не совпадают">
+                                {% endif %}
                                 {% csrf_token %}
                                 <input type="submit" value="Зарегистрироваться" class="pointer">
                                 <div class="openAuthMobile pointer" style="font-size: 5em; margin: 0px 50px 50px 50px;">
@@ -169,7 +236,7 @@
                         </div>
                     </div>
 
-                    <div class="authorizationMobile">
+                    <div class="authorizationMobile {% if login_error %}active{% endif %}">
                         <div class="flex btw">
                             <span class="frm">Вход</span>
                             <span class="closeIt" style=""><b>x</b></span>
@@ -177,7 +244,11 @@
                         <div class="">
                             <form action="" method="POST" class="flex">
                                 <input name="action_type" type="text" value="authen" style="display: none;">
-                                <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
+                                {% if not login_error %}
+                                    <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
+                                {% else %}
+                                    <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Неправильная почта или...">
+                                {% endif %}
                                 <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" aria-autocomplete="list" placeholder="Пароль">
                                 {% csrf_token %}
                                 <input type="submit" value="Войти" class="pointer">

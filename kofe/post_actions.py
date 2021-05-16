@@ -59,14 +59,15 @@ def logout_user(request):
 
 
 def set_prefer_address(request):
-    for i in request.user.chosen_address.all():
-        request.user.chosen_address.remove(i)
-    if request.POST.get('prefered_adr_id'):
-        if request.POST.get('prefered_adr_id') == 'addAnAddress':
-            return redirect('personal_area')
-        else:
-            request.user.chosen_address.add(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
-            request.user.save()
+    if request.user.is_authenticated:
+        for i in request.user.chosen_address.all():
+            request.user.chosen_address.remove(i)
+        if request.POST.get('prefered_adr_id'):
+            if request.POST.get('prefered_adr_id') == 'addAnAddress':
+                return redirect('personal_area')
+            else:
+                request.user.chosen_address.add(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
+                request.user.save()
 
 
 def change_basket(request, input_command):
