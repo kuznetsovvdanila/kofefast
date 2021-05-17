@@ -114,6 +114,8 @@ input {
 .main {
     max-width: 100%;
     padding: 60px 100px 0 20%;
+    position: static;
+    box-sizing: border-box;
 }
 .mainAuth {
     padding: 10px 30px 30px 30px;
@@ -393,27 +395,27 @@ input {
     max-width: 350px;
     padding: 0 40px 0 0;
     text-align: right;
-    position: fixed;
-    top: 200px;
+    position: absolute;
+    top: 240px;
     left: 20%;
     box-shadow: 10px 0 0 0 #deb887;
     transition: .2s;
 }
 .description.active {
-    top: 250px;
+    top: 290px;
     transition: .2s;
 }
 .registrationButton {
+    width: auto;
     opacity: 0;
     transition: .2s;
     position: absolute;
     top: 630px;
-    left: 20%;
+    left: 30%;
 }
 .registrationButton.active {
     position: absolute;
     height: 60px;
-    min-width: 360px;
     opacity: 1;
     background-color: #deb887;
     color: #111111;
@@ -425,31 +427,33 @@ input {
     margin: 2px 0 0 35px;
     transition: .2s;
 }
-.rightSide {
-    width: 400px;
-    position: absolute;
-}
 .information, .registration, .authorization {
-    position: fixed;
-    left: 100%;
+    padding: 0 20% 0 0;
+    position: absolute;
+    left: 70%;
     opacity: 0;
     max-width: 400px;
     max-height: 100%;
     transition: .5s;
+    z-index: 1000;
+    height: 60%;
 }
 .information {
-    margin-top: 30px;
-    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 75px;
+    max-width: 390px !important;
     max-height: 100%;
-    font-size: 2em;
+    font-size: 3em;
 }
 .authorization {
     margin-top: 5%;
 }
 .information.active, .registration.active, .authorization.active {
-    left: 51%;
+    left: 52%;
     opacity: 1;
     transition: .5s;
+    z-index: 2000;
 }
 .frm {
     text-align: left;
@@ -792,6 +796,7 @@ option:not(:checked) {
         top: 2000px;
         z-index: 1000;
         max-height: auto;
+        min-height: 1100px;
         opacity: 1;
         transition: .5s;
     }
@@ -1196,14 +1201,14 @@ option:not(:checked) {
         left: 23%;
     }
     .registrationButton {
-        top: 680px;
-        left: 20%;
+        top: 650px;
+        left: 29%;
     }
     .registrationButton.active {
         border-radius: 50px;
-        height: 70px;
-        font-size: 3em;
-        padding: 5px 15px 5px 15px;
+        height: 80px;
+        font-size: 3.5em;
+        padding: 5px 20px 5px 20px;
     }
     .information, .registration, .authorization {
         max-width: 550px;

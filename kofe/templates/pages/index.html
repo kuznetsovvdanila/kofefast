@@ -113,12 +113,12 @@
         {% if not request.user.is_authenticated %}
             <div class="main flex">
                 <div class="description {% if registration_error %}active{% endif %}">
-                    мы реально крутые, пользуйтесь нашим офигенным сайтом
+                    вкусный кофе ещё никогда не был так близко
                 </div>
-                <input type="submit" class="registrationButton {% if not registration_error %}active{% endif %} pointer" value="Зарегистрироваться">
-                <div class="rightSide">
+                <input type="submit" class="registrationButton {% if not registration_error %}active{% endif %} pointer" value="Хочу кофе">
+
                     <div class="information {% if not registration_error %} {% if not login_error %}active{% endif %} {% endif %}">
-                        Уже целых 0 лет мы занимаемся доставкой кофе и ещё там чего-то из менее чем 1 кофейни города Москвы и только
+                        Мы заботимся о наших клиентах и не хотим, чтобы вы получили свой заказ остывшим, поэтому ищем кофейни в радиусе всего <span style="color: #deb887;">1 километра</span> от вас, что также позволяет доставлять заказ всего за <span style="color: #deb887;">20-25 минут</span>
                     </div>
 
                     <div class="registration {% if registration_error %}active{% endif %}">
@@ -181,11 +181,10 @@
                             </form>
                         </div>
                     </div>
-                </div>
             </div>
             <div class="mainMobile flex">
                 <div class="descriptionMobile">
-                    мы реально крутые, пользуйтесь нашим офигенным сайтом
+                    ваш любимый кофе ещё никогда не был так близко
                 </div>
                 <div class="registrationButtonMobile active">
                     <span>
@@ -194,7 +193,7 @@
                 </div>
                 <div class="rightSideMobile flex">
                     <div class="informationMobile {% if not registration_error %} {% if not login_error %}active{% endif %} {% endif %}">
-                        Уже целых 0 лет мы занимаемся доставкой кофе и ещё там чего-то из менее чем 1 кофейни города Москвы и только
+                        Мы заботимся о наших клиентах и не хотим, чтобы вы получили свой заказ остывшим, поэтому ищем кофейни в радиусе всего <span style="color: #deb887;">1 километра</span> от вас, что также позволяет доставлять заказ всего за <span style="color: #deb887;">20-25 минут</span>
                     </div>
 
                     <div class="registrationMobile {% if registration_error %}active{% endif %}">
