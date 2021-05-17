@@ -16,13 +16,18 @@
                 <a href="{% url 'index' %}" style="color: #eeeeee;">kofefast</a>
             </div>
             {% if request.user.is_authenticated %}
-            <div class="topMenuNotMobile" style="display: flex; justify-content: space-around; align-items: center; width: 200px;">
-                <a href="{% url 'personal_area' %}" style="color: #eeeeee;">
-                    <div style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; border: 5px solid #eeeeee; border-radius: 40px; height: 60px !important; width: 60px !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %} background-position: 50% 50%; background-size: cover;" class="defaultUserPhoto pointer">
+                <div class="topMenuNotMobile flex btw" style="align-items: center; width: 225px; border-radius: 50px; padding: 0; height: 60px;">
+                    <a href="{% url 'logout' %}" class="flex" style=" align-items: center; color: #eeeeee; height: auto;">
+                        <div style="padding: 0 20px 0 20px; font-size: 2em; border-right: 7px solid #deb887;">
+                            Выйти
+                        </div>
+                    </a>
+                    <a href="{% url 'personal_area' %}">
+                        <div style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; border: 5px solid #eeeeee; border-radius: 40px; height: 60px !important; width: 60px !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %} background-position: 50% 50%; background-size: cover;" class="defaultUserPhoto pointer">
 
-                    </div>
-                </a>
-            </div>
+                        </div>
+                    </a>
+                </div>
             {% else %}
             <div>
 
@@ -188,9 +193,15 @@
                         </div>
                     {% else %}
                         {% for order in orders %}
+                            {{ order.chosen_items.good }}
                             <div class="order flex btw vCenter">
+                                <div class="status">{% if order.is_over %}Завершен:{% else %}В процессе:{% endif %}</div>
                                 <div class="orderName">
-                                    {{ order }} - {% if order.is_over %}завершен{% else %}в процессе{% endif %}
+                                    <div>{{ order.chosen_cafe }}:</div>
+                                    <div>
+
+                                    </div>
+<!--                                    {{ order }} - {% if order.is_over %}завершен{% else %}в процессе{% endif %}-->
                                 </div>
                             </div>
                         {% endfor %}

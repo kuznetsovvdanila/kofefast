@@ -23,6 +23,10 @@ input {
     outline: none;
     font-family: "ProductSans-Regular";
 }
+textarea {
+    outline: none;
+    font-family: "ProductSans-Regular";
+}
 .flex {
     display: flex;
 }
@@ -33,7 +37,7 @@ input {
     flex-direction: column !important;
 }
 .btw {
-    justify-content: space-between;
+    justify-content: space-between !important;
 }
 .vCenter {
     align-items: center;
@@ -51,6 +55,7 @@ input {
     justify-content: space-between;
     padding: 15px 30px 0 30px;
     height: 100px;
+    align-items: center;
 }
 .logo {
     font-size: 3.5em;
@@ -177,6 +182,18 @@ input {
     margin: 0;
     min-width: 30%;
 }
+.makeAnOrder > textarea {
+    background-color: #111111;
+    border-bottom: 7px solid #333333;
+    border: none;
+    resize: none;
+    height: 100px;
+    color: #eeeeee;
+    font-family: "ProductSans-Regular";
+    font-size: 1em;
+
+}
+
 .makeAnOrderButton {
     text-align: center;
     font-size: 1.5em !important;
@@ -410,18 +427,19 @@ input {
     opacity: 0;
     transition: .2s;
     position: absolute;
-    top: 630px;
-    left: 30%;
+    top: 600px;
+    left: 27%;
 }
 .registrationButton.active {
+    padding: 5px 20px 5px 20px;
     position: absolute;
-    height: 60px;
+    height: 70px;
     opacity: 1;
     background-color: #deb887;
     color: #111111;
     transition: .2s;
     margin: 5px 0 0 35px;
-    font-size: 2.3em;
+    font-size: 3em;
 }
 .registrationButton.active:hover {
     margin: 2px 0 0 35px;
@@ -444,7 +462,7 @@ input {
     margin-top: 75px;
     max-width: 390px !important;
     max-height: 100%;
-    font-size: 3em;
+    font-size: 1.9em;
 }
 .authorization {
     margin-top: 5%;
@@ -671,6 +689,11 @@ option:not(:checked) {
     }
     .basketHd {
         font-size: 2.5em;
+    }
+    .makeAnOrder > textarea {
+        background-color: #111111;
+        border: 7px solid #eeeeee;
+        border-radius: 70px;
     }
     .makeAnOrder > div:nth-child(2) {
         flex-direction: column;

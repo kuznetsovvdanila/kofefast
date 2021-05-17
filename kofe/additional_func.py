@@ -39,12 +39,15 @@ def collect_relevant_coffeeshops(request, user_adrs):
         user_adrs = user_adrs.all()[0]
         user_location = geolocator.geocode(user_adrs)
         if request.user.is_authenticated:
-            for adrs in AddressCafe.objects.all():
-                coffeeshop_address = str(adrs.city) + ', ' + str(adrs.street) + ', ' + str(adrs.house)
-                coffeeshop_location = geolocator.geocode(coffeeshop_address)
-                if distance.distance((user_location.longitude, user_location.latitude), (coffeeshop_location.longitude, coffeeshop_location.latitude)).m < 1000:
-                    coffeeshops.append(adrs.owner)
-                    cafe_addresses.append(adrs)
+            if user_location:
+                for adrs in AddressCafe.objects.all():
+                    coffeeshop_address = str(adrs.city) + ', ' + str(adrs.street) + ', ' + str(adrs.house)
+                    coffeeshop_location = geolocator.geocode(coffeeshop_address)
+                    if distance.distance((user_location.longitude, user_location.latitude), (coffeeshop_location.longitude, coffeeshop_location.latitude)).m < 1000:
+                        coffeeshops.append(adrs.owner)
+                        cafe_addresses.append(adrs)
+            else:
+                cafe_addresses = coffeeshops
     return coffeeshops, cafe_addresses
 
 

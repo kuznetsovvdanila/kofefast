@@ -166,9 +166,16 @@ body {
     overflow: hidden;
     text-overflow: ellipsis !important;
 }
+.orderName {
+    max-width: 100%;
+}
 .order > div, .address > div {
     margin: 20px 30px 20px 30px;
     font-size: 2em;
+}
+.status {
+    margin: 20px 0 20px 30px !important;
+    min-width: 36%;
 }
 .order > div:last-child, .address > div:last-child {
     margin: 20px 12px 20px 30px !important;
