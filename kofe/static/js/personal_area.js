@@ -1,3 +1,13 @@
+$('.ownerInterface').click(function(){
+    $('.ownerInterface').toggleClass('active');
+
+    $('.info').toggleClass('hidden');
+    $('.infoOwner').toggleClass('hidden');
+
+    $('.addresses').removeClass('active');
+
+    $('.orders').removeClass('active');
+})
 $('.ord').click(function(){
     $('.orders').toggleClass('active');
     $('.cls').toggleClass('active');
