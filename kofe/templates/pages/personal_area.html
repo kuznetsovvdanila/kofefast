@@ -182,10 +182,10 @@
                     </div>
                     {% else %}
                         <div class="address flex btw vCenter addressOpen">
-                            <div  class="addressName">
+                            <div  class="addressName" style="max-width: 70%;">
                                 Добавьте адрес
                             </div>
-                            <div class="addAnAddress">
+                            <div class="makeAnOrder">
                                 <b>+</b>
                             </div>
                         </div>
@@ -204,17 +204,15 @@
                 </div>
                 <div class="orders flex">
                     {% if not orders %}
-                        <div class="order flex btw vCenter">
-                            <div class="orderName">
-                                Сделайте ваш первый заказ
-                            </div>
-                            <div>
-                                <a href="{% url 'index' %}">
-                                    <div class="makeAnOrder">
-                                        <b>+</b>
-                                    </div>
-                                </a>
-                            </div>
+                        <div class="order flex vCenter">
+                            <a href="{% url 'index' %}" class="flex btw vCenter">
+                                <div class="orderName" style="max-width: 70%;">
+                                    Сделайте ваш первый заказ
+                                </div>
+                                <div class="makeAnOrder">
+                                    <b>+</b>
+                                </div>
+                            </a>
                         </div>
                     {% else %}
                         {% for order in orders %}

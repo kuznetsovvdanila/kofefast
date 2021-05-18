@@ -660,6 +660,7 @@ option:not(:checked) {
 }
 
 @media screen and (max-width: 1000px) {
+
     .mobileInput {
         display: block;
     }
@@ -690,10 +691,11 @@ option:not(:checked) {
     .basketHd {
         font-size: 2.5em;
     }
-    .makeAnOrder > textarea {
-        background-color: #111111;
-        border: 7px solid #eeeeee;
-        border-radius: 70px;
+    textarea {
+        border: none;
+        border-radius: 0;
+        font-size: 1.8em !important;
+        height: 250px !important;
     }
     .makeAnOrder > div:nth-child(2) {
         flex-direction: column;
