@@ -17,11 +17,11 @@ class AddressUser(models.Model):
     name = models.CharField('Имя', max_length=30, default='Дом')
     city = models.CharField('Город', max_length=30, default='Москва')
     street = models.CharField('Улица', max_length=30, default='Арбат')
-    house = models.CharField('Дом', max_length=30, default='1')
-    building = models.CharField('Корпус', max_length=30, default='1')
-    entrance = models.IntegerField('Подъезд', default=1)
-    floor = models.IntegerField('Этаж', default=1)
-    flat = models.IntegerField('Квартира', default=1)
+    house = models.CharField('Дом', max_length=30, default='-1')
+    building = models.CharField('Корпус', max_length=30, default='-1')
+    entrance = models.IntegerField('Подъезд', default=-1)
+    floor = models.IntegerField('Этаж', default=-1)
+    flat = models.IntegerField('Квартира', default=-1)
 
     def __str__(self):
         return str(self.city) + ' ' + str(self.street) + ' ' + str(self.house)
@@ -35,9 +35,9 @@ class AddressCafe(models.Model):
     owner = models.ForeignKey('Provider', on_delete=models.CASCADE, verbose_name='Владелец')
     city = models.CharField('Город', max_length=30, default='Москва')
     street = models.CharField('Улица', max_length=30, default='Арбат')
-    house = models.CharField('Дом', max_length=30, default='1')
-    building = models.CharField('Корпус', max_length=30, default='1')
-    entrance = models.IntegerField('Подъезд', default=1)
+    house = models.CharField('Дом', max_length=30, default='-1')
+    building = models.CharField('Корпус', max_length=30, default='-1')
+    entrance = models.IntegerField('Подъезд', default=-1)
 
     def __str__(self):
         return str(self.owner)
@@ -45,6 +45,30 @@ class AddressCafe(models.Model):
     class Meta:
         verbose_name = "Адрес Кофейни"
         verbose_name_plural = "Адреса Кофейни"
+
+
+class Volumes(models.Model):
+    volume = models.CharField('Объем', max_length=4, default='0.')
+    source = models.ForeignKey('Item', on_delete=models.CASCADE, verbose_name='Чей??')
+
+    def __str__(self):
+        return str(self.volume)
+
+    class Meta:
+        verbose_name = "Объем"
+        verbose_name_plural = "Объемы"
+
+
+class Addons(models.Model):
+    addth = models.CharField('Добавка', max_length=15, default='ниче')
+    sourceItem = models.ForeignKey('Item', on_delete=models.CASCADE, verbose_name='К чему??')
+
+    def __str__(self):
+        return str(self.addth)
+
+    class Meta:
+        verbose_name = "Добавка"
+        verbose_name_plural = "Добавки"
 
 
 class Item(models.Model):
@@ -57,6 +81,9 @@ class Item(models.Model):
                                    default='Съешь ещё этих мягких французских булок, да выпей же чаю')
     not_has_color = models.BooleanField('Не просчитан цвет', default=True)
     primary_color = models.CharField('Главный цвет превью', max_length=50, default="0, 0, 0, 255")
+
+    other_volumes = models.ManyToManyField('Volumes', blank=True)
+    additions = models.ManyToManyField('Addons', blank=True)
 
     FoodTypes = [
         ('e', 'Eatable'),
@@ -105,6 +132,10 @@ class Provider(models.Model):
     name = models.CharField('Название', max_length=50)
     cafe_addresses = models.ManyToManyField('AddressCafe', blank=True)
     production = models.ManyToManyField('Item', blank=True)
+    owner = models.ManyToManyField(AUTH_USER_MODEL, blank=True, verbose_name='Владелец')
+
+    open_time = models.CharField('Открытие в', max_length=10, default='9')
+    close_time = models.CharField('Закрытие в', max_length=10, default='23')
 
     def __str__(self):
         return self.name
@@ -135,12 +166,13 @@ class Order(models.Model):
     type_of_delivery = models.CharField('Тип доставки', max_length=10, default='Самовывоз')
     #courier = models.ForeignKey(AUTH_USER_MODEL, related_name='courier', on_delete=models.CASCADE,
     #                            verbose_name='Курьер', unique=True, default=None)
-    chosen_delivery_address = models.ForeignKey('AddressUser', on_delete=models.CASCADE,
-                                                verbose_name='Выбранный адрес доставки')
+    chosen_delivery_address = models.ManyToManyField('AddressUser', blank=True, verbose_name='Выбранный адрес доставки')
     time_created = models.TimeField('Время создания заказа', auto_now_add=True, auto_now=False)
     time_requested = models.TimeField('Время на выполнение заказа', default=datetime.now()+timedelta(minutes=20))
     time_over = models.DateTimeField('Время завершения заказа', auto_now=True)
     is_over = models.BooleanField('Окончен ли заказ?', default=False)
+
+    comment = models.CharField('Комментарий к заказу', max_length=500, default='лучший сервис')
 
     def __str__(self):
         return "Заказ от " + str(self.customer) + " из " + str(self.chosen_cafe) + " время: " + str(self.time_created)
@@ -221,6 +253,8 @@ class Account(AbstractBaseUser):
     user_basket = models.ManyToManyField(Basket, blank=True, verbose_name="Пользовательские корзины корзина")
     chosen_address = models.ManyToManyField(AddressUser, blank=True, verbose_name="Выбранный адрес")
     phone_number = models.CharField('Номер телефона', max_length=13, default="89142185648")
+
+    owned_cafe = models.ManyToManyField(Provider, blank=True, verbose_name="Владеет кофейней")
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

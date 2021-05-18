@@ -99,6 +99,8 @@ def index_page(request):
             else:
                 login_error = True
 
+            return redirect('index')
+
     if request.user.is_authenticated:
         drinkable, eatable = collect_items(request)
     addresses = collect_addresses(request)
@@ -119,8 +121,9 @@ def index_page(request):
         coffeeshops, cafe_addresses = collect_relevant_coffeeshops(request, adrs_user)
 
     if request.user.is_authenticated:
-        if request.user.chosen_address.all():
-            flagCA = True
+        if request.user.chosen_address:
+            if request.user.chosen_address.all():
+                flagCA = True
         if ItemsSlotBasket.objects.all():
             for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
                 chosen_items.append(item)

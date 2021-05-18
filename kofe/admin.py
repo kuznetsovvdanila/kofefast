@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from kofe.models import Item, Provider, AddressUser, AddressCafe, Account, Order, Basket, Review, ItemsSlotOrder, \
-    ItemsSlotBasket
+    ItemsSlotBasket, Volumes, Addons
 
 from django.utils.translation import gettext, gettext_lazy as _
 
@@ -17,6 +17,16 @@ class ItemsSlotOrderInLine(admin.StackedInline):
 class ItemsSlotBasketInLine(admin.StackedInline):
     model = ItemsSlotBasket
     extra = 0
+
+
+class ItemsAddsInLine(admin.StackedInline):
+    model = Addons
+    extra = 1
+
+
+class ItemsVolumesInLine(admin.StackedInline):
+    model = Volumes
+    extra = 1
 
 
 class ItemInLine(admin.StackedInline):
@@ -34,9 +44,24 @@ class UserBasketsInLine(admin.StackedInline):
     extra = 1
 
 
+class ItemAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('Название', {'fields': ['name']}),
+        ('Описание', {'fields': ['description']}),
+        ('Цена', {'fields': ['price']}),
+        ('Внешка', {'fields': ['preview']}),
+        ('Из', {'fields': ['provided']}),
+        ('Просчитан цвет', {'fields': ['not_has_color']}),
+    ]
+    inlines = [ItemsVolumesInLine, ItemsAddsInLine]
+
+
 class Cafe(admin.ModelAdmin):
     fieldsets = [
         ('Название', {'fields': ['name']}),
+        ('Владелец', {'fields': ['owner']}),
+        ('Открытие в', {'fields': ['open_time']}),
+        ('Закрытие в', {'fields': ['close_time']}),
     ]
     inlines = [ItemInLine, CafeAddressesInLine]
 
@@ -50,6 +75,7 @@ class OrderAdmin(admin.ModelAdmin):
         ('Адрес доставки', {'fields': ['chosen_delivery_address']}),
         ('Выбранное время доставки', {'fields': ['time_requested']}),
         ('Закончен ли заказ?', {'fields': ['is_over']}),
+        ('Комментарий к заказу', {'fields': ['comment']}),
     ]
     inlines = [ItemsSlotOrderInLine]
 
@@ -74,6 +100,8 @@ class AccountAdmin(UserAdmin):
 
 admin.site.register(Account, AccountAdmin)
 
+
+admin.site.register(Item, ItemAdmin)
 admin.site.register(AddressUser)
 admin.site.register(AddressCafe)
 admin.site.register(Review)

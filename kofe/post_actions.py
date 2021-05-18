@@ -171,7 +171,8 @@ def delete_an_address(request):
 def make_an_order(request):
     user = request.user
     provider = user.basket_set.all()[0].chosen_items.all()[0].good.provided
-    current_order = Order(customer=user)
+    current_order = Order(customer=user,
+                          comment=request.POST.get('comment'))
 
     adrs_user = request.user.chosen_address.all()
     coffeeshops, cafe_addresses = collect_relevant_coffeeshops(request, adrs_user)
@@ -181,7 +182,7 @@ def make_an_order(request):
             current_order.chosen_cafe = adrs
 
     if request.user.chosen_address.all():
-        current_order.chosen_delivery_address = request.user.chosen_address.all()[0]
+        current_order.chosen_delivery_address.add(request.user.chosen_address.all()[0])
     else:
         current_order.type_of_delivery = 'Самовывоз'
 

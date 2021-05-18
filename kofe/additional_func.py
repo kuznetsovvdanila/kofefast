@@ -68,6 +68,8 @@ def collect_items(request):
     for provider in providers:
         for item in provider.item_set.all():
             set_count(item)
+            item.volumes = item.volumes_set.all()
+            item.addons = item.addons_set.all()
             if item.not_has_color:
                 calculate_color(item)
             if item.type == 'd':
