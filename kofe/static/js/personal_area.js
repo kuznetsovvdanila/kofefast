@@ -49,6 +49,11 @@ $('.adr').click(function(){
 $('.addressOpen').click(function(){
     if ($('.info').hasClass('hidden')) {
         hdn = 'infoOwner';
+        console.log('infoOwner');
+    }
+    else if ($('.infoOwner').hasClass('hidden')) {
+        hdn = 'info';
+        console.log('info');
     }
     else {
         hdn = 'info';
@@ -62,11 +67,12 @@ $('.addressOpen').click(function(){
 $('.addAnAddress').click(function(){
     if ($('.info').hasClass('hidden')) {
         hdn = 'infoOwner';
-        console.log('infoOwner');
+    }
+    else if ($('.infoOwner').hasClass('hidden')) {
+        hdn = 'info';
     }
     else {
         hdn = 'info';
-        console.log('info');
     }
     $('.edit').removeClass('active');
     $('.addressMenu').addClass('active');
