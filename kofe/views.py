@@ -162,9 +162,22 @@ def personal_area_page(request):
     orders = collect_orders(request)
     addresses = collect_addresses(request)
 
+    production = []
+    provider_addresses = []
+
+    if request.user.is_cafe_owner:
+        production = request.user.owned_cafe.all()[0].item_set.all()
+        if AddressCafe.objects.all():
+            for address in AddressCafe.objects.all():
+                if address.owner == request.user.owned_cafe.all()[0]:
+                    provider_addresses.append(address)
+
     context = {
         'addresses': addresses,
         'orders': orders,
+        'owned_cafe': request.user.owned_cafe.all()[0] if request.user.is_cafe_owner else None,
+        'production': production,
+        'provider_addresses': provider_addresses,
     }
     return render(request, 'pages/personal_area.html', context)
 

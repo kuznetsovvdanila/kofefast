@@ -183,6 +183,7 @@ body {
     border-radius: 40px;
     width: 85%;
     min-height: 180px;
+    height: 180px;
     border: 10px solid #eeeeee;
 }
 .order:hover  .makeAnOrder {
@@ -214,6 +215,31 @@ body {
 }
 .orderName {
     max-width: 100%;
+}
+.itemOptions {
+    margin: 20px 12px 20px 0 !important;
+    justify-content: space-around;
+    height: 170px;
+}
+.itemEdit {
+    color: #eeeeee !important;
+    background-color: #111111 !important;
+    box-shadow: inset 0 0 0 5px #eeeeee;
+    width: 260px !important;
+    height: 70px !important;
+    margin: 0 !important;
+    background-color: #eeeeee;
+    font-size: 0.9em !important;
+    border-radius: 40px;
+    text-align: center;
+    margin: 0 !important;
+    cursor: pointer;
+    transition: .2s;
+    font-weight: bolder !important;
+    box-sizing: border-box;
+}
+.itemEdit:hover {
+    background-color: #34a853 !important;
 }
 .order > div, .address > div {
     margin: 20px 30px 20px 30px;
@@ -350,6 +376,49 @@ body {
     height: 100%;
     opacity: 0;
     height: auto;
+}
+.itemEditForm {
+    justify-content: center;
+    position: absolute;
+    top: 180px;
+    right: -50%;
+    width: 52%;
+    transition: .5s;
+    height: 100%;
+    opacity: 0;
+    height: auto;
+}
+.itemEditForm.active {
+    opacity: 1;
+    right: 2%;
+    transition: .5s;
+}
+.itemEditForm form textarea {
+    border-radius: 35px;
+    text-align: center;
+    margin: 10px 0 0 0;
+    height: 100px;
+    padding: 10px;
+    border: 5px solid #eeeeee;
+    background-color: #111111;
+    color: #eeeeee;
+    font-size: 1.5em;
+}
+.addressMenuProvider {
+    justify-content: center;
+    position: absolute;
+    top: 180px;
+    right: -50%;
+    width: 52%;
+    transition: .5s;
+    height: 100%;
+    opacity: 0;
+    height: auto;
+}
+.addressMenuProvider.active {
+    opacity: 1;
+    right: 2%;
+    transition: .5s;
 }
 .editSubmit {
     bottom: 97px;
@@ -851,12 +920,6 @@ input[type='file'] {
         font-size: 1.9em;
     }
     */
-    .address, .order {
-        width: 80%;
-    }
-    .adr, .ord {
-        padding: 0 0 0 30px;
-    }
 }
 
 

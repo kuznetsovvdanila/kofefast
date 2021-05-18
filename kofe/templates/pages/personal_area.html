@@ -246,10 +246,11 @@
                         </div>
                     </div>
                     <div class="orders flex">
-                        {% if not orders %}
+
+                        {% if not production %}
                             <div class="order flex btw vCenter">
                                 <div class="orderName">
-                                    Сделайте ваш первый заказ
+                                   Пока никаких товаров нет
                                 </div>
                                 <div>
                                     <a href="{% url 'index' %}">
@@ -260,19 +261,34 @@
                                 </div>
                             </div>
                         {% else %}
-                            {% for order in orders %}
-                                {{ order.chosen_items.good }}
-                                <div class="order flex btw vCenter">
-                                    <div class="status">{% if order.is_over %}Завершен:{% else %}В процессе:{% endif %}</div>
+                            {% for item in production %}
+                                <div class="order flex btw vCenter" style="background-image: url('{{ item.preview.url }}'); background-size: cover; background-position: right 50%">
                                     <div class="orderName">
-                                        <div>{{ order.chosen_cafe }}:</div>
+                                        <div>
+                                            <span style="background-color: #111111;">{{ item }}</span>
+                                        </div>
                                         <div>
 
                                         </div>
-    <!--                                    {{ order }} - {% if order.is_over %}завершен{% else %}в процессе{% endif %}-->
+                                    </div>
+                                    <div class="itemOptions flex clmn vCenter">
+                                        <div class="itemEdit {{ item.id }}" style="width: 170px !important; padding: 17px 0 0 0;">
+                                            Изменить
+                                        </div>
+                                        <div>
+                                            <form action="" method="POST" class="inside">
+                                                <input name="action_type" type="text" value="deleteItem" style="display: none;">
+                                                <input name="delete_item_id" type="text" value="{{ item.id }}" style="display: none;">
+                                                {% csrf_token %}
+                                                <input type="submit" style="width: 170px !important; padding: 0 20px 0 20px;" class="deleteAnAddress" value="Удалить">
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             {% endfor %}
+                            <div class="makeAnOrder">
+                                <b>+</b>
+                            </div>
                         {% endif %}
                     </div>
                     <div class="adr pointer" style="margin: 20px 0 5px 80px;">
@@ -286,8 +302,8 @@
                         </div>
                     </div>
                     <div class="addresses flex">
-                        {% if addresses %}
-                            {% for adr in addresses %}
+                        {% if provider_addresses %}
+                            {% for adr in provider_addresses %}
                                 <div style="font-size: 1em;" class="address flex btw vCenter">
                                     <div class="addressName" style="max-width: 70%;">
                                         {{ adr.city }}, {{ adr.street }} {{ adr.house }} к{{ adr.building }}
@@ -317,10 +333,10 @@
                         </div>
                         {% else %}
                             <div class="address flex btw vCenter addressOpen">
-                                <div  class="addressName">
+                                <div  class="addressName" style="max-width: 70%;">
                                     Добавьте адрес
                                 </div>
-                                <div class="addAnAddress">
+                                <div class="makeAnOrder">
                                     <b>+</b>
                                 </div>
                             </div>
@@ -384,6 +400,61 @@
             </form>
 
         </div>
+        {% if user.is_cafe_owner %}
+            <div class="addressMenuProvider flex">
+                <form action="" method="POST" class="flex">
+                    <div class="flex btw">
+                        <span class="frm"><b>Адрес</b></span>
+                        <span class="closeIt" style=""><b>x</b></span>
+                    </div>
+                    <input name="action_type" type="text" value="add_address" style="display: none;">
+                    <input type="text" name="name" maxlength="150" required="" id="name" placeholder="Название адреса">
+                    <input type="text" name="city" maxlength="150" required="" id="city" placeholder="Город">
+                    <input type="text" name="street" maxlength="150" required="" id="street" placeholder="Улица">
+                    <div class="inARow flex">
+                        <input type="text" name="house" maxlength="150" required="" id="house" placeholder="Дом">
+                        <input type="text" name="building" maxlength="150" id="building" placeholder="Корпус">
+                    </div>
+                    <input type="text" name="entrance" maxlength="150" id="entrance" placeholder="Подъезд">
+                    <div class="inARow flex">
+                        <input type="text" name="floor" maxlength="150" id="floor" placeholder="Этаж">
+                        <input type="text" name="flat" maxlength="150" id="flat" placeholder="Квартира">
+                    </div>
+
+                    {% csrf_token %}
+                    <input type="submit" value="Добавить" class="pointer">
+                </form>
+            </div>
+            {% for item in production %}
+                <div id="{{ item.id }}" class="itemEditForm flex">
+                    <form action="" method="POST" class="input_file flex" enctype="multipart/form-data">
+                        <div class="flex btw">
+                            <span class="frm"><b>Изменить</b></span>
+                            <span class="closeIt" style=""><b>x</b></span>
+                        </div>
+                        <input name="action_type" type="text" value="changeItem" style="display: none;">
+                        <input name="itemId" type="text" value="{{ item.id }}" style="display: none;">
+                        <input type="text" name="item_name" maxlength="150" required="" id="item_name" placeholder="Название" value="{{ item.name }}">
+                        <textarea id="description" name="description" placeholder="Описание">{{ item.description }}</textarea>
+                        <input type="text" name="item_price" maxlength="150" required="" id="item_price" placeholder="Цена" value="{{ item.price }}">
+
+        <!--                <input type="file" id="pro_pic" name="profile_picture" accept=".jpg, .jpeg, .png">-->
+
+                        <input class="" type="file" id="item_pic" name="item_picture" accept=".jpg, .jpeg, .png">
+                        <div class="fake_file">
+                            <input type="text" class="fake_file_input" value="Добавить фото">
+                        </div>
+                        <a href="#" class="clear_input">Очистить</a>
+                        {% csrf_token %}
+        <!--                <input type="submit" value="Изменить пикчуу" class="pointer">-->
+        <!--                {% csrf_token %}-->
+        <!--                <input type="submit" value="Добавить" class="pointer">-->
+                        <input type="submit" value="Готово" class="pointer rltv editSubmit">
+                    </form>
+
+                </div>
+            {% endfor %}
+        {% endif %}
 
 <!--        <div class="bottom flex clmn vCenter">-->
 <!--            <div style="margin: 0 0 10px 0;">-->

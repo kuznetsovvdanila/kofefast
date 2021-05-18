@@ -38,6 +38,16 @@ $('.ownerInterface').click(function(){
     $('.edit').removeClass('active');
     $('.addressMenu').removeClass('active');
 })
+$('.itemEdit').click(function(){
+    var t_element = this.classList;
+    var el = document.getElementsByClassName('itemEditForm');
+    for (var i = 0; i < el.length; i++) {
+        if (el[i].id == t_element[1]) {
+            $(el[i]).addClass('active');
+        }
+    }
+    $('.infoOwner').addClass('hidden');
+})
 $('.ord').click(function(){
     $('.orders').toggleClass('active');
     $('.cls').toggleClass('active');
@@ -86,6 +96,11 @@ $('.addAnAddress').click(function(){
     $('.personInfo').removeClass('hidden');
 })
 $('.closeIt').click(function(){
+    if ($('.itemEditForm').hasClass('active')) {
+        $('.infoOwner').removeClass('move');
+        $('.infoOwner').removeClass('hidden');
+        $('.itemEditForm').removeClass('active');
+    }
     if ($('.edit').hasClass('active')) {
         $('.info').removeClass('move');
         $('.infoOwner').removeClass('move');

@@ -194,3 +194,46 @@ def make_an_order(request):
         current_order.chosen_items.add(i)
     current_order.save()
     clear_the_basket(request)
+
+
+def delete_item(request):
+    Item.objects.all().filter(id=request.POST.get('delete_item_id')).delete()
+
+
+def change_item(request):
+    def remove_transparency(im, bg_colour=(255, 255, 255)):
+        if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
+            alpha = im.convert('RGBA').split()[-1]
+            bg = Image.new("RGB", im.size, bg_colour + (255,))
+            bg.paste(im, mask=alpha)
+            return bg
+
+        else:
+            return im
+
+    item = Item.objects.all().filter(id=request.POST.get('itemId'))[0]
+    print(item)
+
+    if request.POST.get('item_name'):
+        item.name = request.POST.get('item_name')
+        item.save()
+
+    if request.POST.get('description'):
+        item.description = request.POST.get('description')
+        item.save()
+
+    if request.POST.get('item_price'):
+        item.price = request.POST.get('item_price')
+        item.save()
+
+    if request.FILES:
+        item.preview = request.FILES['item_picture']
+        t = Image.open(item.preview)
+        t = remove_transparency(t)
+        t.convert('RGB')
+        t.thumbnail((400, 400))
+        t_io = BytesIO()
+        t.save(t_io, 'JPEG')
+        t_result = File(t_io, name=request.user.profile_picture.name)
+        item.preview = t_result
+        item.save()

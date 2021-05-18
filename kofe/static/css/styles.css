@@ -491,7 +491,6 @@ input {
     margin: 10px 0 0 0;
 }
 input:not([type='submit']) {
-    /*background-color: #333333;*/
     border: 5px solid #eeeeee;
     background-color: #111111;
     color: #eeeeee;
@@ -691,7 +690,7 @@ option:not(:checked) {
     .basketHd {
         font-size: 2.5em;
     }
-    textarea {
+    .makeAnOrder textarea {
         border: none;
         border-radius: 0;
         font-size: 1.8em !important;

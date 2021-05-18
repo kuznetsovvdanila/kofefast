@@ -235,7 +235,7 @@ class MyAccountManager(BaseUserManager):
 
 
 class Account(AbstractBaseUser):
-    username = models.CharField(max_length=60, default='LOX')
+    username = models.CharField(max_length=60, default='username')
     email 					= models.EmailField(verbose_name="Почта", max_length=60, unique=True)
     date_joined				= models.DateTimeField(verbose_name='Дата регистрации', auto_now_add=True)
     last_login				= models.DateTimeField(verbose_name='Последний вход', auto_now=True)
@@ -247,8 +247,8 @@ class Account(AbstractBaseUser):
 
     profile_picture = models.ImageField(null=True, blank=True, upload_to="profile_pictures", default=None)
 
-    first_name = models.CharField('Имя', max_length=60, default='Антон')
-    last_name = models.CharField('Фамилия', max_length=60, default='Крутой')
+    first_name = models.CharField('Имя', max_length=60, default='first_name')
+    last_name = models.CharField('Фамилия', max_length=60, default='last_name')
 
     user_basket = models.ManyToManyField(Basket, blank=True, verbose_name="Пользовательские корзины корзина")
     chosen_address = models.ManyToManyField(AddressUser, blank=True, verbose_name="Выбранный адрес")

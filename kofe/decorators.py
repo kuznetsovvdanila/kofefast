@@ -4,7 +4,8 @@ from django.shortcuts import redirect
 
 from kofe.models import Basket
 from kofe.post_actions import login_user, registration_user, logout_user, set_prefer_address, change_basket, \
-    delete_prefer_address, add_address, user_changing_info, delete_an_address, clear_the_basket, make_an_order
+    delete_prefer_address, add_address, user_changing_info, delete_an_address, clear_the_basket, make_an_order, \
+    change_item, delete_item
 
 
 def check_admin_link(func):
@@ -68,6 +69,8 @@ def check_POST(func):
             'delete_an_address': delete_an_address,
             'clear_the_basket': clear_the_basket,
             'makeAnOrder': make_an_order,
+            'changeItem': change_item,
+            'deleteItem': delete_item,
         }
 
         if request.method == 'POST':
