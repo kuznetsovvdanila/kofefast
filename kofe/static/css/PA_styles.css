@@ -501,6 +501,43 @@ input[type='file'] {
     .info.move {
         top: 2070px;
     }
+    .infoOwner {
+        left: 0;
+        z-index: 1000;
+        margin: 0;
+        top: 1900px;
+        width: 100%;
+        height: auto;
+        padding: 60px 0 0 0;
+    }
+    .infoOwner.hidden {
+        z-index: 0;
+        left: 0;
+    }
+    .infoOwner.move {
+        top: 2070px;
+    }
+    .ownerInterface {
+        justify-content: center;
+        margin: 0 20px 0 0;
+        height: 53px;
+        min-width: 28px;
+        border-radius: 30px;
+        background-color: #333333;
+        padding: 7px;
+    }
+    .ownerInterface > div {
+        transform: translateY(25px);
+        width: 28px;
+        height: 28px;
+        border-radius: 20px;
+        background-color: #deb887;
+        transition: .2s;
+    }
+    .ownerInterface.active > div {
+        transform: none;
+        transition: .2s;
+    }
     form {
         width: 100% !important;
     }
