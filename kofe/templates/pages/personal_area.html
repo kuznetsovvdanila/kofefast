@@ -19,13 +19,13 @@
             {% if request.user.is_authenticated %}
                 <div class="topMenuNotMobile flex btw" style="align-items: center;{% if not user.is_cafe_owner %} width: 225px; {% else %} width: 450px; {% endif %}border-radius: 50px; padding: 0; height: 60px;">
                     {% if user.is_cafe_owner %}
-                        <div href="" class="flex" style="padding: 0 20px 0 20px;  align-items: center; color: #eeeeee; height: auto; max-width: 130px;">
+                        <div href="" class="flex" style="padding: 0 20px 0 20px;  align-items: center; color: #eeeeee; height: auto; width: 160px;">
                             <div class="ownerInterface flex pointer">
                                 <div>
 
                                 </div>
                             </div>
-                            <div>
+                            <div style="font-size: 1.1em;">
                                 Инструменты владельца кофейни
                             </div>
                         </div>
@@ -78,14 +78,21 @@
                             <a style="color: #eeeeee;" href="{% url 'logout' %}">Выйти</a>
                         </div>
                     </div>
-                    <div class="ownerInterface">
-                        <div>
+                    {% if user.is_cafe_owner %}
+                    <div class="tools flex">
+                        <div class=ownerInterface>
+                            <div>
 
+                            </div>
+                        </div>
+                        <div>
+                            Инструменты владельца кофейни
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
-            <div class="info">
+            <div class="info" style="{% if user.is_cafe_owner %}top: 2100px;{% endif %}">
                 <div class="adr pointer">
                     <div class="flex btw">
                         <div class="underln">
@@ -228,124 +235,102 @@
             </div>
 
 
-
-            <div class="infoOwner hidden">
-                <div class="ord pointer" style="margin: 0 0 5px 80px;">
-                    <div class="flex btw">
-                        <div class="underln">
-                            <b>Ассортимент</b>
-                        </div>
-                        <div class="cls active">
-                            <b>ᐃ</b>
+            {% if user.is_cafe_owner %}
+                <div class="infoOwner hidden">
+                    <div class="ord pointer" style="margin: 0 0 5px 80px;">
+                        <div class="flex btw">
+                            <div class="underln">
+                                <b>Ассортимент</b>
+                            </div>
+                            <div class="cls active">
+                                <b>ᐃ</b>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="orders flex">
-                    {% if not orders %}
-                        <div class="order flex btw vCenter">
-                            <div class="orderName">
-                                Сделайте ваш первый заказ
-                            </div>
-                            <div>
-                                <a href="{% url 'index' %}">
-                                    <div class="makeAnOrder">
-                                        <b>+</b>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    {% else %}
-                        {% for order in orders %}
-                            {{ order.chosen_items.good }}
+                    <div class="orders flex">
+                        {% if not orders %}
                             <div class="order flex btw vCenter">
-                                <div class="status">{% if order.is_over %}Завершен:{% else %}В процессе:{% endif %}</div>
                                 <div class="orderName">
-                                    <div>{{ order.chosen_cafe }}:</div>
-                                    <div>
+                                    Сделайте ваш первый заказ
+                                </div>
+                                <div>
+                                    <a href="{% url 'index' %}">
+                                        <div class="makeAnOrder">
+                                            <b>+</b>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% else %}
+                            {% for order in orders %}
+                                {{ order.chosen_items.good }}
+                                <div class="order flex btw vCenter">
+                                    <div class="status">{% if order.is_over %}Завершен:{% else %}В процессе:{% endif %}</div>
+                                    <div class="orderName">
+                                        <div>{{ order.chosen_cafe }}:</div>
+                                        <div>
 
+                                        </div>
+    <!--                                    {{ order }} - {% if order.is_over %}завершен{% else %}в процессе{% endif %}-->
                                     </div>
-<!--                                    {{ order }} - {% if order.is_over %}завершен{% else %}в процессе{% endif %}-->
                                 </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="adr pointer" style="margin: 20px 0 5px 80px;">
+                        <div class="flex btw">
+                            <div class="underln">
+                                <b>Адреса</b>
                             </div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-                <div class="adr pointer" style="margin: 20px 0 5px 80px;">
-                    <div class="flex btw">
-                        <div class="underln">
-                            <b>Адреса</b>
-                        </div>
-                        <div class="opn active">
-                            <b>ᐃ</b>
+                            <div class="opn active">
+                                <b>ᐃ</b>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="addresses flex">
-                    {% if addresses %}
-                        {% for adr in addresses %}
-                            <div style="font-size: 1em;" class="address flex btw vCenter">
-                                <div class="addressName" style="max-width: 70%;">
-                                    {{ adr.city }}, {{ adr.street }} {{ adr.house }} к{{ adr.building }}
+                    <div class="addresses flex">
+                        {% if addresses %}
+                            {% for adr in addresses %}
+                                <div style="font-size: 1em;" class="address flex btw vCenter">
+                                    <div class="addressName" style="max-width: 70%;">
+                                        {{ adr.city }}, {{ adr.street }} {{ adr.house }} к{{ adr.building }}
+                                    </div>
+                                    <div class="flex" style="flex-direction: column; margin-left: 0;">
+                                        <form action="" method="POST" class="inside">
+                                            <input name="action_type" type="text" value="delete_an_address" style="display: none;">
+                                            <input name="delete_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                            {% csrf_token %}
+                                            <input type="submit" style="width: auto !important; padding: 0 20px 0 20px;" class="deleteAnAddress" value="Удалить">
+                                        </form>
+                                    </div>
                                 </div>
-                                <div class="flex" style="flex-direction: column; margin-left: 0;">
-                                    <form action="" method="POST" class="inside">
-                                        <input name="action_type" type="text" value="delete_an_address" style="display: none;">
-                                        <input name="delete_adr_id" type="text" value="{{adr.id}}" style="display: none;">
-                                        {% csrf_token %}
-                                        <input type="submit" style="width: auto !important; padding: 0 20px 0 20px;" class="deleteAnAddress" value="Удалить">
-                                    </form>
+                                <div class="afterAddressMenu">
+                                    <div class="flex" style="margin-left: 0;">
+                                        <form action="" method="POST" class="inside">
+                                            <input name="action_type" type="text" value="delete_an_address" style="display: none;">
+                                            <input name="delete_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                            {% csrf_token %}
+                                            <input type="submit" class="deleteAnAddress" value="Удалить">
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="afterAddressMenu">
-                                {% if adr.chosen %}
-                                <div class="flex" style="margin-left: 0;">
-                                    <form action="" method="POST" class="inside flex">
-                                        <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">
-                                        <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
-                                        {% csrf_token %}
-                                        <input type="submit" value="Отменить выбор" class="chooseAnAddress pointer">
-                                    </form>
-                                    <form action="" method="POST" class="inside">
-                                        <input name="action_type" type="text" value="delete_an_address" style="display: none;">
-                                        <input name="delete_adr_id" type="text" value="{{adr.id}}" style="display: none;">
-                                        {% csrf_token %}
-                                        <input type="submit" class="deleteAnAddress" value="Удалить">
-                                    </form>
-                                </div>
-                                {% else %}
-                                <div class="flex" style="margin-left: 0;">
-                                    <form action="" method="POST" class="inside flex">
-                                        <input name="action_type" type="text" value="prefer_address" style="display: none;">
-                                        <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
-                                        {% csrf_token %}
-                                        <input type="submit" value="Доставлять сюда" class="chooseAnAddress pointer">
-                                    </form>
-                                    <form action="" method="POST" class="inside">
-                                        <input name="action_type" type="text" value="delete_an_address" style="display: none;">
-                                        <input name="delete_adr_id" type="text" value="{{adr.id}}" style="display: none;">
-                                        {% csrf_token %}
-                                        <input type="submit" class="deleteAnAddress" value="Удалить">
-                                    </form>
-                                </div>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
-                    <div class="addAnAddress">
-                        <b>+</b>
-                    </div>
-                    {% else %}
-                        <div class="address flex btw vCenter addressOpen">
-                            <div  class="addressName">
-                                Добавьте адрес
-                            </div>
-                            <div class="addAnAddress">
-                                <b>+</b>
-                            </div>
+                            {% endfor %}
+                        <div class="addAnAddress">
+                            <b>+</b>
                         </div>
-                    {% endif %}
+                        {% else %}
+                            <div class="address flex btw vCenter addressOpen">
+                                <div  class="addressName">
+                                    Добавьте адрес
+                                </div>
+                                <div class="addAnAddress">
+                                    <b>+</b>
+                                </div>
+                            </div>
+                        {% endif %}
 
+                    </div>
                 </div>
-            </div>
+            {% endif %}
 
 
 

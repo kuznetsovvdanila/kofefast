@@ -32,8 +32,14 @@ $('.addAnAddress').click(function(){
 $('.closeIt').click(function(){
     $('.addressMenu').removeClass('active');
     $('.edit').removeClass('active');
-    $('.info').removeClass('hidden');
-    $('.info').removeClass('move');
+    if ($('.info').hasClass('hidden')) {
+        $('.infoOwner').removeClass('hidden');
+        $('.infoOwner').removeClass('move');
+    }
+    else {
+        $('.info').removeClass('hidden');
+        $('.info').removeClass('move');
+    }
     $('.person').removeClass('hidden');
     $('.personInfo').removeClass('hidden');
 })
@@ -43,7 +49,12 @@ $('.photo').click(function(){
     $('.info').addClass('hidden');
 })
 $('.chng').click(function(){
-    $('.info').addClass('move');
+    if ($('.info').hasClass('hidden')) {
+        $('.infoOwner').addClass('move');
+    }
+    else {
+        $('.info').addClass('move');
+    }
     $('.person').addClass('hidden');
     $('.personInfo').addClass('hidden');
     $('.addressMenu').removeClass('active');
