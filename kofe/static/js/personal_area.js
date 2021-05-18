@@ -1,12 +1,42 @@
+var hdn = ''
+var hdnChng = ''
 $('.ownerInterface').click(function(){
     $('.ownerInterface').toggleClass('active');
 
-    $('.info').toggleClass('hidden');
-    $('.infoOwner').toggleClass('hidden');
-
-    $('.addresses').removeClass('active');
-
-    $('.orders').removeClass('active');
+    if ($('.addresses').hasClass('active')) {
+        $('.opn').addClass('active');
+        $('.addresses').removeClass('active');
+    }
+    if ($('.orders').hasClass('active')) {
+        $('.cls').addClass('active');
+        $('.orders').removeClass('active');
+    }
+    if ($('.addressMenu').hasClass('active')) {
+        if (hdn == 'infoOwner') {
+            $('.infoOwner').addClass('hidden');
+            $('.info').removeClass('hidden');
+        }
+        else {
+            $('.infoOwner').removeClass('hidden');
+            $('.info').addClass('hidden');
+        }
+    }
+    else if ($('.edit').hasClass('active')) {
+        if (hdnChng == 'infoOwner') {
+            $('.infoOwner').addClass('hidden');
+            $('.info').removeClass('hidden');
+        }
+        else {
+            $('.infoOwner').removeClass('hidden');
+            $('.info').addClass('hidden');
+        }
+    }
+    else {
+        $('.info').toggleClass('hidden');
+        $('.infoOwner').toggleClass('hidden');
+    }
+    $('.edit').removeClass('active');
+    $('.addressMenu').removeClass('active');
 })
 $('.ord').click(function(){
     $('.orders').toggleClass('active');
@@ -17,44 +47,77 @@ $('.adr').click(function(){
     $('.opn').toggleClass('active');
 })
 $('.addressOpen').click(function(){
+    if ($('.info').hasClass('hidden')) {
+        hdn = 'infoOwner';
+    }
+    else {
+        hdn = 'info';
+    }
     $('.edit').removeClass('active');
     $('.addressMenu').addClass('active');
     $('.info').addClass('hidden');
+    $('.infoOwner').addClass('hidden');
+
 })
 $('.addAnAddress').click(function(){
+    if ($('.info').hasClass('hidden')) {
+        hdn = 'infoOwner';
+        console.log('infoOwner');
+    }
+    else {
+        hdn = 'info';
+        console.log('info');
+    }
     $('.edit').removeClass('active');
     $('.addressMenu').addClass('active');
     $('.info').addClass('hidden');
+    $('.infoOwner').addClass('hidden');
+
+    $('.addressMenu').addClass('active');
     $('.info').removeClass('move');
+    $('.infoOwner').removeClass('move');
     $('.person').removeClass('hidden');
     $('.personInfo').removeClass('hidden');
 })
 $('.closeIt').click(function(){
-    $('.addressMenu').removeClass('active');
-    $('.edit').removeClass('active');
-    if ($('.info').hasClass('hidden')) {
-        $('.infoOwner').removeClass('hidden');
-        $('.infoOwner').removeClass('move');
-    }
-    else {
-        $('.info').removeClass('hidden');
+    if ($('.edit').hasClass('active')) {
         $('.info').removeClass('move');
+        $('.infoOwner').removeClass('move');
+        if (hdnChng == 'info') {
+            $('.info').removeClass('hidden');
+        }
+        if (hdnChng == 'infoOwner') {
+            $('.infoOwner').removeClass('hidden');
+        }
+        $('.edit').removeClass('active');
+    }
+    if ($('.addressMenu').hasClass('active')) {
+        if (hdn == 'info') {
+            $('.info').removeClass('hidden');
+        }
+        if (hdn == 'infoOwner') {
+            $('.infoOwner').removeClass('hidden');
+        }
+        $('.addressMenu').removeClass('active');
     }
     $('.person').removeClass('hidden');
     $('.personInfo').removeClass('hidden');
 })
 $('.photo').click(function(){
+    if ($('.info').hasClass('hidden')) {
+        hdnChng = 'infoOwner';
+    }
+    else {
+        hdnChng = 'info';
+    }
     $('.addressMenu').removeClass('active');
     $('.edit').addClass('active');
     $('.info').addClass('hidden');
+    $('.infoOwner').addClass('hidden');
 })
 $('.chng').click(function(){
-    if ($('.info').hasClass('hidden')) {
-        $('.infoOwner').addClass('move');
-    }
-    else {
-        $('.info').addClass('move');
-    }
+    $('.info').addClass('move');
+    $('.infoOwner').addClass('move');
     $('.person').addClass('hidden');
     $('.personInfo').addClass('hidden');
     $('.addressMenu').removeClass('active');
