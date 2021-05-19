@@ -211,29 +211,45 @@ def change_item(request):
         else:
             return im
 
-    item = Item.objects.all().filter(id=request.POST.get('itemId'))[0]
-    print(item)
-
-    if request.POST.get('item_name'):
-        item.name = request.POST.get('item_name')
-        item.save()
-
-    if request.POST.get('description'):
-        item.description = request.POST.get('description')
-        item.save()
-
-    if request.POST.get('item_price'):
-        item.price = request.POST.get('item_price')
-        item.save()
-
-    if request.FILES:
-        item.preview = request.FILES['item_picture']
-        t = Image.open(item.preview)
+    if request.POST.get('itemId') == '0':
+        current_item = Item(name=request.POST.get('item_name'),
+                            description=request.POST.get('description'), price=request.POST.get('item_price'),
+                            provided=request.user.owned_cafe.all()[0], type=request.POST.get('type'))
+        current_item.preview = request.FILES['item_picture']
+        t = Image.open(current_item.preview)
         t = remove_transparency(t)
         t.convert('RGB')
         t.thumbnail((400, 400))
         t_io = BytesIO()
         t.save(t_io, 'JPEG')
         t_result = File(t_io, name=request.user.profile_picture.name)
-        item.preview = t_result
-        item.save()
+        current_item.preview = t_result
+        current_item.save()
+
+    else:
+        item = Item.objects.all().filter(id=request.POST.get('itemId'))[0]
+        print(item)
+
+        if request.POST.get('item_name'):
+            item.name = request.POST.get('item_name')
+            item.save()
+
+        if request.POST.get('description'):
+            item.description = request.POST.get('description')
+            item.save()
+
+        if request.POST.get('item_price'):
+            item.price = request.POST.get('item_price')
+            item.save()
+
+        if request.FILES:
+            item.preview = request.FILES['item_picture']
+            t = Image.open(item.preview)
+            t = remove_transparency(t)
+            t.convert('RGB')
+            t.thumbnail((400, 400))
+            t_io = BytesIO()
+            t.save(t_io, 'JPEG')
+            t_result = File(t_io, name=request.user.profile_picture.name)
+            item.preview = t_result
+            item.save()

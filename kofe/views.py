@@ -166,7 +166,8 @@ def personal_area_page(request):
     provider_addresses = []
 
     if request.user.is_cafe_owner:
-        production = request.user.owned_cafe.all()[0].item_set.all()
+        if request.user.owned_cafe.all():
+            production = request.user.owned_cafe.all()[0].item_set.all()
         if AddressCafe.objects.all():
             for address in AddressCafe.objects.all():
                 if address.owner == request.user.owned_cafe.all()[0]:
@@ -175,7 +176,7 @@ def personal_area_page(request):
     context = {
         'addresses': addresses,
         'orders': orders,
-        'owned_cafe': request.user.owned_cafe.all()[0] if request.user.is_cafe_owner else None,
+        'owned_cafe': request.user.owned_cafe.all()[0] if request.user.owned_cafe.all() else None,
         'production': production,
         'provider_addresses': provider_addresses,
     }

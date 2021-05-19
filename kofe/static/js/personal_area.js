@@ -48,6 +48,15 @@ $('.itemEdit').click(function(){
     }
     $('.infoOwner').addClass('hidden');
 })
+$('.addAnItem').click(function(){
+    var el = document.getElementsByClassName('itemEditForm');
+    for (var i = 0; i < el.length; i++) {
+        if (el[i].id == '0') {
+            $(el[i]).addClass('active');
+        }
+    }
+    $('.infoOwner').addClass('hidden');
+})
 $('.ord').click(function(){
     $('.orders').toggleClass('active');
     $('.cls').toggleClass('active');

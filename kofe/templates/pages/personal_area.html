@@ -248,7 +248,7 @@
                     <div class="orders flex">
 
                         {% if not production %}
-                            <div class="order flex btw vCenter">
+                            <div class="order flex btw vCenter" style="cursor: default !important;">
                                 <div class="orderName">
                                    Пока никаких товаров нет
                                 </div>
@@ -262,13 +262,13 @@
                             </div>
                         {% else %}
                             {% for item in production %}
-                                <div class="order flex btw vCenter" style="background-image: url('{{ item.preview.url }}'); background-size: cover; background-position: right 50%">
-                                    <div class="orderName">
+                                <div class="order flex btw vCenter" style="cursor: default !important; background-image: url('{{ item.preview.url }}'); background-size: cover; background-position: right 50%">
+                                    <div class="orderName flex clmn" style="padding: 10px; height: 100%; justify-content: space-around;">
                                         <div>
                                             <span style="background-color: #111111;">{{ item }}</span>
                                         </div>
-                                        <div>
-
+                                        <div class="itemPrice" style="font-size: 1em;">
+                                            <span><b>{{ item.price }}₽</b></span>
                                         </div>
                                     </div>
                                     <div class="itemOptions flex clmn vCenter">
@@ -286,7 +286,7 @@
                                     </div>
                                 </div>
                             {% endfor %}
-                            <div class="makeAnOrder">
+                            <div class="makeAnOrder addAnItem">
                                 <b>+</b>
                             </div>
                         {% endif %}
@@ -424,6 +424,37 @@
                     {% csrf_token %}
                     <input type="submit" value="Добавить" class="pointer">
                 </form>
+            </div>
+            <div id="0" class="itemEditForm flex">
+                <form action="" method="POST" class="input_file flex" enctype="multipart/form-data">
+                    <div class="flex btw">
+                        <span class="frm"><b>Добавить</b></span>
+                        <span class="closeIt" style=""><b>x</b></span>
+                    </div>
+                    <input name="action_type" type="text" value="changeItem" style="display: none;">
+                    <input name="itemId" type="text" value="0" style="display: none;">
+                    <input type="text" name="item_name" maxlength="150" id="item_name" placeholder="Название" value="" required>
+                    <span class="flex vCenter" style="margin: 20px 0 10px 0; min-width: 100%; justify-content: space-around; font-size: 1.5em;">
+                        <span class="flex vCenter"><input type="radio" id="food" name="type" value="e">Еда</span>
+                        <span class="flex vCenter"><input type="radio" id="drink" name="type" value="d" checked>Напиток</span>
+                    </span>
+                    <textarea id="description" name="description" placeholder="Описание" required></textarea>
+                    <input type="text" name="item_price" maxlength="150" id="item_price" placeholder="Цена" value="" required>
+
+    <!--                <input type="file" id="pro_pic" name="profile_picture" accept=".jpg, .jpeg, .png">-->
+
+                    <input class="" type="file" id="item_pic" name="item_picture" accept=".jpg, .jpeg, .png" required>
+                    <div class="fake_file">
+                        <input type="text" class="fake_file_input" value="Добавить фото">
+                    </div>
+                    <a href="#" class="clear_input">Очистить</a>
+                    {% csrf_token %}
+    <!--                <input type="submit" value="Изменить пикчуу" class="pointer">-->
+    <!--                {% csrf_token %}-->
+    <!--                <input type="submit" value="Добавить" class="pointer">-->
+                    <input type="submit" value="Готово" class="pointer rltv editSubmit">
+                </form>
+
             </div>
             {% for item in production %}
                 <div id="{{ item.id }}" class="itemEditForm flex">
