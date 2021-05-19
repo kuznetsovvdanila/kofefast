@@ -329,6 +329,24 @@ input:checked {
     background-color: #34a853;
     transition: .2s;
 }
+.addAnItemList {
+    color: #eeeeee;
+    width: 50px;
+    height: 50px;
+    background-color: #111111;
+    box-shadow: inset 0 0 0 5px #eeeeee;
+    padding: 0px 17px 35px 17px;
+    font-size: 4em !important;
+    border-radius: 45px;
+    text-align: center;
+    margin: 10px 0 0 15px;
+    cursor: pointer;
+    transition: .2s;
+}
+.addAnItemList:hover {
+    background-color: #34a853;
+    transition: .2s;
+}
 .inside {
     width: 40%;
 }
@@ -504,8 +522,88 @@ input[type='file'] {
 .addAnAddressMobile {
     display: none;
 }
+.itemOptions {
+    display: flex;
+}
 
 @media screen and (max-width: 980px) {
+
+    .itemEditForm form input[type="radio"] {
+        width: 70px;
+        height: 70px;
+    }
+    .rdo > span {
+        font-size: 3em;
+        margin: 0 0 40px 0;
+        width: 90%;
+    }
+    .rdo span > input {
+        border: 15px solid #eeeeee !important;
+        margin: 0 30px 0 0 !important;
+    }
+    .rdo {
+        padding: 0 0 30px 0;
+        margin: 30px 0 30px 50px !important;
+        justify-content: flex-start !important;
+        flex-direction: column-reverse !important;
+        align-items: flex-start;
+        border-bottom: 15px solid #333333;
+        width: 90% !important;
+        min-width: 0 !important;
+    }
+    .itemEditForm form textarea {
+        padding: 0;
+        width: 90%;
+        margin: 50px !important;
+        text-align: left;
+        height: 350px;
+        border-bottom: 15px solid #333333;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+        font-size: 4em;
+    }
+    .editSubmit {
+        bottom: 220px;
+    }
+    .input_file {
+        position: relative !important;
+        margin: 0 0 10px 0 !important;
+    }
+    .input_file > input[type=file] {
+        opacity: 0;
+        filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+        position: relative !important;
+        z-index: 2 !important;
+        height: 150px !important;
+        width: 90% !important;
+    }
+    .fake_file {
+        position: relative;
+        height: 150px;
+        bottom: 220px;
+        width: 100%;
+    }
+    .fake_file input:not([type="button"]) {
+        color: #666666;
+        border-radius: 0;
+        font-weight: normal;
+        font-size: 4em !important;
+        background-color: #111111;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 15px solid #333333;
+        text-align: left;
+        max-width: 100%;
+        width: 88%;
+        margin: 0;
+        height: 150px;
+    }
+    input[type='file'] {
+        background-color: #eeeeee;
+    }
     .topMenu {
         width: 100%;
         text-align: center;
@@ -672,7 +770,7 @@ input[type='file'] {
         border-radius: 80px;
         padding: 0 0 40px 0;
     }
-    .addressMenu form > input, .edit form > input {
+    .addressMenu form > input, .edit form > input, .itemEditForm form > input, .addressMenuProvider form > input {
         height: 150px;
         margin: 50px !important;
         text-align: left;
@@ -681,7 +779,13 @@ input[type='file'] {
         border: none;
         border-bottom: 15px solid #333333;
     }
-    .addressMenu form div > input {
+    .hint {
+        font-size: 4em !important;
+        margin: 50px !important;
+        text-align: left !important;
+
+    }
+    .addressMenu form div > input, .addressMenuProvider form div > input {
         height: 150px;
         margin: 50px !important;
         text-align: left;
@@ -690,16 +794,16 @@ input[type='file'] {
         border: none;
         border-bottom: 15px solid #333333;
     }
-    .addressMenu form > input[type='submit'], .edit form > input[type='submit'] {
+    .addressMenu form > input[type='submit'], .edit form > input[type='submit'], .itemEditForm form > input[type='submit'], .addressMenuProvider form > input[type='submit'] {
         text-align: center;
         border-radius: 100px;
         border: none;
     }
-    .addressMenu form  > div:first-child, .edit form > div:first-child {
+    .addressMenu form  > div:first-child, .edit form > div:first-child, .itemEditForm form > div:first-child, .addressMenuProvider form > div:first-child {
         font-size: 2.5em;
         margin: 30px;
     }
-    .addressMenu form, .edit form {
+    .addressMenu form, .edit form, .itemEditForm form, .addressMenuProvider form {
         width: 100% !important;
         margin: 0;
     }
@@ -717,6 +821,42 @@ input[type='file'] {
     .edit.active {
         opacity: 1;
         z-index: 2000;
+    }
+    .itemEditForm {
+        position: absolute;
+        left: 0;
+        opacity: 0;
+        top: 0;
+        z-index: 0;
+        width: 100%;
+        transition: .3s;
+        padding: 0 0 0 10px;
+        top: 0;
+        height: auto;
+    }
+    .itemEditForm.active {
+        opacity: 1;
+        z-index: 2000;
+        transition: .3s;
+        top: 2170px;
+    }
+    .addressMenuProvider {
+        position: absolute;
+        left: 0;
+        opacity: 0;
+        top: 0;
+        z-index: 0;
+        width: 100%;
+        transition: .3s;
+        padding: 0 0 0 10px;
+        top: 0;
+        height: auto;
+    }
+    .addressMenuProvider.active {
+        opacity: 1;
+        z-index: 2000;
+        transition: .3s;
+        top: 2170px;
     }
     .personInfo.hidden {
         opacity: 0;
@@ -808,6 +948,28 @@ input[type='file'] {
     .deleteAnAddress:hover {
         background-color: #ea4335 !important;
     }
+    .itemOptions {
+        display: none;
+    }
+    .itemEdit {
+        color: #eeeeee !important;
+        background-color: #111111 !important;
+        height: 150px !important;
+        margin: 0 !important;
+        background-color: #eeeeee;
+        font-size: 3.7em !important;
+        border-radius: 80px;
+        text-align: center;
+        margin: 0 !important;
+        cursor: pointer;
+        transition: .2s;
+        font-weight: bolder !important;
+        border: 15px solid #eeeeee;
+        box-shadow: none;
+    }
+    .itemEdit:hover {
+        background-color: #34a853 !important;
+    }
 
 
     .address, .order {
@@ -849,6 +1011,32 @@ input[type='file'] {
         background-color: #111111;
         box-shadow: none;
     }
+    .addAnAddressProvider {
+        height: 120px;
+        min-width: 0 !important;
+        width: 120px;
+        max-width: 120px;
+        padding: 0 !important;
+        border-radius: 200px;
+        font-size: 5.7em !important;
+        border: 15px solid #eeeeee;
+        color: #eeeeee;
+        background-color: #111111;
+        box-shadow: none;
+    }
+    .addAnItemList {
+        height: 120px;
+        min-width: 0 !important;
+        width: 120px;
+        max-width: 120px;
+        padding: 0 !important;
+        border-radius: 200px;
+        font-size: 5.7em !important;
+        border: 15px solid #eeeeee;
+        color: #eeeeee;
+        background-color: #111111;
+        box-shadow: none;
+    }
     .addAnAddressMobile {
         display: block;
         color: #eeeeee;
@@ -864,93 +1052,6 @@ input[type='file'] {
         cursor: pointer;
         transition: .2s;
     }
-}
-
-@media screen and (min-width: 1500px) {
-    /*.editSubmit {
-        bottom: 89px;
-    }
-    .input_file {
-        position: relative !important;
-        margin: 0 0 10px 0 !important;
-    }
-    .input_file > input[type=file] {
-        opacity: 0;
-        filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
-        position: relative !important;
-        z-index: 2 !important;
-        height: 77px !important;
-        width: 440px !important;
-    }
-    .fake_file {
-        position: relative;
-        bottom: 88px;
-        width: 100%;
-    }
-    .fake_file input:not([type="button"]) {
-        color: #111111;
-        font-weight: bold;
-        font-size: 3em !important;
-        background-color: #eeeeee;
-        max-width: 436px;
-        margin: 0;
-    }
-    input[type='file'] {
-        background-color: #eeeeee;
-    }
-    .edit form {
-        margin: 10% 15% 0 0;
-    }
-    .addresses, .orders {
-        height: 225px;
-    }
-    .address, .order {
-        min-height: 195px;
-        width: 80%;
-    }
-    .info {
-        height: 720px;
-    }
-    .person {
-        width: 600px;
-    }
-    .person .photo {
-        padding: 0 10px 20px 10px;
-
-    }
-    .changePhoto {
-        top: 220px;
-        left: 220px;
-
-    }
-    .photo {
-        border-radius: 300px;
-        width: 450px;
-        height: 450px;
-    }
-    .person > div:first-child {
-        border-radius: 300px;
-    }
-    .adr, .ord {
-        font-size: 3em;
-        margin: 20px 0 10px 110px;
-        width: 80%;
-    }
-    .personInfo > div:first-child {
-        font-size: 4em;
-        margin: 0 0 10px 0;
-    }
-    .personInfo > div:nth-child(2) {
-        font-size: 2.5em;
-        margin: 0 0 10px 0;
-    }
-    .personInfo > div:last-child {
-        font-size: 2.5em;
-    }
-    .addressName, .orderName {
-        font-size: 1.9em;
-    }
-    */
 }
 
 

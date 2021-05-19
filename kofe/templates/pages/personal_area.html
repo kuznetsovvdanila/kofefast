@@ -10,6 +10,13 @@
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
         <link rel="stylesheet" href="{% static 'css/PA_styles.css' %}">
         <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/png">
+        <style>
+            .addressMenu.active {
+                {% if user.is_cafe_owner %}
+                    top: 2170px;
+                {% endif %}
+            }
+        </style>
     </head>
     <body>
         <div class="topMenu flex">
@@ -249,15 +256,13 @@
 
                         {% if not production %}
                             <div class="order flex btw vCenter" style="cursor: default !important;">
-                                <div class="orderName">
+                                <div class="orderName addAnItem">
                                    Пока никаких товаров нет
                                 </div>
                                 <div>
-                                    <a href="{% url 'index' %}">
-                                        <div class="makeAnOrder">
-                                            <b>+</b>
-                                        </div>
-                                    </a>
+                                    <div class="makeAnOrder addAnItem" style="font-size: 2em !important;">
+                                        <b>+</b>
+                                    </div>
                                 </div>
                             </div>
                         {% else %}
@@ -285,8 +290,21 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="afterAddressMenu btw" style="width: 100%; margin-bottom: 10px; padding: 0 5% 0 5%; box-sizing: border-box;">
+                                    <div class="flex" style="margin-left: 0;">
+                                        <div class="itemEdit {{ item.id }}" style="padding: 24px 0 0 0; width: 46% !important;">
+                                            Изменить
+                                        </div>
+                                        <form action="" method="POST" class="inside">
+                                            <input name="action_type" type="text" value="deleteItem" style="display: none;">
+                                            <input name="delete_item_id" type="text" value="{{ item.id }}" style="display: none;">
+                                            {% csrf_token %}
+                                            <input style="width: 94% !important;" type="submit" class="deleteAnAddress" value="Удалить">
+                                        </form>
+                                    </div>
+                                </div>
                             {% endfor %}
-                            <div class="makeAnOrder addAnItem">
+                            <div class="addAnItemList addAnItem" style="margin: 0 !important;">
                                 <b>+</b>
                             </div>
                         {% endif %}
@@ -317,7 +335,7 @@
                                         </form>
                                     </div>
                                 </div>
-                                <div class="afterAddressMenu">
+                                <div class="afterAddressMenu" style="margin-bottom: 10px;">
                                     <div class="flex" style="margin-left: 0;">
                                         <form action="" method="POST" class="inside">
                                             <input name="action_type" type="text" value="delete_an_address_provider" style="display: none;">
@@ -328,7 +346,7 @@
                                     </div>
                                 </div>
                             {% endfor %}
-                        <div class="addAnAddressProvider">
+                        <div class="addAnAddressProvider" style="margin: 10px 0 0 0 !important;">
                             <b>+</b>
                         </div>
                         {% else %}
@@ -391,7 +409,6 @@
                 <div class="fake_file">
                     <input type="text" class="fake_file_input" value="Добавить фото">
                 </div>
-                <a href="#" class="clear_input">Очистить</a>
                 {% csrf_token %}
 <!--                <input type="submit" value="Изменить пикчуу" class="pointer">-->
 <!--                {% csrf_token %}-->
@@ -411,7 +428,7 @@
                     <input type="text" name="city" maxlength="150" required="" id="city" placeholder="Город">
                     <input type="text" name="street" maxlength="150" required="" id="street" placeholder="Улица">
                     <input type="text" name="house" maxlength="150" required="" id="house" placeholder="Дом">
-                    <div style="margin: 12px 0 5px 0; font-size: 1.7em;">
+                    <div class="hint" style="margin: 12px 0 5px 0; font-size: 1.7em;">
                         Далее - при наличии
                     </div>
                     <div class="inARow flex">
@@ -432,7 +449,7 @@
                     <input name="action_type" type="text" value="changeItem" style="display: none;">
                     <input name="itemId" type="text" value="0" style="display: none;">
                     <input type="text" name="item_name" maxlength="150" id="item_name" placeholder="Название" value="" required>
-                    <span class="flex vCenter" style="margin: 20px 0 10px 0; min-width: 100%; justify-content: space-around; font-size: 1.5em;">
+                    <span class="flex vCenter rdo" style="margin: 20px 0 10px 0; min-width: 100%; justify-content: space-around; font-size: 1.5em;">
                         <span class="flex vCenter"><input type="radio" id="food" name="type" value="e">Блюдо</span>
                         <span class="flex vCenter"><input type="radio" id="drink" name="type" value="d" checked>Напиток</span>
                     </span>
@@ -445,11 +462,7 @@
                     <div class="fake_file">
                         <input type="text" class="fake_file_input" value="Добавить фото">
                     </div>
-                    <a href="#" class="clear_input">Очистить</a>
                     {% csrf_token %}
-    <!--                <input type="submit" value="Изменить пикчуу" class="pointer">-->
-    <!--                {% csrf_token %}-->
-    <!--                <input type="submit" value="Добавить" class="pointer">-->
                     <input type="submit" value="Готово" class="pointer rltv editSubmit">
                 </form>
 
@@ -473,11 +486,7 @@
                         <div class="fake_file">
                             <input type="text" class="fake_file_input" value="Добавить фото">
                         </div>
-                        <a href="#" class="clear_input">Очистить</a>
                         {% csrf_token %}
-        <!--                <input type="submit" value="Изменить пикчуу" class="pointer">-->
-        <!--                {% csrf_token %}-->
-        <!--                <input type="submit" value="Добавить" class="pointer">-->
                         <input type="submit" value="Готово" class="pointer rltv editSubmit">
                     </form>
 

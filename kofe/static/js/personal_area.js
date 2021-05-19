@@ -1,5 +1,8 @@
-var hdn = ''
-var hdnChng = ''
+var hdn = '';
+var hdnChng = '';
+var menuItemOpen = false;
+var menuAddressCafeOpen = false;
+
 $('.ownerInterface').click(function(){
     $('.ownerInterface').toggleClass('active');
 
@@ -39,6 +42,16 @@ $('.ownerInterface').click(function(){
     $('.addressMenu').removeClass('active');
 })
 $('.itemEdit').click(function(){
+    if ($('.orders').hasClass('active')) {
+        menuItemOpen = true;
+        $('.orders').removeClass('active');
+        $('.cls').addClass('active');
+    }
+    if ($('.addresses').hasClass('active')) {
+        menuAddressCafeOpen = true;
+        $('.addresses').removeClass('active');
+        $('.opn').addClass('active');
+    }
     var t_element = this.classList;
     var el = document.getElementsByClassName('itemEditForm');
     for (var i = 0; i < el.length; i++) {
@@ -90,6 +103,16 @@ $('.addressOpen').click(function(){
 
 })
 $('.addAnAddressProvider').click(function(){
+    if ($('.orders').hasClass('active')) {
+        menuItemOpen = true;
+        $('.orders').removeClass('active');
+        $('.cls').addClass('active');
+    }
+    if ($('.addresses').hasClass('active')) {
+        menuAddressCafeOpen = true;
+        $('.addresses').removeClass('active');
+        $('.opn').addClass('active');
+    }
     $('.addressMenuProvider').addClass('active');
     $('.infoOwner').addClass('hidden');
 })
@@ -115,6 +138,22 @@ $('.addAnAddress').click(function(){
     $('.personInfo').removeClass('hidden');
 })
 $('.closeIt').click(function(){
+    if (menuItemOpen) {
+        $('.orders').addClass('active');
+        $('.cls').removeClass('active');
+        $('.itemEditForm').removeClass('active');
+        menuItemOpen = false;
+        $('.infoOwner').removeClass('move');
+        $('.infoOwner').removeClass('hidden');
+    }
+    if (menuAddressCafeOpen) {
+        $('.addresses').addClass('active');
+        $('.opn').removeClass('active');
+        $('.itemEditForm').removeClass('active');
+        menuAddressCafeOpen = false;
+        $('.infoOwner').removeClass('move');
+        $('.infoOwner').removeClass('hidden');
+    }
     if ($('.addressMenuProvider').hasClass('active')) {
         $('.addressMenuProvider').removeClass('active');
         $('.infoOwner').removeClass('move');
