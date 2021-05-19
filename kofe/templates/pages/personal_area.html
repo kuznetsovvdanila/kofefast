@@ -112,7 +112,7 @@
                                 </div>
 
                                 {% if adr.chosen %}
-                                <div class="flex" style="flex-direction: column; margin-left: 0; margin-right: 0;">
+                                <div class="flex" style="flex-direction: column; margin: 0 12px 0 0 !important; margin-right: 0;">
                                     <form action="" method="POST" class="inside flex">
                                         <input name="action_type" type="text" value="delete_prefer_address" style="display: none;">
                                         <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
@@ -310,8 +310,8 @@
                                     </div>
                                     <div class="flex" style="flex-direction: column; margin-left: 0;">
                                         <form action="" method="POST" class="inside">
-                                            <input name="action_type" type="text" value="delete_an_address" style="display: none;">
-                                            <input name="delete_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                            <input name="action_type" type="text" value="delete_an_address_provider" style="display: none;">
+                                            <input name="delete_adr_id" type="text" value="{{ adr.id }}" style="display: none;">
                                             {% csrf_token %}
                                             <input type="submit" style="width: auto !important; padding: 0 20px 0 20px;" class="deleteAnAddress" value="Удалить">
                                         </form>
@@ -320,19 +320,19 @@
                                 <div class="afterAddressMenu">
                                     <div class="flex" style="margin-left: 0;">
                                         <form action="" method="POST" class="inside">
-                                            <input name="action_type" type="text" value="delete_an_address" style="display: none;">
-                                            <input name="delete_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                            <input name="action_type" type="text" value="delete_an_address_provider" style="display: none;">
+                                            <input name="delete_adr_id" type="text" value="{{ adr.id }}" style="display: none;">
                                             {% csrf_token %}
                                             <input type="submit" class="deleteAnAddress" value="Удалить">
                                         </form>
                                     </div>
                                 </div>
                             {% endfor %}
-                        <div class="addAnAddress">
+                        <div class="addAnAddressProvider">
                             <b>+</b>
                         </div>
                         {% else %}
-                            <div class="address flex btw vCenter addressOpen">
+                            <div class="address flex btw vCenter addCafeAddress">
                                 <div  class="addressName" style="max-width: 70%;">
                                     Добавьте адрес
                                 </div>
@@ -407,18 +407,16 @@
                         <span class="frm"><b>Адрес</b></span>
                         <span class="closeIt" style=""><b>x</b></span>
                     </div>
-                    <input name="action_type" type="text" value="add_address" style="display: none;">
-                    <input type="text" name="name" maxlength="150" required="" id="name" placeholder="Название адреса">
+                    <input name="action_type" type="text" value="add_address_provider" style="display: none;">
                     <input type="text" name="city" maxlength="150" required="" id="city" placeholder="Город">
                     <input type="text" name="street" maxlength="150" required="" id="street" placeholder="Улица">
-                    <div class="inARow flex">
-                        <input type="text" name="house" maxlength="150" required="" id="house" placeholder="Дом">
-                        <input type="text" name="building" maxlength="150" id="building" placeholder="Корпус">
+                    <input type="text" name="house" maxlength="150" required="" id="house" placeholder="Дом">
+                    <div style="margin: 12px 0 5px 0; font-size: 1.7em;">
+                        Далее - при наличии
                     </div>
-                    <input type="text" name="entrance" maxlength="150" id="entrance" placeholder="Подъезд">
                     <div class="inARow flex">
-                        <input type="text" name="floor" maxlength="150" id="floor" placeholder="Этаж">
-                        <input type="text" name="flat" maxlength="150" id="flat" placeholder="Квартира">
+                        <input type="text" name="building" maxlength="150" id="building" placeholder="Корпус">
+                        <input type="text" name="entrance" maxlength="150" id="entrance" placeholder="Подъезд">
                     </div>
 
                     {% csrf_token %}
@@ -435,7 +433,7 @@
                     <input name="itemId" type="text" value="0" style="display: none;">
                     <input type="text" name="item_name" maxlength="150" id="item_name" placeholder="Название" value="" required>
                     <span class="flex vCenter" style="margin: 20px 0 10px 0; min-width: 100%; justify-content: space-around; font-size: 1.5em;">
-                        <span class="flex vCenter"><input type="radio" id="food" name="type" value="e">Еда</span>
+                        <span class="flex vCenter"><input type="radio" id="food" name="type" value="e">Блюдо</span>
                         <span class="flex vCenter"><input type="radio" id="drink" name="type" value="d" checked>Напиток</span>
                     </span>
                     <textarea id="description" name="description" placeholder="Описание" required></textarea>

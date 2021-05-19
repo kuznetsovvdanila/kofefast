@@ -57,6 +57,12 @@ $('.addAnItem').click(function(){
     }
     $('.infoOwner').addClass('hidden');
 })
+$('.addCafeAddress').click(function(){
+    $('.addressMenuProvider').addClass('active');
+    $('.infoOwner').addClass('hidden');
+    $('.itemEditForm').removeClass('active');
+    $('.edit').removeClass('active');
+})
 $('.ord').click(function(){
     $('.orders').toggleClass('active');
     $('.cls').toggleClass('active');
@@ -83,6 +89,10 @@ $('.addressOpen').click(function(){
     $('.infoOwner').addClass('hidden');
 
 })
+$('.addAnAddressProvider').click(function(){
+    $('.addressMenuProvider').addClass('active');
+    $('.infoOwner').addClass('hidden');
+})
 $('.addAnAddress').click(function(){
     if ($('.info').hasClass('hidden')) {
         hdn = 'infoOwner';
@@ -105,6 +115,11 @@ $('.addAnAddress').click(function(){
     $('.personInfo').removeClass('hidden');
 })
 $('.closeIt').click(function(){
+    if ($('.addressMenuProvider').hasClass('active')) {
+        $('.addressMenuProvider').removeClass('active');
+        $('.infoOwner').removeClass('move');
+        $('.infoOwner').removeClass('hidden');
+    }
     if ($('.itemEditForm').hasClass('active')) {
         $('.infoOwner').removeClass('move');
         $('.infoOwner').removeClass('hidden');

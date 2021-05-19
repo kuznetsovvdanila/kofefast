@@ -12,7 +12,7 @@ from django.urls import reverse
 
 from kofe.additional_func import collect_relevant_coffeeshops
 from kofe.forms import RegistrationForm
-from kofe.models import AddressUser, ItemsSlotBasket, Item, Account, Order, ItemsSlotOrder
+from kofe.models import AddressUser, ItemsSlotBasket, Item, Account, Order, ItemsSlotOrder, AddressCafe
 
 from PIL import Image
 
@@ -253,3 +253,20 @@ def change_item(request):
             t_result = File(t_io, name=request.user.profile_picture.name)
             item.preview = t_result
             item.save()
+
+
+def add_address_provider(request):
+    current_address = AddressCafe(owner=request.user.owned_cafe.all()[0], city=request.POST.get('city'),
+                                  street=request.POST.get('street'), house=request.POST.get('house'))
+
+    if request.POST.get('building'):
+        current_address.building = request.POST.get('building')
+
+    if request.POST.get('entrance'):
+        current_address.entrance = request.POST.get('entrance')
+
+    current_address.save()
+
+
+def delete_an_address_provider(request):
+    AddressCafe.objects.all().filter(id=request.POST.get('delete_adr_id')).delete()
