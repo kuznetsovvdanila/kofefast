@@ -472,6 +472,9 @@ input:checked {
 .editSubmit {
     bottom: 97px;
 }
+input[type="submit"] {
+    bottom: 80px;
+}
 .input_file {
     position: relative !important;
     margin: 0 0 10px 0 !important;
@@ -486,7 +489,6 @@ input:checked {
 }
 .fake_file {
     position: relative;
-    height: 67px;
     bottom: 78px;
     width: 100%;
 }
@@ -527,7 +529,6 @@ input[type='file'] {
 }
 
 @media screen and (max-width: 980px) {
-
     .itemEditForm form input[type="radio"] {
         width: 70px;
         height: 70px;
@@ -603,6 +604,9 @@ input[type='file'] {
     }
     input[type='file'] {
         background-color: #eeeeee;
+    }
+    input[type="submit"] {
+        bottom: 200px;
     }
     .topMenu {
         width: 100%;
