@@ -11,11 +11,14 @@
         <link rel="stylesheet" href="{% static 'css/PA_styles.css' %}">
         <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/png">
         <style>
-            .addressMenu.active {
-                {% if user.is_cafe_owner %}
-                    top: 2170px;
-                {% endif %}
+            @media screen and (max-width: 980px) {
+                .addressMenu.active {
+                    {% if user.is_cafe_owner %}
+                        top: 2170px;
+                    {% endif %}
+                }
             }
+
         </style>
     </head>
     <body>
@@ -189,7 +192,7 @@
                     </div>
                     {% else %}
                         <div class="address flex btw vCenter addressOpen">
-                            <div  class="addressName" style="max-width: 70%;">
+                            <div  class="addressName addressOpen" style="max-width: 70%;">
                                 Добавьте адрес
                             </div>
                             <div class="makeAnOrder">

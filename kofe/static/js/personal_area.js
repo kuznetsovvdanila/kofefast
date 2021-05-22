@@ -87,11 +87,9 @@ $('.adr').click(function(){
 $('.addressOpen').click(function(){
     if ($('.info').hasClass('hidden')) {
         hdn = 'infoOwner';
-        console.log('infoOwner');
     }
     else if ($('.infoOwner').hasClass('hidden')) {
         hdn = 'info';
-        console.log('info');
     }
     else {
         hdn = 'info';
