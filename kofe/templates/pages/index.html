@@ -261,23 +261,29 @@
             <div class="mainAuth flex">
                 {% if not chosen_items %}
                     <div class="hd">
-                        Выберите кофейню:
+                        {% if coffeeshops %}
+                            Выберите кофейню:
+                        {% else %}
+                            Нет доступных кофеен
+                        {% endif %}
                     </div>
-                    <div class="categories flex">
-                        <div class="provider del active">
-                            Любая
-                        </div>
-                        {% for provider in providers %}
-                            <div id="{{ provider.id }}" class="provider flex vCenter btw">
-                                <div>
-                                    {{ provider.name }}
-                                </div>
-                                <div class="mapPointImage">
-
-                                </div>
+                    {% if coffeeshops %}
+                        <div class="categories flex">
+                            <div class="provider del active">
+                                Любая
                             </div>
-                        {% endfor %}
-                    </div>
+                            {% for provider in providers %}
+                                <div id="{{ provider.id }}" class="provider flex vCenter btw">
+                                    <div>
+                                        {{ provider.name }}
+                                    </div>
+                                    <div class="mapPointImage">
+
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 {% else %}
                     <div style="flex-wrap: wrap;" class="hd flex clmn">
                         <div>
@@ -359,6 +365,7 @@
                 {% endif %}
                 <hr class="line">
                 <div class="list">
+                    {% if coffeeshops %}
                     <div class="coffee flex active">
                         <div class="hd" style="width: 100%; text-align: center;">
                             Напитки
@@ -387,6 +394,7 @@
                                         <div>
                                             <form action="" method="POST">
                                                 <input name="action_type" type="text" value="add {{ drink.id }}" style="display: none;">
+                                                <input class="user_y" type="text" name="user_y" value="" style="display: none;">
                                                 {% csrf_token %}
                                                 <input type="submit" value="+" class="pointer">
                                             </form>
@@ -397,6 +405,7 @@
                                         <div>
                                             <form action="" method="POST">
                                                 <input name="action_type" type="text" value="reduce {{ drink.id }}" style="display: none;">
+                                                <input class="user_y" type="text" name="user_y" value="" style="display: none;">
                                                 {% csrf_token %}
                                                 <input type="submit" value="-" class="pointer">
                                             </form>
@@ -450,6 +459,11 @@
                             </div>
                         {% endfor %}
                     </div>
+                    {% else %}
+                        <div class="hd" style="text-align: left;">
+                            <p>В радиусе 1 км от вас нет ни одной кофейни(</p> <p>Проверьте выбранный Вами адрес</p>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
 
@@ -548,24 +562,14 @@
                     {% endif %}
                 </div>
             </div>
-<!--        <div class="addressMenu flex">-->
-<!--            <form action="" method="POST" class="flex">-->
-<!--                <div class="flex btw">-->
-<!--                    <span class="frm"><b>Адрес</b></span>-->
-<!--                    <span class="closeIt" style=""><b>x</b></span>-->
-<!--                </div>-->
-<!--                <input name="action_type" type="text" value="add_address" style="display: none;">-->
-<!--                <input type="text" name="name" maxlength="150" required="" id="name" placeholder="Название адреса">-->
-<!--                <input type="text" name="city" maxlength="150" required="" id="city" placeholder="Город">-->
-<!--                <input type="text" name="street" maxlength="150" required="" id="street" placeholder="Улица">-->
-<!--                <input type="text" name="house" maxlength="150" required="" id="house" placeholder="Дом, корпус">-->
-<!--                <input type="text" name="entrance" maxlength="150" required="" id="entrance" placeholder="Подъезд (при наличии)">-->
-<!--                {% csrf_token %}-->
-<!--                <input type="submit" value="Добавить" class="pointer">-->
-<!--            </form>-->
-<!--        </div>-->
+
 <!--            <div id="map"></div>-->
         {% endif %}
+        <script>
+            console.log({{ user.y }});
+            window.scrollTo(0, {{ user.y }});
+            console.log({{ user.y }});
+        </script>
         <div class="mapForProvider">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2692.396739189686!2d37.70401737743941!3d55.64590975658826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTXCsDM4JzQ1LjMiTiAzN8KwNDInMTQuNSJF!5e1!3m2!1sru!2sru!4v1618988358075!5m2!1sru!2sru" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy">
                                                                                                 55.645909, 37.704017

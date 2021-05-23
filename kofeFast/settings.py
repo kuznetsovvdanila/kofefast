@@ -33,7 +33,7 @@ SECRET_KEY = '@l_!yi*-b*sb5rt&2huzyqgn4+1i$!ggdunwun#4_04o_3bq@h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['kofefast.ru', '127.0.0.1']
 
 
 # Application definition

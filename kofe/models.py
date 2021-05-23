@@ -190,7 +190,6 @@ class Basket(models.Model):
         cost = 0
 
         for i in self.chosen_items.all():
-            print(i.good.price, i.count)
             cost += i.good.price * i.count
 
         return cost
@@ -244,6 +243,7 @@ class Account(AbstractBaseUser):
     is_staff				= models.BooleanField(default=False)
     is_cafe_owner		    = models.BooleanField(default=False)
     is_superuser			= models.BooleanField(default=False)
+    y                       = models.IntegerField('Прокрутка', default=0)
 
     profile_picture = models.ImageField(null=True, blank=True, upload_to="profile_pictures", default=None)
 

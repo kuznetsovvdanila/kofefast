@@ -59,6 +59,8 @@ def logout_user(request):
 
 
 def set_prefer_address(request):
+    request.user.y = 0
+    request.user.save()
     if request.user.is_authenticated:
         for i in request.user.chosen_address.all():
             request.user.chosen_address.remove(i)
@@ -74,6 +76,9 @@ def change_basket(request, input_command):
     if len(input_command) == 2:
         f = ItemsSlotBasket.objects.all().filter(good=Item.objects.all().filter(id=int(input_command[1]))[0], basket_connection=request.user.basket_set.all()[0])
         if f:
+            if request.POST.get('user_y'):
+                request.user.y = int(request.POST.get('user_y'))
+            request.user.save()
             chosen_slot = f[0]
             if input_command[0] == 'add':
                 chosen_slot.count += 1
@@ -94,16 +99,22 @@ def change_basket(request, input_command):
 
 
 def clear_the_basket(request):
+    request.user.y = 0
+    request.user.save()
     ItemsSlotBasket.objects.all().delete()
 
 
 def delete_prefer_address(request):
+    request.user.y = 0
+    request.user.save()
     for i in request.user.chosen_address.all():
         request.user.chosen_address.remove(i)
     request.user.save()
 
 
 def add_address(request):
+    request.user.y = 0
+    request.user.save()
     adr = AddressUser(owner=request.user, name=request.POST.get('name'), city=request.POST.get('city'),
                       street=request.POST.get('street'),
                       house=request.POST.get('house'))
@@ -120,6 +131,8 @@ def add_address(request):
 
 
 def user_changing_info(request):
+    request.user.y = 0
+    request.user.save()
     def remove_transparency(im, bg_colour=(255, 255, 255)):
         if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
             alpha = im.convert('RGBA').split()[-1]
@@ -165,11 +178,15 @@ def user_changing_info(request):
 
 
 def delete_an_address(request):
+    request.user.y = 0
+    request.user.save()
     AddressUser.objects.all().filter(id=request.POST.get('delete_adr_id')).delete()
 
 
 def make_an_order(request):
     user = request.user
+    user.y = 0
+    user.save()
     provider = user.basket_set.all()[0].chosen_items.all()[0].good.provided
     current_order = Order(customer=user,
                           comment=request.POST.get('comment'))
@@ -197,10 +214,14 @@ def make_an_order(request):
 
 
 def delete_item(request):
+    request.user.y = 0
+    request.user.save()
     Item.objects.all().filter(id=request.POST.get('delete_item_id')).delete()
 
 
 def change_item(request):
+    request.user.y = 0
+    request.user.save()
     def remove_transparency(im, bg_colour=(255, 255, 255)):
         if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
             alpha = im.convert('RGBA').split()[-1]
@@ -256,6 +277,8 @@ def change_item(request):
 
 
 def add_address_provider(request):
+    request.user.y = 0
+    request.user.save()
     current_address = AddressCafe(owner=request.user.owned_cafe.all()[0], city=request.POST.get('city'),
                                   street=request.POST.get('street'), house=request.POST.get('house'))
 
