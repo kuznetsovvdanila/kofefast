@@ -1,3 +1,10 @@
+$('.addToBasket').click(function(){
+    var elements = document.getElementsByClassName('user_y');
+    for (var i = 0; i < elements.length; i++) {
+        elements[i] = 0;
+        elements[i].value = window.pageYOffset;
+    }
+})
 $('.arrowMobile').click(function(){
     $('.arrow').toggleClass('active');
     $('.arrowMobile').toggleClass('active');
