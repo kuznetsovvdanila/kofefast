@@ -440,6 +440,7 @@
                                         <div>
                                             <form action="" method="POST">
                                                 <input name="action_type" type="text" value="add {{ dish.id }}" style="display: none;">
+                                                <input class="user_y" type="text" name="user_y" value="" style="display: none;">
                                                 {% csrf_token %}
                                                 <input type="submit" value="+" class="pointer">
                                             </form>
@@ -450,6 +451,7 @@
                                         <div>
                                             <form action="" method="POST">
                                                 <input name="action_type" type="text" value="reduce {{ dish.id }}" style="display: none;">
+                                                <input class="user_y" type="text" name="user_y" value="" style="display: none;">
                                                 {% csrf_token %}
                                                 <input type="submit" value="-" class="pointer">
                                             </form>
