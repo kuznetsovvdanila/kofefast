@@ -22,20 +22,19 @@ from kofe.forms import RegistrationForm
 from kofe.models import Provider, AddressUser, AddressCafe, ItemsSlotBasket, Basket, Item, Account
 
 context = {}
+registration_error = False
+email_exists = False
+number_exists = False
+dif_passwords = False
+weak_password = False
 
+login_error = False
 
 @check_admin_link
 @add_user_buc
 @check_POST
 def index_page(request):
-    global context
-    registration_error = False
-    email_exists = False
-    number_exists = False
-    dif_passwords = False
-    weak_password = False
-
-    login_error = False
+    global context, login_error, registration_error, email_exists, number_exists, dif_passwords, weak_password
 
     if request.method == 'POST':
         if request.POST.get('action_type') == 'registr':
@@ -49,7 +48,6 @@ def index_page(request):
             # проверка пароля на сложность #
             res = [re.search(r"[a-z]", password1), re.search(r"[A-Z]", password1), re.search(r"[0-9]", password1),
                    re.search(r"\W", password1)]
-            print(res)
 
             if Account.objects.filter(email=email).exists():
                 email_exists = True
@@ -92,6 +90,7 @@ def index_page(request):
 
         elif request.POST.get('action_type') == 'authen':
             account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
+            login_error = True
             if account:
                 login_error = False
                 registration_error = False
