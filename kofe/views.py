@@ -16,7 +16,7 @@ import numpy as np
 from geopy import Nominatim
 
 from kofe.additional_func import calculate_color, collect_items, collect_addresses, collect_relevant_coffeeshops, \
-    collect_orders
+    collect_orders, collect_relevant_addresses
 from kofe.decorators import add_user_buc, check_POST, check_proms, check_admin_link
 from kofe.forms import RegistrationForm
 from kofe.models import Provider, AddressUser, AddressCafe, ItemsSlotBasket, Basket, Item, Account
@@ -120,6 +120,14 @@ def index_page(request):
         coffeeshops, cafe_addresses = collect_relevant_coffeeshops(request, adrs_user)
 
     if request.user.is_authenticated:
+        if AddressUser.objects.all().filter(owner=request.user):
+            if request.user.user_basket.all()[0].chosen_items.all():
+                coffeeshop = request.user.user_basket.all()[0].chosen_items.all()[0].good.provided
+                user_addresses = AddressUser.objects.all().filter(owner=request.user)
+                chosen_one = request.user.chosen_address.all()[0] if request.user.chosen_address.all() else None
+                addresses = collect_relevant_addresses(request, user_addresses, coffeeshop, cafe_addresses, chosen_one)
+
+    if request.user.is_authenticated:
         if request.user.chosen_address:
             if request.user.chosen_address.all():
                 flagCA = True
@@ -140,6 +148,7 @@ def index_page(request):
         'chosen_items': chosen_items,
         'prvdr': chosen_items[0].good.provided if chosen_items else None,
         'basket': request.user.basket_set.all()[0] if request.user.is_authenticated and ItemsSlotBasket.objects.all() else None,
+        'chosen_address_raw': request.user.chosen_address.all() if request.user.chosen_address.all() else None,
         'chosen_address': CA if flagCA else None,
         'email_exists': email_exists,
         'number_exists': number_exists,

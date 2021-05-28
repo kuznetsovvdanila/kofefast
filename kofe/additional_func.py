@@ -10,6 +10,8 @@ from kofe.models import AddressUser, Provider, ItemsSlotBasket, AddressCafe, Ord
 from geopy import Nominatim
 from geopy import distance
 
+import time
+
 
 def collect_addresses(request):
     addresses = []
@@ -37,18 +39,61 @@ def collect_relevant_coffeeshops(request, user_adrs):
         coffeeshops = []
         cafe_addresses = []
         user_adrs = user_adrs.all()[0]
-        user_location = geolocator.geocode(user_adrs)
+        try:
+            user_location = geolocator.geocode(user_adrs)
+        except:
+            time.sleep(1)
+            user_location = geolocator.geocode(user_adrs)
         if request.user.is_authenticated:
             if user_location:
                 for adrs in AddressCafe.objects.all():
                     coffeeshop_address = str(adrs.city) + ', ' + str(adrs.street) + ', ' + str(adrs.house)
-                    coffeeshop_location = geolocator.geocode(coffeeshop_address)
+                    try:
+                        coffeeshop_location = geolocator.geocode(coffeeshop_address)
+                    except:
+                        time.sleep(1)
+                        coffeeshop_location = geolocator.geocode(coffeeshop_address)
                     if distance.distance((user_location.longitude, user_location.latitude), (coffeeshop_location.longitude, coffeeshop_location.latitude)).m < 1000:
                         coffeeshops.append(adrs.owner)
                         cafe_addresses.append(adrs)
             else:
                 cafe_addresses = coffeeshops
     return coffeeshops, cafe_addresses
+
+
+def collect_relevant_addresses(request, user_addresses, provider, cafe_addresses, chosen_one):
+    relevant_addresses = []
+    coffeeshop = provider
+    addresses = []
+    if chosen_one:
+        addresses.append(chosen_one)
+    geolocator = Nominatim(user_agent="kofefast")
+    for cafe_address in cafe_addresses:
+        coffeeshop_address = str(cafe_address.city) + ', ' + str(cafe_address.street) + ', ' + str(cafe_address.house)
+        try:
+            coffeeshop_location = geolocator.geocode(coffeeshop_address)
+        except:
+            time.sleep(1)
+            coffeeshop_location = geolocator.geocode(coffeeshop_address)
+        for user_address in user_addresses:
+            if chosen_one:
+                if str(user_address.city) + str(user_address.street) + str(user_address.house) != str(chosen_one.city) + str(chosen_one.street) + str(chosen_one.house):
+                    try:
+                        user_location = geolocator.geocode(user_address)
+                    except:
+                        time.sleep(1)
+                        user_location = geolocator.geocode(user_address)
+                    if distance.distance((user_location.longitude, user_location.latitude),
+                                         (coffeeshop_location.longitude, coffeeshop_location.latitude)).m < 1000:
+                        addresses.append(user_address)
+            else:
+                print('aeeeeeeeeeeeeeeeeeeeeee')
+                user_location = geolocator.geocode(user_address)
+                if distance.distance((user_location.longitude, user_location.latitude),
+                                     (coffeeshop_location.longitude, coffeeshop_location.latitude)).m < 1000:
+                    addresses.append(user_address)
+    print(addresses)
+    return addresses
 
 
 def collect_items(request):
