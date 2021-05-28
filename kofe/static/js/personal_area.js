@@ -4,42 +4,23 @@ var menuItemOpen = false;
 var menuAddressCafeOpen = false;
 
 $('.ownerInterface').click(function(){
-    $('.ownerInterface').toggleClass('active');
-
-    if ($('.addresses').hasClass('active')) {
-        $('.opn').addClass('active');
-        $('.addresses').removeClass('active');
-    }
-    if ($('.orders').hasClass('active')) {
-        $('.cls').addClass('active');
-        $('.orders').removeClass('active');
-    }
-    if ($('.addressMenu').hasClass('active')) {
-        if (hdn == 'infoOwner') {
-            $('.infoOwner').addClass('hidden');
-            $('.info').removeClass('hidden');
-        }
-        else {
-            $('.infoOwner').removeClass('hidden');
-            $('.info').addClass('hidden');
-        }
-    }
-    else if ($('.edit').hasClass('active')) {
-        if (hdnChng == 'infoOwner') {
-            $('.infoOwner').addClass('hidden');
-            $('.info').removeClass('hidden');
-        }
-        else {
-            $('.infoOwner').removeClass('hidden');
-            $('.info').addClass('hidden');
-        }
+    if ($('.ownerInterface').hasClass('active')) {
+        $('.addressMenuProvider').removeClass('active');
+        $('.itemEditForm').removeClass('active');
+        $('.info').removeClass('hidden');
+        $('.infoOwner').addClass('hidden');
     }
     else {
-        $('.info').toggleClass('hidden');
-        $('.infoOwner').toggleClass('hidden');
+        $('.edit').removeClass('active');
+        $('.addressMenu').removeClass('active');
+        $('.infoOwner').removeClass('hidden');
+        $('.info').addClass('hidden');
     }
-    $('.edit').removeClass('active');
-    $('.addressMenu').removeClass('active');
+    $('.opn').addClass('active');
+    $('.addresses').removeClass('active');
+    $('.cls').addClass('active');
+    $('.orders').removeClass('active');
+    $('.ownerInterface').toggleClass('active');
 })
 $('.itemEdit').click(function(){
     if ($('.orders').hasClass('active')) {
@@ -88,12 +69,10 @@ $('.addressOpen').click(function(){
     if ($('.info').hasClass('hidden')) {
         hdn = 'infoOwner';
     }
-    else if ($('.infoOwner').hasClass('hidden')) {
-        hdn = 'info';
-    }
     else {
         hdn = 'info';
     }
+    console.log('открыть', hdn);
     $('.edit').removeClass('active');
     $('.addressMenu').addClass('active');
     $('.info').addClass('hidden');

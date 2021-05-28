@@ -281,6 +281,9 @@ textarea {
 .lineMobile {
     display: none;
 }
+.emptyList {
+    font-size: 2em;
+}
 .list {
     padding: 0 0 0 0 !important;
     width: 85%;
@@ -659,7 +662,9 @@ option:not(:checked) {
 }
 
 @media screen and (max-width: 1000px) {
-
+    .emptyList {
+        font-size: 4.5em;
+    }
     .mobileInput {
         display: block;
     }

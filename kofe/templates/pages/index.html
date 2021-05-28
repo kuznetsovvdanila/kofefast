@@ -462,8 +462,8 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                        <div class="hd" style="text-align: left;">
-                            <p>В радиусе 1 км от вас нет ни одной кофейни(</p> <p>Проверьте выбранный Вами адрес</p>
+                        <div class="emptyList" style="text-align: left;">
+                            <p>В радиусе 1 км от Вас нет ни одной кофейни. Скорее всего, нас пока нет в этом районе.</p> <p>Проверьте выбранный Вами адрес</p>
                         </div>
                     {% endif %}
                 </div>
@@ -528,31 +528,31 @@
                                 </div>
                             </div>
                         {% endif %}
-                        {% for adr in addresses %}
-                            {% if not adr.chosen %}
-                            <div class="itemAddress flex btw vCenter">
-                                <div style="font-size: 3.5em; min-width: 95%; padding: 0 0 0 35px;">
-                                    {{ adr.name }} ({{ adr.street }} {{ adr.house }})
+                            {% for adr in addresses %}
+                                {% if not adr.chosen %}
+                                <div class="itemAddress flex btw vCenter">
+                                    <div style="font-size: 3.5em; min-width: 95%; padding: 0 0 0 35px;">
+                                        {{ adr.name }} ({{ adr.street }} {{ adr.house }})
+                                    </div>
+                                    <div class="rltv">
+                                        <form action="" method="POST" class="inside flex">
+                                            <input name="action_type" type="text" value="prefer_address" style="display: none;">
+                                            <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
+                                            {% csrf_token %}
+                                            <input type="submit" value="Выбрать" class="chooseAnAddressMobile pointer">
+                                        </form>
+                                    </div>
                                 </div>
-                                <div class="rltv">
-                                    <form action="" method="POST" class="inside flex">
-                                        <input name="action_type" type="text" value="prefer_address" style="display: none;">
-                                        <input name="prefered_adr_id" type="text" value="{{adr.id}}" style="display: none;">
-                                        {% csrf_token %}
-                                        <input type="submit" value="Выбрать" class="chooseAnAddressMobile pointer">
-                                    </form>
-                                </div>
+                                {% endif %}
+                            {% endfor %}
+                            <div>
+                                <a href="{% url 'personal_area' %}">
+                                    Добавить адрес
+                                </a>
                             </div>
-                            {% endif %}
-                        {% endfor %}
-                        <div>
-                            <a href="{% url 'personal_area' %}">
-                                Добавить адрес
-                            </a>
                         </div>
-                    </div>
                     {% else %}
-                        <div style="border-left: 15px solid #deb887; padding: 0 0 0 20px;" class="itemAddressName">
+                        <div style="font-size: 3.5em; border-left: 15px solid #deb887; padding: 0 0 0 20px;" class="itemAddressName">
                             Пока нет ни одного адреса
                         </div>
                         <div>

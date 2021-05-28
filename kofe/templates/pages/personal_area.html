@@ -29,7 +29,7 @@
             {% if request.user.is_authenticated %}
                 <div class="topMenuNotMobile flex btw" style="align-items: center;{% if not user.is_cafe_owner %} width: 225px; {% else %} width: 450px; {% endif %}border-radius: 50px; padding: 0; height: 60px;">
                     {% if user.is_cafe_owner %}
-                        <div href="" class="flex" style="padding: 0 20px 0 20px;  align-items: center; color: #eeeeee; height: auto; width: 160px;">
+                        <div class="flex" style="padding: 0 20px 0 20px;  align-items: center; color: #eeeeee; height: auto; width: 160px;">
                             <div class="ownerInterface flex pointer">
                                 <div>
 
@@ -192,7 +192,7 @@
                     </div>
                     {% else %}
                         <div class="address flex btw vCenter addressOpen">
-                            <div  class="addressName addressOpen" style="max-width: 70%;">
+                            <div  class="addressName" style="max-width: 70%;">
                                 Добавьте адрес
                             </div>
                             <div class="makeAnOrder">
