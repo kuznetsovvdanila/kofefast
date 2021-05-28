@@ -87,16 +87,14 @@ def collect_relevant_addresses(request, user_addresses, provider, cafe_addresses
                                          (coffeeshop_location.longitude, coffeeshop_location.latitude)).m < 1000:
                         addresses.append(user_address)
             else:
-                print('aeeeeeeeeeeeeeeeeeeeeee')
                 user_location = geolocator.geocode(user_address)
                 if distance.distance((user_location.longitude, user_location.latitude),
                                      (coffeeshop_location.longitude, coffeeshop_location.latitude)).m < 1000:
                     addresses.append(user_address)
-    print(addresses)
     return addresses
 
 
-def collect_items(request):
+def collect_items(request, chosen_items):
     providers = Provider.objects.all()
     drinkable = []
     eatable = []
@@ -117,10 +115,17 @@ def collect_items(request):
             item.addons = item.addons_set.all()
             if item.not_has_color:
                 calculate_color(item)
-            if item.type == 'd':
-                drinkable.append(item)
-            if item.type == 'e':
-                eatable.append(item)
+            if chosen_items:
+                if item.provided == chosen_items[0].good.provided:
+                    if item.type == 'd':
+                        drinkable.append(item)
+                    if item.type == 'e':
+                        eatable.append(item)
+            else:
+                if item.type == 'd':
+                    drinkable.append(item)
+                if item.type == 'e':
+                    eatable.append(item)
 
     return drinkable, eatable
 

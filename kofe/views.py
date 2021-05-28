@@ -100,16 +100,21 @@ def index_page(request):
 
             return redirect('index')
 
-    if request.user.is_authenticated:
-        drinkable, eatable = collect_items(request)
+    chosen_items = []
     addresses = collect_addresses(request)
     coffeeshops = Provider.objects.all()
     cafe_addresses = AddressCafe.objects.all()
-    chosen_items = []
-    CA = None
-
+    chosen_address_raw = []
+    production = []
     flagCoffeeshops = False
     flagCA = False
+    CA = None
+
+    if request.user.is_authenticated:
+        if ItemsSlotBasket.objects.all():
+            for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
+                chosen_items.append(item)
+        drinkable, eatable = collect_items(request, chosen_items)
 
     if request.user.is_authenticated:
         if request.user.chosen_address:
@@ -125,18 +130,19 @@ def index_page(request):
                 coffeeshop = request.user.user_basket.all()[0].chosen_items.all()[0].good.provided
                 user_addresses = AddressUser.objects.all().filter(owner=request.user)
                 chosen_one = request.user.chosen_address.all()[0] if request.user.chosen_address.all() else None
-                addresses = collect_relevant_addresses(request, user_addresses, coffeeshop, cafe_addresses, chosen_one)
+                addresses = collect_relevant_addresses(request, user_addresses, coffeeshop, AddressCafe.objects.all().filter(owner=coffeeshop), chosen_one)
 
     if request.user.is_authenticated:
         if request.user.chosen_address:
             if request.user.chosen_address.all():
                 flagCA = True
-        if ItemsSlotBasket.objects.all():
-            for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
-                chosen_items.append(item)
 
     if flagCA:
         CA = request.user.chosen_address.all()[0]
+
+    if request.user.is_authenticated:
+        if request.user.chosen_address.all():
+            chosen_address_raw = request.user.chosen_address.all()
 
     context = {
         'addresses': addresses if request.user.is_authenticated else None,
@@ -148,7 +154,7 @@ def index_page(request):
         'chosen_items': chosen_items,
         'prvdr': chosen_items[0].good.provided if chosen_items else None,
         'basket': request.user.basket_set.all()[0] if request.user.is_authenticated and ItemsSlotBasket.objects.all() else None,
-        'chosen_address_raw': request.user.chosen_address.all() if request.user.chosen_address.all() else None,
+        'chosen_address_raw': chosen_address_raw,
         'chosen_address': CA if flagCA else None,
         'email_exists': email_exists,
         'number_exists': number_exists,
