@@ -1,57 +1,23 @@
+import smtplib
+from email.header import Header
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from io import BytesIO
 
-import re
-from random import choice
-
-from django.contrib import messages
+from PIL import Image
 from django.contrib.auth import login, authenticate
 from django.core.files import File
-from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
-from django.urls import reverse
+from environs import Env
 
 from kofe.additional_func import collect_relevant_coffeeshops
-from kofe.forms import RegistrationForm
-from kofe.models import AddressUser, ItemsSlotBasket, Item, Account, Order, ItemsSlotOrder, AddressCafe
-
-from PIL import Image
+from kofe.models import AddressUser, ItemsSlotBasket, Item, Order, ItemsSlotOrder, AddressCafe
 
 
 def login_user(request):
     account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
     if account:
         login(request, account)
-
-
-def registration_user(request):
-    registration_error = email_exists = number_exists = dif_passwords = weak_password = False
-    request.POST = request.POST.copy()
-    form = RegistrationForm(request.POST)
-    email = request.POST.get('email')
-    phone_number = request.POST.get('phone_number')
-    password1 = request.POST.get('password1')
-    password2 = request.POST.get('password2')
-
-    # проверка пароля на сложность #
-    res = [re.search(r"[a-z]", password1), re.search(r"[A-Z]", password1), re.search(r"[0-9]", password1), re.search(r"\W", password1)]
-
-    if Account.objects.filter(email=email).exists():
-        email_exists = True
-    if Account.objects.filter(phone_number=phone_number).exists():
-        number_exists = True
-    if password1 != password2:
-        dif_passwords = True
-    if not all(res):
-        weak_password = True
-
-    if form.is_valid():
-        form.save()
-        email = form.cleaned_data.get('email')
-        raw_password = form.cleaned_data.get('password1')
-        phone_number = form.cleaned_data.get('phone_number')
-        account = authenticate(email=email, password=raw_password, phone_number=phone_number)
-        login(request, account)
-
 
 
 def logout_user(request):
@@ -68,13 +34,17 @@ def set_prefer_address(request):
             if request.POST.get('prefered_adr_id') == 'addAnAddress':
                 return redirect('personal_area')
             else:
-                request.user.chosen_address.add(AddressUser.objects.all().filter(id=request.POST.get('prefered_adr_id'))[0])
+                request.user.chosen_address.add(AddressUser.objects.all().
+                                                filter(id=request.POST.get('prefered_adr_id'))[0])
                 request.user.save()
 
 
 def change_basket(request, input_command):
     if len(input_command) == 2:
-        f = ItemsSlotBasket.objects.all().filter(good=Item.objects.all().filter(id=int(input_command[1]))[0], basket_connection=request.user.basket_set.all()[0])
+        f = ItemsSlotBasket.objects.all().filter(good=Item.objects.all().
+                                                 filter(id=int(input_command[1]))[0],
+                                                 basket_connection=request.user.basket_set.all()[0])
+
         if request.POST.get('user_y'):
             request.user.y = int(request.POST.get('user_y'))
             request.user.save()
@@ -133,6 +103,7 @@ def add_address(request):
 def user_changing_info(request):
     request.user.y = 0
     request.user.save()
+
     def remove_transparency(im, bg_colour=(255, 255, 255)):
         if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
             alpha = im.convert('RGBA').split()[-1]
@@ -164,14 +135,12 @@ def user_changing_info(request):
         request.user.save()
 
     if request.FILES:
-        print('aeeee')
         request.user.profile_picture = request.FILES['profile_picture']
         t = Image.open(request.user.profile_picture)
         t = remove_transparency(t)
         t.convert('RGB')
-        t.thumbnail((400, 400))
         t_io = BytesIO()
-        t.save(t_io, 'JPEG')
+        t.save(t_io, 'JPEG', quality=100)
         t_result = File(t_io, name=request.user.profile_picture.name)
         request.user.profile_picture = t_result
         request.user.save()
@@ -183,6 +152,74 @@ def delete_an_address(request):
     AddressUser.objects.all().filter(id=request.POST.get('delete_adr_id')).delete()
 
 
+def make_an_order(request):
+    order = ''
+
+    # Инициализация
+    env = Env()
+    env.read_env()
+    sender_mail = env.str('sender_mail')
+    sender_password = env.str('password')
+    target_mail = str(request.user.email)
+
+    # Настройка протокола, по которому будет передаваться сообщение
+    mailsender = smtplib.SMTP('smtp.gmail.com', 587)
+    mailsender.starttls()
+    mailsender.login(sender_mail, sender_password)
+
+    # Информация о заказе
+    subject = 'Информация о заказе'
+    msg = MIMEMultipart()
+    msg['From'] = sender_mail
+    msg['To'] = target_mail
+    msg.add_header('reply-to', sender_mail)
+
+    user = request.user
+    user.y = 0
+    user.save()
+    provider = user.basket_set.all()[0].chosen_items.all()[0].good.provided
+    current_order = Order(customer=user,
+                          comment=request.POST.get('comment'))
+
+    adrs_user = request.user.chosen_address.all()
+    coffeeshops, cafe_addresses = collect_relevant_coffeeshops(request, adrs_user)
+
+    for adrs in cafe_addresses:
+        if adrs.owner == provider:
+            current_order.chosen_cafe = adrs
+
+    current_order.save()
+
+    if request.user.chosen_address.all():
+        current_order.chosen_delivery_address.add(request.user.chosen_address.all()[0])
+    else:
+        current_order.type_of_delivery = 'Самовывоз'
+
+    current_order.save()
+
+    for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
+        i = ItemsSlotOrder(count=item.count, good=item.good, order_connection=current_order)
+        i.save()
+        order += str(i)
+        order += ', '
+        current_order.chosen_items.add(i)
+
+    # отправка сообщения на почту
+    mail_subject = f'Информация о заказе пользователя {request.user}'
+    mail_body_text = 'Заказ: ' + order + f'Тип доставки: {current_order.type_of_delivery}; ' + \
+                     f'Время оформления заказа: {current_order.time_created}; ' + \
+                     f'Сообщение к заказу: {current_order.comment}'
+    msg = MIMEText(mail_body_text, 'html', 'utf-8')
+    msg['Subject'] = Header(mail_subject, 'utf-8')
+    mailsender.sendmail(sender_mail, target_mail, msg.as_string())
+    mailsender.quit()
+    ##
+
+    current_order.save()
+    clear_the_basket(request)
+
+
+"""
 def make_an_order(request):
     user = request.user
     user.y = 0
@@ -211,6 +248,7 @@ def make_an_order(request):
         current_order.chosen_items.add(i)
     current_order.save()
     clear_the_basket(request)
+"""
 
 
 def delete_item(request):
@@ -222,6 +260,7 @@ def delete_item(request):
 def change_item(request):
     request.user.y = 0
     request.user.save()
+
     def remove_transparency(im, bg_colour=(255, 255, 255)):
         if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
             alpha = im.convert('RGBA').split()[-1]
@@ -240,9 +279,8 @@ def change_item(request):
         t = Image.open(current_item.preview)
         t = remove_transparency(t)
         t.convert('RGB')
-        t.thumbnail((400, 400))
         t_io = BytesIO()
-        t.save(t_io, 'JPEG')
+        t.save(t_io, 'JPEG', quality=100)
         t_result = File(t_io, name=request.user.profile_picture.name)
         current_item.preview = t_result
         current_item.save()
@@ -268,9 +306,8 @@ def change_item(request):
             t = Image.open(item.preview)
             t = remove_transparency(t)
             t.convert('RGB')
-            t.thumbnail((400, 400))
             t_io = BytesIO()
-            t.save(t_io, 'JPEG')
+            t.save(t_io, 'JPEG', quality=100)
             t_result = File(t_io, name=request.user.profile_picture.name)
             item.preview = t_result
             item.save()

@@ -1,12 +1,6 @@
 from datetime import datetime, timedelta
 
-from django.db import models
-from django.contrib.auth.models import User
-from django.utils import timezone
-from kofeFast import settings
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
-from django.contrib.auth.models import AbstractUser
-from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
 from kofeFast.settings import AUTH_USER_MODEL
@@ -49,7 +43,6 @@ class AddressCafe(models.Model):
 
 class Volumes(models.Model):
     volume = models.CharField('Объем', max_length=4, default='0.')
-    source = models.ForeignKey('Item', on_delete=models.CASCADE, verbose_name='Чей??')
 
     def __str__(self):
         return str(self.volume)
@@ -61,7 +54,6 @@ class Volumes(models.Model):
 
 class Addons(models.Model):
     addth = models.CharField('Добавка', max_length=15, default='ниче')
-    sourceItem = models.ForeignKey('Item', on_delete=models.CASCADE, verbose_name='К чему??')
 
     def __str__(self):
         return str(self.addth)
@@ -134,8 +126,8 @@ class Provider(models.Model):
     production = models.ManyToManyField('Item', blank=True)
     owner = models.ManyToManyField(AUTH_USER_MODEL, blank=True, verbose_name='Владелец')
 
-    open_time = models.CharField('Открытие в', max_length=10, default='9')
-    close_time = models.CharField('Закрытие в', max_length=10, default='23')
+    open_time = models.CharField('Открытие в', max_length=10, default='-9')
+    close_time = models.CharField('Закрытие в', max_length=10, default='-23')
 
     def __str__(self):
         return self.name
@@ -164,7 +156,7 @@ class Order(models.Model):
     chosen_items = models.ManyToManyField(ItemsSlotOrder, blank=True, verbose_name="Выбранные продукты")
     chosen_cafe = models.ForeignKey('AddressCafe', on_delete=models.CASCADE, verbose_name='Выбранное кафе')
     type_of_delivery = models.CharField('Тип доставки', max_length=10, default='Самовывоз')
-    #courier = models.ForeignKey(AUTH_USER_MODEL, related_name='courier', on_delete=models.CASCADE,
+    # courier = models.ForeignKey(AUTH_USER_MODEL, related_name='courier', on_delete=models.CASCADE,
     #                            verbose_name='Курьер', unique=True, default=None)
     chosen_delivery_address = models.ManyToManyField('AddressUser', blank=True, verbose_name='Выбранный адрес доставки')
     time_created = models.TimeField('Время создания заказа', auto_now_add=True, auto_now=False)
@@ -235,15 +227,15 @@ class MyAccountManager(BaseUserManager):
 
 class Account(AbstractBaseUser):
     username = models.CharField(max_length=60, default='username')
-    email 					= models.EmailField(verbose_name="Почта", max_length=60, unique=True)
-    date_joined				= models.DateTimeField(verbose_name='Дата регистрации', auto_now_add=True)
-    last_login				= models.DateTimeField(verbose_name='Последний вход', auto_now=True)
-    is_admin				= models.BooleanField(default=False)
-    is_active				= models.BooleanField(default=True)
-    is_staff				= models.BooleanField(default=False)
-    is_cafe_owner		    = models.BooleanField(default=False)
-    is_superuser			= models.BooleanField(default=False)
-    y                       = models.IntegerField('Прокрутка', default=0)
+    email = models.EmailField(verbose_name="Почта", max_length=60, unique=True)
+    date_joined = models.DateTimeField(verbose_name='Дата регистрации', auto_now_add=True)
+    last_login = models.DateTimeField(verbose_name='Последний вход', auto_now=True)
+    is_admin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_cafe_owner = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    y = models.IntegerField('Прокрутка', default=0)
 
     profile_picture = models.ImageField(null=True, blank=True, upload_to="profile_pictures", default=None)
 
@@ -264,10 +256,8 @@ class Account(AbstractBaseUser):
     def __str__(self):
         return self.email
 
-    # For checking permissions. to keep it simple all admin have ALL permissons
     def has_perm(self, perm, obj=None):
         return self.is_admin
 
-    # Does this user have permission to view this app? (ALWAYS YES FOR SIMPLICITY)
     def has_module_perms(self, app_label):
         return True

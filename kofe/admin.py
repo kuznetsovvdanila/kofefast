@@ -4,7 +4,6 @@ from django.contrib.auth.admin import UserAdmin
 from kofe.models import Item, Provider, AddressUser, AddressCafe, Account, Order, Basket, Review, ItemsSlotOrder, \
     ItemsSlotBasket, Volumes, Addons
 
-from django.utils.translation import gettext, gettext_lazy as _
 
 # Register your models here
 
@@ -53,7 +52,6 @@ class ItemAdmin(admin.ModelAdmin):
         ('Из', {'fields': ['provided']}),
         ('Просчитан цвет', {'fields': ['not_has_color']}),
     ]
-    inlines = [ItemsVolumesInLine, ItemsAddsInLine]
 
 
 class Cafe(admin.ModelAdmin):
@@ -71,7 +69,7 @@ class OrderAdmin(admin.ModelAdmin):
         ('Заказчик', {'fields': ['customer']}),
         ('Выбранное кафе', {'fields': ['chosen_cafe']}),
         ('Тип доставки', {'fields': ['type_of_delivery']}),
-        #('Курьер', {'fields': ['courier']}),
+        # ('Курьер', {'fields': ['courier']}),
         ('Адрес доставки', {'fields': ['chosen_delivery_address']}),
         ('Выбранное время доставки', {'fields': ['time_requested']}),
         ('Закончен ли заказ?', {'fields': ['is_over']}),
