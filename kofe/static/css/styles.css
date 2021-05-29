@@ -23,6 +23,26 @@ input {
     outline: none;
     font-family: "ProductSans-Regular";
 }
+input[type="radio"] {
+    margin: 0 15px 0 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border: 5px solid #eeeeee;
+    background-color: #111111;
+}
+input:checked {
+    background-color: #deb887 !important;
+}
+#timeInput {
+    border-radius: 0 !important;
+    font-size: 1em;
+    text-align: left;
+    border: none;
+    width: 150px;
+}
 textarea {
     outline: none;
     font-family: "ProductSans-Regular";
@@ -51,6 +71,25 @@ textarea {
 .pointer {
     cursor: pointer;
 }
+/*.scrollUp {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 49%;
+    left: 1%;
+}
+.scrollUp > span {
+    width: 20px;
+    height: 7px;
+    border-radius: 10px;
+    background-color: #eeeeee;
+}
+.scrollUp > span:first-child {
+    transform: rotateY(45deg);
+}
+.scrollUp > span:last-child {
+
+}*/
 .topMenu {
     justify-content: space-between;
     padding: 15px 30px 0 30px;
@@ -662,6 +701,27 @@ option:not(:checked) {
 }
 
 @media screen and (max-width: 1000px) {
+    input[type="radio"] {
+        width: 70px;
+        height: 70px;
+    }
+    .rdo > span {
+        width: 90%;
+    }
+    .rdo > span:first-child {
+        margin: 0 0 40px 0;
+    }
+    .rdo span > input[type="radio"] {
+        border: 15px solid #eeeeee !important;
+        margin: 0 30px 0 0 !important;
+    }
+    .rdo {
+        justify-content: flex-start !important;
+        flex-direction: column !important;
+        align-items: flex-start;
+        width: 90% !important;
+        min-width: 0 !important;
+    }
     .emptyList {
         font-size: 4.5em;
     }
@@ -720,7 +780,8 @@ option:not(:checked) {
         border-left: 15px solid #deb887;
     }
     .makeAnOrder div:nth-child(2) .time > div:not(:first-child) {
-        margin: 30px 0 30px 0;
+        margin: 30px 0 0 0 !important;
+        height: auto !important;
         max-width: 100%;
         font-size: 1.65em;
     }

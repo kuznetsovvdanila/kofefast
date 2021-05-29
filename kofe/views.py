@@ -131,18 +131,14 @@ def index_page(request):
                 user_addresses = AddressUser.objects.all().filter(owner=request.user)
                 chosen_one = request.user.chosen_address.all()[0] if request.user.chosen_address.all() else None
                 addresses = collect_relevant_addresses(request, user_addresses, coffeeshop, AddressCafe.objects.all().filter(owner=coffeeshop), chosen_one)
-
-    if request.user.is_authenticated:
         if request.user.chosen_address:
             if request.user.chosen_address.all():
                 flagCA = True
+        if request.user.chosen_address.all():
+            chosen_address_raw = request.user.chosen_address.all()
 
     if flagCA:
         CA = request.user.chosen_address.all()[0]
-
-    if request.user.is_authenticated:
-        if request.user.chosen_address.all():
-            chosen_address_raw = request.user.chosen_address.all()
 
     context = {
         'addresses': addresses if request.user.is_authenticated else None,

@@ -78,16 +78,6 @@ $(".sendIt select").change(function() {
     $(this).closest('form').submit();
 });
 
-
-//$('.eat').click(function(){
-//    $('.coffee').removeClass('active');
-//    $('.breakfast').addClass('active');
-//})
-//$('.drink').click(function(){
-//    $('.coffee').addClass('active');
-//    $('.breakfast').removeClass('active');
-//})
-
 //$('#id_username').attr('placeholder','Логин');
 //$('#id_first_name').attr('placeholder','Имя');
 //$('#id_last_name').attr('placeholder','Фамилия');

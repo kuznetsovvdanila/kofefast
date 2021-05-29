@@ -75,10 +75,10 @@ def set_prefer_address(request):
 def change_basket(request, input_command):
     if len(input_command) == 2:
         f = ItemsSlotBasket.objects.all().filter(good=Item.objects.all().filter(id=int(input_command[1]))[0], basket_connection=request.user.basket_set.all()[0])
-        if f:
-            if request.POST.get('user_y'):
-                request.user.y = int(request.POST.get('user_y'))
+        if request.POST.get('user_y'):
+            request.user.y = int(request.POST.get('user_y'))
             request.user.save()
+        if f:
             chosen_slot = f[0]
             if input_command[0] == 'add':
                 chosen_slot.count += 1
