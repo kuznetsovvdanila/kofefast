@@ -183,12 +183,14 @@ def make_an_order(request):
 
     if request.user.chosen_address.all():
         current_order.chosen_delivery_address.add(request.user.chosen_address.all()[0])
+        current_order.type_of_delivery = 'Доставка'
     else:
         current_order.type_of_delivery = 'Самовывоз'
 
     if request.POST.get('time') == '1':
         if int(request.POST.get('time_requested')[:2]) < 24 and int(request.POST.get('time_requested')[3:]) < 60:
-            current_order.time_requested = datetime.time(hour=int(request.POST.get('time_requested')[:2]), minute=int(request.POST.get('time_requested')[3:]))
+            current_order.time_requested = datetime.time(hour=int(request.POST.get('time_requested')[:2]),
+                                                         minute=int(request.POST.get('time_requested')[3:]))
 
     current_order.save()
 

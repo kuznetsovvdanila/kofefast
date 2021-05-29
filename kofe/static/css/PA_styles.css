@@ -261,9 +261,12 @@ input:checked {
 .order a > div {
     margin: 20px 30px 20px 30px;
 }
-.status {
+.cafe_name {
+    overflow: hidden;
+    text-overflos: ellipsis;
+    height: 80%;
+    max-height: 80%;
     margin: 20px 0 20px 30px !important;
-    min-width: 36%;
 }
 .order > div:last-child, .address > div:last-child {
     margin: 20px 12px 20px 30px;
@@ -529,6 +532,13 @@ input[type='file'] {
 }
 
 @media screen and (max-width: 980px) {
+    .cafe_name > div {
+        font-size: 2.2em;
+    }
+    .cafe_name .basketList {
+        border-left: 15px solid #deb887;
+        padding: 0 0 0 25px;
+    }
     .itemEditForm form input[type="radio"] {
         width: 70px;
         height: 70px;

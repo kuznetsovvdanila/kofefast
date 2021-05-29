@@ -139,6 +139,12 @@ def personal_area_page(request):
 
         'addresses': addresses,
         'orders': orders,
+        'the_last_order': orders[len(orders) - 1]
+        if orders else None,
+        'order_items': orders[len(orders) - 1].chosen_items.all()
+        if orders else None,
+        'order_address': orders[len(orders) - 1].chosen_delivery_address.all()[0]
+        if orders else None,
     }
     return render(request, 'pages/personal_area.html', context)
 
