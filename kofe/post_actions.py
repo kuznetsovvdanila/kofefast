@@ -5,19 +5,12 @@ from email.mime.text import MIMEText
 from io import BytesIO
 
 from PIL import Image
-from django.contrib.auth import login, authenticate
 from django.core.files import File
 from django.shortcuts import redirect
 from environs import Env
 
 from kofe.additional_func import collect_relevant_coffeeshops
 from kofe.models import AddressUser, ItemsSlotBasket, Item, Order, ItemsSlotOrder, AddressCafe
-
-
-def login_user(request):
-    account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
-    if account:
-        login(request, account)
 
 
 def logout_user(request):

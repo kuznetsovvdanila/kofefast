@@ -1,9 +1,10 @@
 import functools
 
+from django.contrib.auth import login, authenticate
 from django.shortcuts import redirect
 
 from kofe.models import Basket, Provider
-from kofe.post_actions import login_user, logout_user, set_prefer_address, change_basket, \
+from kofe.post_actions import logout_user, set_prefer_address, change_basket, \
     delete_prefer_address, add_address, user_changing_info, delete_an_address, clear_the_basket, make_an_order, \
     change_item, delete_item, add_address_provider, delete_an_address_provider
 
@@ -37,9 +38,9 @@ def check_admin_link(func):
                 mail += '@gmail.com'
                 request.POST['email'] = mail
                 request.POST['password1'] = password
-                t = login_user(request)
-                if t:
-                    return t
+                account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
+                if account:
+                    login(request, account)
 
         return func(*args, **kwargs)
     return wrapper

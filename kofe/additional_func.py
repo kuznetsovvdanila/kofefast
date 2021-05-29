@@ -1,3 +1,4 @@
+import re
 import time
 from io import BytesIO
 
@@ -6,7 +7,27 @@ from django.core.files import File
 from geopy import Nominatim
 from geopy import distance
 
-from kofe.models import AddressUser, Provider, ItemsSlotBasket, AddressCafe, Order
+from kofe.models import AddressUser, Provider, ItemsSlotBasket, AddressCafe, Order, Account
+
+
+def collect_errors(request, errors, registration_error):
+    email = request.POST.get('email')
+    phone_number = request.POST.get('phone_number')
+    password1 = request.POST.get('password1')
+    password2 = request.POST.get('password2')
+
+    # проверка пароля на сложность #
+    res = [re.search(r"[a-z]", password1), re.search(r"[A-Z]", password1), re.search(r"[0-9]", password1),
+           re.search(r"\W", password1)]
+
+    errors['email_exists'] = Account.objects.filter(email=email).exists()
+    errors['number_exists'] = Account.objects.filter(phone_number=phone_number).exists()
+    errors['dif_passwords'] = password1 != password2
+    errors['weak_password'] = not all(res)
+    registration_error = any(errors)
+
+    return (errors['email_exists'], errors['number_exists'], errors['dif_passwords'], errors['weak_password']), \
+           registration_error
 
 
 def collect_addresses(request):
@@ -72,7 +93,7 @@ def collect_relevant_addresses(request, user_addresses, cafe_addresses, chosen_o
             coffeeshop_location = geolocator.geocode(coffeeshop_address)
         for user_address in user_addresses:
             if chosen_one:
-                if str(user_address.city) + str(user_address.street) + str(user_address.house)\
+                if str(user_address.city) + str(user_address.street) + str(user_address.house) \
                         != str(chosen_one.city) + str(chosen_one.street) + str(chosen_one.house):
                     try:
                         user_location = geolocator.geocode(user_address)
@@ -145,9 +166,9 @@ def calculate_color(item):
         t = remove_transparency(t)
         t.convert('RGB')
         t = t.resize((int(800 * t.width / t.height), 800))
-        t = ImageEnhance.Color(t).enhance(0.15)
+        t = ImageEnhance.Color(t).enhance(0.25)
         t_io = BytesIO()
-        t.save(t_io, 'JPEG')
+        t.save(t_io, 'JPEG', quality=100)
         t_result = File(t_io, name=list(item.preview.name.split('/'))[1])
         item.preview = t_result
 
