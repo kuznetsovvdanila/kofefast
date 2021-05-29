@@ -251,6 +251,7 @@ def make_an_order(request):
     mailsender.quit()
     ##
 
+
     current_order.save()
     clear_the_basket(request)
 
