@@ -1,3 +1,4 @@
+"""Функции, обрабатывающие все POST запросы"""
 import smtplib
 from email.header import Header
 from email.mime.multipart import MIMEMultipart
@@ -9,15 +10,17 @@ from django.core.files import File
 from django.shortcuts import redirect
 from environs import Env
 
-from kofe.additional_func import collect_relevant_coffeeshops
+from kofe.additional_func import collect_relevant_coffeeshops, remove_transparency
 from kofe.models import AddressUser, ItemsSlotBasket, Item, Order, ItemsSlotOrder, AddressCafe
 
 
 def logout_user(request):
+    """Выход из аккаунта"""
     return redirect('logout')
 
 
 def set_prefer_address(request):
+    """Установка предпочтительного адреса"""
     request.user.y = 0
     request.user.save()
     if request.user.is_authenticated:
@@ -26,13 +29,14 @@ def set_prefer_address(request):
         if request.POST.get('prefered_adr_id'):
             if request.POST.get('prefered_adr_id') == 'addAnAddress':
                 return redirect('personal_area')
-            else:
-                request.user.chosen_address.add(AddressUser.objects.all().
-                                                filter(id=request.POST.get('prefered_adr_id'))[0])
-                request.user.save()
+            request.user.chosen_address.add(AddressUser.objects.all().
+                                            filter(id=request.POST.get('prefered_adr_id'))[0])
+            request.user.save()
+    return redirect('index')
 
 
 def change_basket(request, input_command):
+    """Изменение содержания корзины"""
     if len(input_command) == 2:
         f = ItemsSlotBasket.objects.all().filter(good=Item.objects.all().
                                                  filter(id=int(input_command[1]))[0],
@@ -62,12 +66,14 @@ def change_basket(request, input_command):
 
 
 def clear_the_basket(request):
+    """Очищение корзины"""
     request.user.y = 0
     request.user.save()
     ItemsSlotBasket.objects.all().delete()
 
 
 def delete_prefer_address(request):
+    """Удаление выбранного адреса"""
     request.user.y = 0
     request.user.save()
     for i in request.user.chosen_address.all():
@@ -76,9 +82,11 @@ def delete_prefer_address(request):
 
 
 def add_address(request):
+    """Добавление адреса в список адресов пользователя"""
     request.user.y = 0
     request.user.save()
-    adr = AddressUser(owner=request.user, name=request.POST.get('name'), city=request.POST.get('city'),
+    adr = AddressUser(owner=request.user, name=request.POST.get('name'),
+                      city=request.POST.get('city'),
                       street=request.POST.get('street'),
                       house=request.POST.get('house'))
     if request.POST.get('entrance'):
@@ -94,18 +102,9 @@ def add_address(request):
 
 
 def user_changing_info(request):
+    """Изменение профиля пользователя"""
     request.user.y = 0
     request.user.save()
-
-    def remove_transparency(im, bg_colour=(255, 255, 255)):
-        if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
-            alpha = im.convert('RGBA').split()[-1]
-            bg = Image.new("RGB", im.size, bg_colour + (255,))
-            bg.paste(im, mask=alpha)
-            return bg
-
-        else:
-            return im
 
     if request.POST.get('first_name'):
         first_name = request.POST.get('first_name')
@@ -140,42 +139,40 @@ def user_changing_info(request):
 
 
 def delete_an_address(request):
+    """Удаление предпочтительного адреса"""
     request.user.y = 0
     request.user.save()
     AddressUser.objects.all().filter(id=request.POST.get('delete_adr_id')).delete()
 
 
 def make_an_order(request):
+    """Создание заказа на index.html"""
     order = ''
 
     # Инициализация
     env = Env()
     env.read_env()
-    sender_mail = env.str('sender_mail')
-    sender_password = env.str('password')
-    target_mail = str(request.user.email)
+    sender = {'mail': env.str('sender_mail'),
+              'password': env.str('password')}
 
     # Настройка протокола, по которому будет передаваться сообщение
     mailsender = smtplib.SMTP('smtp.gmail.com', 587)
     mailsender.starttls()
-    mailsender.login(sender_mail, sender_password)
+    mailsender.login(sender['mail'], sender['password'])
 
     # Информация о заказе
-    subject = 'Информация о заказе'
     msg = MIMEMultipart()
-    msg['From'] = sender_mail
-    msg['To'] = target_mail
-    msg.add_header('reply-to', sender_mail)
+    msg['From'] = sender['mail']
+    msg['To'] = str(request.user.email)
+    msg.add_header('reply-to', sender['mail'])
 
-    user = request.user
-    user.y = 0
-    user.save()
-    provider = user.basket_set.all()[0].chosen_items.all()[0].good.provided
-    current_order = Order(customer=user,
+    request.user.y = 0
+    request.user.save()
+    provider = request.user.basket_set.all()[0].chosen_items.all()[0].good.provided
+    current_order = Order(customer=request.user,
                           comment=request.POST.get('comment'))
 
-    adrs_user = request.user.chosen_address.all()
-    coffeeshops, cafe_addresses = collect_relevant_coffeeshops(request, adrs_user)
+    _, cafe_addresses = collect_relevant_coffeeshops(request, request.user.chosen_address.all())
 
     for adrs in cafe_addresses:
         if adrs.owner == provider:
@@ -190,7 +187,8 @@ def make_an_order(request):
 
     current_order.save()
 
-    for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
+    for item in ItemsSlotBasket.objects.all().\
+            filter(basket_connection=request.user.basket_set.all()[0]):
         i = ItemsSlotOrder(count=item.count, good=item.good, order_connection=current_order)
         i.save()
         order += str(i)
@@ -204,7 +202,7 @@ def make_an_order(request):
                      f'Сообщение к заказу: {current_order.comment}'
     msg = MIMEText(mail_body_text, 'html', 'utf-8')
     msg['Subject'] = Header(mail_subject, 'utf-8')
-    mailsender.sendmail(sender_mail, target_mail, msg.as_string())
+    mailsender.sendmail(sender['mail'], str(request.user.email), msg.as_string())
     mailsender.quit()
     ##
 
@@ -212,62 +210,24 @@ def make_an_order(request):
     clear_the_basket(request)
 
 
-"""
-def make_an_order(request):
-    user = request.user
-    user.y = 0
-    user.save()
-    provider = user.basket_set.all()[0].chosen_items.all()[0].good.provided
-    current_order = Order(customer=user,
-                          comment=request.POST.get('comment'))
-
-    adrs_user = request.user.chosen_address.all()
-    coffeeshops, cafe_addresses = collect_relevant_coffeeshops(request, adrs_user)
-
-    for adrs in cafe_addresses:
-        if adrs.owner == provider:
-            current_order.chosen_cafe = adrs
-
-    if request.user.chosen_address.all():
-        current_order.chosen_delivery_address.add(request.user.chosen_address.all()[0])
-    else:
-        current_order.type_of_delivery = 'Самовывоз'
-
-    current_order.save()
-
-    for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
-        i = ItemsSlotOrder(count=item.count, good=item.good, order_connection=current_order)
-        i.save()
-        current_order.chosen_items.add(i)
-    current_order.save()
-    clear_the_basket(request)
-"""
-
-
 def delete_item(request):
+    """Удаление товара из продукции"""
     request.user.y = 0
     request.user.save()
     Item.objects.all().filter(id=request.POST.get('delete_item_id')).delete()
 
 
 def change_item(request):
+    """Изменение товара продукции"""
     request.user.y = 0
     request.user.save()
 
-    def remove_transparency(im, bg_colour=(255, 255, 255)):
-        if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
-            alpha = im.convert('RGBA').split()[-1]
-            bg = Image.new("RGB", im.size, bg_colour + (255,))
-            bg.paste(im, mask=alpha)
-            return bg
-
-        else:
-            return im
-
     if request.POST.get('itemId') == '0':
         current_item = Item(name=request.POST.get('item_name'),
-                            description=request.POST.get('description'), price=request.POST.get('item_price'),
-                            provided=request.user.owned_cafe.all()[0], type=request.POST.get('type'))
+                            description=request.POST.get('description'),
+                            price=request.POST.get('item_price'),
+                            provided=request.user.owned_cafe.all()[0],
+                            type=request.POST.get('type'))
         current_item.preview = request.FILES['item_picture']
         t = Image.open(current_item.preview)
         t = remove_transparency(t)
@@ -307,10 +267,13 @@ def change_item(request):
 
 
 def add_address_provider(request):
+    """Добавляет адрес"""
     request.user.y = 0
     request.user.save()
-    current_address = AddressCafe(owner=request.user.owned_cafe.all()[0], city=request.POST.get('city'),
-                                  street=request.POST.get('street'), house=request.POST.get('house'))
+    current_address = AddressCafe(owner=request.user.owned_cafe.all()[0],
+                                  city=request.POST.get('city'),
+                                  street=request.POST.get('street'),
+                                  house=request.POST.get('house'))
 
     if request.POST.get('building'):
         current_address.building = request.POST.get('building')
@@ -322,4 +285,5 @@ def add_address_provider(request):
 
 
 def delete_an_address_provider(request):
+    """Удаляет адрес"""
     AddressCafe.objects.all().filter(id=request.POST.get('delete_adr_id')).delete()

@@ -1,28 +1,23 @@
+"""Обработчики всех страниц сайта"""
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 
 from kofe.additional_func import collect_items, collect_addresses, collect_relevant_coffeeshops, \
-    collect_orders, collect_relevant_addresses, collect_errors
-from kofe.decorators import add_user_buc, check_POST, check_proms, check_admin_link, synchronize_owned_owner
+    collect_orders, collect_errors
+from kofe.decorators import add_user_buc, check_POST, check_proms, check_admin_link, \
+    synchronize_owned_owner
 from kofe.forms import RegistrationForm
-from kofe.models import Provider, AddressUser, AddressCafe, ItemsSlotBasket, Account
-
-context = {}
-login_error = email_exists = number_exists = dif_passwords = weak_password = registration_error = False
+from kofe.models import Provider, AddressCafe, ItemsSlotBasket
 
 
 def registration_user(request):
-    global email_exists, number_exists, dif_passwords, weak_password, registration_error
+    """Регистрация пользователя"""
 
     request.POST = request.POST.copy()
     form = RegistrationForm(request.POST)
 
     (email_exists, number_exists, dif_passwords, weak_password), registration_error = \
-        collect_errors(request, {'email_exists': email_exists,
-                             'number_exists': number_exists,
-                             'dif_passwords': dif_passwords,
-                             'weak_password': weak_password,
-                             'registration_error': registration_error}, registration_error)
+        collect_errors(request)
 
     if form.is_valid():
         form.save()
@@ -32,74 +27,67 @@ def registration_user(request):
         account = authenticate(email=email, password=raw_password, phone_number=phone_number)
         login(request, account)
         return redirect('index')
+    return {'email_exists': email_exists, 'number_exists': number_exists,
+            'dif_passwords': dif_passwords, 'weak_password': weak_password}, registration_error
 
 
 def login_user(request):
-    global login_error
+    """Авторизация пользователя"""
 
     account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
-    login_error = True
     if account:
         login(request, account)
+    return True
 
 
 @check_admin_link
 @add_user_buc
 @check_POST
 def index_page(request):
-    global context
-    global email_exists, number_exists, dif_passwords, weak_password, registration_error
+    """View функция для index.html"""
+    errors = {'email_exists': False, 'number_exists': False,
+              'dif_passwords': False, 'weak_password': False}
+    login_error = registration_error = False
 
     # регистрация и аутенфикация
-    post_actions = {'authen': login_user, 'registr': registration_user}
     if request.method == 'POST':
-        if request.POST.get('action_type') in post_actions:
-            t = post_actions[request.POST.get('action_type')](request)
-            if t:
-                return t
+        if request.POST.get('action_type') == 'authen':
+            login_error = login_user(request)
+        elif request.POST.get('action_type') == 'registr':
+            errors, registration_error = registration_user(request)
 
     # инициализация переменных
-    chosen_items = chosen_address_raw = drinkable = eatable = []
+    chosen_items = chosen_address_raw = coffeeshops = []
     flag_coffeeshops = flag_ca = False
     ca = None
-    addresses = collect_addresses(request)
-    coffeeshops = Provider.objects.all()
+    products = []
 
     if request.user.is_authenticated:
         # составление всех продуктов и предметов в корзине
         if ItemsSlotBasket.objects.all():
-            for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
+            for item in ItemsSlotBasket.objects.all().\
+                    filter(basket_connection=request.user.basket_set.all()[0]):
                 chosen_items.append(item)
-        drinkable, eatable = collect_items(request, chosen_items)
+        products = collect_items(request, chosen_items)
 
-        # подгон сайта под владельцев кофейнь
-        if AddressUser.objects.all().filter(owner=request.user):
-            if request.user.user_basket.all()[0].chosen_items.all():
-                coffeeshop = request.user.user_basket.all()[0].chosen_items.all()[0].good.provided
-                user_addresses = AddressUser.objects.all().filter(owner=request.user)
-                chosen_one = request.user.chosen_address.all()[0] if request.user.chosen_address.all() else None
-                addresses = collect_relevant_addresses(request,
-                                                       user_addresses,
-                                                       AddressCafe.objects.all().filter(owner=coffeeshop),
-                                                       chosen_one)
         # логика отображения кофейнь
         flag_coffeeshops = request.user.chosen_address
         if flag_coffeeshops:
             flag_ca = request.user.chosen_address.all()
             adrs_user = request.user.chosen_address.all()
-            coffeeshops, cafe_addresses = collect_relevant_coffeeshops(request, adrs_user)
+            coffeeshops, _ = collect_relevant_coffeeshops(request, adrs_user)
         if flag_ca:
             chosen_address_raw = request.user.chosen_address.all()
             ca = request.user.chosen_address.all()[0]
 
     context = {
-        'addresses': addresses
+        'addresses': collect_addresses(request)
         if request.user.is_authenticated else None,
-        'coffeeshops': coffeeshops
+        'coffeeshops': Provider.objects.all()
         if flag_coffeeshops else None,
-        'food': eatable
+        'food': products[0]
         if request.user.is_authenticated else None,
-        'drinks': drinkable
+        'drinks': products[1]
         if request.user.is_authenticated else None,
         'prvdr': chosen_items[0].good.provided
         if chosen_items else None,
@@ -107,10 +95,10 @@ def index_page(request):
         if request.user.is_authenticated and ItemsSlotBasket.objects.all() else None,
         'chosen_address': ca
         if flag_ca else None,
-        'email_exists': email_exists,
-        'number_exists': number_exists,
-        'dif_passwords': dif_passwords,
-        'weak_password': weak_password,
+        'email_exists': errors['email_exists'],
+        'number_exists': errors['number_exists'],
+        'dif_passwords': errors['dif_passwords'],
+        'weak_password': errors['weak_password'],
         'registration_error': registration_error,
         'login_error': login_error,
         'providers': coffeeshops,
@@ -125,7 +113,7 @@ def index_page(request):
 @synchronize_owned_owner
 @check_POST
 def personal_area_page(request):
-    global context
+    """View функция для страницы пользователя"""
     if request.method == 'POST':
         return redirect('personal_area')
 
@@ -156,5 +144,6 @@ def personal_area_page(request):
 
 
 def logoutUser(request):
+    """Неюзаемая функция, без нее ничего не работает, но ее не используют нигде"""
     logout(request)
     return redirect('index')

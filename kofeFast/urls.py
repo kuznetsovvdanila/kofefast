@@ -13,26 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import django.conf.urls.static
 from django.contrib import admin
 from django.urls import path
 
-from kofe import views, post_actions
-# from django.contrib.auth import views as auth_views
-
-# from kofe.views import get_menu_context
-
-from django.contrib import admin
-from django.urls import path
 from kofe import views
 from django.contrib.auth import views as auth_views
-from django.conf import settings
-from django.conf.urls.static import static
+
+from kofeFast import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index_page, name='index'),
     path('personal_area/', views.personal_area_page, name='personal_area'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
-              static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+] + django.conf.urls.static.static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
+              django.conf.urls.static.static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

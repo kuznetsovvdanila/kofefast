@@ -1,3 +1,4 @@
+"""Модели для базы данных"""
 from datetime import datetime, timedelta
 
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
@@ -7,6 +8,7 @@ from kofeFast.settings import AUTH_USER_MODEL
 
 
 class AddressUser(models.Model):
+    """Модель адреса пользователя"""
     owner = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец')
     name = models.CharField('Имя', max_length=30, default='Дом')
     city = models.CharField('Город', max_length=30, default='Москва')
@@ -26,6 +28,7 @@ class AddressUser(models.Model):
 
 
 class AddressCafe(models.Model):
+    """Модель адреса кофейни"""
     owner = models.ForeignKey('Provider', on_delete=models.CASCADE, verbose_name='Владелец')
     city = models.CharField('Город', max_length=30, default='Москва')
     street = models.CharField('Улица', max_length=30, default='Арбат')
@@ -42,6 +45,7 @@ class AddressCafe(models.Model):
 
 
 class Volumes(models.Model):
+    """Модель объемов продуктов"""
     volume = models.CharField('Объем', max_length=4, default='0.')
 
     def __str__(self):
@@ -53,6 +57,7 @@ class Volumes(models.Model):
 
 
 class Addons(models.Model):
+    """Модель добавок к продуктам"""
     addth = models.CharField('Добавка', max_length=15, default='ниче')
 
     def __str__(self):
@@ -64,13 +69,14 @@ class Addons(models.Model):
 
 
 class Item(models.Model):
+    """Модель предметов"""
     price = models.IntegerField('Цена', default=300)
     preview = models.ImageField('Внешка', default=None, upload_to='item_picture')
     provided = models.ForeignKey('Provider', on_delete=models.CASCADE)
     name = models.CharField('Продукт', max_length=50, default='coffee')
     description = models.CharField('Описание',
                                    max_length=250,
-                                   default='Съешь ещё этих мягких французских булок, да выпей же чаю')
+                                   default='Съешь ещё этих мягких французских булок, да выпей же')
     not_has_color = models.BooleanField('Не просчитан цвет', default=True)
     primary_color = models.CharField('Главный цвет превью', max_length=50, default="0, 0, 0, 255")
 
@@ -93,6 +99,7 @@ class Item(models.Model):
 
 
 class ItemsSlotOrder(models.Model):
+    """Модель предметов в заказе"""
     count = models.IntegerField('Количество', default=1)
     good = models.ForeignKey('Item', on_delete=models.CASCADE, verbose_name='Продукт')
     order_connection = models.ForeignKey('Order', on_delete=models.CASCADE,
@@ -107,6 +114,7 @@ class ItemsSlotOrder(models.Model):
 
 
 class ItemsSlotBasket(models.Model):
+    """Модель предметов в корзине"""
     count = models.IntegerField('Количество', default=1)
     good = models.ForeignKey('Item', on_delete=models.CASCADE, verbose_name='Продукт')
     basket_connection = models.ForeignKey('Basket', on_delete=models.CASCADE,
@@ -121,6 +129,7 @@ class ItemsSlotBasket(models.Model):
 
 
 class Provider(models.Model):
+    """Модель кофейни"""
     name = models.CharField('Название', max_length=50)
     cafe_addresses = models.ManyToManyField('AddressCafe', blank=True)
     production = models.ManyToManyField('Item', blank=True)
@@ -138,7 +147,9 @@ class Provider(models.Model):
 
 
 class Review(models.Model):
-    author = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор', unique=True)
+    """Модель рецензии на кофейню"""
+    author = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор',
+                               unique=True)
     content = models.CharField('Содержание', max_length=500, default='Мы лучшие')
     time_created = models.TimeField('Время создания отзыва', auto_now_add=False, auto_now=False)
 
@@ -151,23 +162,29 @@ class Review(models.Model):
 
 
 class Order(models.Model):
+    """Модель заказа"""
     customer = models.ForeignKey(AUTH_USER_MODEL, related_name='customer', on_delete=models.CASCADE,
                                  verbose_name='Заказчик')
-    chosen_items = models.ManyToManyField(ItemsSlotOrder, blank=True, verbose_name="Выбранные продукты")
-    chosen_cafe = models.ForeignKey('AddressCafe', on_delete=models.CASCADE, verbose_name='Выбранное кафе')
+    chosen_items = models.ManyToManyField(ItemsSlotOrder, blank=True,
+                                          verbose_name="Выбранные продукты")
+    chosen_cafe = models.ForeignKey('AddressCafe', on_delete=models.CASCADE,
+                                    verbose_name='Выбранное кафе')
     type_of_delivery = models.CharField('Тип доставки', max_length=10, default='Самовывоз')
     # courier = models.ForeignKey(AUTH_USER_MODEL, related_name='courier', on_delete=models.CASCADE,
     #                            verbose_name='Курьер', unique=True, default=None)
-    chosen_delivery_address = models.ManyToManyField('AddressUser', blank=True, verbose_name='Выбранный адрес доставки')
+    chosen_delivery_address = models.ManyToManyField('AddressUser', blank=True,
+                                                     verbose_name='Выбранный адрес доставки')
     time_created = models.TimeField('Время создания заказа', auto_now_add=True, auto_now=False)
-    time_requested = models.TimeField('Время на выполнение заказа', default=datetime.now()+timedelta(minutes=20))
+    time_requested = models.TimeField('Время на выполнение заказа',
+                                      default=datetime.now()+timedelta(minutes=20))
     time_over = models.DateTimeField('Время завершения заказа', auto_now=True)
     is_over = models.BooleanField('Окончен ли заказ?', default=False)
 
     comment = models.CharField('Комментарий к заказу', max_length=500, default='лучший сервис')
 
     def __str__(self):
-        return "Заказ от " + str(self.customer) + " из " + str(self.chosen_cafe) + " время: " + str(self.time_created)
+        return "Заказ от " + str(self.customer) + " из " + str(self.chosen_cafe) + " время: " + \
+               str(self.time_created)
 
     class Meta:
         verbose_name = "Заказ"
@@ -175,10 +192,14 @@ class Order(models.Model):
 
 
 class Basket(models.Model):
-    customer = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Заказчик', unique=True)
-    chosen_items = models.ManyToManyField(ItemsSlotBasket, blank=True, verbose_name="Выбранные продукты")
+    """Модель корзины пользователя"""
+    customer = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Заказчик',
+                                 unique=True)
+    chosen_items = models.ManyToManyField(ItemsSlotBasket, blank=True,
+                                          verbose_name="Выбранные продукты")
 
     def all_cost(self):
+        """Подсчет всей стоимости корзины"""
         cost = 0
 
         for i in self.chosen_items.all():
@@ -195,7 +216,9 @@ class Basket(models.Model):
 
 
 class MyAccountManager(BaseUserManager):
+    """Менеджер аккаунтов пользователей, в частности, создание пользователей"""
     def create_user(self, email, first_name, last_name, password=None):
+        """Создание пользователя"""
         if not email:
             raise ValueError('Users must have an email address')
         if not first_name:
@@ -212,6 +235,7 @@ class MyAccountManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password):
+        """Создание суперпользователя"""
         user = self.create_user(
             email=self.normalize_email(email),
             password=password,
@@ -225,7 +249,13 @@ class MyAccountManager(BaseUserManager):
         return user
 
 
+def has_module_perms():
+    """Наличие частичного доступа"""
+    return True
+
+
 class Account(AbstractBaseUser):
+    """Кастомная модель юзера"""
     username = models.CharField(max_length=60, default='username')
     email = models.EmailField(verbose_name="Почта", max_length=60, unique=True)
     date_joined = models.DateTimeField(verbose_name='Дата регистрации', auto_now_add=True)
@@ -237,12 +267,14 @@ class Account(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     y = models.IntegerField('Прокрутка', default=0)
 
-    profile_picture = models.ImageField(null=True, blank=True, upload_to="profile_pictures", default=None)
+    profile_picture = models.ImageField(null=True, blank=True, upload_to="profile_pictures",
+                                        default=None)
 
     first_name = models.CharField('Имя', max_length=60, default='first_name')
     last_name = models.CharField('Фамилия', max_length=60, default='last_name')
 
-    user_basket = models.ManyToManyField(Basket, blank=True, verbose_name="Пользовательские корзины корзина")
+    user_basket = models.ManyToManyField(Basket, blank=True,
+                                         verbose_name="Пользовательские корзины корзина")
     chosen_address = models.ManyToManyField(AddressUser, blank=True, verbose_name="Выбранный адрес")
     phone_number = models.CharField('Номер телефона', max_length=13, default="89142185648")
 
@@ -256,8 +288,6 @@ class Account(AbstractBaseUser):
     def __str__(self):
         return self.email
 
-    def has_perm(self, perm, obj=None):
+    def has_perm(self):
+        """Проверка доступа(только админ имеет доступ)"""
         return self.is_admin
-
-    def has_module_perms(self, app_label):
-        return True

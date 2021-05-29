@@ -1,49 +1,58 @@
+"""Инициализация страничек в админ панели"""
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from kofe.models import Item, Provider, AddressUser, AddressCafe, Account, Order, Basket, Review, ItemsSlotOrder, \
-    ItemsSlotBasket, Volumes, Addons
+from kofe.models import Item, Provider, AddressUser, AddressCafe, Account, Order, Basket, Review, \
+    ItemsSlotOrder, ItemsSlotBasket, Volumes, Addons
 
 
 # Register your models here
 
 
 class ItemsSlotOrderInLine(admin.StackedInline):
+    """Создание структуры для предметов заказа"""
     model = ItemsSlotOrder
     extra = 0
 
 
 class ItemsSlotBasketInLine(admin.StackedInline):
+    """Создание структуры для предметов в корзине"""
     model = ItemsSlotBasket
     extra = 0
 
 
 class ItemsAddsInLine(admin.StackedInline):
+    """Создание структуры для добавок к предмету"""
     model = Addons
     extra = 1
 
 
 class ItemsVolumesInLine(admin.StackedInline):
+    """Создание структуры для объемов предмета"""
     model = Volumes
     extra = 1
 
 
 class ItemInLine(admin.StackedInline):
+    """Создание структуры для продукции кофейни"""
     model = Item
     extra = 0
 
 
 class CafeAddressesInLine(admin.StackedInline):
+    """Создание структуры для адресов кофейни"""
     model = AddressCafe
     extra = 0
 
 
 class UserBasketsInLine(admin.StackedInline):
+    """Создание структуры для отображения корзин(она всегда одна) пользователя"""
     model = Basket
     extra = 1
 
 
 class ItemAdmin(admin.ModelAdmin):
+    """Отображение продукта в админ панели"""
     fieldsets = [
         ('Название', {'fields': ['name']}),
         ('Описание', {'fields': ['description']}),
@@ -55,6 +64,7 @@ class ItemAdmin(admin.ModelAdmin):
 
 
 class Cafe(admin.ModelAdmin):
+    """Отображение кофейни в админ панели"""
     fieldsets = [
         ('Название', {'fields': ['name']}),
         ('Владелец', {'fields': ['owner']}),
@@ -65,6 +75,7 @@ class Cafe(admin.ModelAdmin):
 
 
 class OrderAdmin(admin.ModelAdmin):
+    """Отображение заказа в админ панели"""
     fieldsets = [
         ('Заказчик', {'fields': ['customer']}),
         ('Выбранное кафе', {'fields': ['chosen_cafe']}),
@@ -79,6 +90,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 class BasketAdmin(admin.ModelAdmin):
+    """Отображение корзины в админ панели"""
     fieldsets = [
         ('Заказчик', {'fields': ['customer']}),
     ]
@@ -86,6 +98,7 @@ class BasketAdmin(admin.ModelAdmin):
 
 
 class AccountAdmin(UserAdmin):
+    """Отображение аккаунта пользователя в админ панели"""
     list_display = ('email', 'username', 'date_joined', 'last_login', 'is_admin', 'is_staff')
     search_fields = ('email', 'username',)
     readonly_fields = ('date_joined', 'last_login')
