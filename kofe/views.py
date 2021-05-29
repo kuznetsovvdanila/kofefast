@@ -85,9 +85,9 @@ def index_page(request):
         if request.user.is_authenticated else None,
         'coffeeshops': Provider.objects.all()
         if flag_coffeeshops else None,
-        'food': products[0]
+        'food': products[1]
         if request.user.is_authenticated else None,
-        'drinks': products[1]
+        'drinks': products[0]
         if request.user.is_authenticated else None,
         'prvdr': chosen_items[0].good.provided
         if chosen_items else None,
