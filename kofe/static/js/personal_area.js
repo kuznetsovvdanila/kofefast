@@ -117,6 +117,10 @@ $('.addAnAddress').click(function(){
     $('.personInfo').removeClass('hidden');
 })
 $('.closeIt').click(function(){
+    $('.info').removeClass('move');
+    $('.infoOwner').removeClass('move');
+    $('.person').removeClass('hidden');
+    $('.personInfo').removeClass('hidden');
     $('.addressMenuProvider').removeClass('active');
     $('.itemEditForm').removeClass('active');
     $('.edit').removeClass('active');

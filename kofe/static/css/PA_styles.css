@@ -724,7 +724,7 @@ input[type='file'] {
         left: 1%;
     }
     .infoOwner.move {
-        top: 2030px;
+        top: 2100px;
     }
     .ownerInterface {
         justify-content: center;
@@ -815,12 +815,13 @@ input[type='file'] {
         position: absolute;
         left: 0;
         opacity: 0;
-        top: 400px;
+        top: 350px;
         z-index: 0;
         width: 100%;
         transition: .3s;
         padding: 0 0 0 10px;
         right: 0;
+        height: auto;
     }
     .edit.active {
         opacity: 1;
