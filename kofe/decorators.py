@@ -1,3 +1,4 @@
+"""Декораторы, обертывающие view функции с целью увеличения читаемости кода"""
 import functools
 
 from django.contrib.auth import login, authenticate
@@ -5,17 +6,22 @@ from django.shortcuts import redirect
 
 from kofe.models import Basket, Provider
 from kofe.post_actions import logout_user, set_prefer_address, change_basket, \
-    delete_prefer_address, add_address, user_changing_info, delete_an_address, clear_the_basket, make_an_order, \
-    change_item, delete_item, add_address_provider, delete_an_address_provider
+    delete_prefer_address, add_address, user_changing_info, delete_an_address, clear_the_basket, \
+    make_an_order, change_item, delete_item, add_address_provider, delete_an_address_provider
 
 
 def synchronize_owned_owner(func):
+    """Синхранизация бд для кофейнь и их владельцев"""
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         request = args[0]
 
         owned = request.user.owned_cafe.all()
         is_owner_in = Provider.objects.all().filter(owner=request.user)
+
+        for owned_one in owned:
+            if owned_one not in is_owner_in:
+                owned_one.owner.add(request.user)
 
         for cafe in is_owner_in:
             if cafe not in owned:
@@ -26,6 +32,7 @@ def synchronize_owned_owner(func):
 
 
 def check_admin_link(func):
+    """Проверка наличия GET запроса для входа в аккаунт"""
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         request = args[0]
@@ -38,7 +45,8 @@ def check_admin_link(func):
                 mail += '@gmail.com'
                 request.POST['email'] = mail
                 request.POST['password1'] = password
-                account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
+                account = authenticate(email=request.POST.get('email'),
+                                       password=request.POST.get('password1'))
                 if account:
                     login(request, account)
 
@@ -47,6 +55,7 @@ def check_admin_link(func):
 
 
 def add_user_buc(func):
+    """Добавление корзины для новых пользователей"""
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         user = args[0].user
@@ -62,6 +71,7 @@ def add_user_buc(func):
 
 
 def check_proms(func):
+    """Проверка на наличие доступа к странице"""
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         user = args[0].user
@@ -72,6 +82,7 @@ def check_proms(func):
 
 
 def check_POST(func):
+    """Проверка на наличие POST запросов и исполнение их"""
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         request = args[0]
