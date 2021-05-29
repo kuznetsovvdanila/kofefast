@@ -166,9 +166,9 @@ def calculate_color(item):
         t = remove_transparency(t)
         t.convert('RGB')
         t = t.resize((int(800 * t.width / t.height), 800))
-        t = ImageEnhance.Color(t).enhance(0.15)
+        t = ImageEnhance.Color(t).enhance(0.25)
         t_io = BytesIO()
-        t.save(t_io, 'JPEG')
+        t.save(t_io, 'JPEG', quality=100)
         t_result = File(t_io, name=list(item.preview.name.split('/'))[1])
         item.preview = t_result
 
