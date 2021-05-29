@@ -7,9 +7,9 @@ $('.ownerInterface').click(function(){
     if ($('.ownerInterface').hasClass('active')) {
         $('.addressMenuProvider').removeClass('active');
         $('.itemEditForm').removeClass('active');
+        $('.edit').removeClass('active');
         $('.info').removeClass('hidden');
         $('.infoOwner').addClass('hidden');
-        $('.edit').removeClass('active');
     }
     else {
         console.log('ae');
@@ -117,54 +117,16 @@ $('.addAnAddress').click(function(){
     $('.personInfo').removeClass('hidden');
 })
 $('.closeIt').click(function(){
-    if (menuItemOpen) {
-        $('.orders').addClass('active');
-        $('.cls').removeClass('active');
-        $('.itemEditForm').removeClass('active');
-        menuItemOpen = false;
-        $('.infoOwner').removeClass('move');
+    $('.addressMenuProvider').removeClass('active');
+    $('.itemEditForm').removeClass('active');
+    $('.edit').removeClass('active');
+    $('.addressMenu').removeClass('active');
+    if ($('.ownerInterface').hasClass('active')) {
         $('.infoOwner').removeClass('hidden');
     }
-    if (menuAddressCafeOpen) {
-        $('.addresses').addClass('active');
-        $('.opn').removeClass('active');
-        $('.itemEditForm').removeClass('active');
-        menuAddressCafeOpen = false;
-        $('.infoOwner').removeClass('move');
-        $('.infoOwner').removeClass('hidden');
+    else {
+        $('.info').removeClass('hidden');
     }
-    if ($('.addressMenuProvider').hasClass('active')) {
-        $('.addressMenuProvider').removeClass('active');
-        $('.infoOwner').removeClass('move');
-        $('.infoOwner').removeClass('hidden');
-    }
-    if ($('.itemEditForm').hasClass('active')) {
-        $('.infoOwner').removeClass('move');
-        $('.infoOwner').removeClass('hidden');
-        $('.itemEditForm').removeClass('active');
-    }
-    if ($('.edit').hasClass('active')) {
-        $('.info').removeClass('move');
-        $('.infoOwner').removeClass('move');
-        if (hdnChng == 'info') {
-            $('.info').removeClass('hidden');
-        }
-        if (hdnChng == 'infoOwner') {
-            $('.infoOwner').removeClass('hidden');
-        }
-        $('.edit').removeClass('active');
-    }
-    if ($('.addressMenu').hasClass('active')) {
-        if (hdn == 'info') {
-            $('.info').removeClass('hidden');
-        }
-        if (hdn == 'infoOwner') {
-            $('.infoOwner').removeClass('hidden');
-        }
-        $('.addressMenu').removeClass('active');
-    }
-    $('.person').removeClass('hidden');
-    $('.personInfo').removeClass('hidden');
 })
 $('.photo').click(function(){
     if ($('.info').hasClass('hidden')) {
@@ -174,6 +136,7 @@ $('.photo').click(function(){
         hdnChng = 'info';
     }
     $('.addressMenu').removeClass('active');
+    $('.itemEditForm').removeClass('active');
     $('.edit').addClass('active');
     $('.info').addClass('hidden');
     $('.infoOwner').addClass('hidden');
