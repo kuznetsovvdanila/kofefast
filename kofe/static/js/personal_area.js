@@ -9,8 +9,10 @@ $('.ownerInterface').click(function(){
         $('.itemEditForm').removeClass('active');
         $('.info').removeClass('hidden');
         $('.infoOwner').addClass('hidden');
+        $('.edit').removeClass('active');
     }
     else {
+        console.log('ae');
         $('.edit').removeClass('active');
         $('.addressMenu').removeClass('active');
         $('.infoOwner').removeClass('hidden');
