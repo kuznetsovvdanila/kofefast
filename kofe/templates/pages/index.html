@@ -299,7 +299,7 @@
                     </div>
                     <hr class="line">
                     <div style="width: 85%; margin-bottom: 0;">
-                        <form method="POST" class="makeAnOrder flex clmn">
+                        <form method="POST" class="makeAnOrder flex clmn" id="orderMaking">
                             <input name="action_type" type="text" value="makeAnOrder" style="display: none;">
                             <div class="flex btw" style="flex-wrap: wrap;">
                                 <div class="flex clmn">
@@ -335,8 +335,8 @@
                                         Получить:
                                     </div>
                                     <div class="flex clmn rdo">
-                                        <span class="flex vCenter"><input type="radio" name="time" value="0" checked>Как можно скорее</span>
-                                        <span class="flex vCenter"><input type="radio" name="time" value=""><input style="margin: 0;" id="timeInput" type="text" value="12:00"></span>
+                                        <span class="flex vCenter"><input class="pointer ch" type="radio" id="fast" name="time" value="0" checked>Как можно скорее</span>
+                                        <span class="flex vCenter"><input class="pointer" type="radio" id="to_time" name="time" value="1">В&nbsp;<input style="margin: 0;" id="timeInput" type="text" value="" name="time_requested"></span>
                                     </div>
                                 </div>
                             </div>
@@ -349,7 +349,7 @@
                                 </div>
                                 <div style="">
                                     {% csrf_token %}
-                                    <input class="makeAnOrderButton pointer" type="submit" value="Заказать">
+                                    <input id="takeAnOrder" class="makeAnOrderButton pointer" type="submit" value="Заказать">
                                 </div>
                             </div>
                         </form>
@@ -558,7 +558,7 @@
         <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://snipp.ru/cdn/maskedinput/jquery.maskedinput.min.js"></script>
         <script>
-            $('#timeInput').mask('99:99', {placeholder: '12:00'});
+            $('#timeInput').mask('99.99', {placeholder: '00.00'});
         </script>
 
 

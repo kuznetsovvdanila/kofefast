@@ -1,4 +1,5 @@
 import smtplib
+import datetime
 from email.header import Header
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -146,8 +147,9 @@ def delete_an_address(request):
 
 
 def make_an_order(request):
-    order = ''
 
+    order = ''
+    """
     # Инициализация
     env = Env()
     env.read_env()
@@ -166,7 +168,7 @@ def make_an_order(request):
     msg['From'] = sender_mail
     msg['To'] = target_mail
     msg.add_header('reply-to', sender_mail)
-
+    """
     user = request.user
     user.y = 0
     user.save()
@@ -188,6 +190,10 @@ def make_an_order(request):
     else:
         current_order.type_of_delivery = 'Самовывоз'
 
+    if request.POST.get('time') == '1':
+        if int(request.POST.get('time_requested')[:2]) < 24 and int(request.POST.get('time_requested')[3:]) < 60:
+            current_order.time_requested = datetime.time(hour=int(request.POST.get('time_requested')[:2]), minute=int(request.POST.get('time_requested')[3:]))
+
     current_order.save()
 
     for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
@@ -196,7 +202,7 @@ def make_an_order(request):
         order += str(i)
         order += ', '
         current_order.chosen_items.add(i)
-
+    """
     # отправка сообщения на почту
     mail_subject = f'Информация о заказе пользователя {request.user}'
     mail_body_text = 'Заказ: ' + order + f'Тип доставки: {current_order.type_of_delivery}; ' + \
@@ -207,7 +213,7 @@ def make_an_order(request):
     mailsender.sendmail(sender_mail, target_mail, msg.as_string())
     mailsender.quit()
     ##
-
+    """
     current_order.save()
     clear_the_basket(request)
 

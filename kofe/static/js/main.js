@@ -1,9 +1,52 @@
+var current_time = new Date;
+var hours = current_time.getHours();
+var minutes = current_time.getMinutes() + 25;
+var sHours = '';
+var sMinutes = '';
+if (minutes > 59) {
+    minutes = minutes - 60;
+    hours = hours + 1;
+}
+if (hours < 10) {
+    sHours = '0' + String(hours);
+}
+else {
+    sHours = String(hours);
+}
+if (minutes < 10) {
+    sMinutes = '0' + String(minutes);
+}
+else {
+    sMinutes = String(minutes);
+}
+document.getElementById('timeInput').value = sHours + '.' + sMinutes;
+document.getElementById('timeInput').oninput = function () {
+    if (Number(this.value[0] + this.value[1] + this.value[3] + this.value[4]) > 2359) {
+        document.getElementById('takeAnOrder').disabled = true;
+    }
+    else {
+        document.getElementById('takeAnOrder').disabled = false;
+    }
+}
+if ($('#to_time').hasClass('ch')) {
+    if (Number(document.getElementById('timeInput').value[0] + document.getElementById('timeInput').value[1] + document.getElementById('timeInput').value[3] + document.getElementById('timeInput').value[4]) > 2359) {
+        console.log('yeet');
+    }
+}
 $('.addToBasket').click(function(){
     var elements = document.getElementsByClassName('user_y');
     for (var i = 0; i < elements.length; i++) {
         elements[i] = 0;
         elements[i].value = parseInt(window.pageYOffset);
     }
+})
+$('#to_time').click(function() {
+    $('#to_time').addClass('ch');
+    $('#fast').removeClass('ch');
+})
+$('#fast').click(function() {
+    $('#to_time').removeClass('ch');
+    $('#fast').addClass('ch');
 })
 $('.arrowMobile').click(function(){
     $('.arrow').toggleClass('active');
