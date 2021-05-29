@@ -99,7 +99,7 @@ def collect_relevant_coffeeshops(request, user_adrs):
 
 
 def collect_relevant_addresses(request, user_addresses, cafe_addresses, chosen_one):
-    """Нахождение адресов кофейни, находящихся в радиусе 1 км"""
+    """Нахождение адресов пользоватея, находящихся в радиусе 1 км от адреса выбранной кофейни"""
     addresses = []
     if chosen_one:
         addresses.append(chosen_one)

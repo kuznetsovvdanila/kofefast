@@ -144,6 +144,6 @@ def personal_area_page(request):
 
 
 def logoutUser(request):
-    """Неюзаемая функция, без нее ничего не работает, но ее не используют нигде"""
+    """Выход из аккаунта"""
     logout(request)
     return redirect('index')
