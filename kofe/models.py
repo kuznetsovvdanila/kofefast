@@ -283,10 +283,10 @@ class Account(AbstractBaseUser):
     def __str__(self):
         return self.email
 
-    def has_perm(self):
+    def has_perm(self, perm, obj=None):
         """Проверка доступа(только админ имеет доступ)"""
         return self.is_admin
 
-    def has_module_perms(self):
+    def has_module_perms(self, app_label):
         """Наличие частичного доступа"""
         return True
