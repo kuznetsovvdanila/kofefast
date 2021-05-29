@@ -1,16 +1,12 @@
+import time
 from io import BytesIO
-from math import sqrt
 
-import numpy as np
 from PIL import Image, ImageEnhance
 from django.core.files import File
-
-from kofe.models import AddressUser, Provider, ItemsSlotBasket, AddressCafe, Order
-
 from geopy import Nominatim
 from geopy import distance
 
-import time
+from kofe.models import AddressUser, Provider, ItemsSlotBasket, AddressCafe, Order
 
 
 def collect_addresses(request):
@@ -53,7 +49,8 @@ def collect_relevant_coffeeshops(request, user_adrs):
                     except:
                         time.sleep(1)
                         coffeeshop_location = geolocator.geocode(coffeeshop_address)
-                    if distance.distance((user_location.longitude, user_location.latitude), (coffeeshop_location.longitude, coffeeshop_location.latitude)).m < 1000:
+                    if distance.distance((user_location.longitude, user_location.latitude),
+                                         (coffeeshop_location.longitude, coffeeshop_location.latitude)).m < 1000:
                         coffeeshops.append(adrs.owner)
                         cafe_addresses.append(adrs)
             else:
@@ -61,9 +58,7 @@ def collect_relevant_coffeeshops(request, user_adrs):
     return coffeeshops, cafe_addresses
 
 
-def collect_relevant_addresses(request, user_addresses, provider, cafe_addresses, chosen_one):
-    relevant_addresses = []
-    coffeeshop = provider
+def collect_relevant_addresses(request, user_addresses, cafe_addresses, chosen_one):
     addresses = []
     if chosen_one:
         addresses.append(chosen_one)
@@ -77,7 +72,8 @@ def collect_relevant_addresses(request, user_addresses, provider, cafe_addresses
             coffeeshop_location = geolocator.geocode(coffeeshop_address)
         for user_address in user_addresses:
             if chosen_one:
-                if str(user_address.city) + str(user_address.street) + str(user_address.house) != str(chosen_one.city) + str(chosen_one.street) + str(chosen_one.house):
+                if str(user_address.city) + str(user_address.street) + str(user_address.house)\
+                        != str(chosen_one.city) + str(chosen_one.street) + str(chosen_one.house):
                     try:
                         user_location = geolocator.geocode(user_address)
                     except:
@@ -102,7 +98,8 @@ def collect_items(request, chosen_items):
     def set_count(current_item):
         found = None
         if request.user.is_authenticated:
-            found = ItemsSlotBasket.objects.all().filter(good=current_item, basket_connection=request.user.basket_set.all()[0])
+            found = ItemsSlotBasket.objects.all().filter(good=current_item,
+                                                         basket_connection=request.user.basket_set.all()[0])
         if found:
             current_item.count = found[0].count
         else:
@@ -111,8 +108,8 @@ def collect_items(request, chosen_items):
     for provider in providers:
         for item in provider.item_set.all():
             set_count(item)
-            item.volumes = item.volumes_set.all()
-            item.addons = item.addons_set.all()
+            item.volumes = item.other_volumes.all()
+            item.addons = item.additions.all()
             if item.not_has_color:
                 calculate_color(item)
             if chosen_items:

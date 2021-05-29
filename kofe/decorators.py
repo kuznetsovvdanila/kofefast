@@ -2,10 +2,26 @@ import functools
 
 from django.shortcuts import redirect
 
-from kofe.models import Basket
-from kofe.post_actions import login_user, registration_user, logout_user, set_prefer_address, change_basket, \
+from kofe.models import Basket, Provider
+from kofe.post_actions import login_user, logout_user, set_prefer_address, change_basket, \
     delete_prefer_address, add_address, user_changing_info, delete_an_address, clear_the_basket, make_an_order, \
     change_item, delete_item, add_address_provider, delete_an_address_provider
+
+
+def synchronize_owned_owner(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        request = args[0]
+
+        owned = request.user.owned_cafe.all()
+        is_owner_in = Provider.objects.all().filter(owner=request.user)
+
+        for cafe in is_owner_in:
+            if cafe not in owned:
+                request.user.owned_cafe.add(cafe)
+
+        return func(*args, **kwargs)
+    return wrapper
 
 
 def check_admin_link(func):
@@ -59,8 +75,8 @@ def check_POST(func):
     def wrapper(*args, **kwargs):
         request = args[0]
         actions = {
-            'authen': login_user,
-            #'registr': registration_user,
+            # 'authen': login_user,
+            # 'registr': registration_user,
             'logout': logout_user,
             'prefer_address': set_prefer_address,
             'delete_prefer_address': delete_prefer_address,

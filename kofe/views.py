@@ -1,25 +1,13 @@
-import functools
 import re
-from io import BytesIO
-
-from django.contrib import messages
 
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django.core.files import File
 from django.shortcuts import render, redirect
 
-from PIL import Image
-import numpy as np
-from geopy import Nominatim
-
-from kofe.additional_func import calculate_color, collect_items, collect_addresses, collect_relevant_coffeeshops, \
+from kofe.additional_func import collect_items, collect_addresses, collect_relevant_coffeeshops, \
     collect_orders, collect_relevant_addresses
-from kofe.decorators import add_user_buc, check_POST, check_proms, check_admin_link
+from kofe.decorators import add_user_buc, check_POST, check_proms, check_admin_link, synchronize_owned_owner
 from kofe.forms import RegistrationForm
-from kofe.models import Provider, AddressUser, AddressCafe, ItemsSlotBasket, Basket, Item, Account
+from kofe.models import Provider, AddressUser, AddressCafe, ItemsSlotBasket, Account
 
 context = {}
 registration_error = False
@@ -29,6 +17,7 @@ dif_passwords = False
 weak_password = False
 
 login_error = False
+
 
 @check_admin_link
 @add_user_buc
@@ -103,12 +92,10 @@ def index_page(request):
     chosen_items = []
     addresses = collect_addresses(request)
     coffeeshops = Provider.objects.all()
-    cafe_addresses = AddressCafe.objects.all()
     chosen_address_raw = []
-    production = []
-    flagCoffeeshops = False
-    flagCA = False
-    CA = None
+    flag_coffeeshops = False
+    flag_ca = False
+    ca = None
 
     if request.user.is_authenticated:
         if ItemsSlotBasket.objects.all():
@@ -118,9 +105,9 @@ def index_page(request):
 
     if request.user.is_authenticated:
         if request.user.chosen_address:
-            flagCoffeeshops = True
+            flag_coffeeshops = True
 
-    if flagCoffeeshops:
+    if flag_coffeeshops:
         adrs_user = request.user.chosen_address.all()
         coffeeshops, cafe_addresses = collect_relevant_coffeeshops(request, adrs_user)
 
@@ -130,19 +117,22 @@ def index_page(request):
                 coffeeshop = request.user.user_basket.all()[0].chosen_items.all()[0].good.provided
                 user_addresses = AddressUser.objects.all().filter(owner=request.user)
                 chosen_one = request.user.chosen_address.all()[0] if request.user.chosen_address.all() else None
-                addresses = collect_relevant_addresses(request, user_addresses, coffeeshop, AddressCafe.objects.all().filter(owner=coffeeshop), chosen_one)
+                addresses = collect_relevant_addresses(request,
+                                                       user_addresses,
+                                                       AddressCafe.objects.all().filter(owner=coffeeshop),
+                                                       chosen_one)
         if request.user.chosen_address:
             if request.user.chosen_address.all():
-                flagCA = True
+                flag_ca = True
         if request.user.chosen_address.all():
             chosen_address_raw = request.user.chosen_address.all()
 
-    if flagCA:
-        CA = request.user.chosen_address.all()[0]
+    if flag_ca:
+        ca = request.user.chosen_address.all()[0]
 
     context = {
         'addresses': addresses if request.user.is_authenticated else None,
-        'coffeeshops': coffeeshops if flagCoffeeshops else None,
+        'coffeeshops': coffeeshops if flag_coffeeshops else None,
         'providers': coffeeshops,
         'food': eatable if request.user.is_authenticated else None,
         'drinks': drinkable if request.user.is_authenticated else None,
@@ -151,7 +141,7 @@ def index_page(request):
         'prvdr': chosen_items[0].good.provided if chosen_items else None,
         'basket': request.user.basket_set.all()[0] if request.user.is_authenticated and ItemsSlotBasket.objects.all() else None,
         'chosen_address_raw': chosen_address_raw,
-        'chosen_address': CA if flagCA else None,
+        'chosen_address': ca if flag_ca else None,
         'email_exists': email_exists,
         'number_exists': number_exists,
         'dif_passwords': dif_passwords,
@@ -163,6 +153,7 @@ def index_page(request):
 
 
 @check_proms
+@synchronize_owned_owner
 @check_POST
 def personal_area_page(request):
     global context
