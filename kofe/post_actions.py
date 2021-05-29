@@ -16,6 +16,12 @@ from kofe.models import AddressUser, ItemsSlotBasket, Item, Account, Order, Item
 
 from PIL import Image
 
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.header import Header
+
+from environs import Env
 
 def login_user(request):
     account = authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
@@ -184,6 +190,72 @@ def delete_an_address(request):
 
 
 def make_an_order(request):
+    order = ''
+    ############    Инициализация   ###########
+    env = Env()
+    env.read_env()
+    sender_mail = env.str('sender_mail')
+    sender_password = env.str('password')
+    target_mail = "just1fun@gmail.com"
+
+    ########### Настройка протокола, по которому будет передаваться сообщение
+    mailsender = smtplib.SMTP('smtp.gmail.com', 587)
+    mailsender.starttls()
+    mailsender.login(sender_mail, sender_password)
+
+
+    ########### Информация о заказе ###############
+    subject = 'Информация о заказе'
+    msg = MIMEMultipart()
+    msg['From'] = sender_mail
+    msg['To'] = target_mail
+    msg.add_header('reply-to', sender_mail)
+
+
+
+    user = request.user
+    user.y = 0
+    user.save()
+    provider = user.basket_set.all()[0].chosen_items.all()[0].good.provided
+    current_order = Order(customer=user,
+                          comment=request.POST.get('comment'))
+
+    adrs_user = request.user.chosen_address.all()
+    coffeeshops, cafe_addresses = collect_relevant_coffeeshops(request, adrs_user)
+
+    for adrs in cafe_addresses:
+        if adrs.owner == provider:
+            current_order.chosen_cafe = adrs
+
+    if request.user.chosen_address.all():
+        current_order.chosen_delivery_address.add(request.user.chosen_address.all()[0])
+    else:
+        current_order.type_of_delivery = 'Самовывоз'
+
+    current_order.save()
+
+    for item in ItemsSlotBasket.objects.all().filter(basket_connection=request.user.basket_set.all()[0]):
+        i = ItemsSlotOrder(count=item.count, good=item.good, order_connection=current_order)
+        i.save()
+        order += str(i)
+        order += ', '
+        current_order.chosen_items.add(i)
+
+
+    ########    отправка сообщения на почту ##########
+    mail_subject = f'Информация о заказе пользователя {request.user}'
+    mail_body_text = 'Заказ: ' + order + f'Тип доставки: {current_order.type_of_delivery}; ' + f'Время оформления заказа: {current_order.time_created}; ' + f'Сообщение к заказу: {current_order.comment}'
+    msg = MIMEText(mail_body_text, 'html', 'utf-8')
+    msg['Subject'] = Header(mail_subject, 'utf-8')
+    mailsender.sendmail(sender_mail, target_mail, msg.as_string())
+    mailsender.quit()
+    ##
+
+    current_order.save()
+    clear_the_basket(request)
+
+"""
+def make_an_order(request):
     user = request.user
     user.y = 0
     user.save()
@@ -211,7 +283,7 @@ def make_an_order(request):
         current_order.chosen_items.add(i)
     current_order.save()
     clear_the_basket(request)
-
+"""
 
 def delete_item(request):
     request.user.y = 0
