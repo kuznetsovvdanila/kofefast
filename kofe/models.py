@@ -249,11 +249,6 @@ class MyAccountManager(BaseUserManager):
         return user
 
 
-def has_module_perms():
-    """Наличие частичного доступа"""
-    return True
-
-
 class Account(AbstractBaseUser):
     """Кастомная модель юзера"""
     username = models.CharField(max_length=60, default='username')
@@ -291,3 +286,7 @@ class Account(AbstractBaseUser):
     def has_perm(self):
         """Проверка доступа(только админ имеет доступ)"""
         return self.is_admin
+
+    def has_module_perms(self):
+        """Наличие частичного доступа"""
+        return True
