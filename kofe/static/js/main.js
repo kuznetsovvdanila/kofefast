@@ -19,15 +19,17 @@ if (minutes < 10) {
 else {
     sMinutes = String(minutes);
 }
-document.getElementById('timeInput').value = sHours + '.' + sMinutes;
-document.getElementById('timeInput').oninput = function () {
-    if (Number(this.value[0] + this.value[1] + this.value[3] + this.value[4]) > 2359) {
-        document.getElementById('takeAnOrder').disabled = true;
-    }
-    else {
-        document.getElementById('takeAnOrder').disabled = false;
-    }
+if (document.getElementById('timeInput')) {
+    document.getElementById('timeInput').value = sHours + '.' + sMinutes;
 }
+//document.getElementById('timeInput').oninput = function () {
+//    if (Number(this.value[0] + this.value[1] + this.value[3] + this.value[4]) > 2359) {
+//        document.getElementById('takeAnOrder').disabled = true;
+//    }
+//    else {
+//        document.getElementById('takeAnOrder').disabled = false;
+//    }
+//}
 if ($('#to_time').hasClass('ch')) {
     if (Number(document.getElementById('timeInput').value[0] + document.getElementById('timeInput').value[1] + document.getElementById('timeInput').value[3] + document.getElementById('timeInput').value[4]) > 2359) {
         console.log('yeet');
