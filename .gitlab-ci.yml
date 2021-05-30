@@ -1,5 +1,10 @@
 image: python:latest
 
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache"
+
+
 cache:
   paths:
     - ~/.cache/pip/
@@ -13,7 +18,7 @@ pep8:
   before_script:
     - pip install -r requirements.txt
   script:
-    - pycodestyle --ignore=E501,E722,E126,C0326 . --statistics
+    - pycodestyle --ignore=E501,E722,E126 . --exclude=forms.py --statistics
   allow_failure: true
   tags:
     - django
