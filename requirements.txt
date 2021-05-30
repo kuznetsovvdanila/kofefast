@@ -7,3 +7,4 @@ environs>=9.3.2
 pylint
 sphinx
 pycodestyle
+pylint_django
