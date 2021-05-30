@@ -19,6 +19,7 @@ pep8:
       - public/pycodestyle.txt
   only:
     - develop
+    - master
   
 pylint:
     stage: style
@@ -33,4 +34,5 @@ pylint:
         - public/pylint.html
     only:
         - develop
+        - master
 
