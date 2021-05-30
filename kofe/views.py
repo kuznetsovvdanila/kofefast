@@ -7,7 +7,7 @@ from kofe.additional_func import collect_items, collect_addresses, collect_relev
 from kofe.decorators import add_user_buc, check_POST, check_proms, check_admin_link, \
     synchronize_owned_owner
 from kofe.forms import RegistrationForm
-from kofe.models import Provider, AddressCafe, ItemsSlotBasket
+from kofe.models import AddressCafe, ItemsSlotBasket
 
 
 def registration_user(request):

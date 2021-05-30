@@ -188,9 +188,11 @@ def make_an_order(request):
         current_order.type_of_delivery = 'Самовывоз'
 
     if request.POST.get('time') == '1':
-        if int(request.POST.get('time_requested')[:2]) < 24 and int(request.POST.get('time_requested')[3:]) < 60:
-            current_order.time_requested = datetime.time(hour=int(request.POST.get('time_requested')[:2]),
-                                                         minute=int(request.POST.get('time_requested')[3:]))
+        if int(request.POST.get('time_requested')[:2]) < 24 and \
+                int(request.POST.get('time_requested')[3:]) < 60:
+            current_order.time_requested = datetime.\
+                time(hour=int(request.POST.get('time_requested')[:2]),
+                     minute=int(request.POST.get('time_requested')[3:]))
 
     current_order.save()
 
