@@ -287,6 +287,7 @@ class Account(AbstractBaseUser):
         """Проверка доступа(только админ имеет доступ)"""
         return self.is_admin
 
-    def has_module_perms(self, app_label):
+    @staticmethod
+    def has_module_perms(app_label):
         """Наличие частичного доступа"""
         return True

@@ -64,7 +64,7 @@ def collect_orders(request):
 
 
 def collect_relevant_coffeeshops(request, user_adrs):
-    """Нахождение близких к пользователю кофейнь"""
+    """Нахождение близких к пользователю кофеен"""
     coffeeshops = Provider.objects.all()
     cafe_addresses = AddressCafe.objects.all()
     geolocator = Nominatim(user_agent="kofefast")

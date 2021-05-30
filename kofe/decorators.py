@@ -11,7 +11,7 @@ from kofe.post_actions import logout_user, set_prefer_address, change_basket, \
 
 
 def synchronize_owned_owner(func):
-    """Синхранизация бд для кофейнь и их владельцев"""
+    """Синхранизация бд для кофеен и их владельцев"""
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         request = args[0]

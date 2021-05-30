@@ -26,9 +26,9 @@ def registration_user(request):
         phone_number = form.cleaned_data.get('phone_number')
         account = authenticate(email=email, password=raw_password, phone_number=phone_number)
         login(request, account)
-        return redirect('index')
-    return {'email_exists': email_exists, 'number_exists': number_exists,
-            'dif_passwords': dif_passwords, 'weak_password': weak_password}, registration_error
+        return [redirect('index')]
+    return [{'email_exists': email_exists, 'number_exists': number_exists,
+            'dif_passwords': dif_passwords, 'weak_password': weak_password}, registration_error]
 
 
 def login_user(request):
@@ -54,7 +54,12 @@ def index_page(request):
         if request.POST.get('action_type') == 'authen':
             login_error = login_user(request)
         elif request.POST.get('action_type') == 'registr':
-            errors, registration_error = registration_user(request)
+            t = registration_user(request)
+            if len(t) == 1:
+                return t[0]
+            else:
+                errors = t[0]
+                registration_error = t[1]
 
     # инициализация переменных
     chosen_items = chosen_address_raw = coffeeshops = []
@@ -70,7 +75,7 @@ def index_page(request):
                 chosen_items.append(item)
         products = collect_items(request, chosen_items)
 
-        # логика отображения кофейнь
+        # логика отображения кофеен
         flag_coffeeshops = request.user.chosen_address
         if flag_coffeeshops:
             flag_ca = request.user.chosen_address.all()
@@ -83,7 +88,7 @@ def index_page(request):
     context = {
         'addresses': collect_addresses(request)
         if request.user.is_authenticated else None,
-        'coffeeshops': Provider.objects.all()
+        'coffeeshops': coffeeshops
         if flag_coffeeshops else None,
         'food': products[1]
         if request.user.is_authenticated else None,
