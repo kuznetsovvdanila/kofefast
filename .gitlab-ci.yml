@@ -6,33 +6,49 @@ cache:
 
 stages:
     - style
+    - docs
 
 pep8:
   stage: style
   before_script:
-    - pip install -r ci/pycodestyle/requirements.txt
-    - chmod +x ci/pycodestyle/runner.sh
+    - pip install -r requirements.txt
   script:
-    - ./ci/pycodestyle/runner.sh
-  artifacts:
-    paths:
-      - public/pycodestyle.txt
-  only:
-    - develop
-    - master
+    - pycodestyle . --statistics
+  allow_failure: true
+  tags:
+    - django
+
   
 pylint:
-    stage: style
-    before_script:
-    - pip install -r ci/pylint/requirements.txt
-    - chmod +x ci/pylint/runner.sh
-    script:
-    - ./ci/pylint/runner.sh
-    artifacts:
-      paths:
-        - public/pylint.svg
-        - public/pylint.html
-    only:
-        - develop
-        - master
+  stage: style
+  before_script:
+    - pip install -r requirements.txt
+    - pip install pylint pylint-exit anybadge
+  script:
+    - mkdir ./pylint
+    - echo "" > __init__.py
+    - pylint kofe kofeFast --ignore=migrations --disable=C0103,C0304 | tee ./pylint/pylint.log || pylint-exit $?
+    - PYLINT_SCORE=$(sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' ./pylint/pylint.log)
+    - anybadge --label=Pylint --file=pylint/pylint.svg --value=$PYLINT_SCORE 2=red 4=orange 8=yellow 10=green
+    - echo "Pylint score is $PYLINT_SCORE"
+  artifacts:
+    paths:
+      - ./pylint/
+  tags:
+    - django
 
+sphinx:
+  stage: docs
+  before_script:
+    - pip install -r requirements.txt
+    - mkdir public
+  script:
+    - cd docs
+    - make html
+    - cd ..
+    - mv docs/build/html public/docs
+  artifacts:
+    paths:
+      - public/docs
+  tags:
+    - django
