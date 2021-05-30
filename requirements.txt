@@ -8,3 +8,4 @@ pylint
 sphinx
 pycodestyle
 pylint_django
+prospector

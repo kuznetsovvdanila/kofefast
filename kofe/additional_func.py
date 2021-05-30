@@ -80,8 +80,7 @@ def collect_relevant_coffeeshops(request, user_adrs):
         if request.user.is_authenticated:
             if user_location:
                 for adrs in AddressCafe.objects.all():
-                    coffeeshop_address = str(adrs.city) + ', ' + \
-                                         str(adrs.street) + ', ' + \
+                    coffeeshop_address = str(adrs.city) + ', ' + str(adrs.street) + ', ' + \
                                          str(adrs.house)
                     try:
                         coffeeshop_location = geolocator.geocode(coffeeshop_address)
@@ -105,8 +104,7 @@ def collect_relevant_addresses(request, user_addresses, cafe_addresses, chosen_o
         addresses.append(chosen_one)
     geolocator = Nominatim(user_agent="kofefast")
     for cafe_address in cafe_addresses:
-        coffeeshop_address = str(cafe_address.city) + ', ' + \
-                             str(cafe_address.street) + ', ' + \
+        coffeeshop_address = str(cafe_address.city) + ', ' + str(cafe_address.street) + ', ' + \
                              str(cafe_address.house)
         try:
             coffeeshop_location = geolocator.geocode(coffeeshop_address)

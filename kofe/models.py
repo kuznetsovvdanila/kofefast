@@ -176,7 +176,7 @@ class Order(models.Model):
                                                      verbose_name='Выбранный адрес доставки')
     time_created = models.TimeField('Время создания заказа', auto_now_add=True, auto_now=False)
     time_requested = models.TimeField('Время на выполнение заказа',
-                                      default=datetime.now()+timedelta(minutes=20))
+                                      default=datetime.now() + timedelta(minutes=20))
     time_over = models.DateTimeField('Время завершения заказа', auto_now=True)
     is_over = models.BooleanField('Окончен ли заказ?', default=False)
 
