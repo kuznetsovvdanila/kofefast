@@ -74,7 +74,7 @@ def index_page(request):
                 coffeeshop = request.user.user_basket.all()[0].chosen_items.all()[0].good.provided
                 user_addresses = AddressUser.objects.all().filter(owner=request.user)
                 chosen_one = request.user.chosen_address.all()[0] if request.user.chosen_address.all() else None
-                addresses = collect_relevant_addresses(request, user_addresses, coffeeshop, AddressCafe.objects.all().filter(owner=coffeeshop), chosen_one)
+                addresses = collect_relevant_addresses(request, user_addresses, AddressCafe.objects.all().filter(owner=coffeeshop), chosen_one)
 
         if ItemsSlotBasket.objects.all():
             for item in ItemsSlotBasket.objects.all().\

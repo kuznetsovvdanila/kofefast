@@ -92,10 +92,6 @@ def collect_relevant_coffeeshops(request, user_adrs):
                             (coffeeshop_location.longitude, coffeeshop_location.latitude)).m < 1000:
                         coffeeshops.append(adrs.owner)
                         cafe_addresses.append(adrs)
-
-                    print(distance.distance(
-                        (user_location.longitude, user_location.latitude),
-                        (coffeeshop_location.longitude, coffeeshop_location.latitude)))
             else:
                 cafe_addresses = coffeeshops
     return coffeeshops, cafe_addresses
