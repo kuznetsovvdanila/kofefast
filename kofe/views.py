@@ -3,11 +3,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 
 from kofe.additional_func import collect_items, collect_addresses, collect_relevant_coffeeshops, \
-    collect_orders, collect_errors
+    collect_orders, collect_errors, collect_relevant_addresses
 from kofe.decorators import add_user_buc, check_POST, check_proms, check_admin_link, \
     synchronize_owned_owner
 from kofe.forms import RegistrationForm
-from kofe.models import AddressCafe, ItemsSlotBasket
+from kofe.models import AddressCafe, ItemsSlotBasket, AddressUser
 
 
 def registration_user(request):
@@ -69,6 +69,13 @@ def index_page(request):
 
     if request.user.is_authenticated:
         # составление всех продуктов и предметов в корзине
+        if AddressUser.objects.all().filter(owner=request.user):
+            if request.user.user_basket.all()[0].chosen_items.all():
+                coffeeshop = request.user.user_basket.all()[0].chosen_items.all()[0].good.provided
+                user_addresses = AddressUser.objects.all().filter(owner=request.user)
+                chosen_one = request.user.chosen_address.all()[0] if request.user.chosen_address.all() else None
+                addresses = collect_relevant_addresses(request, user_addresses, coffeeshop, AddressCafe.objects.all().filter(owner=coffeeshop), chosen_one)
+
         if ItemsSlotBasket.objects.all():
             for item in ItemsSlotBasket.objects.all().\
                     filter(basket_connection=request.user.basket_set.all()[0]):
