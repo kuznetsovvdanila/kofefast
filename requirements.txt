@@ -9,3 +9,4 @@ sphinx
 pycodestyle
 pylint_django
 prospector
+wrapt
