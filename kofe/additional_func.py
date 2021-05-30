@@ -97,7 +97,7 @@ def collect_relevant_coffeeshops(request, user_adrs):
     return coffeeshops, cafe_addresses
 
 
-def collect_relevant_addresses(request, user_addresses, cafe_addresses, chosen_one):
+def collect_relevant_addresses(request, user_addresses, provider, cafe_addresses, chosen_one):
     """Нахождение адресов пользоватея, находящихся в радиусе 1 км от адреса выбранной кофейни"""
     addresses = []
     if chosen_one:
@@ -130,6 +130,7 @@ def collect_relevant_addresses(request, user_addresses, cafe_addresses, chosen_o
                         (user_location.longitude, user_location.latitude),
                         (coffeeshop_location.longitude, coffeeshop_location.latitude)).m < 1000:
                     addresses.append(user_address)
+    print(addresses)
     return addresses
 
 

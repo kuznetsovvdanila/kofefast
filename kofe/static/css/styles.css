@@ -616,9 +616,6 @@ option:not(:checked) {
     max-width: 70%;
     width: 70%;
 }
-
-
-
 .inside {
     max-width: 20%;
     margin: 0 !important;
@@ -641,7 +638,11 @@ option:not(:checked) {
     transition: .2s;
     font-weight: bolder !important;
 }
-
+.tgIcon {
+    width: 50px;
+    height: 50px;
+    background-image: url('../img/telegram.png');
+}
 .topMenuNotMobile {
     display: flex;
     display: flex;
