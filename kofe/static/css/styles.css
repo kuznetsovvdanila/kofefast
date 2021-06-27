@@ -94,7 +94,11 @@ textarea {
     justify-content: space-between;
     padding: 15px 30px 0 30px;
     height: 100px;
-    align-items: center;
+    align-items: flex-start;
+}
+.topMenu > div:last-child {
+    position: relative;
+    top: 15px;
 }
 .logo {
     font-size: 3.5em;
@@ -645,7 +649,6 @@ option:not(:checked) {
 }
 .topMenuNotMobile {
     display: flex;
-    display: flex;
     justify-content: space-around;
     align-items: center;
     width: 540px;
@@ -791,6 +794,9 @@ option:not(:checked) {
         width: auto;
         border-radius: 60px;
         font-size: 2em !important;
+    }
+    .topMenuResizable {
+        display: none !important;
     }
     .topMenuNotMobile {
         display: none !important;

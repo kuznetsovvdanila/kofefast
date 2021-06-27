@@ -18,6 +18,11 @@
                     {% endif %}
                 }
             }
+            {% if not user.is_cafe_owner %}
+                .topMenuResizable:hover {
+                    height: 195px;
+                }
+            {% endif %}
 
         </style>
     </head>
@@ -27,33 +32,75 @@
                 <a href="{% url 'index' %}" style="color: #eeeeee;">kofefast</a>
             </div>
             {% if request.user.is_authenticated %}
-                <div class="topMenuNotMobile flex btw" style="align-items: center;{% if not user.is_cafe_owner %} width: 225px; {% else %} width: 450px; {% endif %}border-radius: 50px; padding: 0; height: 60px;">
-                    {% if user.is_cafe_owner %}
-                        <div class="flex" style="padding: 0 20px 0 20px;  align-items: center; color: #eeeeee; height: auto; width: 160px;">
-                            <div class="tgIcon">
+<!--                <div class="topMenuNotMobile flex btw" style="align-items: center;{% if not user.is_cafe_owner %} width: 300px; {% else %} width: 530px; {% endif %}border-radius: 50px; padding: 0; height: 60px;">-->
+<!--                    {% if user.is_cafe_owner %}-->
+<!--                        <div class="flex" style="padding: 0 20px 0 20px;  align-items: center; color: #eeeeee; height: auto; width: 160px;">-->
+<!--                            <div class="ownerInterface flex pointer">-->
+<!--                                <div>-->
 
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div style="font-size: 1.1em;">-->
+<!--                                Инструменты владельца кофейни-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    {% endif %}-->
+<!--                    <a href="{% url 'logout' %}" class="flex" style=" align-items: center; color: #eeeeee; height: auto;">-->
+<!--                        <div style="padding: 0 20px 0 20px; font-size: 2em; {% if user.is_cafe_owner %}border-left: 7px solid #deb887;{% endif %} border-right: 7px solid #deb887;">-->
+<!--                            Выйти-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                    <a href="https://t.me/kofefast_bot" target="_blank">-->
+<!--                        <div class="tgIcon">-->
+
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                    <a href="{% url 'personal_area' %}">-->
+<!--                        <div style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; border: 5px solid #eeeeee; border-radius: 40px; height: 60px !important; width: 60px !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %} background-position: 50% 50%; background-size: cover;" class="defaultUserPhoto pointer">-->
+
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                </div>-->
+                    <div class="topMenuResizable">
+                        <div class="profilePhotoTopMenu flex clmn" style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %}">
+
+                        </div>
+                        <div>
+                            {{ user.first_name }}
+                        </div>
+                        <div style="border-left: 5px solid #deb887; padding: 0 0 0 10px;">
+                            <div>
+                                <a href="{% url 'index' %}">
+                                    На главную
+                                </a>
                             </div>
-                            <div class="ownerInterface flex pointer">
-                                <div>
+                            <div class="tg">
+                                <a href="https://t.me/kofefast_bot" target="_blank">
+                                    Написать в телегу
+                                </a>
+                            </div>
+                            <div>
+                                <a href="{% url 'logout' %}">
+                                    Выйти
+                                </a>
+                            </div>
+                        </div>
+                        <div>
+                            {% if user.is_cafe_owner %}
+                                <div class="flex" style="margin: 20px 0 0 0; align-items: center; color: #eeeeee; height: auto; width: 100%;">
+                                    <div class="ownerInterface flex pointer">
+                                        <div>
 
+                                        </div>
+                                    </div>
+                                    <div style="width: 50%; font-size: 1.1em;">
+                                        Инструменты владельца кофейни
+                                    </div>
                                 </div>
-                            </div>
-                            <div style="font-size: 1.1em;">
-                                Инструменты владельца кофейни
-                            </div>
+                            {% endif %}
                         </div>
-                    {% endif %}
-                    <a href="{% url 'logout' %}" class="flex" style=" align-items: center; color: #eeeeee; height: auto;">
-                        <div style="padding: 0 20px 0 20px; font-size: 2em; {% if user.is_cafe_owner %}border-left: 7px solid #deb887;{% endif %} border-right: 7px solid #deb887;">
-                            Выйти
-                        </div>
-                    </a>
-                    <a href="{% url 'personal_area' %}">
-                        <div style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; border: 5px solid #eeeeee; border-radius: 40px; height: 60px !important; width: 60px !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %} background-position: 50% 50%; background-size: cover;" class="defaultUserPhoto pointer">
 
-                        </div>
-                    </a>
-                </div>
+                    </div>
             {% else %}
             <div>
 
@@ -407,10 +454,8 @@
                     </div>
                 </div>
             {% endif %}
-
-
-
         </div>
+
         <div class="addressMenu flex">
             <form action="" method="POST" class="flex">
                 <div class="flex btw">
