@@ -359,9 +359,11 @@
                 <div class="list">
                     {% if coffeeshops %}
                     <div class="coffee flex active">
-                        <div class="hd" style="width: 100%; text-align: center;">
-                            Напитки
-                        </div>
+                        {% if drinks %}
+                            <div class="hd" style="width: 100%; text-align: center;">
+                                Напитки
+                            </div>
+                        {% endif %}
                         {% for drink in drinks %}
                             {% if drink.provided in coffeeshops %}
                                 <div id="{{ drink.provided.id }}" class="btw item show" style="background: linear-gradient(to left, rgba({{ drink.primary_color }}) 60%, transparent); background-image: url('{{ drink.preview.url }}'); background-size: cover; background-position: right 50%">
@@ -408,9 +410,11 @@
                         {% endfor %}
                     </div>
                     <div class="food flex active">
-                        <div class="hd" style="width: 100%; text-align: center;">
-                            Еда
-                        </div>
+                        {% if food %}
+                            <div class="hd" style="width: 100%; text-align: center;">
+                                Еда
+                            </div>
+                        {% endif %}
                         {% for dish in food %}
                             {% if dish.provided in coffeeshops %}
                                 <div id="{{ dish.provided.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ dish.primary_color }}) 60%, transparent); background-image: url('{{ dish.preview.url }}'); background-size: cover; background-position: right 50%">
@@ -461,6 +465,9 @@
                 </div>
             </div>
 
+            <div class="bottom flex clmn vCenter">
+                kofefast, 2021
+            </div>
 
 
             <div class="addressMenuMainPage flex">

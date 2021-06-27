@@ -151,21 +151,21 @@ def make_an_order(request):
     order = ''
 
     # Инициализация
-    env = Env()
-    env.read_env()
-    sender = {'mail': env.str('sender_mail'),
-              'password': env.str('password')}
+    # env = Env()
+    # env.read_env()
+    # sender = {'mail': env.str('sender_mail'),
+    #           'password': env.str('password')}
 
     # Настройка протокола, по которому будет передаваться сообщение
-    mailsender = smtplib.SMTP('smtp.gmail.com', 587)
-    mailsender.starttls()
-    mailsender.login(sender['mail'], sender['password'])
+    # mailsender = smtplib.SMTP('smtp.gmail.com', 587)
+    # mailsender.starttls()
+    # mailsender.login(sender['mail'], sender['password'])
 
     # Информация о заказе
-    msg = MIMEMultipart()
-    msg['From'] = sender['mail']
-    msg['To'] = str(request.user.email)
-    msg.add_header('reply-to', sender['mail'])
+    # msg = MIMEMultipart()
+    # msg['From'] = sender['mail']
+    # msg['To'] = str(request.user.email)
+    # msg.add_header('reply-to', sender['mail'])
 
     request.user.y = 0
     request.user.save()
@@ -183,7 +183,9 @@ def make_an_order(request):
 
     if request.user.chosen_address.all():
         current_order.chosen_delivery_address.add(request.user.chosen_address.all()[0])
-        current_order.type_of_delivery = 'Доставка'
+        current_order.type_of_delivery = str(request.user.chosen_address.all()[0].name) + ' (' \
+                                         + str(request.user.chosen_address.all()[0].street) + ', ' \
+                                         + str(request.user.chosen_address.all()[0].house) + ')'
     else:
         current_order.type_of_delivery = 'Самовывоз'
 
@@ -196,8 +198,11 @@ def make_an_order(request):
 
     current_order.save()
 
+    orderHTML = ''
+
     for item in ItemsSlotBasket.objects.all().\
             filter(basket_connection=request.user.basket_set.all()[0]):
+        orderHTML += '<div style="margin: 0 0 10px 0;">' + str(item.good) + ', ' + str(item.count) + ' шт.</div>'
         i = ItemsSlotOrder(count=item.count, good=item.good, order_connection=current_order)
         i.save()
         order += str(i)
@@ -205,15 +210,57 @@ def make_an_order(request):
         current_order.chosen_items.add(i)
 
     # отправка сообщения на почту
-    mail_subject = f'Информация о заказе пользователя {request.user}'
-    mail_body_text = 'Заказ: ' + order + f'Тип доставки: {current_order.type_of_delivery}; ' + \
-                     f'Время оформления заказа: {current_order.time_created}; ' + \
-                     f'Сообщение к заказу: {current_order.comment}'
-    msg = MIMEText(mail_body_text, 'html', 'utf-8')
-    msg['Subject'] = Header(mail_subject, 'utf-8')
-    mailsender.sendmail(sender['mail'], '000000.dan@mail.ru', msg.as_string())
-    mailsender.quit()
+    # mail_subject = f'Информация о заказе пользователя {request.user}'
+    # mail_body_text = 'Заказ: ' + order + f'Тип доставки: {current_order.type_of_delivery}; ' + \
+    #                  f'Время оформления заказа: {current_order.time_created}; ' + \
+    #                  f'Сообщение к заказу: {current_order.comment}'
+    # msg = MIMEText(mail_body_text, 'html', 'utf-8')
+    # msg['Subject'] = Header(mail_subject, 'utf-8')
+    # mailsender.sendmail(sender['mail'], '000000.dan@mail.ru', msg.as_string())
+    # mailsender.quit()
     ##
+    if current_order.type_of_delivery == 'Самовывоз':
+        delivery_type = '<div style="font-size: 25px; margin: 0 0 20px 0; font-weight: bold;">' + current_order.type_of_delivery + '</div>'
+    else:
+        delivery_type = '<div style="font-size: 25px; margin: 0 0 20px 0;">' \
+                            '<div style="margin: 0 0 15px 0; font-weight: bold;">' + 'Доставка:' + '</div>' + \
+                            '<div style="border-left: 7px solid #deb887; padding: 0 0 0 10px; font-size: 25px;">'\
+                                + current_order.type_of_delivery + \
+                            '</div>' \
+                        '</div>'
+
+    message = '<div style="display: flex; flex-direction: column; background-color: #111111; color: #eeeeee; padding: 40px;">' \
+                  '<div style="font-size: 50px; margin: 0 0 20px 0; font-weight: bold;">' \
+                      'kofefast' \
+                  '</div>' \
+                  '<div style="font-size: 25px; margin: 0 0 20px 0;">' \
+                      '<div style="margin: 0 0 15px 0; font-weight: bold;">' + 'Что у вас в корзине:' + '</div>' + \
+                      '<div style="border-left: 7px solid #deb887; padding: 0 0 0 10px; font-size: 25px;">'\
+                          + orderHTML + \
+                      '</div>' \
+                  '</div>' \
+                  + delivery_type + \
+                  '<div style="font-size: 30px; font-weight: bold;">' \
+                      'Итого: ' + str(request.user.basket_set.all()[0].all_cost()) + '₽' \
+                  '</div>' \
+              '</div>'
+    msg = MIMEText(message, 'html', 'utf-8')
+    msg['From'] = 'kofefast@internet.ru'
+    msg['To'] = str(request.user.email)
+    msg['Subject'] = Header('Информация о заказе, kofefast', 'utf-8')
+
+    mailserver = smtplib.SMTP('smtp.mail.ru', 587)
+    # identify ourselves to smtp gmail client
+    mailserver.ehlo()
+    # secure our email with tls encryption
+    mailserver.starttls()
+    # re-identify ourselves as an encrypted connection
+    mailserver.ehlo()
+    mailserver.login(msg['From'], 'kffst_email_access')
+
+    mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
+
+    mailserver.quit()
 
     current_order.save()
     clear_the_basket(request)

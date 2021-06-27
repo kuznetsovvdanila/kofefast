@@ -166,7 +166,7 @@ textarea {
     box-sizing: border-box;
 }
 .mainAuth {
-    padding: 10px 30px 30px 30px;
+    padding: 10px 30px 0px 30px;
     flex-direction: column;
     align-items: center;
 }
@@ -549,9 +549,10 @@ input[type='submit'] {
     height: 63px;
 }
 .bottom {
-    position: fixed;
+    justify-content: center;
     width: 100%;
-    bottom: 5%;
+    height: 130px;
+    font-size: 1.5em;
 }
 .closeIt {
     text-align: center;
