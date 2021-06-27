@@ -9,6 +9,7 @@ from io import BytesIO
 from PIL import Image
 from django.core.files import File
 from django.shortcuts import redirect
+from environs import Env
 
 from kofe.additional_func import collect_relevant_coffeeshops, remove_transparency
 from kofe.models import AddressUser, ItemsSlotBasket, Item, Order, ItemsSlotOrder, AddressCafe
@@ -217,6 +218,7 @@ def make_an_order(request):
                   '</div>' \
               '</div>'
     msg = MIMEText(message, 'html', 'utf-8')
+
     msg['From'] = 'kofefast@internet.ru'
     msg['To'] = str(request.user.email)
     msg['Subject'] = Header('Информация о заказе, kofefast', 'utf-8')
@@ -228,7 +230,12 @@ def make_an_order(request):
     mailserver.starttls()
     # re-identify ourselves as an encrypted connection
     mailserver.ehlo()
-    mailserver.login(msg['From'], 'kffst_email_access')
+
+    env = Env()
+    env.read_env()
+    sender = {'mail': env.str('sender_mail'),
+              'password': env.str('password')}
+    mailserver.login(sender['mail'], sender['password'])
 
     mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
 
