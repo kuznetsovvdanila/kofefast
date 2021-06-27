@@ -150,23 +150,6 @@ def make_an_order(request):
     """Создание заказа на index.html"""
     order = ''
 
-    # Инициализация
-    # env = Env()
-    # env.read_env()
-    # sender = {'mail': env.str('sender_mail'),
-    #           'password': env.str('password')}
-
-    # Настройка протокола, по которому будет передаваться сообщение
-    # mailsender = smtplib.SMTP('smtp.gmail.com', 587)
-    # mailsender.starttls()
-    # mailsender.login(sender['mail'], sender['password'])
-
-    # Информация о заказе
-    # msg = MIMEMultipart()
-    # msg['From'] = sender['mail']
-    # msg['To'] = str(request.user.email)
-    # msg.add_header('reply-to', sender['mail'])
-
     request.user.y = 0
     request.user.save()
     provider = request.user.basket_set.all()[0].chosen_items.all()[0].good.provided
@@ -209,16 +192,6 @@ def make_an_order(request):
         order += ', '
         current_order.chosen_items.add(i)
 
-    # отправка сообщения на почту
-    # mail_subject = f'Информация о заказе пользователя {request.user}'
-    # mail_body_text = 'Заказ: ' + order + f'Тип доставки: {current_order.type_of_delivery}; ' + \
-    #                  f'Время оформления заказа: {current_order.time_created}; ' + \
-    #                  f'Сообщение к заказу: {current_order.comment}'
-    # msg = MIMEText(mail_body_text, 'html', 'utf-8')
-    # msg['Subject'] = Header(mail_subject, 'utf-8')
-    # mailsender.sendmail(sender['mail'], '000000.dan@mail.ru', msg.as_string())
-    # mailsender.quit()
-    ##
     if current_order.type_of_delivery == 'Самовывоз':
         delivery_type = '<div style="font-size: 25px; margin: 0 0 20px 0; font-weight: bold;">' + current_order.type_of_delivery + '</div>'
     else:
