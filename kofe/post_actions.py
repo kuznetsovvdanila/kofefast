@@ -150,6 +150,11 @@ def make_an_order(request):
     """Создание заказа на index.html"""
     order = ''
 
+    env = Env()
+    env.read_env()
+    sender = {'mail': env.str('sender_mail'),
+              'password': env.str('password')}
+
     request.user.y = 0
     request.user.save()
     provider = request.user.basket_set.all()[0].chosen_items.all()[0].good.provided
@@ -231,10 +236,6 @@ def make_an_order(request):
     # re-identify ourselves as an encrypted connection
     mailserver.ehlo()
 
-    env = Env()
-    env.read_env()
-    sender = {'mail': env.str('sender_mail'),
-              'password': env.str('password')}
     mailserver.login(sender['mail'], sender['password'])
 
     mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
