@@ -211,7 +211,7 @@ def make_an_order(request):
                      f'Сообщение к заказу: {current_order.comment}'
     msg = MIMEText(mail_body_text, 'html', 'utf-8')
     msg['Subject'] = Header(mail_subject, 'utf-8')
-    mailsender.sendmail(sender['mail'], 'alekosta.nechepko@yandex.ru', msg.as_string())
+    mailsender.sendmail(sender['mail'], '000000.dan@mail.ru', msg.as_string())
     mailsender.quit()
     ##
 
