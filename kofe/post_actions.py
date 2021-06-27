@@ -9,7 +9,6 @@ from io import BytesIO
 from PIL import Image
 from django.core.files import File
 from django.shortcuts import redirect
-from environs import Env
 
 from kofe.additional_func import collect_relevant_coffeeshops, remove_transparency
 from kofe.models import AddressUser, ItemsSlotBasket, Item, Order, ItemsSlotOrder, AddressCafe
