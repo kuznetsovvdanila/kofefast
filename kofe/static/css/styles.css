@@ -1347,6 +1347,7 @@ a .backArrow:hover div {
         transition: .2s;
     }
     .addressMenuMainPage {
+        z-index: 10000;
         display: block;
         left: 0;
         bottom: 0;
@@ -1406,13 +1407,13 @@ a .backArrow:hover div {
         width: 550px;
         background-color: #111111 !important;
     }
-    .addressList > div:nth-child(3), .addressList > div:last-child {
+    .addressList > div:nth-child(4), .addressList > div:last-child {
         font-weight: bold;
         margin: 45px 20px 45px 0;
         text-align: left;
         font-size: 5em;
     }
-    .addressList > div:first-child {
+    .addressList > div:first-child, .addressList > div:nth-child(2) {
         font-weight: bold;
         margin: 0 0 40px 0;
         text-align: left;
