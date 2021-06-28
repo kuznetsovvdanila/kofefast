@@ -14,6 +14,9 @@
 
         </script>
         <style>
+            input.placeholderRed::-webkit-input-placeholder {
+               color: #ea4335;
+            }
             {% if email_exists %}
                 .registration #id_email::placeholder, .registrationMobile #id_email::placeholder {
                     color: #ea4335;
@@ -40,6 +43,11 @@
 
             {% if login_error %}
                 .authorization #id_email::placeholder, .authorization #id_password1::placeholder, .authorizationMobile #id_email::placeholder, .authorizationMobile #id_password1::placeholder {
+                    color: #ea4335;
+                }
+            {% endif %}
+            {% if password_change_error %}
+                .authorization #id_email::placeholder, .authorizationMobile #id_email::placeholder {
                     color: #ea4335;
                 }
             {% endif %}
@@ -112,8 +120,8 @@
                 </div>
                 <input type="submit" class="registrationButton {% if not registration_error %}active{% endif %} pointer" value="Хочу кофе">
 
-                    <div class="information {% if not registration_error %} {% if not login_error %}active{% endif %} {% endif %}">
-                        Мы заботимся о наших клиентах и не хотим, чтобы вы получили свой заказ остывшим, поэтому ищем кофейни в радиусе всего <span style="color: #deb887;">1 километра</span> от вас, что также позволяет доставлять заказ всего за <span style="color: #deb887;">20-25 минут</span>
+                    <div class="information {% if not registration_error %} {% if not login_error %} {% if not auth_open %}active{% endif %}{% endif %} {% endif %}">
+                        Мы заботимся о наших клиентах и не хотим, чтобы вы получили свой заказ остывшим, поэтому ищем кофейни в радиусе <span style="color: #deb887;">1 километра</span> от вас, что также позволяет доставлять заказ всего за <span style="color: #deb887;">20-25 минут</span>
                     </div>
 
                     <div class="registration {% if registration_error %}active{% endif %}">
@@ -157,22 +165,24 @@
                         </div>
                     </div>
 
-                    <div class="authorization {% if login_error %}active{% endif %}">
+                    <div class="authorization {% if login_error %}active{% else %}{% if auth_open %}active {% if password_change_error %}move{% endif %}{% endif %}{% endif %}">
                         <div class="">
                             <div class="flex btw">
                                 <span class="frm">Вход</span>
                                 <span class="closeIt" style=""><b>x</b></span>
                             </div>
                             <form action="" method="POST" class="flex">
-                                <input name="action_type" type="text" value="authen" style="display: none;">
-                                {% if not login_error %}
-                                    <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
-                                {% else %}
-                                    <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Неправильная почта или...">
-                                {% endif %}
-                                <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" aria-autocomplete="list" placeholder="Пароль">
+                                <input class="type_changer" name="action_type" type="text" value="{% if not password_change_error %}authen{% else %}password_change{% endif %}" style="display: none;">
+                                <input class="emailAuth rltv" type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="{% if not login_error %}{% if password_change_error %}Такой почты не существует{% else %}Почта{% endif %}{% else %}Неправильная почта или...{% endif %}">
+                                <input class="passwordAuth {% if password_change_error %}active{% endif %} rltv" type="password" name="password1" autocomplete="new-password" {% if not password_change_error %}required=""{% endif %} id="id_password1" aria-autocomplete="list" placeholder="Пароль">
                                 {% csrf_token %}
-                                <input type="submit" value="Войти" class="pointer">
+                                <input class="submitAuth {% if password_change_error %}active{% endif %} rltv pointer" type="submit" value="Войти">
+                                <div class="password_change {% if password_change_error %}hidden{% endif %} pointer rltv" style="font-size: 1.5em; margin: 15px;">
+                                    Забыли пароль?
+                                </div>
+                                <div class="password_change_return {% if not password_change_error %}hidden{% endif %} pointer rltv" style="font-size: 1.5em; margin: 15px;">
+                                    Вернуться
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -188,7 +198,7 @@
                 </div>
                 <div class="rightSideMobile flex">
                     <div class="informationMobile {% if not registration_error %} {% if not login_error %}active{% endif %} {% endif %}">
-                        Мы заботимся о наших клиентах и не хотим, чтобы вы получили свой заказ остывшим, поэтому ищем кофейни в радиусе всего <span style="color: #deb887;">1 километра</span> от вас, что также позволяет доставлять заказ всего за <span style="color: #deb887;">20-25 минут</span>
+                        Мы заботимся о наших клиентах и не хотим, чтобы вы получили свой заказ остывшим, поэтому ищем кофейни в радиусе <span style="color: #deb887;">1 километра</span> от вас, что также позволяет доставлять заказ всего за <span style="color: #deb887;">20-25 минут</span>
                     </div>
 
                     <div class="registrationMobile {% if registration_error %}active{% endif %}">
@@ -560,7 +570,14 @@
 <!--            <div id="map"></div>-->
         {% endif %}
         <script>
-            window.scrollTo(0, {{ user.y }});
+            {% if request.user.is_authenticated %}
+                window.scrollTo(0, {{ user.y }});
+            {% endif %}
+            {% if password_change_error %}
+                console.log(document.getElementsByClassName('submitAuth')[0].value);
+                document.getElementsByClassName('submitAuth')[0].value = 'Отправить письмо';
+            {% endif %}
+
         </script>
         <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://snipp.ru/cdn/maskedinput/jquery.maskedinput.min.js"></script>

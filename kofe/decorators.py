@@ -101,6 +101,7 @@ def check_POST(func):
             'deleteItem': delete_item,
             'add_address_provider': add_address_provider,
             'delete_an_address_provider': delete_an_address_provider,
+            # 'change_password': change_password,
         }
 
         if request.method == 'POST':

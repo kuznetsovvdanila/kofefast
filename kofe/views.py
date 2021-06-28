@@ -1,13 +1,24 @@
 """Обработчики всех страниц сайта"""
+import smtplib
+import urllib.request
+import urllib.parse
+import random
+from email.header import Header
+from email.mime.text import MIMEText
+
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
+from environs import Env
 
 from kofe.additional_func import collect_items, collect_addresses, collect_relevant_coffeeshops, \
     collect_orders, collect_errors, collect_relevant_addresses
 from kofe.decorators import add_user_buc, check_POST, check_proms, check_admin_link, \
     synchronize_owned_owner
 from kofe.forms import RegistrationForm
-from kofe.models import AddressCafe, ItemsSlotBasket, AddressUser
+from kofe.models import AddressCafe, ItemsSlotBasket, AddressUser, Account
+
+auth_open = False
+password_change_error = False
 
 
 def registration_user(request):
@@ -40,26 +51,100 @@ def login_user(request):
     return True
 
 
+def password_change(request):
+    email = request.POST.get('email')
+    if Account.objects.all().filter(email=email).exists():
+        symbols = ['abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', '0123456789']
+        new_password = ''
+        for i in range(8):
+            rnd = random.randint(0, 2)
+            if rnd == 0:
+                new_password += symbols[0][random.randint(0, 25)]
+            elif rnd == 1:
+                new_password += symbols[1][random.randint(0, 25)]
+            else:
+                new_password += symbols[2][random.randint(0, 9)]
+
+        url = "http://127.0.0.1:8000/"
+        params = {
+            'login': 'open',
+            'password': new_password,
+            'email': email,
+        }
+        query_string = urllib.parse.urlencode(params)
+        url = url + "?" + query_string
+
+        env = Env()
+        env.read_env()
+        sender = {'mail': env.str('sender_mail'),
+                  'password': env.str('password')}
+
+        message = 'Перейдите по ' \
+                  '<a href="' + url + '">ссылке</a> для сброса старого пароля, ' \
+                                      'после чего воспользуйтесь этим паролем: ' + new_password + \
+                  ' для установки нового в личном кабинете. Если это были не вы, ' \
+                  'просто проигнорируйте данное письмо.'
+
+        msg = MIMEText(message, 'html', 'utf-8')
+
+        msg['From'] = 'kofefast@internet.ru'
+        msg['To'] = email
+        msg['Subject'] = Header('Изменение пароля', 'utf-8')
+
+        mailserver = smtplib.SMTP('smtp.mail.ru', 587)
+        # identify ourselves to smtp gmail client
+        mailserver.ehlo()
+        # secure our email with tls encryption
+        mailserver.starttls()
+        # re-identify ourselves as an encrypted connection
+        mailserver.ehlo()
+
+        mailserver.login(sender['mail'], sender['password'])
+
+        mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
+
+        mailserver.quit()
+
+    else:
+        return True
+
+
 @check_admin_link
 @add_user_buc
 @check_POST
 def index_page(request):
     """View функция для index.html"""
+    global auth_open, password_change_error
+    if request.GET and not request.user.is_authenticated:
+        if request.GET['login']:
+            auth_open = True
+        if request.GET['password'] and request.GET['email']:
+            usr = Account.objects.all().filter(email=request.GET['email'])[0]
+            usr.set_password(request.GET['password'])
+            usr.save()
+            login(request, usr)
+            return redirect('index')
+
     errors = {'email_exists': False, 'number_exists': False,
               'dif_passwords': False, 'weak_password': False}
     login_error = registration_error = False
 
-    # регистрация и аутенфикация
+    # регистрация и аутентификация
     if request.method == 'POST':
         if request.POST.get('action_type') == 'authen':
+            auth_open = password_change_error = False
             login_error = login_user(request)
         elif request.POST.get('action_type') == 'registr':
             t = registration_user(request)
             if len(t) == 1:
+                auth_open = password_change_error = False
                 return t[0]
             else:
                 errors = t[0]
+                auth_open = password_change_error = False
                 registration_error = t[1]
+        elif request.POST.get('action_type') == 'password_change':
+            auth_open = password_change_error = password_change(request)
 
     # инициализация переменных
     chosen_items = chosen_address_raw = coffeeshops = []
@@ -117,6 +202,8 @@ def index_page(request):
         'chosen_items': chosen_items,
         'chosen_address_raw': chosen_address_raw,
         'form': RegistrationForm(),
+        'auth_open': auth_open,
+        'password_change_error': password_change_error,
     }
     return render(request, 'pages/index.html', context)
 
@@ -159,6 +246,23 @@ def personal_area_page(request):
         if orders else None,
     }
     return render(request, 'pages/personal_area.html', context)
+
+
+@check_proms
+@check_POST
+def change_password(request):
+    # if request.GET:
+    #     try:
+    #         email = request.GET['email']
+    #         context = {
+    #             'email': email,
+    #         }
+    #     except:
+    #         return redirect('index')
+    #     return render(request, 'pages/change_password.html', context)
+    # else:
+    #     return redirect('index')
+    return redirect('index')
 
 
 def logoutUser(request):

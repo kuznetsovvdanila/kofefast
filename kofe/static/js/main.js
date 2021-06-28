@@ -35,6 +35,30 @@ if ($('#to_time').hasClass('ch')) {
         console.log('yeet');
     }
 }
+$('.password_change_return').click(function(){
+    $('.passwordAuth').attr("required");
+    $('.password_change_return').addClass('hidden');
+    $('.password_change').removeClass('hidden');
+    $('.submitAuth').removeClass('active');
+    $('.passwordAuth').removeClass('active');
+    $('.authorization').removeClass('move');
+    document.getElementsByClassName('submitAuth')[0].value = 'Войти';
+    document.getElementsByClassName('emailAuth')[0].placeholder = 'Почта';
+    document.getElementsByClassName('type_changer')[0].value = 'authen';
+    $('input').addClass('placeholderWhite');
+})
+$('.password_change').click(function(){
+    $('.passwordAuth').removeAttr("required");
+    $('.password_change_return').removeClass('hidden');
+    $('.password_change').addClass('hidden');
+    $('.submitAuth').addClass('active');
+    $('.passwordAuth').addClass('active');
+    $('.authorization').addClass('move');
+    document.getElementsByClassName('submitAuth')[0].value = 'Отправить письмо';
+    document.getElementsByClassName('emailAuth')[0].placeholder = 'Почта';
+    document.getElementsByClassName('type_changer')[0].value = 'password_change';
+    $('input').addClass('placeholderWhite');
+})
 $('.addToBasket').click(function(){
     var elements = document.getElementsByClassName('user_y');
     for (var i = 0; i < elements.length; i++) {
@@ -67,17 +91,21 @@ $('.mainAuth').click(function(){
     $('.addressMenuMainPageNotMobile').removeClass('active');
 })
 $('.registrationButton').click(function(){
+    $('input').addClass('placeholderWhite');
     $('.registration').addClass('active');
     $('.authorization').removeClass('active');
     $('.information').removeClass('active');
     $('.registrationButton').removeClass('active');
     $('.description').addClass('active');
+    document.getElementsByClassName('emailAuth')[0].placeholder = 'Почта';
 })
 $('.registrationButtonMobile').click(function(){
+    $('input').addClass('placeholderWhite');
     $('.registrationMobile').addClass('active');
     $('.authorizationMobile').removeClass('active');
     $('.informationMobile').removeClass('active');
     $('.descriptionMobile').addClass('active');
+    document.getElementsByClassName('emailAuth')[0].placeholder = 'Почта';
 })
 $('.openAuth').click(function(){
     $('.registration').removeClass('active');
@@ -100,6 +128,8 @@ $('.defaultUserPhoto').click(function(){
     $('.description').removeClass('active');
 })
 $('.closeIt').click(function(){
+    $('input').addClass('placeholderWhite');
+    document.getElementsByClassName('emailAuth')[0].placeholder = 'Почта';
     $('.registration').removeClass('active');
     $('.authorization').removeClass('active');
     $('.information').addClass('active');

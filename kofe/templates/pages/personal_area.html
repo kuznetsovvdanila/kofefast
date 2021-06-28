@@ -62,7 +62,7 @@
 <!--                    </a>-->
 <!--                </div>-->
                     <div class="topMenuResizable">
-                        <div class="profilePhotoTopMenu flex clmn" style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %}">
+                        <div class="profilePhotoTopMenu flex clmn" style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; {% else %} filter: invert(); transform: filter; background-position: 50% 80%; background-size: 80%; background-repeat: no-repeat; background-image: url('../../static/img/anonymous.svg'); {% endif %}">
 
                         </div>
                         <div>
