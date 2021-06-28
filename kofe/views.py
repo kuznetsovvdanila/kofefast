@@ -110,7 +110,7 @@ def password_change(request):
         return True
 
 
-def change_password_final(request):
+def password_change_final(request):
     global password_change_final_error
     usr = request.user
     if usr.check_password(request.POST.get('password_old')) and \
@@ -267,7 +267,7 @@ def change_password(request):
         'password_change_final_error': password_change_final_error,
     }
     if request.method == 'POST':
-        if change_password_final(request):
+        if password_change_final(request):
             return redirect('personal_area')
         else:
             return render(request, 'pages/change_password.html', context)
