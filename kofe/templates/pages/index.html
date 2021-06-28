@@ -14,6 +14,9 @@
 
         </script>
         <style>
+            .topMenuResizable:hover {
+                height: 230px;
+            }
             input.placeholderRed::-webkit-input-placeholder {
                color: #ea4335;
             }
@@ -61,10 +64,7 @@
                 <a href="{% url 'index' %}" style="color: #eeeeee;">kofefast</a>
             </div>
             {% if request.user.is_authenticated %}
-            <div class="topMenuNotMobile">
-                <div>
 
-                </div>
                 <div class="addressPart flex">
                     <form action="" method="POST" class="sendIt flex">
                         <input name="action_type" type="text" value="prefer_address" style="display: none;">
@@ -85,12 +85,68 @@
                             {% csrf_token %}
                     </form>
                 </div>
-                <a href="{% url 'personal_area' %}" style="color: #eeeeee;">
-                    <div style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; border: 5px solid #eeeeee; border-radius: 40px; height: 60px !important; width: 60px !important; {% else %} background-image: url('../../static/img/anonymous.svg'); {% endif %} background-position: 50% 50%; background-size: cover;" class="defaultUserPhoto pointer">
+<!--                <div class="address_which_is_chosen_box flex vCenter pointer">-->
+<!--                    {% if addresses %}-->
+<!--                        {% if chosen_address %}-->
+<!--                            <div style="margin: 0 10px 0 30px;">-->
+<!--                                Доставка:-->
+<!--                            </div>-->
+<!--                            <div class="address_which_is_chosen">-->
+<!--                                {{ chosen_address.name }} ({{ chosen_address.street }} {{ chosen_address.house }})-->
+<!--                            </div>-->
+<!--                        {% else %}-->
+<!--                            <div style="font-weight: bold; margin: 0 0 0 30px;">-->
+<!--                                Самовывоз-->
+<!--                            </div>-->
+<!--                        {% endif %}-->
+<!--                    {% else %}-->
+<!--                        <div style="font-weight: bold;">-->
+<!--                            Приду и заберу-->
+<!--                        </div>-->
+<!--                    {% endif %}-->
+<!--                    <div class="arrowDown">-->
+<!--                        <div>-->
+
+<!--                        </div>-->
+<!--                        <div>-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="topMenuResizable">
+                    <div class="profilePhotoTopMenu flex clmn" style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; {% else %} filter: invert(); transform: filter; background-position: 50% 80%; background-size: 80%; background-repeat: no-repeat; background-image: url('../../static/img/anonymous.svg'); {% endif %}">
 
                     </div>
-                </a>
-            </div>
+                    <div style="font-weight: bold;">
+                        {{ user.first_name }}
+                    </div>
+                    <div style="border-left: 5px solid #deb887; padding: 0 0 0 10px; font-size: 1.5em;">
+                        <div>
+                            <a href="{% url 'personal_area' %}">
+                                Личный кабинет
+                            </a>
+                        </div>
+<!--                        <div class="choose_your_address pointer">-->
+<!--                            Куда доставлять?-->
+<!--                        </div>-->
+                        <div class="tg">
+                            <a href="https://t.me/kofefast_bot" target="_blank">
+                                Написать в телегу
+                            </a>
+                        </div>
+                        <div class="chng_psswrd">
+                            <a href="{% url 'change_password' %}">
+                                Сменить пароль
+                            </a>
+                        </div>
+                        <div>
+                            <a href="{% url 'logout' %}">
+                                Выйти
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             {% else %}
             <div>
 
@@ -197,7 +253,7 @@
                     </span>
                 </div>
                 <div class="rightSideMobile flex">
-                    <div class="informationMobile {% if not registration_error %} {% if not login_error %}active{% endif %} {% endif %}">
+                    <div class="informationMobile {% if not registration_error %} {% if not login_error %}{% if not password_change_error %}active{% endif %}{% endif %} {% endif %}">
                         Мы заботимся о наших клиентах и не хотим, чтобы вы получили свой заказ остывшим, поэтому ищем кофейни в радиусе <span style="color: #deb887;">1 километра</span> от вас, что также позволяет доставлять заказ всего за <span style="color: #deb887;">20-25 минут</span>
                     </div>
 
@@ -240,7 +296,7 @@
                         </div>
                     </div>
 
-                    <div class="authorizationMobile {% if login_error %}active{% endif %}">
+                    <div class="authorizationMobile {% if login_error %}active{% else %}{% if password_change_error %}active{% endif %}{% endif %}">
                         <div class="flex btw">
                             <span class="frm">Вход</span>
                             <span class="closeIt" style=""><b>x</b></span>
@@ -248,14 +304,17 @@
                         <div class="">
                             <form action="" method="POST" class="flex">
                                 <input name="action_type" type="text" value="authen" style="display: none;">
-                                {% if not login_error %}
-                                    <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Почта">
-                                {% else %}
-                                    <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="Неправильная почта или...">
-                                {% endif %}
-                                <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" aria-autocomplete="list" placeholder="Пароль">
+                                <input class="type_changer" name="action_type" type="text" value="{% if not password_change_error %}authen{% else %}password_change{% endif %}" style="display: none;">
+                                <input class="emailAuth rltv" type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" placeholder="{% if not login_error %}{% if password_change_error %}Такой почты не существует{% else %}Почта{% endif %}{% else %}Неправильная почта или...{% endif %}">
+                                <input class="passwordAuth {% if password_change_error %}active{% endif %} rltv" type="password" name="password1" autocomplete="new-password" {% if not password_change_error %}required=""{% endif %} id="id_password1" aria-autocomplete="list" placeholder="Пароль">
                                 {% csrf_token %}
-                                <input type="submit" value="Войти" class="pointer">
+                                <input class="submitAuth {% if password_change_error %}active{% endif %} rltv pointer" type="submit" value="Войти">
+                                <div class="password_change {% if password_change_error %}hidden{% endif %} pointer rltv" style="font-size: 5em; margin: 0px 50px 50px 50px;">
+                                    Забыли пароль?
+                                </div>
+                                <div class="password_change_return {% if not password_change_error %}hidden{% endif %} pointer rltv" style="font-size: 5em; margin: 0px 50px 50px 50px;">
+                                    Вернуться
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -562,6 +621,12 @@
                     {% endif %}
                 </div>
             </div>
+            <div class="choose_your_address_menu_background">
+
+            </div>
+            <div class="choose_your_address_menu hidden">
+
+            </div>
 <!--            <div class="scrollUp">-->
 <!--                <span></span>-->
 <!--                <span></span>-->
@@ -574,8 +639,8 @@
                 window.scrollTo(0, {{ user.y }});
             {% endif %}
             {% if password_change_error %}
-                console.log(document.getElementsByClassName('submitAuth')[0].value);
                 document.getElementsByClassName('submitAuth')[0].value = 'Отправить письмо';
+                document.getElementsByClassName('submitAuth')[1].value = 'Отправить письмо';
             {% endif %}
 
         </script>

@@ -20,7 +20,7 @@
             }
             {% if not user.is_cafe_owner %}
                 .topMenuResizable:hover {
-                    height: 215px;
+                    height: 230px;
                 }
             {% endif %}
 
@@ -65,7 +65,7 @@
                         <div class="profilePhotoTopMenu flex clmn" style="{% if user.profile_picture %} background-image: url({{ user.profile_picture.url }}); filter: none !important; {% else %} filter: invert(); transform: filter; background-position: 50% 80%; background-size: 80%; background-repeat: no-repeat; background-image: url('../../static/img/anonymous.svg'); {% endif %}">
 
                         </div>
-                        <div>
+                        <div style="font-weight: bold;">
                             {{ user.first_name }}
                         </div>
                         <div style="border-left: 5px solid #deb887; padding: 0 0 0 10px;">
@@ -280,57 +280,55 @@
                             </a>
                         </div>
                     {% else %}
-                        <div class="order flex vCenter">
-                            <div class="cafe_name flex clmn">
-                                <div style="margin: 0 0 10px 0; font-weight: bold;">
-                                    Заказ в {{ the_last_order.chosen_cafe }}
-                                </div>
-                                <div class="basketList" style="overflow: hidden; text-overflow: ellipsis;">
-                                    <div>
-                                        {% if the_last_order.is_over %}
-                                            Завершен
-                                        {% else %}
-                                            Пока не готов
-                                        {% endif %}
+                        {% for order in orders %}
+                            <div class="order flex vCenter">
+                                <div class="cafe_name flex clmn">
+                                    <div style="margin: 0 0 10px 0; font-weight: bold;">
+                                        Заказ в {{ order.chosen_cafe }}
                                     </div>
-                                    <div style="overflow: hidden; text-overflow: ellipsis; margin-right: 30px; white-space: nowrap;">
-                                        {% if order_address %}
-                                            {{ the_last_order.type_of_delivery }}: {{ order_address.name }}, {{ order_address.street }} {{ order_address.house }} к{{ order_address.building }}
-                                        {% else %}
-                                            {{ the_last_order.type_of_delivery }}
-                                        {% endif %}
+                                    <div class="basketList" style="overflow: hidden; text-overflow: ellipsis;">
+                                        <div>
+                                            {% if order.is_over %}
+                                                Завершен
+                                            {% else %}
+                                                Пока не готов
+                                            {% endif %}
+                                        </div>
+                                        <div style="overflow: hidden; text-overflow: ellipsis; margin-right: 30px; white-space: nowrap;">
+                                            {{ order.type_of_delivery }}
+                                        </div>
                                     </div>
                                 </div>
+
+    <!--                            <div class="flex clmn">-->
+    <!--                                <div style="font-weight: bold; margin-bottom: 10px;">-->
+    <!--                                    {{ the_last_order.chosen_cafe }}-->
+    <!--                                </div>-->
+    <!--                                <div class="basketList">-->
+    <!--                                    {% for item in order_items %}-->
+    <!--                                        <div>-->
+    <!--                                            {{ item.good }}, {{ item.count }} шт.-->
+    <!--                                        </div>-->
+    <!--                                    {% endfor %}-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+    <!--                            <div>-->
+    <!--                                <div style="font-weight: bold; margin-bottom: 10px;">-->
+    <!--                                    Готовность-->
+    <!--                                </div>-->
+    <!--                                <div class="basketList">-->
+    <!--                                    <div>-->
+    <!--                                        {% if the_last_order.is_over %}-->
+    <!--                                            Завершен-->
+    <!--                                        {% else %}-->
+    <!--                                            В процессе-->
+    <!--                                        {% endif %}-->
+    <!--                                    </div>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+
                             </div>
-
-<!--                            <div class="flex clmn">-->
-<!--                                <div style="font-weight: bold; margin-bottom: 10px;">-->
-<!--                                    {{ the_last_order.chosen_cafe }}-->
-<!--                                </div>-->
-<!--                                <div class="basketList">-->
-<!--                                    {% for item in order_items %}-->
-<!--                                        <div>-->
-<!--                                            {{ item.good }}, {{ item.count }} шт.-->
-<!--                                        </div>-->
-<!--                                    {% endfor %}-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div>-->
-<!--                                <div style="font-weight: bold; margin-bottom: 10px;">-->
-<!--                                    Готовность-->
-<!--                                </div>-->
-<!--                                <div class="basketList">-->
-<!--                                    <div>-->
-<!--                                        {% if the_last_order.is_over %}-->
-<!--                                            Завершен-->
-<!--                                        {% else %}-->
-<!--                                            В процессе-->
-<!--                                        {% endif %}-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-
-                        </div>
+                        {% endfor %}
                     {% endif %}
                 </div>
             </div>
@@ -508,6 +506,9 @@
 <!--                {% csrf_token %}-->
 <!--                <input type="submit" value="Добавить" class="pointer">-->
                 <input type="submit" value="Готово" class="pointer rltv editSubmit">
+                <div class="psswrd">
+                    <a href="{% url 'change_password' %}">Сменить пароль</a>
+                </div>
             </form>
 
         </div>

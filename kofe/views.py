@@ -251,16 +251,10 @@ def personal_area_page(request):
     context = {
         'owned_cafe': request.user.owned_cafe.all()[0]
         if request.user.owned_cafe.all() else None,
-        'production': production,
-        'provider_addresses': provider_addresses,
-        'addresses': addresses,
-        'orders': orders,
-        'the_last_order': orders[len(orders) - 1]
-        if orders else None,
-        'order_items': orders[len(orders) - 1].chosen_items.all()
-        if orders else None,
-        'order_address': orders[len(orders) - 1].chosen_delivery_address.all()[0]
-        if orders else None,
+        'production': production[::-1],
+        'provider_addresses': provider_addresses[::-1],
+        'addresses': addresses[::-1],
+        'orders': orders[::-1],
     }
     return render(request, 'pages/personal_area.html', context)
 
