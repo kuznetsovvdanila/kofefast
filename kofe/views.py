@@ -19,6 +19,7 @@ from kofe.models import AddressCafe, ItemsSlotBasket, AddressUser, Account
 
 auth_open = False
 password_change_error = False
+password_change_final_error = False
 
 
 def registration_user(request):
@@ -109,12 +110,27 @@ def password_change(request):
         return True
 
 
+def change_password_final(request):
+    global password_change_final_error
+    usr = request.user
+    if usr.check_password(request.POST.get('password_old')) and \
+            request.POST.get('password1') == request.POST.get('password2'):
+        usr.set_password(request.POST.get('password1'))
+        usr.save()
+        login(request, usr)
+        return True
+    else:
+        password_change_final_error = True
+        return False
+
+
 @check_admin_link
 @add_user_buc
 @check_POST
 def index_page(request):
     """View функция для index.html"""
-    global auth_open, password_change_error
+    global auth_open, password_change_error, password_change_final_error
+    password_change_final_error = False
     if request.GET and not request.user.is_authenticated:
         if request.GET['login']:
             auth_open = True
@@ -212,6 +228,8 @@ def index_page(request):
 @synchronize_owned_owner
 @check_POST
 def personal_area_page(request):
+    global password_change_final_error
+    password_change_final_error = False
     """View функция для страницы пользователя"""
     if request.method == 'POST':
         return redirect('personal_area')
@@ -235,7 +253,6 @@ def personal_area_page(request):
         if request.user.owned_cafe.all() else None,
         'production': production,
         'provider_addresses': provider_addresses,
-
         'addresses': addresses,
         'orders': orders,
         'the_last_order': orders[len(orders) - 1]
@@ -251,18 +268,16 @@ def personal_area_page(request):
 @check_proms
 @check_POST
 def change_password(request):
-    # if request.GET:
-    #     try:
-    #         email = request.GET['email']
-    #         context = {
-    #             'email': email,
-    #         }
-    #     except:
-    #         return redirect('index')
-    #     return render(request, 'pages/change_password.html', context)
-    # else:
-    #     return redirect('index')
-    return redirect('index')
+    context = {
+        'email': request.user.email,
+        'password_change_final_error': password_change_final_error,
+    }
+    if request.method == 'POST':
+        if change_password_final(request):
+            return redirect('personal_area')
+        else:
+            return render(request, 'pages/change_password.html', context)
+    return render(request, 'pages/change_password.html', context)
 
 
 def logoutUser(request):

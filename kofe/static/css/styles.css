@@ -759,9 +759,43 @@ input.placeholderWhite:not(input[type="submit"])::placeholder {
     height: 100%;
 }
 .change_password_form {
-    border-left: solid 7px #deb887;
-    padding: 0 0 0 20px;
+    border-left: solid 10px #deb887;
+    padding: 0 0 0 50px;
     margin: 0 0 0 50px;
+}
+.change_password_form input {
+    padding: 1px 0 1px 0 !important;
+    min-width: 340px;
+}
+.change_password_form input[type="submit"] {
+    min-width: 350px;
+}
+
+.backArrow {
+    width: 200px;
+    position: absolute;
+    height: 100%;
+    justify-content: center;
+}
+a .backArrow:hover div {
+    background-color: #eeeeee;
+    transition: .2s;
+}
+.backArrow > div:first-child {
+    transform: rotateZ(-45deg) translateX(16px) translateY(-15px);
+    width: 50px;
+    height: 8px;
+    border-radius: 5px;
+    background-color: #333333;
+    transition: .2s;
+}
+.backArrow > div:last-child {
+    transform: rotateZ(45deg) translateX(2px);
+    width: 50px;
+    height: 8px;
+    border-radius: 5px;
+    background-color: #333333;
+    transition: .2s;
 }
 
 
