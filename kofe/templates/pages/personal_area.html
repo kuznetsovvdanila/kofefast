@@ -172,10 +172,19 @@
                     {% if addresses %}
                         {% for adr in addresses %}
                             <div style="font-size: 1em;" class="address flex btw vCenter">
-                                <div class="addressName">
-                                    {{ adr.name }}, {{ adr.street }} {{ adr.house }}
+                                <div class="cafe_name flex clmn" style="font-size: 2em;">
+                                    <div style="margin: 0 0 10px 0; font-weight: bold;">
+                                        {{ adr.name }}
+                                    </div>
+                                    <div class="basketList" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                        <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                            {{ adr.city }}
+                                        </div>
+                                        <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                            {{ adr.street }}, д. {{ adr.house }}
+                                        </div>
+                                    </div>
                                 </div>
-
                                 {% if adr.chosen %}
                                 <div class="flex" style="flex-direction: column; margin: 0 12px 0 0 !important; margin-right: 0;">
                                     <form action="" method="POST" class="inside flex">
@@ -294,11 +303,7 @@
                                         {% endif %}
                                     </div>
                                     <div style="overflow: hidden; text-overflow: ellipsis; margin-right: 30px; white-space: nowrap;">
-                                        {% if order_address %}
-                                            {{ the_last_order.type_of_delivery }}: {{ order_address.name }}, {{ order_address.street }} {{ order_address.house }} к{{ order_address.building }}
-                                        {% else %}
-                                            {{ the_last_order.type_of_delivery }}
-                                        {% endif %}
+                                        {{ the_last_order.type_of_delivery }}
                                     </div>
                                 </div>
                             </div>

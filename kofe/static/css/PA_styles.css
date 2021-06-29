@@ -263,7 +263,8 @@ input:checked {
 }
 .cafe_name {
     overflow: hidden;
-    text-overflos: ellipsis;
+    text-overflow: ellipsis;
+    justify-content: center;
     height: 80%;
     max-height: 80%;
     margin: 20px 0 20px 30px !important;
@@ -602,7 +603,7 @@ input[type='file'] {
     transition: .3s;
 }
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 1000px) {
     .cafe_name > div {
         font-size: 2.2em;
     }
@@ -1074,9 +1075,9 @@ input[type='file'] {
     .adr, .ord {
         font-size: 6em;
     }
-    .addressName, .orderName {
+    .addressName {
         max-width: 100%;
-        font-size: 6em !important;
+        font-size: 5em !important;
         color: #deb887;
         max-height: 100% !important;
         margin: 30px 30px 30px 30px !important;

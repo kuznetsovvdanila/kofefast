@@ -1067,22 +1067,9 @@ a .backArrow:hover div {
         padding: 80px 40px 0 40px;
         text-align: center;
     }
-    .address, .order {
-        border: 15px solid #eeeeee;
-        border-radius: 70px;
-        min-height: 320px;
-        max-width: 100%;
-        padding: 0 40px 0 40px;
-        margin: 20px 50px 20px 50px;
-    }
     .addressNameAdd{
         font-size: 6em;
         background-color: #111111;
-        color: #deb887;
-    }
-    .addressName, .orderName {
-        max-width: 70%;
-        font-size: 4.5em;
         color: #deb887;
     }
     .addAnAddress {
