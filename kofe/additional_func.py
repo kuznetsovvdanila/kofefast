@@ -74,13 +74,23 @@ def collect_relevant_coffeeshops(request, user_adrs):
         user_adrs = user_adrs.all()[0]
         try:
             user_location = geolocator.geocode(user_adrs)
+            if not user_location:
+                if 'переулок' in str(user_adrs.street):
+                    user_adrs.street = user_adrs.street[0:len(user_adrs.street) - 10] + 'проезд'
+                    time.sleep(1)
+                    user_location = geolocator.geocode(user_adrs)
         except:
             time.sleep(1)
             user_location = geolocator.geocode(user_adrs)
+            if not user_location:
+                if 'переулок' in str(user_adrs.street):
+                    user_adrs.street = user_adrs.street[0:len(user_adrs.street) - 10] + 'проезд'
+                    time.sleep(1)
+                    user_location = geolocator.geocode(user_adrs)
         if request.user.is_authenticated:
             if user_location:
                 for adrs in AddressCafe.objects.all():
-                    coffeeshop_address = str(adrs.city) + ', ' + str(adrs.street) + ', ' + \
+                    coffeeshop_address = 'Россия, ' + str(adrs.city) + ', ' + str(adrs.street) + ', ' + \
                                          str(adrs.house)
                     try:
                         coffeeshop_location = geolocator.geocode(coffeeshop_address)
@@ -104,7 +114,7 @@ def collect_relevant_addresses(request, user_addresses, provider, cafe_addresses
         addresses.append(chosen_one)
     geolocator = Nominatim(user_agent="kofefast")
     for cafe_address in cafe_addresses:
-        coffeeshop_address = str(cafe_address.city) + ', ' + str(cafe_address.street) + ', ' + \
+        coffeeshop_address = 'Россия, ' + str(cafe_address.city) + ', ' + str(cafe_address.street) + ', ' + \
                              str(cafe_address.house)
         try:
             coffeeshop_location = geolocator.geocode(coffeeshop_address)
@@ -117,9 +127,19 @@ def collect_relevant_addresses(request, user_addresses, provider, cafe_addresses
                         != str(chosen_one.city) + str(chosen_one.street) + str(chosen_one.house):
                     try:
                         user_location = geolocator.geocode(user_address)
+                        if not user_location:
+                            if 'переулок' in str(user_address.street):
+                                user_address.street = user_address.street[0:len(user_address.street) - 10] + 'проезд'
+                                time.sleep(1)
+                                user_location = geolocator.geocode(user_address)
                     except:
                         time.sleep(1)
                         user_location = geolocator.geocode(user_address)
+                        if not user_location:
+                            if 'переулок' in str(user_address.street):
+                                user_address.street = user_address.street[0:len(user_address.street) - 10] + 'проезд'
+                                time.sleep(1)
+                                user_location = geolocator.geocode(user_address)
                     if distance.distance(
                             (user_location.longitude, user_location.latitude),
                             (coffeeshop_location.longitude, coffeeshop_location.latitude)).m < 1000:
@@ -130,7 +150,6 @@ def collect_relevant_addresses(request, user_addresses, provider, cafe_addresses
                         (user_location.longitude, user_location.latitude),
                         (coffeeshop_location.longitude, coffeeshop_location.latitude)).m < 1000:
                     addresses.append(user_address)
-    print(addresses)
     return addresses
 
 

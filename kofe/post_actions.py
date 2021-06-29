@@ -90,6 +90,14 @@ def add_address(request):
                       city=request.POST.get('city'),
                       street=request.POST.get('street'),
                       house=request.POST.get('house'))
+
+    if str(adr.street)[len(str(adr.street)) - 1] == 'я' or str(adr.street)[
+        len(str(adr.street)) - 1] == 'Я' and 'улица' not in str(adr.street):
+        adr.street = str(adr.street) + ' улица, '
+    elif str(adr.street)[len(str(adr.street)) - 1] == 'й' or str(adr.street)[
+        len(str(adr.street)) - 1] == 'Й' and 'переулок' not in str(adr.street):
+        adr.street = str(adr.street) + ' переулок, '
+
     if request.POST.get('entrance'):
         adr.entrance = request.POST.get('entrance')
     if request.POST.get('building'):
@@ -311,11 +319,19 @@ def add_address_provider(request):
                                   street=request.POST.get('street'),
                                   house=request.POST.get('house'))
 
+    if str(current_address.street)[len(str(current_address.street)) - 1] == 'я' or str(current_address.street)[
+        len(str(current_address.street)) - 1] == 'Я' and 'улица' not in str(current_address.street):
+        current_address.street = str(current_address.street) + ' улица, '
+    elif str(current_address.street)[len(str(current_address.street)) - 1] == 'й' or str(current_address.street)[
+        len(str(current_address.street)) - 1] == 'Й' and 'переулок' not in str(current_address.street):
+        current_address.street = str(current_address.street) + ' переулок, '
+
     if request.POST.get('building'):
         current_address.building = request.POST.get('building')
 
     if request.POST.get('entrance'):
         current_address.entrance = request.POST.get('entrance')
+    
 
     current_address.save()
 
