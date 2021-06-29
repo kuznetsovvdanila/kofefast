@@ -24,6 +24,11 @@ $('.ownerInterface').click(function(){
     $('.orders').removeClass('active');
     $('.ownerInterface').toggleClass('active');
 })
+$('.arrowMobile').click(function(){
+    $('.arrow').toggleClass('active');
+    $('.arrowMobile').toggleClass('active');
+    $('.addressMenuMainPage').toggleClass('active');
+})
 $('.itemEdit').click(function(){
     if ($('.orders').hasClass('active')) {
         menuItemOpen = true;

@@ -548,6 +548,17 @@ input[type='file'] {
     transition: .3s;
     overflow: hidden;
 }
+
+@media screen and (max-width: 980px) {
+    .psswrd {
+        position: relative;
+        display: flex;
+        font-size: 4em;
+        width: 60%;
+        left: 250px;
+        bottom: 210px;
+        font-weight: bold;
+    }
 .topMenuResizable > div {
     position: relative;
 }
@@ -1075,9 +1086,9 @@ input[type='file'] {
     .adr, .ord {
         font-size: 6em;
     }
-    .addressName {
+    .addressName, .orderName {
         max-width: 100%;
-        font-size: 5em !important;
+        font-size: 6em !important;
         color: #deb887;
         max-height: 100% !important;
         margin: 30px 30px 30px 30px !important;

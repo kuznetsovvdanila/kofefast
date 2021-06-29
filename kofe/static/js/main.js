@@ -35,6 +35,10 @@ if ($('#to_time').hasClass('ch')) {
         console.log('yeet');
     }
 }
+$('.choose_your_address').click(function(){
+    $('.choose_your_address_menu').removeClass('hidden');
+    $('.choose_your_address_menu_background').addClass('active');
+})
 $('.password_change_return').click(function(){
     $('.passwordAuth').attr("required");
     $('.password_change_return').addClass('hidden');
@@ -45,6 +49,9 @@ $('.password_change_return').click(function(){
     document.getElementsByClassName('submitAuth')[0].value = 'Войти';
     document.getElementsByClassName('emailAuth')[0].placeholder = 'Почта';
     document.getElementsByClassName('type_changer')[0].value = 'authen';
+    document.getElementsByClassName('submitAuth')[1].value = 'Войти';
+    document.getElementsByClassName('emailAuth')[1].placeholder = 'Почта';
+    document.getElementsByClassName('type_changer')[1].value = 'authen';
     $('input').addClass('placeholderWhite');
 })
 $('.password_change').click(function(){
@@ -57,6 +64,9 @@ $('.password_change').click(function(){
     document.getElementsByClassName('submitAuth')[0].value = 'Отправить письмо';
     document.getElementsByClassName('emailAuth')[0].placeholder = 'Почта';
     document.getElementsByClassName('type_changer')[0].value = 'password_change';
+    document.getElementsByClassName('submitAuth')[1].value = 'Отправить письмо';
+    document.getElementsByClassName('emailAuth')[1].placeholder = 'Почта';
+    document.getElementsByClassName('type_changer')[1].value = 'password_change';
     $('input').addClass('placeholderWhite');
 })
 $('.addToBasket').click(function(){
