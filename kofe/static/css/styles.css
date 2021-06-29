@@ -954,16 +954,8 @@ a .backArrow:hover div {
     transition: .2s;
 }
 
-
-
-
-
-
-#map {
-  height: 768px;
-}
-
 @media screen and (max-width: 1000px) {
+
     .main_password {
         margin-top: 100px;
         position: static;
@@ -1026,6 +1018,7 @@ a .backArrow:hover div {
         margin: 0 0 40px 0;
     }
     .rdo span > input[type="radio"] {
+        min-width: 70px;
         border: 15px solid #eeeeee !important;
         margin: 0 30px 0 0 !important;
     }

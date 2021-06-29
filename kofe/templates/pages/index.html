@@ -383,7 +383,16 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-                                <div class="prmtrs">
+                                <div class="time flex clmn">
+                                    <div class="basketHd">
+                                        Получить:
+                                    </div>
+                                    <div class="flex clmn rdo">
+                                        <span class="flex vCenter"><input class="pointer ch" type="radio" id="fast" name="time" value="0" checked>Как можно скорее</span>
+                                        <span class="flex vCenter"><input class="pointer" type="radio" id="to_time" name="time" value="1">В&nbsp;<input style="margin: 0;" id="timeInput" type="text" value="" name="time_requested"></span>
+                                    </div>
+                                </div>
+                                <div class="{% if chosen_address %}prmtrs{% else %}time flex clmn{% endif %}">
                                     {% if chosen_address %}
                                         <div class="basketHd">
                                             Адрес доставки:
@@ -394,19 +403,15 @@
                                         <div style="max-width: 400px; margin: 10px 0 0 0; font-size: 0.7em;">
                                         </div>
                                     {% else %}
-                                        <div class="basketHd">
-                                            Самовывоз
+                                        <div class="basketHd chooseCafeAddress">
+                                            Самовывоз из:
+                                        </div>
+                                        <div class="flex rdo" style="flex-direction: column-reverse">
+                                            {% for cafe_address in cafe_addresses %}
+                                                <span class="flex vCenter" style="margin-bottom: 7px;"><input checked required class="pointer ch" type="radio" name="cafe_address" value="{{ cafe_address.id }}">{{ cafe_address.city }}, {{ cafe_address.street }}, д. {{ cafe_address.house }}</span>
+                                            {% endfor %}
                                         </div>
                                     {% endif %}
-                                </div>
-                                <div class="time flex clmn">
-                                    <div class="basketHd">
-                                        Получить:
-                                    </div>
-                                    <div class="flex clmn rdo">
-                                        <span class="flex vCenter"><input class="pointer ch" type="radio" id="fast" name="time" value="0" checked>Как можно скорее</span>
-                                        <span class="flex vCenter"><input class="pointer" type="radio" id="to_time" name="time" value="1">В&nbsp;<input style="margin: 0;" id="timeInput" type="text" value="" name="time_requested"></span>
-                                    </div>
                                 </div>
                             </div>
                             <hr style="width: 100%; margin-top: 30px;" class="line">
@@ -653,12 +658,19 @@
             $('#timeInput').mask('99.99', {placeholder: '00.00'});
         </script>
 
+<!--        55.645909, 37.704017-->
+<!--        <div id="map" class="mapForProvider">-->
 
-        <div class="mapForProvider">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2692.396739189686!2d37.70401737743941!3d55.64590975658826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTXCsDM4JzQ1LjMiTiAzN8KwNDInMTQuNSJF!5e1!3m2!1sru!2sru!4v1618988358075!5m2!1sru!2sru" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy">
-                                                                                                55.645909, 37.704017
-            </iframe>
-        </div>
+<!--        </div>-->
+<!--        <script>-->
+<!--            function initMap(){-->
+<!--                var coffeeshop = {lat: 55.645909, lng: 37.704017};-->
+<!--                var map = new google.maps.Map(-->
+<!--                    document.getElementById('map'), {zoom: 4, center: coffeeshop}-->
+<!--                );-->
+<!--                var marker = new google.maps.Marker-->
+<!--            }-->
+<!--        </script>-->
         <!--        <div class="bottom">-->
 <!--            Designed by somebody, 2021-->
 <!--        </div>-->

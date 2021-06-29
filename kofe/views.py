@@ -167,6 +167,7 @@ def index_page(request):
     flag_coffeeshops = flag_ca = False
     ca = None
     products = []
+    cafe_addresses = []
     addresses = collect_addresses(request)
     if request.user.is_authenticated:
         # составление всех продуктов и предметов в корзине
@@ -177,6 +178,9 @@ def index_page(request):
                 chosen_one = request.user.chosen_address.all()[0] if request.user.chosen_address.all() else None
                 addresses = collect_relevant_addresses(request, user_addresses, coffeeshop,
                                                        AddressCafe.objects.all().filter(owner=coffeeshop), chosen_one)
+                if not request.user.chosen_address.all():
+                    cafe_addresses = AddressCafe.objects.all().filter(owner=coffeeshop)
+
         if ItemsSlotBasket.objects.all():
             for item in ItemsSlotBasket.objects.all().\
                     filter(basket_connection=request.user.basket_set.all()[0]):
@@ -220,6 +224,7 @@ def index_page(request):
         'form': RegistrationForm(),
         'auth_open': auth_open,
         'password_change_error': password_change_error,
+        'cafe_addresses': cafe_addresses,
     }
     return render(request, 'pages/index.html', context)
 
