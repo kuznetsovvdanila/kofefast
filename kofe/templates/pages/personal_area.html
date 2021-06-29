@@ -172,8 +172,18 @@
                     {% if addresses %}
                         {% for adr in addresses %}
                             <div style="font-size: 1em;" class="address flex btw vCenter">
-                                <div class="addressName">
-                                    {{ adr.name }}, {{ adr.street }} {{ adr.house }}
+                                <div class="cafe_name flex clmn">
+                                    <div style="margin: 0 0 10px 0; font-weight: bold;">
+                                        {{ adr.name }}
+                                    </div>
+                                    <div class="basketList" style="overflow: hidden; text-overflow: ellipsis; margin-right: 30px; white-space: nowrap;">
+                                        <div>
+                                            {{ adr.city }}
+                                        </div>
+                                        <div style="overflow: hidden; text-overflow: ellipsis; margin-right: 30px; white-space: nowrap;">
+                                            {{ adr.street }}, д. {{ adr.house }}
+                                        </div>
+                                    </div>
                                 </div>
 
                                 {% if adr.chosen %}
