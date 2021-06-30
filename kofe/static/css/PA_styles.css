@@ -397,7 +397,8 @@ input:checked {
 .addressMenu {
     justify-content: center;
     position: absolute;
-    top: 70px;
+    top: 50%;
+    margin-top: -375px;
     right: -50%;
     width: 52%;
     transition: .5s;
@@ -424,7 +425,8 @@ input:checked {
 .edit {
     justify-content: center;
     position: absolute;
-    top: 180px;
+    top: 50%;
+    margin-top: -250px;
     right: -50%;
     width: 52%;
     transition: .5s;
@@ -435,7 +437,8 @@ input:checked {
 .itemEditForm {
     justify-content: center;
     position: absolute;
-    top: 180px;
+    top: 50%;
+    margin-top: -250px;
     right: -50%;
     width: 52%;
     transition: .5s;
@@ -462,7 +465,8 @@ input:checked {
 .addressMenuProvider {
     justify-content: center;
     position: absolute;
-    top: 180px;
+    top: 50%;
+    margin-top: -230px;
     right: -50%;
     width: 52%;
     transition: .5s;
