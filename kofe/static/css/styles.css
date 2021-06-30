@@ -1419,6 +1419,7 @@ a .backArrow:hover div {
     }
     .item.show {
         max-width: 100%;
+        min-width: 100%;
     }
     .item.active {
         max-width: 100%;

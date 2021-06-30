@@ -309,7 +309,7 @@ input:checked {
     font-size: 4em !important;
     border-radius: 45px;
     text-align: center;
-    margin: 10px 0 0 15px;
+    margin: 10px 5px 0 0;
     cursor: pointer;
     transition: .2s;
 }

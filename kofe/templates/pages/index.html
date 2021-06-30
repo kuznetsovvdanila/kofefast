@@ -371,7 +371,7 @@
                         <form method="POST" class="makeAnOrder flex clmn" id="orderMaking">
                             <input name="action_type" type="text" value="makeAnOrder" style="display: none;">
                             <div class="flex btw" style="flex-wrap: wrap;">
-                                <div class="flex clmn">
+                                <div style="margin-right: 5px;" class="flex clmn">
                                     <div class="basketHd">
                                         Что у вас в корзине:
                                     </div>
@@ -398,7 +398,7 @@
                                             Адрес доставки:
                                         </div>
                                         <div class="basketAddress">
-                                            {{ chosen_address.name }} ({{ chosen_address.street }}, {{ chosen_address.house }}, к{{ chosen_address.building }})
+                                            {{ chosen_address.name }} ({{ chosen_address.street }}, {{ chosen_address.house }})
                                         </div>
                                         <div style="max-width: 400px; margin: 10px 0 0 0; font-size: 0.7em;">
                                         </div>
