@@ -751,7 +751,7 @@ input[type='file'] {
         padding: 0;
         border: none;
         width: 90%;
-        height: 1500px;
+        height: 1350px;
     }
     .person > div:first-child {
         margin: 0 0 70px 0 !important;
@@ -772,7 +772,7 @@ input[type='file'] {
     .personInfo > div:nth-child(3) {
         font-size: 5em;
         margin: 10px 0 20px 0;
-        padding: 0 0 20px 0;
+        padding: 20px 0 20px 0;
         border-bottom: 15px solid #333333;
     }
     .func {

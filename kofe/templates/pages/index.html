@@ -633,9 +633,18 @@
             <div class="choose_your_address_menu_background">
 
             </div>
-            <div class="choose_your_address_menu hidden">
+            {% if coffeeshops %}
+                {% for provider in providers %}
+                    <div class="{{ provider.id }} choose_your_address_menu hidden">
+                        <div class="addresses_header">
+                            Адреса {{ provider.name }}
+                        </div>
+                        <div>
 
-            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
 <!--            <div class="scrollUp">-->
 <!--                <span></span>-->
 <!--                <span></span>-->

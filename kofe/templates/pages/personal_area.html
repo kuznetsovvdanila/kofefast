@@ -181,7 +181,7 @@
                                             {{ adr.city }}
                                         </div>
                                         <div style="overflow: hidden; text-overflow: ellipsis; margin-right: 30px; white-space: nowrap;">
-                                            {{ adr.street }}д. {{ adr.house }}
+                                            {{ adr.street }} {{ adr.house }}
                                         </div>
                                     </div>
                                 </div>
@@ -310,32 +310,6 @@
                                     </div>
                                 </div>
 
-    <!--                            <div class="flex clmn">-->
-    <!--                                <div style="font-weight: bold; margin-bottom: 10px;">-->
-    <!--                                    {{ the_last_order.chosen_cafe }}-->
-    <!--                                </div>-->
-    <!--                                <div class="basketList">-->
-    <!--                                    {% for item in order_items %}-->
-    <!--                                        <div>-->
-    <!--                                            {{ item.good }}, {{ item.count }} шт.-->
-    <!--                                        </div>-->
-    <!--                                    {% endfor %}-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                            <div>-->
-    <!--                                <div style="font-weight: bold; margin-bottom: 10px;">-->
-    <!--                                    Готовность-->
-    <!--                                </div>-->
-    <!--                                <div class="basketList">-->
-    <!--                                    <div>-->
-    <!--                                        {% if the_last_order.is_over %}-->
-    <!--                                            Завершен-->
-    <!--                                        {% else %}-->
-    <!--                                            В процессе-->
-    <!--                                        {% endif %}-->
-    <!--                                    </div>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
 
                             </div>
                         {% endfor %}

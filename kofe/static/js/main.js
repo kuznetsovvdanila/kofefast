@@ -153,7 +153,14 @@ $('.closeIt').click(function(){
     $('.descriptionMobile').removeClass('active');
 })
 $('.mapPointImage').click(function(){
-    $('.mapForProvider').addClass('active');
+    $('.choose_your_address_menu_background').addClass('active');
+    $('.choose_your_address_menu_background').removeClass('not_active');
+    $('.choose_your_address_menu').removeClass('hidden');
+})
+$('.choose_your_address_menu_background').click(function(){
+    $('.choose_your_address_menu_background').removeClass('active');
+    $('.choose_your_address_menu_background').addClass('not_active');
+    $('.choose_your_address_menu').addClass('hidden');
 })
 $('.mapForProvider:not(iframe)').click(function(){
     $('.mapForProvider').removeClass('active');
