@@ -14,7 +14,7 @@
             @media screen and (max-width: 980px) {
                 .addressMenu.active {
                     {% if user.is_cafe_owner %}
-                        top: 2170px;
+                        top: 1875px;
                     {% endif %}
                 }
             }
@@ -135,14 +135,14 @@
                     <div>
                         <b>{{ user.phone_number }}</b>
                     </div>
-                    <div class="func flex btw vCenter">
-                        <div class="chng">
-                            Изменить
-                        </div>
-                        <div>
-                            <a style="color: #eeeeee;" href="{% url 'logout' %}">Выйти</a>
-                        </div>
-                    </div>
+<!--                    <div class="func flex btw vCenter">-->
+<!--                        <div class="chng">-->
+<!--                            Изменить-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <a style="color: #eeeeee;" href="{% url 'logout' %}">Выйти</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     {% if user.is_cafe_owner %}
                     <div class="tools flex">
                         <div class=ownerInterface>
@@ -157,7 +157,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="info" style="{% if user.is_cafe_owner %}top: 2100px;{% endif %}">
+            <div class="info" style="{% if user.is_cafe_owner %}top: 1875px;{% endif %}">
                 <div class="adr pointer">
                     <div class="flex btw">
                         <div class="underln">
@@ -181,7 +181,7 @@
                                             {{ adr.city }}
                                         </div>
                                         <div style="overflow: hidden; text-overflow: ellipsis; margin-right: 30px; white-space: nowrap;">
-                                            {{ adr.street }}, д. {{ adr.house }}
+                                            {{ adr.street }}д. {{ adr.house }}
                                         </div>
                                     </div>
                                 </div>
@@ -372,12 +372,17 @@
                         {% else %}
                             {% for item in production %}
                                 <div class="order flex btw vCenter" style="cursor: default !important; background-image: url('{{ item.preview.url }}'); background-size: cover; background-position: right 50%">
-                                    <div class="orderName flex clmn" style="padding: 10px; height: 100%; justify-content: space-around;">
-                                        <div>
-                                            <span style="background-color: #111111;">{{ item }}</span>
+                                     <div class="cafe_name flex clmn">
+                                        <div style="margin: 0 0 10px 0; font-weight: bold;">
+                                            <span style="background-color: rgba(17, 17, 17, .3);">{{ item }}</span>
                                         </div>
-                                        <div class="itemPrice" style="font-size: 1em;">
-                                            <span><b>{{ item.price }}₽</b></span>
+                                        <div class="basketList" style="overflow: hidden; text-overflow: ellipsis; margin-right: 30px; white-space: nowrap; color: #eeeeee;">
+                                            <div style="overflow: hidden; text-overflow: ellipsis; margin-right: 30px; white-space: nowrap; color: #eeeeee;">
+                                                <span style="background-color: rgba(17, 17, 17, .3);">{{ item.description }}</span>
+                                            </div>
+                                            <div style="overflow: hidden; text-overflow: ellipsis; margin-right: 30px; white-space: nowrap;">
+                                                <span style="background-color: rgba(17, 17, 17, .3);">{{ item.price }}₽</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="itemOptions flex clmn vCenter">
@@ -393,17 +398,24 @@
                                             </form>
                                         </div>
                                     </div>
+
+
+
+
+
+
+
                                 </div>
                                 <div class="afterAddressMenu btw" style="width: 100%; margin-bottom: 10px; padding: 0 5% 0 5%; box-sizing: border-box;">
                                     <div class="flex" style="margin-left: 0;">
-                                        <div class="itemEdit {{ item.id }}" style="padding: 24px 0 0 0; width: 46% !important;">
+                                        <div class="itemEdit {{ item.id }}" style="padding: 24px 0 0 0; width: 50% !important;">
                                             Изменить
                                         </div>
                                         <form action="" method="POST" class="inside">
                                             <input name="action_type" type="text" value="deleteItem" style="display: none;">
                                             <input name="delete_item_id" type="text" value="{{ item.id }}" style="display: none;">
                                             {% csrf_token %}
-                                            <input style="width: 94% !important;" type="submit" class="deleteAnAddress" value="Удалить">
+                                            <input style="width: 90% !important;" type="submit" class="deleteAnAddress" value="Удалить">
                                         </form>
                                     </div>
                                 </div>
@@ -427,17 +439,19 @@
                         {% if provider_addresses %}
                             {% for adr in provider_addresses %}
                                 <div style="font-size: 1em;" class="address flex btw vCenter">
-                                    <div class="addressName" style="max-width: 70%;">
-                                        {{ adr.city }}, {{ adr.street }} {{ adr.house }} к{{ adr.building }}
+                                    <div class="cafe_name flex clmn">
+                                    <div style="margin: 0 0 10px 0; font-weight: bold;">
+                                        {{ adr.city }}
                                     </div>
-                                    <div class="flex" style="flex-direction: column; margin-left: 0;">
-                                        <form action="" method="POST" class="inside">
-                                            <input name="action_type" type="text" value="delete_an_address_provider" style="display: none;">
-                                            <input name="delete_adr_id" type="text" value="{{ adr.id }}" style="display: none;">
-                                            {% csrf_token %}
-                                            <input type="submit" style="width: auto !important; padding: 0 20px 0 20px;" class="deleteAnAddress" value="Удалить">
-                                        </form>
+                                    <div class="basketList" style="overflow: hidden; text-overflow: ellipsis; margin-right: 30px; white-space: nowrap; color: #eeeeee;">
+                                        <div style="overflow: hidden; text-overflow: ellipsis; margin-right: 30px; white-space: nowrap; color: #eeeeee;">
+                                            {{ adr.street }}
+                                        </div>
+                                        <div style="overflow: hidden; text-overflow: ellipsis; margin-right: 30px; white-space: nowrap;">
+                                            д. {{ adr.house }}
+                                        </div>
                                     </div>
+                                </div>
                                 </div>
                                 <div class="afterAddressMenu" style="margin-bottom: 10px;">
                                     <div class="flex" style="margin-left: 0;">
@@ -500,6 +514,7 @@
                     <span class="frm"><b>Изменить</b></span>
                     <span class="closeIt" style=""><b>x</b></span>
                 </div>
+<!--                <hr class="lineMobileForm">-->
                 <input name="action_type" type="text" value="changing_info" style="display: none;">
                 <input type="text" name="first_name" maxlength="150" required="" id="first_name" placeholder="Имя" value="{{ request.user.first_name }}">
                 <input type="text" name="last_name" maxlength="150" required="" id="last_name" placeholder="Фамилия" value="{{ request.user.last_name }}">
@@ -516,9 +531,6 @@
 <!--                {% csrf_token %}-->
 <!--                <input type="submit" value="Добавить" class="pointer">-->
                 <input type="submit" value="Готово" class="pointer rltv editSubmit">
-                <div class="psswrd">
-                    <a href="{% url 'change_password' %}">Сменить пароль</a>
-                </div>
             </form>
 
         </div>
@@ -611,8 +623,17 @@
                 <div>
                     <a href="https://t.me/kofefast_bot" target="_blank">Техподдержка</a>
                 </div>
+                <div class="chng">
+                    <a>Изменить профиль</a>
+                </div>
+                <div class="psswrd">
+                    <a href="{% url 'change_password' %}">Сменить пароль</a>
+                </div>
+                <div style="font-weight: bold; margin: 0 0 40px 0; text-align: left; font-size: 5em;">
+                    <a href="{% url 'logout' %}">Выйти</a>
+                </div>
                 <hr style="width: 90%; margin: 0 10% 0 0; position: static;" class="lineMobile">
-                <div>
+                <div style="font-weight: bold; margin: 45px 20px 45px 0; text-align: left; font-size: 5em;">
                     {% if not chosen_items %}
                         Куда доставлять?
                     {% else %}

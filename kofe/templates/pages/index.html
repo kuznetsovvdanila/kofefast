@@ -441,42 +441,41 @@
                         {% for drink in drinks %}
                             {% if drink.provided in coffeeshops %}
                                 <div id="{{ drink.provided.id }}" class="btw item show" style="background: linear-gradient(to left, rgba({{ drink.primary_color }}) 60%, transparent); background-image: url('{{ drink.preview.url }}'); background-size: cover; background-position: right 50%">
-                                    <div class="cntnr flex">
-                                        <div class="itemName">
-                                            <b><span>{{ drink.name }} - {{ drink.provided }}</span></b>
+                                    <div class="itemInner flex">
+                                        <div class="cntnr flex">
+                                            <div class="itemName">
+                                                {{ drink.name }} - {{ drink.provided }}
+                                            </div>
+                                            <div class="itemDescription">
+                                                {{ drink.description }}
+    <!--                                                есть в {% for volume in drink.volumes %}{{ volume }} {% endfor %}-->
+    <!--                                                вместе с {% for addon in drink.addons %}{{ addon }} {% endfor %}-->
+                                            </div>
+                                            <div class="itemPrice">
+                                                {{ drink.price }}₽
+                                            </div>
+                                            <hr class="lineMobileForm">
                                         </div>
-                                        <div class="itemDescription">
-                                            <span style="background-color: #111111; color: #eeeeee;">{{ drink.description }}
-<!--                                                есть в {% for volume in drink.volumes %}{{ volume }} {% endfor %}-->
-<!--                                                вместе с {% for addon in drink.addons %}{{ addon }} {% endfor %}-->
-                                            </span>
-                                        </div>
-                                        <div class="itemPrice">
-                                            <span><b>{{ drink.price }}₽</b></span>
-                                        </div>
-                                    </div>
-    <!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->
-
-    <!--                                </div>-->
-                                    <div class="addToBasket flex clmn">
-                                        <div>
-                                            <form action="" method="POST">
-                                                <input name="action_type" type="text" value="add {{ drink.id }}" style="display: none;">
-                                                <input class="user_y" type="text" name="user_y" value="" style="display: none;">
-                                                {% csrf_token %}
-                                                <input type="submit" value="+" class="pointer">
-                                            </form>
-                                        </div>
-                                        <div class="counter" style="">
-                                            {{ drink.count }}
-                                        </div>
-                                        <div>
-                                            <form action="" method="POST">
-                                                <input name="action_type" type="text" value="reduce {{ drink.id }}" style="display: none;">
-                                                <input class="user_y" type="text" name="user_y" value="" style="display: none;">
-                                                {% csrf_token %}
-                                                <input type="submit" value="-" class="pointer">
-                                            </form>
+                                        <div class="addToBasket flex clmn">
+                                            <div>
+                                                <form action="" method="POST">
+                                                    <input name="action_type" type="text" value="add {{ drink.id }}" style="display: none;">
+                                                    <input class="user_y" type="text" name="user_y" value="" style="display: none;">
+                                                    {% csrf_token %}
+                                                    <input type="submit" value="+" class="pointer">
+                                                </form>
+                                            </div>
+                                            <div class="counter" style="">
+                                                {{ drink.count }}
+                                            </div>
+                                            <div>
+                                                <form action="" method="POST">
+                                                    <input name="action_type" type="text" value="reduce {{ drink.id }}" style="display: none;">
+                                                    <input class="user_y" type="text" name="user_y" value="" style="display: none;">
+                                                    {% csrf_token %}
+                                                    <input type="submit" value="-" class="pointer">
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -492,39 +491,38 @@
                         {% for dish in food %}
                             {% if dish.provided in coffeeshops %}
                                 <div id="{{ dish.provided.id }}" class="item show" style="background: linear-gradient(to left, rgba({{ dish.primary_color }}) 60%, transparent); background-image: url('{{ dish.preview.url }}'); background-size: cover; background-position: right 50%">
-                                    <div class="cntnr flex">
-                                        <div class="itemName">
-                                            <b><span>{{ dish.name }} - {{ dish.provided }}</span></b>
+                                    <div class="itemInner flex">
+                                        <div class="cntnr flex">
+                                            <div class="itemName">
+                                                {{ dish.name }} - {{ dish.provided }}
+                                            </div>
+                                            <div class="itemDescription">
+                                                {{ dish.description }}
+                                            </div>
+                                            <div class="itemPrice">
+                                                {{ dish.price }}₽
+                                            </div>
                                         </div>
-                                        <div class="itemDescription">
-                                            <span style="background-color: #111111; color: #eeeeee;">{{ dish.description }}</span>
-                                        </div>
-                                        <div class="itemPrice">
-                                            <span><b>{{ dish.price }}₽</b></span>
-                                        </div>
-                                    </div>
-    <!--                                <div class="itemPhoto reallySoftBorder" style="background-image: url('{{ drink.preview.url }}'); -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0), transparent);">-->
-
-    <!--                                </div>-->
-                                    <div class="addToBasket flex reallySoftBorder clmn">
-                                        <div>
-                                            <form action="" method="POST">
-                                                <input name="action_type" type="text" value="add {{ dish.id }}" style="display: none;">
-                                                <input class="user_y" type="text" name="user_y" value="" style="display: none;">
-                                                {% csrf_token %}
-                                                <input type="submit" value="+" class="pointer">
-                                            </form>
-                                        </div>
-                                        <div class="counter" style="">
-                                            {{ dish.count }}
-                                        </div>
-                                        <div>
-                                            <form action="" method="POST">
-                                                <input name="action_type" type="text" value="reduce {{ dish.id }}" style="display: none;">
-                                                <input class="user_y" type="text" name="user_y" value="" style="display: none;">
-                                                {% csrf_token %}
-                                                <input type="submit" value="-" class="pointer">
-                                            </form>
+                                        <div class="addToBasket flex reallySoftBorder clmn">
+                                            <div>
+                                                <form action="" method="POST">
+                                                    <input name="action_type" type="text" value="add {{ dish.id }}" style="display: none;">
+                                                    <input class="user_y" type="text" name="user_y" value="" style="display: none;">
+                                                    {% csrf_token %}
+                                                    <input type="submit" value="+" class="pointer">
+                                                </form>
+                                            </div>
+                                            <div class="counter" style="">
+                                                {{ dish.count }}
+                                            </div>
+                                            <div>
+                                                <form action="" method="POST">
+                                                    <input name="action_type" type="text" value="reduce {{ dish.id }}" style="display: none;">
+                                                    <input class="user_y" type="text" name="user_y" value="" style="display: none;">
+                                                    {% csrf_token %}
+                                                    <input type="submit" value="-" class="pointer">
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 {% endif %}
@@ -556,6 +554,9 @@
                     </div>
                     <div>
                         <a href="https://t.me/kofefast_bot" target="_blank">Техподдержка</a>
+                    </div>
+                    <div>
+                        <a href="{% url 'logout' %}">Выйти</a>
                     </div>
                     <hr style="width: 90%; margin: 0 10% 0 0;" class="lineMobile">
                     <div>

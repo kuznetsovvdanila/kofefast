@@ -151,6 +151,9 @@ $('.photo').click(function(){
     $('.infoOwner').addClass('hidden');
 })
 $('.chng').click(function(){
+    $('.arrow').removeClass('active');
+    $('.arrowMobile').removeClass('active');
+    $('.addressMenuMainPage').removeClass('active');
     $('.info').addClass('move');
     $('.infoOwner').addClass('move');
     $('.person').addClass('hidden');

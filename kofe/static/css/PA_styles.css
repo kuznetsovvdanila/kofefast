@@ -48,9 +48,11 @@ body {
 
 
 .mainPA {
+    position: absolute;
+    top: 50%;
+    margin: -300px 0 0 0;
     justify-content: center;
     width: 100%;
-    height: 100%;
 }
 .person {
     margin: 30px 50px 0 70px;
@@ -208,7 +210,7 @@ body {
     max-height: 150px;
     font-weight: bold;
     font-size: 2.5em !important;
-    color: #deb887;
+    color: #eeeeee;
     max-width: 40%;
     overflow: hidden;
     text-overflow: ellipsis !important;
@@ -549,16 +551,14 @@ input[type='file'] {
     overflow: hidden;
 }
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 1000px) {
     .psswrd {
-        position: relative;
-        display: flex;
-        font-size: 4em;
-        width: 60%;
-        left: 250px;
-        bottom: 210px;
         font-weight: bold;
+        margin: 0 0 40px 0;
+        text-align: left;
+        font-size: 5em;
     }
+}
 .topMenuResizable > div {
     position: relative;
 }
@@ -594,7 +594,7 @@ input[type='file'] {
     border: 7px solid #333333;
     top: 0;
     width: 300px;
-    height: 295px;
+    height: 320px;
     transition: .3s;
     box-shadow: 0 0 30px 10px #111111;
 }
@@ -613,8 +613,18 @@ input[type='file'] {
     left: 0;
     transition: .3s;
 }
+.lineMobileForm {
+    display: none;
+}
 
 @media screen and (max-width: 1000px) {
+    .lineMobileForm {
+        display: block;
+        background-color: #333333;
+        width: 90%;
+        height: 15px;
+        border: none;
+    }
     .cafe_name > div {
         font-size: 2.2em;
     }
@@ -723,6 +733,8 @@ input[type='file'] {
 
     }
     .mainPA {
+        top: 0;
+        height: 100%;
         margin: 0;
         padding: 0;
         flex-direction: column;
@@ -754,13 +766,14 @@ input[type='file'] {
     }
     .personInfo > div:nth-child(2) {
         font-size: 4em;
-        margin: 0 0 20px 0;
         padding: 0 0 20px 0;
         border-bottom: 15px solid #333333;
     }
     .personInfo > div:nth-child(3) {
         font-size: 5em;
-        margin: 50px 0 60px 0;
+        margin: 10px 0 20px 0;
+        padding: 0 0 20px 0;
+        border-bottom: 15px solid #333333;
     }
     .func {
         font-size: 4em;
@@ -792,7 +805,7 @@ input[type='file'] {
         position: absolute;
         z-index: 1000;
         margin: 0;
-        top: 1900px;
+        top: 1700px;
         width: 100%;
         height: auto;
         padding: 60px 0 0 0;
@@ -807,7 +820,7 @@ input[type='file'] {
         left: 1%;
         z-index: 1000;
         margin: 0;
-        top: 2100px;
+        top: 1875px;
         width: 100%;
         height: auto;
         padding: 60px 0 0 0;
@@ -845,13 +858,12 @@ input[type='file'] {
         transition: .2s;
     }
     .tools {
-        border-top: 15px solid #333333;
         border-bottom: 15px solid #333333;
-        padding: 20px 0 20px 0;
+        padding: 0 0 20px 0;
         display: flex;
         align-items: center;
         text-align: right;
-        margin: 50px 0 40px 0;
+        margin: 10px 0 40px 0;
         font-size: 3.6em;
     }
     .tools > div:last-child {
@@ -1080,7 +1092,7 @@ input[type='file'] {
     .address > div:first-child {
         max-width: 100% !important;
     }
-    .address > div:last-child {
+    .address > div:last-child:not(:first-child) {
         display: none;
     }
     .adr, .ord {
@@ -1088,8 +1100,8 @@ input[type='file'] {
     }
     .addressName, .orderName {
         max-width: 100%;
-        font-size: 6em !important;
-        color: #deb887;
+        font-size: 5.5em !important;
+        color: #eeeeee;
         max-height: 100% !important;
         margin: 30px 30px 30px 30px !important;
     }
