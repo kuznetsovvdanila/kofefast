@@ -20,7 +20,7 @@ else {
     sMinutes = String(minutes);
 }
 if (document.getElementById('timeInput')) {
-    document.getElementById('timeInput').value = sHours + '.' + sMinutes;
+    document.getElementById('timeInput').value = sHours + ':' + sMinutes;
 }
 //document.getElementById('timeInput').oninput = function () {
 //    if (Number(this.value[0] + this.value[1] + this.value[3] + this.value[4]) > 2359) {

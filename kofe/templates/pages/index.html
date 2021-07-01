@@ -444,7 +444,7 @@
                                     <div class="itemInner flex">
                                         <div class="cntnr flex">
                                             <div class="itemName">
-                                                {{ drink.name }} - {{ drink.provided }}
+                                                {{ drink.name }}
                                             </div>
                                             <div class="itemDescription">
                                                 {{ drink.description }}
@@ -452,7 +452,7 @@
     <!--                                                вместе с {% for addon in drink.addons %}{{ addon }} {% endfor %}-->
                                             </div>
                                             <div class="itemPrice">
-                                                {{ drink.price }}₽
+                                                {{ drink.price }}₽ - {{ drink.provided }}
                                             </div>
                                             <hr class="lineMobileForm">
                                         </div>
@@ -665,7 +665,7 @@
         <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://snipp.ru/cdn/maskedinput/jquery.maskedinput.min.js"></script>
         <script>
-            $('#timeInput').mask('99.99', {placeholder: '00.00'});
+            $('#timeInput').mask('99:99', {placeholder: '00:00'});
         </script>
 
 <!--        55.645909, 37.704017-->
